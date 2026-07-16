@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "titulo": "Cocinero/a",
+    "empresa": "Casa Norte",
+    "ubicacion": "Nueva Córdoba",
+    "tipo_jornada": "Tiempo completo",
+    "turno": "Turno Noche",
+    "urgente": 1,
+    "salario": "A convenir"
+  },
+  {
+    "id": 2,
+    "titulo": "Barista",
+    "empresa": "Café Central",
+    "ubicacion": "Güemes",
+    "tipo_jornada": "Part-time",
+    "turno": "Turno Mañana",
+    "urgente": 0,
+    "salario": "A convenir"
+  },
+  {
+    "id": 3,
+    "titulo": "Bartender",
+    "empresa": "Barra Sur",
+    "ubicacion": "Centro",
+    "tipo_jornada": "Tiempo completo",
+    "turno": "Turno Noche",
+    "urgente": 0,
+    "salario": "A convenir"
+  }
+]
