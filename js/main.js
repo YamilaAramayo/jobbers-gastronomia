@@ -84,9 +84,21 @@ function configurarFormularioWhatsApp() {
     });
 }
 
-// 3. EVENTOS DE LOS BOTONES Y LINKS DE LA PÁGINA
+// 3. EVENTOS GENERALES Y MODAL DE INICIO DE SESIÓN / REGISTRO
 function configurarEventosGenerales() {
-    // Scroll suave para botón "Busco Trabajo"
+    // Referencias de Elementos del Modal
+    const modal = document.getElementById("auth-modal");
+    const loginBox = document.getElementById("login-box");
+    const registerBox = document.getElementById("register-box");
+    
+    const btnOpenLogin = document.querySelector(".btn-login");
+    const btnOpenRegister = document.querySelector(".btn-register");
+    const btnCloseModal = document.getElementById("close-modal");
+    
+    const goToRegister = document.getElementById("go-to-register");
+    const goToLogin = document.getElementById("go-to-login");
+
+    // Scroll suave para botón "Busco Trabajo" (Hero)
     const btnBuscoTrabajo = document.querySelector(".btn-primary");
     if (btnBuscoTrabajo) {
         btnBuscoTrabajo.addEventListener("click", () => {
@@ -94,7 +106,7 @@ function configurarEventosGenerales() {
         });
     }
 
-    // Scroll suave para botón "Necesito Personal"
+    // Scroll suave para botón "Necesito Personal" (Hero)
     const btnNecesitoPersonal = document.querySelector(".btn-secondary");
     if (btnNecesitoPersonal) {
         btnNecesitoPersonal.addEventListener("click", () => {
@@ -102,18 +114,77 @@ function configurarEventosGenerales() {
         });
     }
 
-    // Alertas informativas para simular que el backend se activará próximamente
-    const btnRegister = document.querySelector(".btn-register");
-    if (btnRegister) {
-        btnRegister.addEventListener("click", () => {
-            alert("¡Hola! La sección de registro de postulantes y carga de CV estará activa próximamente en nuestro nuevo servidor. 😊");
+    // --- FUNCIONALIDAD DEL MODAL ---
+    
+    // Función para abrir el modal en una vista específica
+    function abrirModal(vista) {
+        if (!modal) return;
+        modal.classList.add("active");
+        
+        if (vista === "login") {
+            loginBox.classList.add("active");
+            registerBox.classList.remove("active");
+        } else {
+            registerBox.classList.add("active");
+            loginBox.classList.remove("active");
+        }
+    }
+
+    // Cerrar Modal
+    function cerrarModal() {
+        if (modal) modal.classList.remove("active");
+    }
+
+    // Eventos para abrir desde el Navbar
+    if (btnOpenLogin) {
+        btnOpenLogin.addEventListener("click", () => abrirModal("login"));
+    }
+    if (btnOpenRegister) {
+        btnOpenRegister.addEventListener("click", () => abrirModal("register"));
+    }
+
+    // Eventos de cierre
+    if (btnCloseModal) {
+        btnCloseModal.addEventListener("click", cerrarModal);
+    }
+    if (modal) {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) cerrarModal(); // Cierra si hacen clic afuera del cuadro
         });
     }
 
-    const btnLogin = document.querySelector(".btn-login");
-    if (btnLogin) {
-        btnLogin.addEventListener("click", () => {
-            alert("El inicio de sesión de usuarios registrados se habilitará en la siguiente fase de desarrollo.");
+    // Cambiar entre Login y Registro dentro del Modal
+    if (goToRegister) {
+        goToRegister.addEventListener("click", () => {
+            loginBox.classList.remove("active");
+            registerBox.classList.add("active");
+        });
+    }
+    if (goToLogin) {
+        goToLogin.addEventListener("click", () => {
+            registerBox.classList.remove("active");
+            loginBox.classList.add("active");
+        });
+    }
+
+    // Procesar envío de formularios (Simulado)
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("login-email").value;
+            alert(`¡Bienvenido de nuevo! Has iniciado sesión correctamente con ${email}.`);
+            cerrarModal();
+        });
+    }
+
+    const registerForm = document.getElementById("register-form");
+    if (registerForm) {
+        registerForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("register-name").value;
+            alert(`¡Registro completado! Gracias por unirte a Jobbers, ${name}.`);
+            cerrarModal();
         });
     }
 }
