@@ -63,12 +63,10 @@ function configurarFormularioWhatsApp() {
         const zona = formulario.zona.value;
         const turno = formulario.turno.value;
 
-        // Formateo de textos para el mensaje de WhatsApp
         const puestoFormateado = puesto.charAt(0).toUpperCase() + puesto.slice(1);
         const zonaFormateada = zona.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
         const turnoFormateado = turno.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-        // Podés cambiar este número por el número real de tu cliente o el tuyo
         const numeroTelefono = "5493541123456"; 
 
         const mensaje = encodeURIComponent(
@@ -86,7 +84,6 @@ function configurarFormularioWhatsApp() {
 
 // 3. EVENTOS GENERALES Y MODAL DE INICIO DE SESIÓN / REGISTRO
 function configurarEventosGenerales() {
-    // Referencias de Elementos del Modal
     const modal = document.getElementById("auth-modal");
     const loginBox = document.getElementById("login-box");
     const registerBox = document.getElementById("register-box");
@@ -98,7 +95,6 @@ function configurarEventosGenerales() {
     const goToRegister = document.getElementById("go-to-register");
     const goToLogin = document.getElementById("go-to-login");
 
-    // Scroll suave para botón "Busco Trabajo" (Hero)
     const btnBuscoTrabajo = document.querySelector(".btn-primary");
     if (btnBuscoTrabajo) {
         btnBuscoTrabajo.addEventListener("click", () => {
@@ -106,7 +102,6 @@ function configurarEventosGenerales() {
         });
     }
 
-    // Scroll suave para botón "Necesito Personal" (Hero)
     const btnNecesitoPersonal = document.querySelector(".btn-secondary");
     if (btnNecesitoPersonal) {
         btnNecesitoPersonal.addEventListener("click", () => {
@@ -115,8 +110,6 @@ function configurarEventosGenerales() {
     }
 
     // --- FUNCIONALIDAD DEL MODAL ---
-    
-    // Función para abrir el modal en una vista específica
     function abrirModal(vista) {
         if (!modal) return;
         modal.classList.add("active");
@@ -130,12 +123,10 @@ function configurarEventosGenerales() {
         }
     }
 
-    // Cerrar Modal
     function cerrarModal() {
         if (modal) modal.classList.remove("active");
     }
 
-    // Eventos para abrir desde el Navbar
     if (btnOpenLogin) {
         btnOpenLogin.addEventListener("click", () => abrirModal("login"));
     }
@@ -143,17 +134,15 @@ function configurarEventosGenerales() {
         btnOpenRegister.addEventListener("click", () => abrirModal("register"));
     }
 
-    // Eventos de cierre
     if (btnCloseModal) {
         btnCloseModal.addEventListener("click", cerrarModal);
     }
     if (modal) {
         modal.addEventListener("click", (e) => {
-            if (e.target === modal) cerrarModal(); // Cierra si hacen clic afuera del cuadro
+            if (e.target === modal) cerrarModal();
         });
     }
 
-    // Cambiar entre Login y Registro dentro del Modal
     if (goToRegister) {
         goToRegister.addEventListener("click", () => {
             loginBox.classList.remove("active");
@@ -167,7 +156,6 @@ function configurarEventosGenerales() {
         });
     }
 
-    // Procesar envío de formularios (Simulado)
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
@@ -189,7 +177,6 @@ function configurarEventosGenerales() {
     }
 }
 
-// Inicializar funciones al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     cargarOfertasDestacadas();
     configurarFormularioWhatsApp();
