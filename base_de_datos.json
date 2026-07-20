@@ -1,7 +1,4 @@
--- 1. ESTRUCTURA DE LA BASE DE DATOS (jobbers_db)
 
-CREATE DATABASE IF NOT EXISTS jobbers_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE jobbers_db;
 
 -- Tabla de Usuarios (Candidatos y Empresas)
 CREATE TABLE IF NOT EXISTS usuarios (
