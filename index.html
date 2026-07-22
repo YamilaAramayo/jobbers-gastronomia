@@ -11,23 +11,23 @@
 </head>
 <body>
 
-    <!-- CONTENEDOR DE NOTIFICACIONES (TOAST) -->
+    <!-- NOTIFICACIONES TOAST -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- BARRA DE NAVEGACIÓN DUAL Y DINÁMICA -->
+    <!-- BARRA DE NAVEGACIÓN -->
     <header class="navbar">
         <div class="logo">
             Jobbers <span>Gastronomía</span>
         </div>
         <div class="nav-buttons" id="nav-actions">
-            <!-- Los botones se inyectan dinámicamente según si hay sesión iniciada -->
+            <!-- Se llena dinámicamente desde main.js -->
         </div>
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="container">
         
-        <!-- TARJETA EXPRESS PARA EMPRESAS (WHATSAPP URGENTE) -->
+        <!-- TARJETA EXPRESS PARA EMPRESAS (WHATSAPP) -->
         <section class="card-express">
             <div class="express-header">
                 <h2>⚡ ¿NECESITÁS PERSONAL HOY?</h2>
@@ -103,7 +103,7 @@
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados. Especialistas en Reclutamiento Gastronómico.</p>
     </footer>
 
-    <!-- MODAL DINÁMICO REFACTORIZADO -->
+    <!-- MODAL DINÁMICO -->
     <div id="modal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <span class="close" onclick="cerrarModal()">&times;</span>
@@ -111,6 +111,9 @@
         </div>
     </div>
 
+    <script src="js/main.js"></script>
+</body>
+</html>
     <script src="js/main.js"></script>
 </body>
 </html>
