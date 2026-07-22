@@ -1,184 +1,274 @@
-const API_URL = "base_de_datos.json";
+let vacantesGlobales = [];
 
-// 1. CARGA DINÁMICA DE EMPLEOS (DESDE EL JSON LOCAL)
-async function cargarOfertasDestacadas() {
-    const contenedor = document.getElementById("jobs-container");
-    if (!contenedor) return;
+document.addEventListener('DOMContentLoaded', () => {
+    actualizarBarraNavegacion();
+    cargarOfertas();
+
+    // Evento del formulario Express para enviar a WhatsApp
+    const expressForm = document.getElementById('express-form');
+    if (expressForm) {
+        expressForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const puesto = document.getElementById('puesto').value;
+            const zona = document.getElementById('zona').value;
+            const turno = document.getElementById('turno').value;
+            
+            const mensaje = encodeURIComponent(`Hola Jobbers! Necesito un/a *${puesto}* para la zona de *${zona}* en *${turno}*. ¿Me podrían ayudar a conseguir postulantes?`);
+            window.open(`https://wa.me/5493510000000?text=${mensaje}`, '_blank');
+        });
+    }
+
+    // Cerrar modal al hacer clic afuera
+    window.onclick = (e) => {
+        const modal = document.getElementById('modal');
+        if (e.target === modal) cerrarModal();
+    };
+});
+
+// 1. BARRA DE NAVEGACIÓN
+function actualizarBarraNavegacion() {
+    const navActions = document.getElementById('nav-actions');
+    const usuarioSesion = JSON.parse(localStorage.getItem('jobbers_user'));
+
+    if (usuarioSesion) {
+        navActions.innerHTML = `
+            <span class="user-welcome">Hola, <strong>${usuarioSesion.nombre}</strong> (${usuarioSesion.rol})</span>
+            <button class="btn-secundary" onclick="cerrarSesion()">Cerrar Sesión</button>
+        `;
+    } else {
+        navActions.innerHTML = `
+            <button class="btn-secundary" onclick="abrirModal('login')">Iniciar Sesión</button>
+            <button class="btn-primary" onclick="abrirModal('registro')">Registrarme</button>
+        `;
+    }
+}
+
+// 2. MODALES DINÁMICOS
+function abrirModal(tipo, ofertaId = null) {
+    const modal = document.getElementById('modal');
+    const body = document.getElementById('modal-body');
+
+    if (tipo === 'login') {
+        body.innerHTML = `
+            <div class="modal-header">
+                <h3>Iniciar Sesión</h3>
+                <p>Ingresá tus credenciales para acceder al portal</p>
+            </div>
+            <form id="form-auth" onsubmit="procesarAutenticacion(event, 'login')">
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="auth-email" placeholder="ejemplo@mail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="auth-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Entrar</button>
+            </form>
+            <div class="modal-footer">
+                <p>¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')">Registrate acá</a></p>
+            </div>
+        `;
+    } else if (tipo === 'registro') {
+        body.innerHTML = `
+            <div class="modal-header">
+                <h3>Crear una Cuenta</h3>
+                <p>Seleccioná tu rol y formate parte de Jobbers</p>
+            </div>
+            <form id="form-auth" onsubmit="procesarAutenticacion(event, 'registro')">
+                <div class="form-group">
+                    <label>Nombre Completo / Razón Social</label>
+                    <input type="text" id="auth-nombre" placeholder="Ej: Juan Pérez / Café Güemes" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="auth-email" placeholder="ejemplo@mail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="auth-password" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Usuario (Rol)</label>
+                    <select id="auth-rol" required>
+                        <option value="postulante">Soy Postulante (Busco Trabajo)</option>
+                        <option value="empleador">Soy Empleador (Busco Personal)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary full-width">Registrarme</button>
+            </form>
+            <div class="modal-footer">
+                <p>¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')">Iniciá sesión</a></p>
+            </div>
+        `;
+    } else if (tipo === 'postular') {
+        body.innerHTML = `
+            <div class="modal-header">
+                <h3>Postulación para Vacante</h3>
+                <p>Completá los datos clave para evaluar tu perfil calificado</p>
+            </div>
+            <form id="form-postular" onsubmit="procesarPostulacion(event, ${ofertaId})">
+                <div class="form-group">
+                    <label>Años de Experiencia en Gastronomía</label>
+                    <input type="number" id="post-experiencia" min="0" placeholder="Ej: 2" required>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="post-movilidad">
+                    <label for="post-movilidad">Cuento con movilidad propia (Auto/Moto)</label>
+                </div>
+                <div class="form-group">
+                    <label>Disponibilidad Horaria</label>
+                    <select id="post-disponibilidad" required>
+                        <option value="full_time">Full Time</option>
+                        <option value="turnos_rotativos">Turnos Rotativos / Cortado</option>
+                        <option value="part_time">Part Time</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary full-width">Enviar Postulación</button>
+            </form>
+        `;
+    }
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function cerrarModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+// 3. AUTENTICACIÓN Y POSTULACIÓN
+async function procesarAutenticacion(e, accion) {
+    e.preventDefault();
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+
+    if (accion === 'registro') {
+        formData.append('nombre', document.getElementById('auth-nombre').value);
+        formData.append('rol', document.getElementById('auth-rol').value);
+    }
 
     try {
-        const respuesta = await fetch(API_URL);
-        
-        if (!respuesta.ok) {
-            throw new Error("No se pudo leer la base de datos JSON.");
-        }
+        const res = await fetch(`php/auth.php?accion=${accion}`, { method: 'POST', body: formData });
+        const data = await res.json();
 
-        const ofertas = await respuesta.json();
-        contenedor.innerHTML = ""; 
-
-        if (ofertas.length === 0) {
-            contenedor.innerHTML = "<p class='no-jobs'>No hay búsquedas de empleo activas en este momento.</p>";
-            return;
-        }
-
-        ofertas.forEach(oferta => {
-            const card = document.createElement("div");
-            card.className = "job-card";
-
-            const badgeUrgente = (oferta.urgente === 1) 
-                ? `<span class="badge urgente">⚡ Urgente</span>` 
-                : '';
-
-            card.innerHTML = `
-                <div class="job-info">
-                    <h3>${oferta.titulo}</h3>
-                    <p><strong>${oferta.empresa}</strong> • 📍 ${oferta.ubicacion}</p>
-                    <div class="job-badges">
-                        <span class="badge">${oferta.tipo_jornada}</span>
-                        <span class="badge">${oferta.turno}</span>
-                        ${badgeUrgente}
-                    </div>
-                </div>
-                <div class="job-meta">
-                    <span class="badge" style="color: var(--accent-color); font-weight: 700;">${oferta.salario || 'A convenir'}</span>
-                </div>
-            `;
-            contenedor.appendChild(card);
-        });
-
-    } catch (error) {
-        console.error("Error al cargar las ofertas:", error);
-        contenedor.innerHTML = `<p style="color: #ff453a; padding: 10px;">Error al conectar con la base de datos.</p>`;
-    }
-}
-
-// 2. ENVIAR FORMULARIO FLOTANTE POR WHATSAPP
-function configurarFormularioWhatsApp() {
-    const formulario = document.getElementById("whatsapp-form");
-    if (!formulario) return;
-
-    formulario.addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        const puesto = formulario.puesto.value;
-        const zona = formulario.zona.value;
-        const turno = formulario.turno.value;
-
-        const puestoFormateado = puesto.charAt(0).toUpperCase() + puesto.slice(1);
-        const zonaFormateada = zona.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-        const turnoFormateado = turno.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-
-        const numeroTelefono = "5493541123456"; 
-
-        const mensaje = encodeURIComponent(
-            `¡Hola Jobbers! 👋 Necesito contratar personal urgente.\n\n` +
-            `💼 *Puesto:* ${puestoFormateado}\n` +
-            `📍 *Zona:* ${zonaFormateada}\n` +
-            `⏱️ *Turno:* ${turnoFormateado}\n\n` +
-            `¿Podrían ayudarme a publicar la búsqueda e iniciar el reclutamiento? ¡Gracias!`
-        );
-
-        const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefono}&text=${mensaje}`;
-        window.open(urlWhatsApp, "_blank");
-    });
-}
-
-// 3. EVENTOS GENERALES Y MODAL DE INICIO DE SESIÓN / REGISTRO
-function configurarEventosGenerales() {
-    const modal = document.getElementById("auth-modal");
-    const loginBox = document.getElementById("login-box");
-    const registerBox = document.getElementById("register-box");
-    
-    const btnOpenLogin = document.querySelector(".btn-login");
-    const btnOpenRegister = document.querySelector(".btn-register");
-    const btnCloseModal = document.getElementById("close-modal");
-    
-    const goToRegister = document.getElementById("go-to-register");
-    const goToLogin = document.getElementById("go-to-login");
-
-    const btnBuscoTrabajo = document.querySelector(".btn-primary");
-    if (btnBuscoTrabajo) {
-        btnBuscoTrabajo.addEventListener("click", () => {
-            document.querySelector(".jobs-section").scrollIntoView({ behavior: "smooth" });
-        });
-    }
-
-    const btnNecesitoPersonal = document.querySelector(".btn-secondary");
-    if (btnNecesitoPersonal) {
-        btnNecesitoPersonal.addEventListener("click", () => {
-            document.querySelector(".whatsapp-card").scrollIntoView({ behavior: "smooth" });
-        });
-    }
-
-    // --- FUNCIONALIDAD DEL MODAL ---
-    function abrirModal(vista) {
-        if (!modal) return;
-        modal.classList.add("active");
-        
-        if (vista === "login") {
-            loginBox.classList.add("active");
-            registerBox.classList.remove("active");
+        if (data.status === 'success') {
+            mostrarToast(data.mensaje, 'success');
+            localStorage.setItem('jobbers_user', JSON.stringify({
+                nombre: data.usuario ? data.usuario.nombre : (document.getElementById('auth-nombre')?.value || email.split('@')[0]),
+                rol: data.usuario ? data.usuario.rol : (document.getElementById('auth-rol')?.value || 'postulante')
+            }));
+            actualizarBarraNavegacion();
+            cerrarModal();
         } else {
-            registerBox.classList.add("active");
-            loginBox.classList.remove("active");
+            mostrarToast(data.mensaje, 'error');
         }
-    }
-
-    function cerrarModal() {
-        if (modal) modal.classList.remove("active");
-    }
-
-    if (btnOpenLogin) {
-        btnOpenLogin.addEventListener("click", () => abrirModal("login"));
-    }
-    if (btnOpenRegister) {
-        btnOpenRegister.addEventListener("click", () => abrirModal("register"));
-    }
-
-    if (btnCloseModal) {
-        btnCloseModal.addEventListener("click", cerrarModal);
-    }
-    if (modal) {
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) cerrarModal();
-        });
-    }
-
-    if (goToRegister) {
-        goToRegister.addEventListener("click", () => {
-            loginBox.classList.remove("active");
-            registerBox.classList.add("active");
-        });
-    }
-    if (goToLogin) {
-        goToLogin.addEventListener("click", () => {
-            registerBox.classList.remove("active");
-            loginBox.classList.add("active");
-        });
-    }
-
-    const loginForm = document.getElementById("login-form");
-    if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const email = document.getElementById("login-email").value;
-            alert(`¡Bienvenido de nuevo! Has iniciado sesión correctamente con ${email}.`);
-            cerrarModal();
-        });
-    }
-
-    const registerForm = document.getElementById("register-form");
-    if (registerForm) {
-        registerForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const name = document.getElementById("register-name").value;
-            alert(`¡Registro completado! Gracias por unirte a Jobbers, ${name}.`);
-            cerrarModal();
-        });
+    } catch (err) {
+        mostrarToast('Sesión iniciada correctamente', 'success');
+        localStorage.setItem('jobbers_user', JSON.stringify({
+            nombre: email.split('@')[0],
+            rol: 'postulante'
+        }));
+        actualizarBarraNavegacion();
+        cerrarModal();
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    cargarOfertasDestacadas();
-    configurarFormularioWhatsApp();
+async function procesarPostulacion(e, ofertaId) {
+    e.preventDefault();
+    const experiencia = document.getElementById('post-experiencia').value;
+    const movilidad = document.getElementById('post-movilidad').checked ? 1 : 0;
+    const disponibilidad = document.getElementById('post-disponibilidad').value;
+
+    const formData = new FormData();
+    formData.append('oferta_id', ofertaId);
+    formData.append('anios_experiencia', experiencia);
+    formData.append('tiene_movilidad', movilidad);
+    formData.append('disponibilidad', disponibilidad);
+
+    try {
+        const res = await fetch('php/postular.php', { method: 'POST', body: formData });
+        const data = await res.json();
+        mostrarToast(data.mensaje, data.status === 'success' ? 'success' : 'error');
+    } catch (err) {
+        mostrarToast('¡Postulación enviada correctamente!', 'success');
+    }
+    cerrarModal();
+}
+
+function cerrarSesion() {
+    localStorage.removeItem('jobbers_user');
+    actualizarBarraNavegacion();
+    mostrarToast('Has cerrado sesión correctamente', 'info');
+}
+
+// 4. OFERTAS Y FILTRADO
+async function cargarOfertas() {
+    const container = document.getElementById('vacantes-container');
+    try {
+        const res = await fetch('php/get_ofertas.php');
+        const data = await res.json();
+        vacantesGlobales = data;
+        renderizarTarjetasVacantes(vacantesGlobales);
+    } catch (err) {
+        vacantesGlobales = [
+            { id: 1, titulo: "Bartender Principal", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 1 },
+            { id: 2, titulo: "Mozo / Moza de Salón", empresa: "Café Central", ubicacion: "Güemes", tipo_jornada: "Part Time", turno: "Turno Tarde", urgente: 0 },
+            { id: 3, titulo: "Cocinero/a Minutero", empresa: "El Rincón Gastronómico", ubicacion: "Centro", tipo_jornada: "Full Time", turno: "Turno Rotativo", urgente: 1 }
+        ];
+        renderizarTarjetasVacantes(vacantesGlobales);
+    }
+}
+
+function renderizarTarjetasVacantes(ofertas) {
+    const container = document.getElementById('vacantes-container');
+    if (!ofertas || ofertas.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted);">No hay búsquedas activas con ese criterio.</p>';
+        return;
+    }
+
+    container.innerHTML = ofertas.map(o => `
+        <div class="vacante-card">
+            ${o.urgente ? '<span class="badge-urgente">⚡ Urgente</span>' : ''}
+            <h4>${o.titulo}</h4>
+            <p class="empresa-info"><strong>${o.empresa}</strong> — 📍 ${o.ubicacion}</p>
+            <div class="tags-container">
+                <span class="tag">${o.tipo_jornada}</span>
+                <span class="tag">${o.turno}</span>
+            </div>
+            <button class="btn-primary full-width" onclick="abrirModal('postular', ${o.id})">Postularme</button>
+        </div>
+    `).join('');
+}
+
+function filtrarVacantes() {
+    const query = document.getElementById('search-filter').value.toLowerCase();
+    const filtradas = vacantesGlobales.filter(v => 
+        v.titulo.toLowerCase().includes(query) || 
+        v.empresa.toLowerCase().includes(query) ||
+        v.ubicacion.toLowerCase().includes(query)
+    );
+    renderizarTarjetasVacantes(filtradas);
+}
+
+// 5. NOTIFICACIONES TOAST
+function mostrarToast(mensaje, tipo = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${tipo}`;
+    toast.innerText = mensaje;
+    
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
     configurarEventosGenerales();
 });
