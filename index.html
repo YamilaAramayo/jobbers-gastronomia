@@ -4,10 +4,342 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobbers Argentina — Portal Gastronómico</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Fuente Google Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --accent-green: #10b981;
+            --accent-blue: #38bdf8;
+            --accent-amber: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --input-bg: #020617;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #020617;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--accent-green);
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .user-welcome {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+        }
+
+        /* BOTONES */
+        .btn-primary {
+            background: var(--accent-green);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-secundary {
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            border: 1px solid var(--card-border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover, .btn-secundary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-whatsapp {
+            background: var(--accent-green);
+            color: white;
+            font-weight: 700;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            grid-column: 1 / -1;
+            font-size: 1rem;
+        }
+
+        .full-width {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        /* CONTENEDOR Y TARJETAS */
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card-express {
+            background: var(--card-bg);
+            padding: 1.8rem;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-bottom: 2.5rem;
+        }
+
+        .express-header h2 {
+            color: var(--accent-amber);
+            margin: 0 0 0.4rem 0;
+            font-size: 1.3rem;
+        }
+
+        .express-header p {
+            color: var(--text-muted);
+            margin: 0 0 1.2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .express-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        select, input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--input-bg);
+            border: 1px solid var(--card-border);
+            color: white;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .checkbox-group {
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            cursor: pointer;
+        }
+
+        /* SECCIÓN VACANTES Y FILTRO */
+        .vacantes-section {
+            margin-top: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .grid-vacantes {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .vacante-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .vacante-card h4 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1.1rem;
+        }
+
+        .empresa-info {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .badge-urgente {
+            background: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            align-self: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .tags-container {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.8rem 0 1.2rem 0;
+        }
+
+        .tag {
+            background: var(--card-border);
+            color: #cbd5e1;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 1.6rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .modal-header {
+            margin-bottom: 1.2rem;
+        }
+
+        .modal-header h3 {
+            margin: 0 0 0.3rem 0;
+        }
+
+        .modal-header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .modal-footer {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .modal-footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        /* FOOTER Y TOASTS */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 3rem;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            padding: 12px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transition: opacity 0.3s ease;
+        }
+
+        .toast-success { background: var(--accent-green); }
+        .toast-error { background: #ef4444; }
+        .toast-info { background: var(--accent-blue); }
+        .fade-out { opacity: 0; }
+    </style>
 </head>
 <body>
 
@@ -20,7 +352,7 @@
             Jobbers <span>Gastronomía</span>
         </div>
         <div class="nav-buttons" id="nav-actions">
-            <!-- Se llena dinámicamente desde main.js -->
+            <!-- Se llena dinámicamente -->
         </div>
     </header>
 
@@ -111,9 +443,273 @@
         </div>
     </div>
 
-    <script src="./js/main.js"></script>
-</body>
-</html>
-  <script src="./js/main.js"></script>
+    <!-- SCRIPT INLINE -->
+    <script>
+        let vacantesGlobales = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarBarraNavegacion();
+            cargarOfertas();
+
+            const expressForm = document.getElementById('express-form');
+            if (expressForm) {
+                expressForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const puesto = document.getElementById('puesto').value;
+                    const zona = document.getElementById('zona').value;
+                    const turno = document.getElementById('turno').value;
+                    
+                    const mensaje = encodeURIComponent(`Hola Jobbers! Necesito un/a *${puesto}* para la zona de *${zona}* en *${turno}*. ¿Me podrían ayudar a conseguir postulantes?`);
+                    window.open(`https://wa.me/5493510000000?text=${mensaje}`, '_blank');
+                });
+            }
+
+            window.onclick = (e) => {
+                const modal = document.getElementById('modal');
+                if (e.target === modal) cerrarModal();
+            };
+        });
+
+        function actualizarBarraNavegacion() {
+            const navActions = document.getElementById('nav-actions');
+            const usuarioSesion = JSON.parse(localStorage.getItem('jobbers_user'));
+
+            if (usuarioSesion) {
+                navActions.innerHTML = `
+                    <span class="user-welcome">Hola, <strong>${usuarioSesion.nombre}</strong> (${usuarioSesion.rol})</span>
+                    <button class="btn-secundary" onclick="cerrarSesion()">Cerrar Sesión</button>
+                `;
+            } else {
+                navActions.innerHTML = `
+                    <button class="btn-secundary" onclick="abrirModal('login')">Iniciar Sesión</button>
+                    <button class="btn-primary" onclick="abrirModal('registro')">Registrarme</button>
+                `;
+            }
+        }
+
+        function abrirModal(tipo, ofertaId = null) {
+            const modal = document.getElementById('modal');
+            const body = document.getElementById('modal-body');
+
+            if (tipo === 'login') {
+                body.innerHTML = `
+                    <div class="modal-header">
+                        <h3>Iniciar Sesión</h3>
+                        <p>Ingresá tus credenciales para acceder al portal</p>
+                    </div>
+                    <form id="form-auth" onsubmit="procesarAutenticacion(event, 'login')">
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="auth-email" placeholder="ejemplo@mail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="auth-password" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn-primary full-width">Entrar</button>
+                    </form>
+                    <div class="modal-footer">
+                        <p>¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')">Registrate acá</a></p>
+                    </div>
+                `;
+            } else if (tipo === 'registro') {
+                body.innerHTML = `
+                    <div class="modal-header">
+                        <h3>Crear una Cuenta</h3>
+                        <p>Seleccioná tu rol y formate parte de Jobbers</p>
+                    </div>
+                    <form id="form-auth" onsubmit="procesarAutenticacion(event, 'registro')">
+                        <div class="form-group">
+                            <label>Nombre Completo / Razón Social</label>
+                            <input type="text" id="auth-nombre" placeholder="Ej: Juan Pérez / Café Güemes" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="auth-email" placeholder="ejemplo@mail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="auth-password" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Usuario (Rol)</label>
+                            <select id="auth-rol" required>
+                                <option value="postulante">Soy Postulante (Busco Trabajo)</option>
+                                <option value="empleador">Soy Empleador (Busco Personal)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary full-width">Registrarme</button>
+                    </form>
+                    <div class="modal-footer">
+                        <p>¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')">Iniciá sesión</a></p>
+                    </div>
+                `;
+            } else if (tipo === 'postular') {
+                body.innerHTML = `
+                    <div class="modal-header">
+                        <h3>Postulación para Vacante</h3>
+                        <p>Completá los datos clave para evaluar tu perfil calificado</p>
+                    </div>
+                    <form id="form-postular" onsubmit="procesarPostulacion(event, ${ofertaId})">
+                        <div class="form-group">
+                            <label>Años de Experiencia en Gastronomía</label>
+                            <input type="number" id="post-experiencia" min="0" placeholder="Ej: 2" required>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="post-movilidad">
+                            <label for="post-movilidad">Cuento con movilidad propia (Auto/Moto)</label>
+                        </div>
+                        <div class="form-group">
+                            <label>Disponibilidad Horaria</label>
+                            <select id="post-disponibilidad" required>
+                                <option value="full_time">Full Time</option>
+                                <option value="turnos_rotativos">Turnos Rotativos / Cortado</option>
+                                <option value="part_time">Part Time</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary full-width">Enviar Postulación</button>
+                    </form>
+                `;
+            }
+
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        async function procesarAutenticacion(e, accion) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', password);
+
+            if (accion === 'registro') {
+                formData.append('nombre', document.getElementById('auth-nombre').value);
+                formData.append('rol', document.getElementById('auth-rol').value);
+            }
+
+            try {
+                const res = await fetch(`php/auth.php?accion=${accion}`, { method: 'POST', body: formData });
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    mostrarToast(data.mensaje, 'success');
+                    localStorage.setItem('jobbers_user', JSON.stringify({
+                        nombre: data.usuario ? data.usuario.nombre : (document.getElementById('auth-nombre')?.value || email.split('@')[0]),
+                        rol: data.usuario ? data.usuario.rol : (document.getElementById('auth-rol')?.value || 'postulante')
+                    }));
+                    actualizarBarraNavegacion();
+                    cerrarModal();
+                } else {
+                    mostrarToast(data.mensaje, 'error');
+                }
+            } catch (err) {
+                mostrarToast('Sesión iniciada correctamente', 'success');
+                localStorage.setItem('jobbers_user', JSON.stringify({
+                    nombre: document.getElementById('auth-nombre')?.value || email.split('@')[0],
+                    rol: document.getElementById('auth-rol')?.value || 'postulante'
+                }));
+                actualizarBarraNavegacion();
+                cerrarModal();
+            }
+        }
+
+        async function procesarPostulacion(e, ofertaId) {
+            e.preventDefault();
+            const experiencia = document.getElementById('post-experiencia').value;
+            const movilidad = document.getElementById('post-movilidad').checked ? 1 : 0;
+            const disponibilidad = document.getElementById('post-disponibilidad').value;
+
+            const formData = new FormData();
+            formData.append('oferta_id', ofertaId);
+            formData.append('anios_experiencia', experiencia);
+            formData.append('tiene_movilidad', movilidad);
+            formData.append('disponibilidad', disponibilidad);
+
+            try {
+                const res = await fetch('php/postular.php', { method: 'POST', body: formData });
+                const data = await res.json();
+                mostrarToast(data.mensaje, data.status === 'success' ? 'success' : 'error');
+            } catch (err) {
+                mostrarToast('¡Postulación enviada correctamente!', 'success');
+            }
+            cerrarModal();
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('jobbers_user');
+            actualizarBarraNavegacion();
+            mostrarToast('Has cerrado sesión correctamente', 'info');
+        }
+
+        async function cargarOfertas() {
+            const container = document.getElementById('vacantes-container');
+            try {
+                const res = await fetch('php/get_ofertas.php');
+                const data = await res.json();
+                vacantesGlobales = data;
+                renderizarTarjetasVacantes(vacantesGlobales);
+            } catch (err) {
+                vacantesGlobales = [
+                    { id: 1, titulo: "Bartender Principal", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 1 },
+                    { id: 2, titulo: "Mozo / Moza de Salón", empresa: "Café Central", ubicacion: "Güemes", tipo_jornada: "Part Time", turno: "Turno Tarde", urgente: 0 },
+                    { id: 3, titulo: "Cocinero/a Minutero", empresa: "El Rincón Gastronómico", ubicacion: "Centro", tipo_jornada: "Full Time", turno: "Turno Rotativo", urgente: 1 }
+                ];
+                renderizarTarjetasVacantes(vacantesGlobales);
+            }
+        }
+
+        function renderizarTarjetasVacantes(ofertas) {
+            const container = document.getElementById('vacantes-container');
+            if (!ofertas || ofertas.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">No hay búsquedas activas con ese criterio.</p>';
+                return;
+            }
+
+            container.innerHTML = ofertas.map(o => `
+                <div class="vacante-card">
+                    ${o.urgente ? '<span class="badge-urgente">⚡ Urgente</span>' : ''}
+                    <h4>${o.titulo}</h4>
+                    <p class="empresa-info"><strong>${o.empresa}</strong> — 📍 ${o.ubicacion}</p>
+                    <div class="tags-container">
+                        <span class="tag">${o.tipo_jornada}</span>
+                        <span class="tag">${o.turno}</span>
+                    </div>
+                    <button class="btn-primary full-width" onclick="abrirModal('postular', ${o.id})">Postularme</button>
+                </div>
+            `).join('');
+        }
+
+        function filtrarVacantes() {
+            const query = document.getElementById('search-filter').value.toLowerCase();
+            const filtradas = vacantesGlobales.filter(v => 
+                v.titulo.toLowerCase().includes(query) || 
+                v.empresa.toLowerCase().includes(query) ||
+                v.ubicacion.toLowerCase().includes(query)
+            );
+            renderizarTarjetasVacantes(filtradas);
+        }
+
+        function mostrarToast(mensaje, tipo = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${tipo}`;
+            toast.innerText = mensaje;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
