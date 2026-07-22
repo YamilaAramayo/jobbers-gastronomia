@@ -636,17 +636,22 @@ a {
     gap: 0.4rem;
 }
 
-/* MODAL STYLES (CENTRADO ABSOLUTO GLOBAL) */
+/* =========================================================
+   MODAL STYLES (CORREGIDO PARA FLOTAR EN PANTALLA COMPLETA)
+   ========================================================= */
 .modal {
     display: none;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(6px);
-    z-index: 9999;
+    background: rgba(10, 12, 16, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999 !important;
     align-items: center;
     justify-content: center;
     padding: 1rem;
@@ -665,12 +670,48 @@ a {
     max-width: 420px;
     padding: 2rem;
     position: relative;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
     animation: modalAppear 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Estilos internos adicionales para formularios dentro del modal */
+.modal-content h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.3rem;
+}
+
+.modal-content .subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.modal-content input, 
+.modal-content select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: #161b22;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-white);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.modal-content input:focus, 
+.modal-content select:focus {
+    border-color: var(--accent-orange);
+}
+
 @keyframes modalAppear {
-    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    from { opacity: 0; transform: scale(0.92) translateY(15px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
