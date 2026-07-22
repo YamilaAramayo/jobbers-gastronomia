@@ -11,6 +11,10 @@
     --input-bg: #020617;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -148,7 +152,6 @@ select, input[type="text"], input[type="email"], input[type="password"], input[t
     border: 1px solid var(--card-border);
     color: white;
     border-radius: 6px;
-    box-sizing: border-box;
     font-family: inherit;
 }
 
@@ -164,7 +167,7 @@ select, input[type="text"], input[type="email"], input[type="password"], input[t
     cursor: pointer;
 }
 
-/* SECCIÓN VACANTES */
+/* SECCIÓN VACANTES Y FILTRO */
 .vacantes-section {
     margin-top: 2rem;
 }
@@ -324,4 +327,5 @@ select, input[type="text"], input[type="email"], input[type="password"], input[t
 .toast-success { background: var(--accent-green); }
 .toast-error { background: #ef4444; }
 .toast-info { background: var(--accent-blue); }
+.fade-out { opacity: 0; }cent-blue); }
 .fade-out { opacity: 0; }
