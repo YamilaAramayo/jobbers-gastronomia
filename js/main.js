@@ -1,3 +1,4 @@
+
 // Datos locales de prueba (Vacantes activas)
 let vacantesGlobales = [
     { id: 1, titulo: "Bartender Principal", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 1 },
