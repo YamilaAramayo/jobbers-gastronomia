@@ -1,10 +1,9 @@
-
 // Datos locales de prueba (Vacantes activas)
 let vacantesGlobales = [
-    { id: 1, titulo: "Bartender Principal", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 1 },
-    { id: 2, titulo: "Mozo / Moza de Salón", empresa: "Café Central", ubicacion: "Güemes", tipo_jornada: "Part Time", turno: "Turno Tarde", urgente: 0 },
-    { id: 3, titulo: "Cocinero/a Minutero", empresa: "El Rincón Gastronómico", ubicacion: "Centro", tipo_jornada: "Full Time", turno: "Turno Rotativo", urgente: 1 },
-    { id: 4, titulo: "Bachero / Auxiliar de Limpieza", empresa: "Bar Resto", ubicacion: "Alta Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 0 }
+    { id: 1, titulo: "Cocinero/a", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Tiempo completo", turno: "Turno Noche", urgente: 1, fecha: "Hace 1h" },
+    { id: 2, titulo: "Barista", empresa: "Café Central", ubicacion: "Güemes", tipo_jornada: "Part-time", turno: "Turno Mañana", urgente: 0, fecha: "Hace 2h" },
+    { id: 3, titulo: "Bartender", empresa: "Barra Sur", ubicacion: "Centro", tipo_jornada: "Turno noche", turno: "Full Time", urgente: 0, fecha: "Hace 3h" },
+    { id: 4, titulo: "Mozo / Salonero", empresa: "El Rincón", ubicacion: "General Paz", tipo_jornada: "Tiempo completo", turno: "Turno Tarde", urgente: 1, fecha: "Hace 4h" }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Scroll suave para links de navegación
-    document.querySelectorAll('.nav-link').forEach(link => {
+    document.querySelectorAll('.nav-link, .bottom-nav-item').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.nav-link, .bottom-nav-item').forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
             }
         });
@@ -83,12 +82,12 @@ function actualizarBarraNavegacion() {
 
     if (usuarioSesion) {
         navActions.innerHTML = `
-            <span class="user-welcome" style="margin-right: 5px; font-size: 0.85rem;">Hola, <strong>${usuarioSesion.nombre}</strong></span>
+            <span class="user-welcome" style="margin-right: 8px; font-size: 0.85rem;">Hola, <strong>${usuarioSesion.nombre}</strong></span>
             <button class="btn-login" onclick="cerrarSesion()">Cerrar Sesión</button>
         `;
     } else {
         navActions.innerHTML = `
-            <button class="btn-login" onclick="abrirModal('login')">Iniciar Sesión</button>
+            <button class="btn-login" onclick="abrirModal('login')">Iniciar sesión</button>
             <button class="btn-register" onclick="abrirModal('registro')">Registrarme</button>
         `;
     }
@@ -103,18 +102,16 @@ function abrirModal(tipo, ofertaId = null) {
         body.innerHTML = `
             <div class="modal-header">
                 <h3>Iniciar Sesión</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Ingresá tus credenciales para acceder</p>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Ingresá tus credenciales para acceder</p>
             </div>
-            <form id="form-auth" onsubmit="procesarAutenticacion(event, 'login')">
-                <div class="form-group" style="margin-top:1rem;">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="auth-email" placeholder="ejemplo@mail.com" required>
+            <form id="form-auth" class="express-form" onsubmit="procesarAutenticacion(event, 'login')">
+                <div class="form-group">
+                    <input type="email" id="auth-email" placeholder="Correo electrónico" required>
                 </div>
-                <div class="form-group" style="margin-top:1rem;">
-                    <label>Contraseña</label>
-                    <input type="password" id="auth-password" placeholder="••••••••" required>
+                <div class="form-group">
+                    <input type="password" id="auth-password" placeholder="Contraseña" required>
                 </div>
-                <button type="submit" class="btn-express-submit" style="width:100%; margin-top:1.5rem;">Entrar</button>
+                <button type="submit" class="btn-whatsapp" style="width:100%; margin-top:0.5rem;">Entrar</button>
             </form>
             <div class="modal-footer" style="margin-top: 1rem; text-align: center;">
                 <p style="font-size:0.8rem; color: var(--text-muted);">¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')" style="color:var(--accent-orange);">Registrate acá</a></p>
@@ -124,25 +121,22 @@ function abrirModal(tipo, ofertaId = null) {
         body.innerHTML = `
             <div class="modal-header">
                 <h3>Crear una Cuenta</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Sumate a la red de Jobbers</p>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Sumate a la red de Jobbers</p>
             </div>
-            <form id="form-auth" onsubmit="procesarAutenticacion(event, 'registro')">
-                <div class="form-group" style="margin-top:1rem;">
-                    <label>Nombre / Empresa</label>
-                    <input type="text" id="auth-nombre" placeholder="Ej: Juan Pérez / Bar Centro" required>
+            <form id="form-auth" class="express-form" onsubmit="procesarAutenticacion(event, 'registro')">
+                <div class="form-group">
+                    <input type="text" id="auth-nombre" placeholder="Nombre completo o Empresa" required>
                 </div>
-                <div class="form-group" style="margin-top:0.8rem;">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="auth-email" placeholder="ejemplo@mail.com" required>
+                <div class="form-group">
+                    <input type="email" id="auth-email" placeholder="Correo electrónico" required>
                 </div>
-                <div class="form-group" style="margin-top:0.8rem;">
-                    <label>Tipo de Usuario</label>
+                <div class="form-group">
                     <select id="auth-rol" required>
                         <option value="postulante">Soy Postulante</option>
                         <option value="empleador">Soy Empleador</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-express-submit" style="width:100%; margin-top:1.5rem;">Registrarme</button>
+                <button type="submit" class="btn-whatsapp" style="width:100%; margin-top:0.5rem;">Registrarme</button>
             </form>
             <div class="modal-footer" style="margin-top: 1rem; text-align: center;">
                 <p style="font-size:0.8rem; color: var(--text-muted);">¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')" style="color:var(--accent-orange);">Iniciá sesión</a></p>
@@ -155,22 +149,20 @@ function abrirModal(tipo, ofertaId = null) {
         body.innerHTML = `
             <div class="modal-header">
                 <h3>Postulación para ${titulo}</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Completá tus datos para el puesto</p>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Completá tus datos de contacto</p>
             </div>
-            <form id="form-postular" onsubmit="procesarPostulacion(event, ${ofertaId})">
-                <div class="form-group" style="margin-top:1rem;">
-                    <label>Años de Experiencia</label>
-                    <input type="number" id="post-experiencia" min="0" placeholder="Ej: 2" required>
+            <form id="form-postular" class="express-form" onsubmit="procesarPostulacion(event, ${ofertaId})">
+                <div class="form-group">
+                    <input type="number" id="post-experiencia" min="0" placeholder="Años de experiencia" required>
                 </div>
-                <div class="form-group" style="margin-top:1rem;">
-                    <label>Disponibilidad</label>
+                <div class="form-group">
                     <select id="post-disponibilidad" required>
                         <option value="full_time">Full Time</option>
                         <option value="part_time">Part Time</option>
                         <option value="rotativo">Turnos Rotativos</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-express-submit" style="width:100%; margin-top:1.5rem;">Enviar Postulación</button>
+                <button type="submit" class="btn-whatsapp" style="width:100%; margin-top:0.5rem;">Enviar Postulación</button>
             </form>
         `;
     }
@@ -212,31 +204,32 @@ function cerrarSesion() {
     mostrarToast('Has cerrado sesión correctamente', 'info');
 }
 
-// Renderizado de tarjetas
+// Renderizado de tarjetas igual al prototipo UI
 function renderizarTarjetasVacantes(ofertas) {
     const container = document.getElementById('vacantes-container');
     if (!container) return;
 
     if (!ofertas || ofertas.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">No hay búsquedas activas con ese criterio.</p>';
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem; padding: 1rem 0;">No se encontraron vacantes con esa búsqueda.</p>';
         return;
     }
 
     container.innerHTML = ofertas.map(o => `
-        <div class="oferta-card">
+        <div class="oferta-card" onclick="abrirModal('postular', ${o.id})" style="cursor:pointer;">
             <div class="oferta-info">
                 <h4>${o.titulo}</h4>
-                <p style="font-size:0.9rem;"><strong>${o.empresa}</strong> • 📍 ${o.ubicacion}</p>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin: 0.2rem 0 0.5rem 0;">
+                    <strong>${o.empresa}</strong> • 📍 ${o.ubicacion}
+                </p>
                 <div class="badges-container">
-                    ${o.urgente ? '<span class="badge-urgente">URGENTE ⚡</span>' : ''}
+                    ${o.urgente ? '<span class="badge-urgente">Urgente ⚡</span>' : ''}
                     <span class="badge-tag">${o.tipo_jornada}</span>
                     <span class="badge-tag">${o.turno}</span>
                 </div>
             </div>
-            <div>
-                <button class="btn-register" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="abrirModal('postular', ${o.id})">
-                    Postularme
-                </button>
+            <div style="text-align: right;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">${o.fecha || 'Reciente'}</span>
+                <i class="fa-solid fa-chevron-right" style="color: var(--accent-orange);"></i>
             </div>
         </div>
     `).join('');
