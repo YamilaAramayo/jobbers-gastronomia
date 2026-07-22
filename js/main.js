@@ -210,3 +210,50 @@ function mostrarToast(mensaje, tipo = 'info') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+// Datos simulados de ofertas
+const ofertasData = [
+    { id: 1, empresa: "Casa Norte", puesto: "Cocinero/a", ubicacion: "Nueva Córdoba", jornada: "Tiempo completo", tiempo: "Hace 1h", urgente: true },
+    { id: 2, empresa: "Café Central", puesto: "Barista", ubicacion: "Güemes", jornada: "Part-time", tiempo: "Hace 2h", urgente: false },
+    { id: 3, empresa: "Barra Sur", puesto: "Bartender", ubicacion: "Centro", jornada: "Turno noche", tiempo: "Hace 3h", urgente: false }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarOfertas();
+
+    const expressForm = document.getElementById('express-form');
+    if (expressForm) {
+        expressForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const puesto = document.getElementById('puesto').value;
+            const zona = document.getElementById('zona').value;
+            const turno = document.getElementById('turno').value;
+            
+            const mensaje = encodeURIComponent(`Hola Jobbers! Necesito un/a *${puesto}* para la zona de *${zona}* en *${turno}*. ¿Tienen candidatos disponibles?`);
+            window.open(`https://wa.me/5493510000000?text=${mensaje}`, '_blank');
+        });
+    }
+});
+
+function renderizarOfertas() {
+    const container = document.getElementById('vacantes-container');
+    if (!container) return;
+
+    container.innerHTML = ofertasData.map(o => `
+        <div class="oferta-card">
+            <div class="oferta-info">
+                <h4>${o.puesto}</h4>
+                <p><strong>${o.empresa}</strong> • 📍 ${o.ubicacion}</p>
+                <div class="badges-container">
+                    ${o.urgente ? '<span class="badge-urgente">URGENTE ⚡</span>' : ''}
+                    <span class="badge-tag">${o.jornada}</span>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <span style="font-size: 0.75rem; color: var(--text-muted);">${o.tiempo}</span>
+                <br>
+                <i class="fa-solid fa-chevron-right" style="color: var(--accent-orange); margin-top: 10px; cursor: pointer;"></i>
+            </div>
+        </div>
+    `).join('');
+}
