@@ -93,19 +93,19 @@ function actualizarBarraNavegacion() {
     }
 }
 
-// Modal Dinámico (Sincronizado con CSS modal.show)
+// Modal Dinámico (Corregido y Centrado)
 function abrirModal(tipo, ofertaId = null) {
     const modal = document.getElementById('modal');
     const body = document.getElementById('modal-body');
     if (!modal || !body) return;
 
-    let contenidoHTML = `<span class="close-btn" onclick="cerrarModal()">&times;</span>`;
+    let contenidoHTML = '';
 
     if (tipo === 'login') {
-        contenidoHTML += `
+        contenidoHTML = `
             <div class="modal-header">
                 <h3>Iniciar Sesión</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Ingresá tus credenciales para acceder</p>
+                <p class="subtitle">Ingresá tus credenciales para acceder</p>
             </div>
             <form id="form-auth" class="express-form" onsubmit="procesarAutenticacion(event, 'login')">
                 <div class="form-group">
@@ -116,15 +116,15 @@ function abrirModal(tipo, ofertaId = null) {
                 </div>
                 <button type="submit" class="btn-whatsapp" style="width:100%; margin-top:0.5rem;">Entrar</button>
             </form>
-            <div class="modal-footer" style="margin-top: 1rem; text-align: center;">
-                <p style="font-size:0.8rem; color: var(--text-muted);">¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')" style="color:var(--accent-orange);">Registrate acá</a></p>
+            <div class="modal-footer" style="margin-top: 1.2rem; text-align: center;">
+                <p style="font-size:0.8rem; color: var(--text-muted);">¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')" style="color:var(--accent-orange); font-weight:600;">Registrate acá</a></p>
             </div>
         `;
     } else if (tipo === 'registro') {
-        contenidoHTML += `
+        contenidoHTML = `
             <div class="modal-header">
                 <h3>Crear una Cuenta</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Sumate a la red de Jobbers</p>
+                <p class="subtitle">Sumate a la red de Jobbers</p>
             </div>
             <form id="form-auth" class="express-form" onsubmit="procesarAutenticacion(event, 'registro')">
                 <div class="form-group">
@@ -141,18 +141,18 @@ function abrirModal(tipo, ofertaId = null) {
                 </div>
                 <button type="submit" class="btn-whatsapp" style="width:100%; margin-top:0.5rem;">Registrarme</button>
             </form>
-            <div class="modal-footer" style="margin-top: 1rem; text-align: center;">
-                <p style="font-size:0.8rem; color: var(--text-muted);">¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')" style="color:var(--accent-orange);">Iniciá sesión</a></p>
+            <div class="modal-footer" style="margin-top: 1.2rem; text-align: center;">
+                <p style="font-size:0.8rem; color: var(--text-muted);">¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')" style="color:var(--accent-orange); font-weight:600;">Iniciá sesión</a></p>
             </div>
         `;
     } else if (tipo === 'postular') {
         const oferta = vacantesGlobales.find(v => v.id === ofertaId);
         const titulo = oferta ? oferta.titulo : 'la vacante';
 
-        contenidoHTML += `
+        contenidoHTML = `
             <div class="modal-header">
                 <h3>Postulación para ${titulo}</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Completá tus datos de contacto</p>
+                <p class="subtitle">Completá tus datos de contacto</p>
             </div>
             <form id="form-postular" class="express-form" onsubmit="procesarPostulacion(event, ${ofertaId})">
                 <div class="form-group">
