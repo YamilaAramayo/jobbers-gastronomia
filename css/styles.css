@@ -327,5 +327,4 @@ select, input[type="text"], input[type="email"], input[type="password"], input[t
 .toast-success { background: var(--accent-green); }
 .toast-error { background: #ef4444; }
 .toast-info { background: var(--accent-blue); }
-.fade-out { opacity: 0; }cent-blue); }
 .fade-out { opacity: 0; }
