@@ -1,10 +1,15 @@
-let vacantesGlobales = [];
+// Datos locales de prueba
+let vacantesGlobales = [
+    { id: 1, titulo: "Bartender Principal", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 1 },
+    { id: 2, titulo: "Mozo / Moza de Salón", empresa: "Café Central", ubicacion: "Güemes", tipo_jornada: "Part Time", turno: "Turno Tarde", urgente: 0 },
+    { id: 3, titulo: "Cocinero/a Minutero", empresa: "El Rincón Gastronómico", ubicacion: "Centro", tipo_jornada: "Full Time", turno: "Turno Rotativo", urgente: 1 },
+    { id: 4, titulo: "Bachero / Auxiliar de Limpieza", empresa: "Bar Resto", ubicacion: "Alta Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 0 }
+];
 
 document.addEventListener('DOMContentLoaded', () => {
     actualizarBarraNavegacion();
-    cargarOfertas();
+    renderizarTarjetasVacantes(vacantesGlobales);
 
-    // Evento del formulario Express para enviar a WhatsApp
     const expressForm = document.getElementById('express-form');
     if (expressForm) {
         expressForm.addEventListener('submit', (e) => {
@@ -18,14 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cerrar modal al hacer clic afuera
     window.onclick = (e) => {
         const modal = document.getElementById('modal');
         if (e.target === modal) cerrarModal();
     };
 });
 
-// 1. BARRA DE NAVEGACIÓN
 function actualizarBarraNavegacion() {
     const navActions = document.getElementById('nav-actions');
     const usuarioSesion = JSON.parse(localStorage.getItem('jobbers_user'));
@@ -43,7 +46,6 @@ function actualizarBarraNavegacion() {
     }
 }
 
-// 2. MODALES DINÁMICOS
 function abrirModal(tipo, ofertaId = null) {
     const modal = document.getElementById('modal');
     const body = document.getElementById('modal-body');
@@ -139,66 +141,23 @@ function cerrarModal() {
     modal.setAttribute('aria-hidden', 'true');
 }
 
-// 3. AUTENTICACIÓN Y POSTULACIÓN
-async function procesarAutenticacion(e, accion) {
+function procesarAutenticacion(e, accion) {
     e.preventDefault();
     const email = document.getElementById('auth-email').value;
-    const password = document.getElementById('auth-password').value;
+    const nombre = document.getElementById('auth-nombre')?.value || email.split('@')[0];
+    const rol = document.getElementById('auth-rol')?.value || 'postulante';
 
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
-
-    if (accion === 'registro') {
-        formData.append('nombre', document.getElementById('auth-nombre').value);
-        formData.append('rol', document.getElementById('auth-rol').value);
-    }
-
-    try {
-        const res = await fetch(`php/auth.php?accion=${accion}`, { method: 'POST', body: formData });
-        const data = await res.json();
-
-        if (data.status === 'success') {
-            mostrarToast(data.mensaje, 'success');
-            localStorage.setItem('jobbers_user', JSON.stringify({
-                nombre: data.usuario ? data.usuario.nombre : (document.getElementById('auth-nombre')?.value || email.split('@')[0]),
-                rol: data.usuario ? data.usuario.rol : (document.getElementById('auth-rol')?.value || 'postulante')
-            }));
-            actualizarBarraNavegacion();
-            cerrarModal();
-        } else {
-            mostrarToast(data.mensaje, 'error');
-        }
-    } catch (err) {
-        mostrarToast('Sesión iniciada correctamente', 'success');
-        localStorage.setItem('jobbers_user', JSON.stringify({
-            nombre: email.split('@')[0],
-            rol: 'postulante'
-        }));
-        actualizarBarraNavegacion();
-        cerrarModal();
-    }
+    // Guardado local simulado
+    localStorage.setItem('jobbers_user', JSON.stringify({ nombre, email, rol }));
+    
+    mostrarToast(accion === 'registro' ? '¡Cuenta creada con éxito!' : '¡Bienvenido/a de nuevo!', 'success');
+    actualizarBarraNavegacion();
+    cerrarModal();
 }
 
-async function procesarPostulacion(e, ofertaId) {
+function procesarPostulacion(e, ofertaId) {
     e.preventDefault();
-    const experiencia = document.getElementById('post-experiencia').value;
-    const movilidad = document.getElementById('post-movilidad').checked ? 1 : 0;
-    const disponibilidad = document.getElementById('post-disponibilidad').value;
-
-    const formData = new FormData();
-    formData.append('oferta_id', ofertaId);
-    formData.append('anios_experiencia', experiencia);
-    formData.append('tiene_movilidad', movilidad);
-    formData.append('disponibilidad', disponibilidad);
-
-    try {
-        const res = await fetch('php/postular.php', { method: 'POST', body: formData });
-        const data = await res.json();
-        mostrarToast(data.mensaje, data.status === 'success' ? 'success' : 'error');
-    } catch (err) {
-        mostrarToast('¡Postulación enviada correctamente!', 'success');
-    }
+    mostrarToast('¡Postulación enviada correctamente!', 'success');
     cerrarModal();
 }
 
@@ -206,24 +165,6 @@ function cerrarSesion() {
     localStorage.removeItem('jobbers_user');
     actualizarBarraNavegacion();
     mostrarToast('Has cerrado sesión correctamente', 'info');
-}
-
-// 4. OFERTAS Y FILTRADO
-async function cargarOfertas() {
-    const container = document.getElementById('vacantes-container');
-    try {
-        const res = await fetch('php/get_ofertas.php');
-        const data = await res.json();
-        vacantesGlobales = data;
-        renderizarTarjetasVacantes(vacantesGlobales);
-    } catch (err) {
-        vacantesGlobales = [
-            { id: 1, titulo: "Bartender Principal", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 1 },
-            { id: 2, titulo: "Mozo / Moza de Salón", empresa: "Café Central", ubicacion: "Güemes", tipo_jornada: "Part Time", turno: "Turno Tarde", urgente: 0 },
-            { id: 3, titulo: "Cocinero/a Minutero", empresa: "El Rincón Gastronómico", ubicacion: "Centro", tipo_jornada: "Full Time", turno: "Turno Rotativo", urgente: 1 }
-        ];
-        renderizarTarjetasVacantes(vacantesGlobales);
-    }
 }
 
 function renderizarTarjetasVacantes(ofertas) {
@@ -257,7 +198,6 @@ function filtrarVacantes() {
     renderizarTarjetasVacantes(filtradas);
 }
 
-// 5. NOTIFICACIONES TOAST
 function mostrarToast(mensaje, tipo = 'info') {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
@@ -270,5 +210,3 @@ function mostrarToast(mensaje, tipo = 'info') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-    configurarEventosGenerales();
-});
