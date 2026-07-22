@@ -657,4 +657,63 @@ a {
     .floating-whatsapp-btn {
         display: flex;
     }
+
+    /* MODAL STYLES */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 420px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+/* TOAST STYLES */
+.toast-container {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+.toast-success { border-left: 4px solid var(--green-badge); }
+.toast-info { border-left: 4px solid var(--accent-orange); }
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 }
