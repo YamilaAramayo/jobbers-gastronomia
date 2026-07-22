@@ -1,273 +1,84 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobbers - Empleo Gastronómico</title>
+    <title>Jobbers Argentina — Gastronomía</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <!-- Header / Navbar -->
     <header class="navbar">
-        <div class="logo">
-            <span class="logo-bold">JOBBERS</span>
-            <span class="logo-sub">EMPLEO GASTRONÓMICO</span>
-        </div>
-        <nav class="nav-links">
-            <a href="#">Buscar empleo</a>
-            <a href="#">Necesito personal</a>
-            <a href="#">Empresas</a>
-            <a href="#">Nosotros</a>
-        </nav>
-        <div class="auth-buttons">
-            <button class="btn-login">Iniciar sesión</button>
-            <button class="btn-register">Registrarme</button>
+        <div class="logo">Jobbers <span>Gastronomía</span></div>
+        <div class="nav-buttons">
+            <button class="btn-secundary" onclick="abrirModal('login')">Iniciar Sesión</button>
+            <button class="btn-primary" onclick="abrirModal('registro')">Registrarme</button>
         </div>
     </header>
 
-    <!-- Hero Section con Imagen de Fondo de Cocina -->
-    <main class="hero-container">
-        <section class="hero-content">
-            <h1>LABURO REAL<br><span class="highlight">EN GASTRONOMÍA.</span></h1>
-            <p>Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
-            
-            <div class="hero-actions">
-                <button class="btn-primary">🍳 BUSCO TRABAJO</button>
-                <button class="btn-secondary">💼 NECESITO PERSONAL</button>
-            </div>
-
-            <div class="badges">
-                <span>✓ Perfiles verificados</span>
-                <span>✓ Proceso rápido</span>
-                <span>✓ Oportunidades reales</span>
-            </div>
-        </section>
-
-        <!-- Formulario de WhatsApp -->
-        <section class="whatsapp-card">
-            <h3>⚡ ¿NECESITÁS PERSONAL HOY?</h3>
-            <p>Publicá tu búsqueda en segundos y llegá a los mejores perfiles.</p>
-            <form id="whatsapp-form">
-                <select name="puesto" required>
-                    <option value="">Puesto que necesitas</option>
-                    <option value="cocinero">Cocinero/a</option>
-                    <option value="barista">Barista</option>
-                    <option value="mozo">Mozo/a</option>
-                    <option value="bartender">Bartender</option>
+    <main class="container">
+        <!-- Tarjeta Express para Empleadores Urgentes -->
+        <section class="card-express">
+            <h2>⚡ ¿NECESITÁS PERSONAL HOY?</h2>
+            <p>Publicá tu búsqueda urgente y llegá a los mejores perfiles.</p>
+            <form id="express-form">
+                <select id="puesto" required>
+                    <option value="">Seleccionar Puesto</option>
+                    <option value="Bartender">Bartender</option>
+                    <option value="Mozo/Azafata">Mozo / Azafata</option>
+                    <option value="Cocinero/a">Cocinero/a</option>
+                    <option value="Bachero/a">Bachero/a</option>
                 </select>
-                <select name="zona" required>
-                    <option value="">Zona</option>
-                    <option value="nueva-cordoba">Nueva Córdoba</option>
-                    <option value="centro">Centro</option>
-                    <option value="guemes">Güemes</option>
+                <select id="zona" required>
+                    <option value="">Seleccionar Zona</option>
+                    <option value="Nueva Córdoba">Nueva Córdoba</option>
+                    <option value="Güemes">Güemes</option>
+                    <option value="Centro">Centro</option>
+                    <option value="Cerro de las Rosas">Cerro de las Rosas</option>
                 </select>
-                <select name="turno" required>
-                    <option value="">Tipo de turno</option>
-                    <option value="manana">Turno mañana</option>
-                    <option value="noche">Turno noche</option>
-                    <option value="full-time">Tiempo completo</option>
+                <select id="turno" required>
+                    <option value="">Seleccionar Turno</option>
+                    <option value="Turno Noche">Turno Noche</option>
+                    <option value="Turno Tarde">Turno Tarde</option>
+                    <option value="Turno Mañana">Turno Mañana</option>
                 </select>
                 <button type="submit" class="btn-whatsapp">💬 ENVIAR POR WHATSAPP</button>
             </form>
         </section>
+
+        <!-- Listado Dinámico de Ofertas -->
+        <section class="vacantes-section">
+            <h3>Búsquedas Destacadas</h3>
+            <div id="vacantes-container" class="grid-vacantes">
+                <p>Cargando ofertas en tiempo real...</p>
+            </div>
+        </section>
     </main>
 
-    <!-- Categorías de Puestos más Buscados -->
-    <section class="categories-section">
-        <div class="section-header">
-            <h2>PUESTOS MÁS BUSCADOS</h2>
-            <a href="#" class="view-all">Ver todos los puestos ></a>
-        </div>
-        <div class="categories-grid">
-            <div class="category-card">
-                <span class="icon">🍳</span>
-                <h4>Cocina</h4>
-                <p>1.243 ofertas</p>
-            </div>
-            <div class="category-card">
-                <span class="icon">🍽️</span>
-                <h4>Mozo / Salonero</h4>
-                <p>982 ofertas</p>
-            </div>
-            <div class="category-card">
-                <span class="icon">☕</span>
-                <h4>Barista</h4>
-                <p>567 ofertas</p>
-            </div>
-            <div class="category-card">
-                <span class="icon">🍹</span>
-                <h4>Bartender</h4>
-                <p>458 ofertas</p>
-            </div>
-            <div class="category-card">
-                <span class="icon">💵</span>
-                <h4>Cajero/a</h4>
-                <p>324 ofertas</p>
-            </div>
-            <div class="category-card">
-                <span class="icon">🛵</span>
-                <h4>Delivery</h4>
-                <p>1.105 ofertas</p>
-            </div>
-            <div class="category-card">
-                <span class="icon">🍰</span>
-                <h4>Pastelería</h4>
-                <p>256 ofertas</p>
-            </div>
-            <div class="category-card">
-                <span class="icon">👔</span>
-                <h4>Encargado/a</h4>
-                <p>278 ofertas</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contenido Principal: Ofertas y Talento Destacado -->
-    <div class="main-content-grid">
-        <!-- Ofertas de Empleo (Cargadas dinámicamente) -->
-        <section class="jobs-section">
-            <div class="section-header">
-                <h2>OFERTAS DESTACADAS</h2>
-            </div>
-            <div class="jobs-container" id="jobs-container">
-                <p class="loading">Cargando ofertas de empleo...</p>
-            </div>
-            <a href="#" class="view-all-bottom">Ver todas las ofertas ></a>
-        </section>
-
-        <!-- Talento Destacado -->
-        <section class="talents-section">
-            <div class="section-header">
-                <h2>TALENTO DESTACADO</h2>
-                <a href="#" class="view-all">Ver todos los perfiles ></a>
-            </div>
-            <div class="talents-container">
-                <div class="talent-card">
-                    <div class="talent-avatar-wrapper">
-                        <div class="avatar-placeholder">LR</div>
-                        <span class="status-dot online"></span>
-                    </div>
-                    <h4>Lucas R.</h4>
-                    <p class="talent-role">Cocinero</p>
-                    <div class="rating">⭐⭐⭐⭐⭐ <span>(24)</span></div>
-                    <p class="talent-detail">5 años de experiencia</p>
-                    <p class="talent-detail">Disponibilidad: Inmediata</p>
-                    <p class="talent-location">📍 Nueva Córdoba</p>
-                </div>
-
-                <div class="talent-card">
-                    <div class="talent-avatar-wrapper">
-                        <div class="avatar-placeholder">MF</div>
-                        <span class="status-dot online"></span>
-                    </div>
-                    <h4>María F.</h4>
-                    <p class="talent-role">Barista</p>
-                    <div class="rating">⭐⭐⭐⭐⭐ <span>(18)</span></div>
-                    <p class="talent-detail">3 años de experiencia</p>
-                    <p class="talent-detail">Disponibilidad: Mañana</p>
-                    <p class="talent-location">📍 Güemes</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Banner de Comunidad -->
-        <section class="community-banner">
-            <div>
-                <h2>FORMÁ PARTE DE LA COMUNIDAD <span class="brand-text">JOBBERS</span></h2>
-                <p>Recursos, tips y contenido exclusivo para crecer en gastronomía.</p>
-            </div>
-            <button class="btn-blog">IR AL BLOG</button>
-        </section>
-    </div>
-
-    <!-- Footer de Estadísticas -->
-    <footer class="stats-footer">
-        <div class="stat-item">
-            <span class="stat-icon">👥</span>
-            <div>
-                <h3>+12.500</h3>
-                <p>Personas conectadas</p>
-            </div>
-        </div>
-        <div class="stat-item">
-            <span class="stat-icon">🏢</span>
-            <div>
-                <h3>+1.200</h3>
-                <p>Empresas confían</p>
-            </div>
-        </div>
-        <div class="stat-item">
-            <span class="stat-icon">📋</span>
-            <div>
-                <h3>+3.800</h3>
-                <p>Ofertas activas</p>
-            </div>
-        </div>
-        <div class="stat-item">
-            <span class="stat-icon">🤝</span>
-            <div>
-                <h3>+18.000</h3>
-                <p>Contrataciones realizadas</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal de Autenticación (Login / Registro) -->
-    <div id="auth-modal" class="modal-overlay">
-        <div class="modal-container">
-            <button class="modal-close" id="close-modal">&times;</button>
-            
-            <!-- Login -->
-            <div class="auth-box active" id="login-box">
-                <h2>Iniciar Sesión</h2>
-                <p class="auth-subtitle">Accedé a tu panel de Jobbers</p>
-                
-                <form id="login-form">
-                    <div class="input-group">
-                        <label for="login-email">Correo Electrónico</label>
-                        <input type="email" id="login-email" placeholder="nombre@correo.com" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="login-password">Contraseña</label>
-                        <input type="password" id="login-password" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn-auth-submit">INGRESAR</button>
-                </form>
-                
-                <p class="auth-switch">¿No tenés cuenta? <span id="go-to-register">Registrate acá</span></p>
-            </div>
-
-            <!-- Registro -->
-            <div class="auth-box" id="register-box">
-                <h2>Crear Cuenta</h2>
-                <p class="auth-subtitle">Registrate para postularte o publicar ofertas</p>
-                
-                <form id="register-form">
-                    <div class="input-group">
-                        <label for="register-name">Nombre Completo</label>
-                        <input type="text" id="register-name" placeholder="Ej: Yamila Iara" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="register-email">Correo Electrónico</label>
-                        <input type="email" id="register-email" placeholder="nombre@correo.com" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="register-role">¿Qué buscás?</label>
-                        <select id="register-role" required>
-                            <option value="postulante">Quiero buscar trabajo</option>
-                            <option value="empleador">Quiero contratar personal</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="register-password">Contraseña</label>
-                        <input type="password" id="register-password" placeholder="Mínimo 6 caracteres" required minlength="6">
-                    </div>
-                    <button type="submit" class="btn-auth-submit">REGISTRARME</button>
-                </form>
-                
-                <p class="auth-switch">¿Ya tenés cuenta? <span id="go-to-login">Iniciá sesión</span></p>
-            </div>
+    <!-- Modal Dinámico Autenticación / Postulación -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <div id="modal-body"></div>
         </div>
     </div>
 
