@@ -82,7 +82,7 @@ function actualizarBarraNavegacion() {
 
     if (usuarioSesion) {
         navActions.innerHTML = `
-            <span class="user-welcome" style="margin-right: 8px; font-size: 0.85rem;">Hola, <strong>${usuarioSesion.nombre}</strong></span>
+            <span class="user-welcome" style="margin-right: 8px; font-size: 0.85rem; color: var(--text-white);">Hola, <strong>${usuarioSesion.nombre}</strong></span>
             <button class="btn-login" onclick="cerrarSesion()">Cerrar Sesión</button>
         `;
     } else {
@@ -93,13 +93,16 @@ function actualizarBarraNavegacion() {
     }
 }
 
-// Modal Dinámico
+// Modal Dinámico (Sincronizado con CSS modal.show)
 function abrirModal(tipo, ofertaId = null) {
     const modal = document.getElementById('modal');
     const body = document.getElementById('modal-body');
+    if (!modal || !body) return;
+
+    let contenidoHTML = `<span class="close-btn" onclick="cerrarModal()">&times;</span>`;
 
     if (tipo === 'login') {
-        body.innerHTML = `
+        contenidoHTML += `
             <div class="modal-header">
                 <h3>Iniciar Sesión</h3>
                 <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Ingresá tus credenciales para acceder</p>
@@ -118,7 +121,7 @@ function abrirModal(tipo, ofertaId = null) {
             </div>
         `;
     } else if (tipo === 'registro') {
-        body.innerHTML = `
+        contenidoHTML += `
             <div class="modal-header">
                 <h3>Crear una Cuenta</h3>
                 <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Sumate a la red de Jobbers</p>
@@ -146,7 +149,7 @@ function abrirModal(tipo, ofertaId = null) {
         const oferta = vacantesGlobales.find(v => v.id === ofertaId);
         const titulo = oferta ? oferta.titulo : 'la vacante';
 
-        body.innerHTML = `
+        contenidoHTML += `
             <div class="modal-header">
                 <h3>Postulación para ${titulo}</h3>
                 <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">Completá tus datos de contacto</p>
@@ -167,14 +170,15 @@ function abrirModal(tipo, ofertaId = null) {
         `;
     }
 
-    modal.style.display = 'flex';
+    body.innerHTML = contenidoHTML;
+    modal.classList.add('show');
     modal.setAttribute('aria-hidden', 'false');
 }
 
 function cerrarModal() {
     const modal = document.getElementById('modal');
     if (modal) {
-        modal.style.display = 'none';
+        modal.classList.remove('show');
         modal.setAttribute('aria-hidden', 'true');
     }
 }
@@ -204,7 +208,7 @@ function cerrarSesion() {
     mostrarToast('Has cerrado sesión correctamente', 'info');
 }
 
-// Renderizado de tarjetas igual al prototipo UI
+// Renderizado de tarjetas integrado con estilos
 function renderizarTarjetasVacantes(ofertas) {
     const container = document.getElementById('vacantes-container');
     if (!container) return;
@@ -215,21 +219,21 @@ function renderizarTarjetasVacantes(ofertas) {
     }
 
     container.innerHTML = ofertas.map(o => `
-        <div class="oferta-card" onclick="abrirModal('postular', ${o.id})" style="cursor:pointer;">
+        <div class="oferta-card" onclick="abrirModal('postular', ${o.id})" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: border-color 0.2s;">
             <div class="oferta-info">
-                <h4>${o.titulo}</h4>
+                <h4 style="font-size: 1rem; color: var(--text-white); font-weight: 700;">${o.titulo}</h4>
                 <p style="font-size:0.85rem; color:var(--text-muted); margin: 0.2rem 0 0.5rem 0;">
                     <strong>${o.empresa}</strong> • 📍 ${o.ubicacion}
                 </p>
-                <div class="badges-container">
-                    ${o.urgente ? '<span class="badge-urgente">Urgente ⚡</span>' : ''}
-                    <span class="badge-tag">${o.tipo_jornada}</span>
-                    <span class="badge-tag">${o.turno}</span>
+                <div class="badges-container" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                    ${o.urgente ? '<span style="background: rgba(239, 68, 68, 0.15); color: var(--red-badge); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(239, 68, 68, 0.3);">Urgente ⚡</span>' : ''}
+                    <span style="background: #1a202c; color: var(--text-muted); font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-color);">${o.tipo_jornada}</span>
+                    <span style="background: #1a202c; color: var(--text-muted); font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-color);">${o.turno}</span>
                 </div>
             </div>
             <div style="text-align: right;">
                 <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">${o.fecha || 'Reciente'}</span>
-                <i class="fa-solid fa-chevron-right" style="color: var(--accent-orange);"></i>
+                <span style="color: var(--accent-orange); font-weight: bold; font-size: 1.1rem;">&#8250;</span>
             </div>
         </div>
     `).join('');
@@ -240,7 +244,7 @@ function filtrarVacantes() {
     const input = document.getElementById('search-filter');
     if (!input) return;
     
-    const query = input.value.toLowerCase();
+    const query = input.value.toLowerCase().trim();
     const filtradas = vacantesGlobales.filter(v => 
         v.titulo.toLowerCase().includes(query) || 
         v.empresa.toLowerCase().includes(query) ||
@@ -255,8 +259,8 @@ function mostrarToast(mensaje, tipo = 'info') {
     if (!container) return;
 
     const toast = document.createElement('div');
-    toast.className = `toast toast-${tipo}`;
-    toast.innerText = mensaje;
+    toast.className = `toast-msg toast-${tipo}`;
+    toast.innerHTML = `<span>${mensaje}</span>`;
     
     container.appendChild(toast);
     setTimeout(() => {
