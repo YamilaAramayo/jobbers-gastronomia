@@ -5,28 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobbers Argentina — Portal Gastronómico</title>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Fuente Google Inter para diseño tipográfico moderno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- BARRA DE NAVEGACIÓN -->
+    <!-- CONTENEDOR DE NOTIFICACIONES (TOAST) -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- BARRA DE NAVEGACIÓN DUAL Y DINÁMICA -->
     <header class="navbar">
         <div class="logo">
             Jobbers <span>Gastronomía</span>
         </div>
         <div class="nav-buttons" id="nav-actions">
-            <button class="btn-secundary" onclick="abrirModal('login')">Iniciar Sesión</button>
-            <button class="btn-primary" onclick="abrirModal('registro')">Registrarme</button>
+            <!-- Los botones se inyectan dinámicamente según si hay sesión iniciada -->
         </div>
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="container">
         
-        <!-- TARJETA EXPRESS PARA SOLICITUDES URGENTES DE EMPRESAS -->
+        <!-- TARJETA EXPRESS PARA EMPRESAS (WHATSAPP URGENTE) -->
         <section class="card-express">
             <div class="express-header">
                 <h2>⚡ ¿NECESITÁS PERSONAL HOY?</h2>
@@ -80,7 +81,7 @@
             </form>
         </section>
 
-        <!-- SECCIÓN DE BUSQUEDAS Y OFERTAS DESTACADAS -->
+        <!-- BUSQUEDAS Y OFERTAS DESTACADAS -->
         <section class="vacantes-section">
             <div class="section-header">
                 <h3>Ofertas Laborales Destacadas</h3>
@@ -89,7 +90,6 @@
                 </div>
             </div>
 
-            <!-- CONTENEDOR DINÁMICO DE CARGA -->
             <div id="vacantes-container" class="grid-vacantes">
                 <div class="loading-state">
                     <p>Cargando ofertas gastronómicas en tiempo real...</p>
@@ -99,22 +99,18 @@
 
     </main>
 
-    <!-- FOOTER INSTITUCIONAL -->
     <footer class="footer">
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados. Especialistas en Reclutamiento Gastronómico.</p>
     </footer>
 
-    <!-- MODAL DINÁMICO (LOGIN, REGISTRO Y POSTULACIÓN FILTRADA) -->
+    <!-- MODAL DINÁMICO REFACTORIZADO -->
     <div id="modal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <span class="close" onclick="cerrarModal()">&times;</span>
-            <div id="modal-body">
-                <!-- Se inyecta dinámicamente según el flujo desde main.js -->
-            </div>
+            <div id="modal-body"></div>
         </div>
     </div>
 
-    <!-- SCRIPT PRINCIPAL CON LÓGICA DE INTERACCIÓN Y FETCH -->
     <script src="js/main.js"></script>
 </body>
 </html>
