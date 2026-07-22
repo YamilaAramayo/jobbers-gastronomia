@@ -1,4 +1,4 @@
-// Datos locales de prueba
+// Datos locales de prueba (Vacantes activas)
 let vacantesGlobales = [
     { id: 1, titulo: "Bartender Principal", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Full Time", turno: "Turno Noche", urgente: 1 },
     { id: 2, titulo: "Mozo / Moza de Salón", empresa: "Café Central", ubicacion: "Güemes", tipo_jornada: "Part Time", turno: "Turno Tarde", urgente: 0 },
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarBarraNavegacion();
     renderizarTarjetasVacantes(vacantesGlobales);
 
+    // Formulario de envío express por WhatsApp
     const expressForm = document.getElementById('express-form');
     if (expressForm) {
         expressForm.addEventListener('submit', (e) => {
@@ -23,29 +24,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Cerrar modal al hacer clic afuera
     window.onclick = (e) => {
         const modal = document.getElementById('modal');
         if (e.target === modal) cerrarModal();
     };
 });
 
+// Renderizado dinámico de la barra según sesión
 function actualizarBarraNavegacion() {
     const navActions = document.getElementById('nav-actions');
+    if (!navActions) return;
+    
     const usuarioSesion = JSON.parse(localStorage.getItem('jobbers_user'));
 
     if (usuarioSesion) {
         navActions.innerHTML = `
-            <span class="user-welcome">Hola, <strong>${usuarioSesion.nombre}</strong> (${usuarioSesion.rol})</span>
-            <button class="btn-secundary" onclick="cerrarSesion()">Cerrar Sesión</button>
+            <span class="user-welcome" style="margin-right: 10px; font-size: 0.85rem;">Hola, <strong>${usuarioSesion.nombre}</strong> (${usuarioSesion.rol})</span>
+            <button class="btn-login" onclick="cerrarSesion()">Cerrar Sesión</button>
         `;
     } else {
         navActions.innerHTML = `
-            <button class="btn-secundary" onclick="abrirModal('login')">Iniciar Sesión</button>
-            <button class="btn-primary" onclick="abrirModal('registro')">Registrarme</button>
+            <button class="btn-login" onclick="abrirModal('login')">Iniciar Sesión</button>
+            <button class="btn-register" onclick="abrirModal('registro')">Registrarme</button>
         `;
     }
 }
 
+// Control del Modal Unificado (Login, Registro, Postulación)
 function abrirModal(tipo, ofertaId = null) {
     const modal = document.getElementById('modal');
     const body = document.getElementById('modal-body');
@@ -65,10 +71,10 @@ function abrirModal(tipo, ofertaId = null) {
                     <label>Contraseña</label>
                     <input type="password" id="auth-password" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="btn-primary full-width">Entrar</button>
+                <button type="submit" class="btn-express-submit" style="width:100%; margin-top:1rem;">Entrar</button>
             </form>
-            <div class="modal-footer">
-                <p>¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')">Registrate acá</a></p>
+            <div class="modal-footer" style="margin-top: 1rem; text-align: center;">
+                <p style="font-size:0.8rem; color: var(--text-muted);">¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')" style="color:var(--accent-orange);">Registrate acá</a></p>
             </div>
         `;
     } else if (tipo === 'registro') {
@@ -97,16 +103,19 @@ function abrirModal(tipo, ofertaId = null) {
                         <option value="empleador">Soy Empleador (Busco Personal)</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary full-width">Registrarme</button>
+                <button type="submit" class="btn-express-submit" style="width:100%; margin-top:1rem;">Registrarme</button>
             </form>
-            <div class="modal-footer">
-                <p>¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')">Iniciá sesión</a></p>
+            <div class="modal-footer" style="margin-top: 1rem; text-align: center;">
+                <p style="font-size:0.8rem; color: var(--text-muted);">¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')" style="color:var(--accent-orange);">Iniciá sesión</a></p>
             </div>
         `;
     } else if (tipo === 'postular') {
+        const oferta = vacantesGlobales.find(v => v.id === ofertaId);
+        const tituloOferta = oferta ? oferta.titulo : 'la vacante';
+
         body.innerHTML = `
             <div class="modal-header">
-                <h3>Postulación para Vacante</h3>
+                <h3>Postulación para ${tituloOferta}</h3>
                 <p>Completá los datos clave para evaluar tu perfil calificado</p>
             </div>
             <form id="form-postular" onsubmit="procesarPostulacion(event, ${ofertaId})">
@@ -114,9 +123,9 @@ function abrirModal(tipo, ofertaId = null) {
                     <label>Años de Experiencia en Gastronomía</label>
                     <input type="number" id="post-experiencia" min="0" placeholder="Ej: 2" required>
                 </div>
-                <div class="form-group checkbox-group">
+                <div class="form-group checkbox-group" style="display:flex; gap:0.5rem; align-items:center;">
                     <input type="checkbox" id="post-movilidad">
-                    <label for="post-movilidad">Cuento con movilidad propia (Auto/Moto)</label>
+                    <label for="post-movilidad" style="font-size:0.85rem;">Cuento con movilidad propia (Auto/Moto)</label>
                 </div>
                 <div class="form-group">
                     <label>Disponibilidad Horaria</label>
@@ -126,7 +135,7 @@ function abrirModal(tipo, ofertaId = null) {
                         <option value="part_time">Part Time</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary full-width">Enviar Postulación</button>
+                <button type="submit" class="btn-express-submit" style="width:100%; margin-top:1rem;">Enviar Postulación</button>
             </form>
         `;
     }
@@ -137,8 +146,10 @@ function abrirModal(tipo, ofertaId = null) {
 
 function cerrarModal() {
     const modal = document.getElementById('modal');
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    }
 }
 
 function procesarAutenticacion(e, accion) {
@@ -147,7 +158,6 @@ function procesarAutenticacion(e, accion) {
     const nombre = document.getElementById('auth-nombre')?.value || email.split('@')[0];
     const rol = document.getElementById('auth-rol')?.value || 'postulante';
 
-    // Guardado local simulado
     localStorage.setItem('jobbers_user', JSON.stringify({ nombre, email, rol }));
     
     mostrarToast(accion === 'registro' ? '¡Cuenta creada con éxito!' : '¡Bienvenido/a de nuevo!', 'success');
@@ -167,29 +177,42 @@ function cerrarSesion() {
     mostrarToast('Has cerrado sesión correctamente', 'info');
 }
 
+// Renderiza las tarjetas usando la estética de la maqueta principal
 function renderizarTarjetasVacantes(ofertas) {
     const container = document.getElementById('vacantes-container');
+    if (!container) return;
+
     if (!ofertas || ofertas.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted);">No hay búsquedas activas con ese criterio.</p>';
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">No hay búsquedas activas con ese criterio.</p>';
         return;
     }
 
     container.innerHTML = ofertas.map(o => `
-        <div class="vacante-card">
-            ${o.urgente ? '<span class="badge-urgente">⚡ Urgente</span>' : ''}
-            <h4>${o.titulo}</h4>
-            <p class="empresa-info"><strong>${o.empresa}</strong> — 📍 ${o.ubicacion}</p>
-            <div class="tags-container">
-                <span class="tag">${o.tipo_jornada}</span>
-                <span class="tag">${o.turno}</span>
+        <div class="oferta-card">
+            <div class="oferta-info">
+                <h4>${o.titulo}</h4>
+                <p><strong>${o.empresa}</strong> • 📍 ${o.ubicacion}</p>
+                <div class="badges-container">
+                    ${o.urgente ? '<span class="badge-urgente">URGENTE ⚡</span>' : ''}
+                    <span class="badge-tag">${o.tipo_jornada}</span>
+                    <span class="badge-tag">${o.turno}</span>
+                </div>
             </div>
-            <button class="btn-primary full-width" onclick="abrirModal('postular', ${o.id})">Postularme</button>
+            <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between;">
+                <button class="btn-register" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="abrirModal('postular', ${o.id})">
+                    Postularme
+                </button>
+            </div>
         </div>
     `).join('');
 }
 
+// Filtro buscador en tiempo real
 function filtrarVacantes() {
-    const query = document.getElementById('search-filter').value.toLowerCase();
+    const input = document.getElementById('search-filter');
+    if (!input) return;
+    
+    const query = input.value.toLowerCase();
     const filtradas = vacantesGlobales.filter(v => 
         v.titulo.toLowerCase().includes(query) || 
         v.empresa.toLowerCase().includes(query) ||
@@ -198,8 +221,11 @@ function filtrarVacantes() {
     renderizarTarjetasVacantes(filtradas);
 }
 
+// Sistema de Notificaciones Toast
 function mostrarToast(mensaje, tipo = 'info') {
     const container = document.getElementById('toast-container');
+    if (!container) return;
+
     const toast = document.createElement('div');
     toast.className = `toast toast-${tipo}`;
     toast.innerText = mensaje;
@@ -209,51 +235,4 @@ function mostrarToast(mensaje, tipo = 'info') {
         toast.classList.add('fade-out');
         setTimeout(() => toast.remove(), 300);
     }, 3000);
-}
-
-// Datos simulados de ofertas
-const ofertasData = [
-    { id: 1, empresa: "Casa Norte", puesto: "Cocinero/a", ubicacion: "Nueva Córdoba", jornada: "Tiempo completo", tiempo: "Hace 1h", urgente: true },
-    { id: 2, empresa: "Café Central", puesto: "Barista", ubicacion: "Güemes", jornada: "Part-time", tiempo: "Hace 2h", urgente: false },
-    { id: 3, empresa: "Barra Sur", puesto: "Bartender", ubicacion: "Centro", jornada: "Turno noche", tiempo: "Hace 3h", urgente: false }
-];
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderizarOfertas();
-
-    const expressForm = document.getElementById('express-form');
-    if (expressForm) {
-        expressForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const puesto = document.getElementById('puesto').value;
-            const zona = document.getElementById('zona').value;
-            const turno = document.getElementById('turno').value;
-            
-            const mensaje = encodeURIComponent(`Hola Jobbers! Necesito un/a *${puesto}* para la zona de *${zona}* en *${turno}*. ¿Tienen candidatos disponibles?`);
-            window.open(`https://wa.me/5493510000000?text=${mensaje}`, '_blank');
-        });
-    }
-});
-
-function renderizarOfertas() {
-    const container = document.getElementById('vacantes-container');
-    if (!container) return;
-
-    container.innerHTML = ofertasData.map(o => `
-        <div class="oferta-card">
-            <div class="oferta-info">
-                <h4>${o.puesto}</h4>
-                <p><strong>${o.empresa}</strong> • 📍 ${o.ubicacion}</p>
-                <div class="badges-container">
-                    ${o.urgente ? '<span class="badge-urgente">URGENTE ⚡</span>' : ''}
-                    <span class="badge-tag">${o.jornada}</span>
-                </div>
-            </div>
-            <div style="text-align: right;">
-                <span style="font-size: 0.75rem; color: var(--text-muted);">${o.tiempo}</span>
-                <br>
-                <i class="fa-solid fa-chevron-right" style="color: var(--accent-orange); margin-top: 10px; cursor: pointer;"></i>
-            </div>
-        </div>
-    `).join('');
 }
