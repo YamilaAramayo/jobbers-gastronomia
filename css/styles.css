@@ -2,29 +2,23 @@
    VARIABLES GLOBALES & RESET
    ========================================================================== */
 :root {
-    /* --- FONDO Y SUPERFICIES (Base Oscura) --- */
-    --bg-main: #000000;         /* Negro puro para el fondo */
-    --bg-card: #121212;         /* Gris muy oscuro para tarjetas y componentes */
-    --bg-card-hover: #1e1e1e;   /* Un tono más claro para efectos de hover */
+    --bg-main: #0a0b0d;          /* Tono casi negro exacto de la interfaz */
+    --bg-card: #121418;          /* Gris oscuro de las tarjetas */
+    --bg-card-hover: #1a1d24;    
 
-    /* --- COLOR DE ACENTO (Naranja JOBBERS) --- */
-    --accent-orange: #fca311; 
-    --accent-orange-hover: #e5940e; 
+    --accent-orange: #f59e0b;    /* Color anaranjado/amarillo corporativo */
+    --accent-orange-hover: #d97706; 
 
-    /* --- COLORES DE TEXTO --- */
-    --text-white: #ffffff;      /* Texto principal */
-    --text-muted: #a0a0a0;      /* Texto secundario y descripciones */
+    --text-white: #ffffff;
+    --text-muted: #9ca3af;       /* Gris claro para subtítulos */
 
-    /* --- BORDES Y DIVISIONES --- */
-    --border-color: #262626;    /* Líneas sutiles de división */
+    --border-color: #27272a;    /* Bordes oscuros y finos */
 
-    /* --- ESTADOS Y BADGES --- */
-    --red-badge: #ef4444;       /* Para 'URGENTE' */
-    --green-badge: #10b981;     /* Para 'FINDE' o estado activo */
-    --whatsapp-green: #25d366;  /* Color oficial de WhatsApp */
+    --red-badge: #ef4444;
+    --green-badge: #10b981;
+    --whatsapp-green: #f59e0b;  /* Botón de envío en color anaranjado */
 
-    /* --- TIPOGRAFÍA --- */
-    --font-primary: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-primary: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 * {
@@ -38,7 +32,7 @@ body {
     background-color: var(--bg-main);
     color: var(--text-white);
     line-height: 1.5;
-    padding-bottom: 70px; /* Espacio para bottom nav en mobile */
+    padding-bottom: 70px;
 }
 
 @media (min-width: 768px) {
@@ -53,52 +47,55 @@ a {
 }
 
 /* ==========================================================================
-   HEADER / NAVBAR
+   HEADER / NAVBAR (Integrado con el diseño)
    ========================================================================== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: rgba(0, 0, 0, 0.95);
+    padding: 1.2rem 4rem;
+    background-color: rgba(10, 11, 13, 0.9);
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
     z-index: 1000;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
 }
 
 .logo h2 {
     font-size: 1.5rem;
     font-weight: 900;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     color: var(--text-white);
     line-height: 1;
 }
 
 .logo-subtitle {
-    font-size: 0.65rem;
-    color: var(--text-white);
-    font-weight: 700;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
 }
 
 .nav-links {
     display: none;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: center;
 }
 
 .nav-link {
-    font-size: 0.9rem;
-    color: var(--text-white);
+    font-size: 0.85rem;
+    color: var(--text-muted);
     transition: color 0.2s;
     font-weight: 500;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .nav-link:hover, .nav-link.active {
-    color: var(--accent-orange);
+    color: var(--text-white);
 }
 
 .dropdown {
@@ -128,7 +125,7 @@ a {
     padding: 0.75rem 1rem;
     font-size: 0.85rem;
     color: var(--text-white);
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s;
 }
 
 .dropdown-menu a:hover {
@@ -138,11 +135,11 @@ a {
 
 .nav-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.8rem;
 }
 
 .btn-login, .btn-register {
-    padding: 0.5rem 1rem;
+    padding: 0.55rem 1.2rem;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 600;
@@ -158,13 +155,13 @@ a {
 }
 
 .btn-login:hover {
-    border-color: var(--text-white);
     background-color: var(--bg-card-hover);
 }
 
 .btn-register {
     background: var(--accent-orange);
     color: #000000;
+    font-weight: 700;
 }
 
 .btn-register:hover {
@@ -178,16 +175,31 @@ a {
 }
 
 /* ==========================================================================
-   HERO SECTION
+   HERO SECTION (Superposición e imagen)
    ========================================================================== */
 .hero-section {
     position: relative;
-    padding: 3rem 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 4rem 4%;
+    background-size: cover;
+    background-position: center;
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, rgba(10, 11, 13, 0.98) 0%, rgba(10, 11, 13, 0.75) 50%, rgba(10, 11, 13, 0.9) 100%);
+    z-index: 1;
 }
 
 .hero-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1250px;
+    margin: 0 auto;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -195,11 +207,11 @@ a {
 }
 
 .hero-title {
-    font-size: 2.5rem;
+    font-size: 3.2rem;
     font-weight: 900;
-    line-height: 1.1;
+    line-height: 1.05;
     margin-bottom: 1rem;
-    text-transform: uppercase;
+    letter-spacing: -0.5px;
 }
 
 .highlight {
@@ -207,28 +219,28 @@ a {
 }
 
 .hero-subtitle {
-    color: var(--text-white);
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 480px;
 }
 
 .hero-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .btn-primary, .btn-secondary {
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    padding: 0.85rem 1.6rem;
+    border-radius: 6px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    text-transform: uppercase;
-    cursor: pointer;
+    letter-spacing: 0.5px;
 }
 
 .btn-primary {
@@ -237,102 +249,82 @@ a {
 }
 
 .btn-secondary {
-    background: transparent;
-    border: 2px solid var(--accent-orange);
-    color: var(--accent-orange);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
 }
 
-.btn-secondary:hover {
-    background: rgba(252, 163, 17, 0.1);
+.hero-features {
+    display: flex;
+    gap: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.hero-features i {
+    color: var(--accent-orange);
+    margin-right: 0.3rem;
 }
 
 /* Tarjeta Express */
 .hero-card-express {
-    background: var(--bg-card);
+    background: rgba(18, 20, 24, 0.85);
+    backdrop-filter: blur(16px);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
 }
 
-.card-header h3 {
-    text-transform: uppercase;
-}
-
-.text-warning {
-    color: var(--accent-orange);
+.card-header h2 {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
 .hero-card-express p {
-    font-size: 0.85rem;
-    color: var(--text-white);
-    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
 }
 
-/* Formularios Generales e Inputs */
 .express-form .form-group {
     margin-bottom: 0.8rem;
 }
 
-.express-form input, 
-.express-form select,
-.modal-content input,
-.modal-content select {
+.express-form select {
     width: 100%;
     padding: 0.75rem 1rem;
-    background: #1a1a1a;
+    background: #181b20;
     border: 1px solid var(--border-color);
     border-radius: 6px;
     color: var(--text-white);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.express-form input:focus, 
-.express-form select:focus,
-.modal-content input:focus,
-.modal-content select:focus {
-    border-color: var(--accent-orange);
-    box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.2);
-}
-
-/* Ocultar flechas molestas en input type="number" */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-input[type="number"] {
-    -moz-appearance: textfield;
 }
 
 .btn-whatsapp {
     width: 100%;
-    padding: 0.8rem;
-    background: var(--whatsapp-green);
-    color: #fff;
+    padding: 0.85rem;
+    background: var(--accent-orange);
+    color: #000000;
     border: none;
     border-radius: 6px;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 0.85rem;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    transition: background 0.2s;
-    text-transform: uppercase;
-}
-
-.btn-whatsapp:hover {
-    background: #1da851;
+    margin-top: 1rem;
 }
 
 .response-tag {
@@ -340,170 +332,83 @@ input[type="number"] {
     text-align: center;
     font-size: 0.75rem;
     color: var(--text-muted);
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
 }
 
 @media (min-width: 900px) {
     .hero-container {
         grid-template-columns: 1.2fr 0.8fr;
     }
-    .hero-title {
-        font-size: 3.5rem;
-    }
 }
 
 /* ==========================================================================
-   SECCIONES, OFERTAS Y GRIDS (NUEVA ESTRUCTURA DE TARJETAS)
+   CATEGORÍAS / PUESTOS MÁS BUSCADOS
    ========================================================================== */
-.categories-section, .main-grid-section, .stats-section, .info-section {
-    max-width: 1200px;
+.categories-section {
+    max-width: 1250px;
     margin: 3rem auto;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .section-header h2 {
-    text-transform: uppercase;
-}
-
-.search-bar {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.search-bar input {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
     color: var(--text-white);
+    font-weight: 800;
 }
 
-.btn-search {
-    padding: 0 1.2rem;
-    background: var(--accent-orange);
-    border: none;
-    border-radius: 6px;
-    color: #000000;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-/* Tarjeta individual para cada Oferta */
-.vacantes-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.vacante-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 0.8rem;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.2rem 0.8rem;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
     cursor: pointer;
 }
 
-.vacante-card:hover {
-    transform: translateY(-2px);
+.category-card:hover {
+    transform: translateY(-3px);
     border-color: var(--accent-orange);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-.vacante-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+.category-card i {
+    font-size: 1.4rem;
+    color: var(--accent-orange);
+    margin-bottom: 0.6rem;
 }
 
-.vacante-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-white);
-}
-
-.vacante-company {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-top: 0.2rem;
-}
-
-.vacante-company .location {
-    color: var(--text-white);
-    font-weight: 500;
-}
-
-/* Contenedor y Estilos de Badges / Cápsulas */
-.badges-container {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.badge {
-    padding: 0.25rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    background: #1e1e1e;
-    color: var(--text-muted);
-    border: 1px solid var(--border-color);
-}
-
-.badge-urgente {
-    background: rgba(239, 68, 68, 0.15);
-    color: var(--red-badge);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-}
-
-.badge-finde {
-    background: rgba(16, 185, 129, 0.15);
-    color: var(--green-badge);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.vacante-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 0.2rem;
-}
-
-.link-more {
+.category-card h3 {
     font-size: 0.85rem;
-    color: var(--accent-orange);
     font-weight: 600;
+    margin-bottom: 0.2rem;
 }
 
-.link-more-full {
-    display: block;
-    text-align: center;
-    margin-top: 1.5rem;
-    color: var(--accent-orange);
-    font-weight: 600;
-    font-size: 0.9rem;
+.category-card .count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
 }
 
 /* ==========================================================================
-   TALENTO Y STATS
+   GRID PRINCIPAL (OFERTAS + TALENTO + BLOG)
    ========================================================================== */
 .main-grid-section {
+    max-width: 1250px;
+    margin: 3rem auto;
+    padding: 0 2rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -511,14 +416,50 @@ input[type="number"] {
 
 @media (min-width: 900px) {
     .main-grid-section {
-        grid-template-columns: 1.2fr 0.8fr;
+        grid-template-columns: 1fr 1fr;
     }
 }
 
+/* Columna Ofertas */
+.search-bar {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.search-bar input {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-right: none;
+    padding: 0.75rem 1rem;
+    border-radius: 6px 0 0 6px;
+    color: var(--text-white);
+    font-size: 0.85rem;
+}
+
+.btn-search {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: none;
+    padding: 0 1.2rem;
+    color: var(--text-muted);
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+}
+
+.link-more-full {
+    display: inline-block;
+    margin-top: 1.2rem;
+    color: var(--accent-orange);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Columna Talento */
 .talent-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
     margin-bottom: 1.5rem;
 }
 
@@ -526,181 +467,108 @@ input[type="number"] {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 1rem;
-    position: relative;
+    padding: 1rem 0.5rem;
     text-align: center;
 }
 
 .avatar-status {
     position: relative;
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 0.5rem auto;
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 0.6rem;
 }
 
 .avatar-placeholder {
     width: 100%;
     height: 100%;
-    background: #333333;
+    background: #27272a;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 1rem;
-    color: var(--text-white);
+    font-size: 0.85rem;
 }
 
 .status-badge.active {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 14px;
-    height: 14px;
-    background: var(--green-badge);
-    border: 2px solid var(--bg-card);
+    bottom: 2px; right: 2px;
+    width: 10px; height: 10px;
+    background: #22c55e;
     border-radius: 50%;
+    border: 2px solid var(--bg-card);
 }
 
-.talent-card h4 { font-size: 0.95rem; color: var(--text-white); }
-.talent-card .role { font-size: 0.8rem; color: var(--accent-orange); font-weight: 600; }
-.talent-card .rating { font-size: 0.75rem; color: #f59e0b; margin: 0.2rem 0; }
-.talent-card .detail { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.talent-card h3 { font-size: 0.85rem; }
+.talent-card .role { font-size: 0.75rem; color: var(--text-muted); }
+.talent-card .rating { color: var(--accent-orange); font-size: 0.7rem; margin: 0.3rem 0; }
+.talent-card .detail { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+.talent-card .location { font-size: 0.7rem; color: var(--text-muted); }
 
-.stats-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    background: var(--bg-card);
+/* Banner de Comunidad / Blog */
+.blog-banner {
+    background: linear-gradient(135deg, #181b20 0%, #0d0e11 100%);
     border: 1px solid var(--border-color);
     border-radius: 12px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-banner h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.blog-banner p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.8rem;
+    max-width: 320px;
+}
+
+.btn-outline-light {
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   ESTADÍSTICAS
+   ========================================================================== */
+.stats-section {
+    max-width: 1250px;
+    margin: 4rem auto;
     padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
 }
 
 .stat-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem;
 }
 
 .stat-item i {
-    font-size: 2rem;
-    color: var(--accent-orange);
-}
-
-.stat-info h4 { font-size: 1.5rem; font-weight: 800; color: var(--text-white); }
-.stat-info p { font-size: 0.8rem; color: var(--text-muted); }
-
-/* ==========================================================================
-   MODAL REDISEÑADO
-   ========================================================================== */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(6px);
-}
-
-.modal.show, .modal.active {
-    display: flex;
-}
-
-.modal-content {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    width: 90%;
-    max-width: 450px;
-    padding: 2rem 1.5rem 1.5rem 1.5rem;
-    position: relative;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-}
-
-/* Botón de cierre elegante */
-.close-btn {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    font-size: 1.5rem;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    line-height: 1;
-    transition: color 0.2s;
-}
-
-.close-btn:hover {
-    color: var(--text-white);
-}
-
-.modal-header h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-white);
-    text-transform: uppercase;
-}
-
-.modal-header .subtitle {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 1.2rem;
-}
-
-/* ==========================================================================
-   MOBILE BOTTOM NAV & FLOATING BUTTON
-   ========================================================================== */
-.bottom-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0; left: 0; width: 100%;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border-color);
-    justify-content: space-around;
-    padding: 0.5rem 0;
-    z-index: 1000;
-}
-
-.bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-}
-
-.bottom-nav-item i {
-    font-size: 1.1rem;
-    margin-bottom: 0.2rem;
-}
-
-.bottom-nav-item.active, .bottom-nav-item.highlight-item {
-    color: var(--accent-orange);
-}
-
-.floating-whatsapp-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 85px;
-    right: 20px;
-    width: 56px;
-    height: 56px;
-    background-color: var(--whatsapp-green);
-    color: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    z-index: 999;
     font-size: 1.8rem;
+    color: var(--accent-orange);
 }
 
-@media (min-width: 768px) {
-    .bottom-nav, .floating-whatsapp-btn {
-        display: none;
-    }
+.stat-info h4 {
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.stat-info p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
 }
