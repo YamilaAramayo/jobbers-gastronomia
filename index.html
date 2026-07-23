@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jobbers - La plataforma de empleo especializada en el sector gastronómico. Conectamos candidatos con restaurantes, bares y hoteles.">
     <title>Jobbers - Empleo Gastronómico</title>
+
     <link rel="stylesheet" href="css/styles.css">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,7 +24,9 @@
             <a href="#express-form-section" class="nav-link">Necesito personal</a>
             <a href="#nosotros" class="nav-link">Empresas</a>
             <div class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">Recursos <i class="fa-solid fa-chevron-down"></i></a>
+                <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
+                    Recursos <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
                 <div class="dropdown-menu" id="recursos-menu" aria-labelledby="dropdown-recursos">
                     <a href="#guias" onclick="cerrarDropdown()">Guías de Contratación</a>
                     <a href="#plantillas" onclick="cerrarDropdown()">Plantillas de CV</a>
@@ -48,31 +52,31 @@
                     <p class="hero-subtitle">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
                     
                     <div class="hero-buttons">
-                        <a href="#vacantes-container" class="btn-primary"><i class="fa-solid fa-briefcase"></i> BUSCO TRABAJO</a>
-                        <a href="#express-form-section" class="btn-secondary"><i class="fa-solid fa-user-group"></i> NECESITO PERSONAL</a>
+                        <a href="#vacantes-container" class="btn-primary"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> BUSCO TRABAJO</a>
+                        <a href="#express-form-section" class="btn-secondary"><i class="fa-solid fa-user-group" aria-hidden="true"></i> NECESITO PERSONAL</a>
                     </div>
 
                     <div class="hero-features">
-                        <span><i class="fa-regular fa-square-check"></i> Perfiles verificados</span>
-                        <span><i class="fa-regular fa-clock"></i> Proceso rápido</span>
-                        <span><i class="fa-regular fa-handshake"></i> Oportunidades reales</span>
+                        <span><i class="fa-regular fa-square-check" aria-hidden="true"></i> Perfiles verificados</span>
+                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> Proceso rápido</span>
+                        <span><i class="fa-regular fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
                     </div>
                 </div>
 
                 <!-- Tarjeta Express flotante (Der) -->
                 <div class="hero-card-express" id="express-form-section">
                     <div class="card-header">
-                        <i class="fa-solid fa-bolt text-warning"></i>
+                        <i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i>
                         <h2>¿NECESITÁS PERSONAL HOY?</h2>
                     </div>
                     <p>Publicá tu búsqueda en segundos y llegá a los mejores perfiles.</p>
                     
-                    <form id="express-form" class="express-form">
+                    <form id="express-form" class="express-form" onsubmit="enviarWhatsAppExpress(event)">
                         <div class="form-group">
                             <select id="puesto" aria-label="Seleccionar puesto requerido" required>
                                 <option value="" disabled selected>Puesto que necesitas</option>
-                                <option value="Cocinero">Cocinero / Cocinera</option>
-                                <option value="Mozo">Mozo / Salonero</option>
+                                <option value="Cocinero / Cocinera">Cocinero / Cocinera</option>
+                                <option value="Mozo / Salonero">Mozo / Salonero</option>
                                 <option value="Barista">Barista</option>
                                 <option value="Bartender">Bartender</option>
                                 <option value="Cajero">Cajero</option>
@@ -93,11 +97,11 @@
                                 <option value="Turno Noche">Turno Noche</option>
                                 <option value="Turno Tarde">Turno Tarde</option>
                                 <option value="Turno Mañana">Turno Mañana</option>
-                                <option value="Full Time">Full Time / Part Time</option>
+                                <option value="Full Time / Part Time">Full Time / Part Time</option>
                             </select>
                         </div>
                         <button type="submit" class="btn-whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i> ENVIAR POR WHATSAPP
+                            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
                         </button>
                     </form>
                     <span class="response-tag">Te respondemos de inmediato</span>
@@ -109,47 +113,47 @@
         <section class="categories-section">
             <div class="section-header">
                 <h2>PUESTOS MÁS BUSCADOS</h2>
-                <a href="#" class="link-more">Ver todos los puestos <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" class="link-more">Ver todos los puestos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
             
             <div class="categories-grid">
                 <div class="category-card">
-                    <i class="fa-solid fa-utensils"></i>
+                    <i class="fa-solid fa-utensils" aria-hidden="true"></i>
                     <h3>Cocina</h3>
                     <span class="count">1.243 ofertas</span>
                 </div>
                 <div class="category-card">
-                    <i class="fa-solid fa-concierge-bell"></i>
+                    <i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>
                     <h3>Mozo / Salonero</h3>
                     <span class="count">982 ofertas</span>
                 </div>
                 <div class="category-card">
-                    <i class="fa-solid fa-mug-hot"></i>
+                    <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
                     <h3>Barista</h3>
                     <span class="count">567 ofertas</span>
                 </div>
                 <div class="category-card">
-                    <i class="fa-solid fa-martini-glass-citrus"></i>
+                    <i class="fa-solid fa-martini-glass-citrus" aria-hidden="true"></i>
                     <h3>Bartender</h3>
                     <span class="count">458 ofertas</span>
                 </div>
                 <div class="category-card">
-                    <i class="fa-solid fa-cash-register"></i>
+                    <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
                     <h3>Cajero</h3>
                     <span class="count">324 ofertas</span>
                 </div>
                 <div class="category-card">
-                    <i class="fa-solid fa-motorcycle"></i>
+                    <i class="fa-solid fa-motorcycle" aria-hidden="true"></i>
                     <h3>Delivery</h3>
                     <span class="count">1.105 ofertas</span>
                 </div>
                 <div class="category-card">
-                    <i class="fa-solid fa-cake-candles"></i>
+                    <i class="fa-solid fa-cake-candles" aria-hidden="true"></i>
                     <h3>Pastelería</h3>
                     <span class="count">256 ofertas</span>
                 </div>
                 <div class="category-card">
-                    <i class="fa-solid fa-user-tie"></i>
+                    <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
                     <h3>Encargado</h3>
                     <span class="count">278 ofertas</span>
                 </div>
@@ -165,21 +169,21 @@
                 
                 <div class="search-bar">
                     <input type="text" id="search-filter" placeholder="Buscar por puesto, empresa o zona..." oninput="filtrarVacantes()" aria-label="Filtrar ofertas por término de búsqueda">
-                    <button type="button" class="btn-search" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button type="button" class="btn-search" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
                 </div>
 
                 <div id="vacantes-container" class="vacantes-container">
                     <!-- Se cargan dinámicamente con JS -->
                 </div>
                 
-                <a href="#" class="link-more-full">Ver todas las ofertas <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" class="link-more-full">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
 
             <!-- Columna Talento -->
             <div class="column-talent">
                 <div class="section-header">
                     <h2>TALENTO DESTACADO</h2>
-                    <a href="#" class="link-more">Ver todos los perfiles <i class="fa-solid fa-chevron-right"></i></a>
+                    <a href="#" class="link-more">Ver todos los perfiles <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
                 </div>
 
                 <div class="talent-grid">
@@ -192,7 +196,7 @@
                         <p class="role">Cocinero</p>
                         <div class="rating">★★★★★ <span>(24)</span></div>
                         <p class="detail">5 años de experiencia<br>Disponibilidad: Inmediata</p>
-                        <span class="location"><i class="fa-solid fa-location-dot"></i> Nueva Córdoba</span>
+                        <span class="location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Nueva Córdoba</span>
                     </div>
 
                     <div class="talent-card">
@@ -204,7 +208,7 @@
                         <p class="role">Barista</p>
                         <div class="rating">★★★★★ <span>(18)</span></div>
                         <p class="detail">3 años de experiencia<br>Disponibilidad: Mañana</p>
-                        <span class="location"><i class="fa-solid fa-location-dot"></i> Güemes</span>
+                        <span class="location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Güemes</span>
                     </div>
 
                     <div class="talent-card">
@@ -216,7 +220,7 @@
                         <p class="role">Mozo</p>
                         <div class="rating">★★★★★ <span>(31)</span></div>
                         <p class="detail">4 años de experiencia<br>Disponibilidad: Full time</p>
-                        <span class="location"><i class="fa-solid fa-location-dot"></i> Centro</span>
+                        <span class="location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro</span>
                     </div>
                 </div>
 
@@ -235,28 +239,28 @@
         <!-- Estadísticas -->
         <section class="stats-section">
             <div class="stat-item">
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-users" aria-hidden="true"></i>
                 <div class="stat-info">
                     <h4>+12.500</h4>
                     <p>Personas conectadas</p>
                 </div>
             </div>
             <div class="stat-item">
-                <i class="fa-solid fa-city"></i>
+                <i class="fa-solid fa-city" aria-hidden="true"></i>
                 <div class="stat-info">
                     <h4>+1.200</h4>
                     <p>Empresas confían</p>
                 </div>
             </div>
             <div class="stat-item">
-                <i class="fa-solid fa-briefcase"></i>
+                <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
                 <div class="stat-info">
                     <h4>+3.800</h4>
                     <p>Ofertas activas</p>
                 </div>
             </div>
             <div class="stat-item">
-                <i class="fa-solid fa-handshake-angle"></i>
+                <i class="fa-solid fa-handshake-angle" aria-hidden="true"></i>
                 <div class="stat-info">
                     <h4>+18.000</h4>
                     <p>Contrataciones realizadas</p>
@@ -274,35 +278,39 @@
     <!-- Bottom Navigation Bar (Solo visible en Mobile) -->
     <nav class="bottom-nav" aria-label="Navegación inferior mobile">
         <a href="#" class="bottom-nav-item active">
-            <i class="fa-solid fa-house"></i>
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
             <span>Inicio</span>
         </a>
         <a href="#vacantes-container" class="bottom-nav-item">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             <span>Buscar</span>
         </a>
         <a href="#express-form-section" class="bottom-nav-item highlight-item">
-            <i class="fa-solid fa-bolt"></i>
+            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
             <span>Personal YA</span>
         </a>
         <a href="#" class="bottom-nav-item">
-            <i class="fa-regular fa-bookmark"></i>
+            <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
             <span>Mis postulaciones</span>
         </a>
         <a href="#" class="bottom-nav-item" onclick="abrirModal('login')">
-            <i class="fa-regular fa-user"></i>
+            <i class="fa-regular fa-user" aria-hidden="true"></i>
             <span>Mi cuenta</span>
         </a>
     </nav>
 
     <!-- Botón Flotante Mobile Personal YA -->
-    <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20personal%20gastron%C3%B3mico." class="floating-whatsapp-btn" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-whatsapp"></i>
+    <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20personal%20gastron%C3%B3mico." 
+       class="floating-whatsapp-btn" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp para solicitar personal de forma inmediata">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
         <span>PERSONAL YA</span>
     </a>
 
     <!-- Modal Genérico (Login / Registro / Postulación) -->
-    <div id="modal" class="modal" aria-hidden="true" role="dialog">
+    <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
         <div class="modal-content">
             <button type="button" class="close-btn" onclick="cerrarModal()" aria-label="Cerrar modal">&times;</button>
             <div id="modal-body">
