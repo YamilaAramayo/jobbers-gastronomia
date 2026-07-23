@@ -19,8 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const zona = document.getElementById('zona').value;
             const turno = document.getElementById('turno').value;
             
+            // Número de WhatsApp configurado (+54 9 351 308-0197)
+            const numeroWhatsApp = "5493513080197";
+            
             const mensaje = encodeURIComponent(`Hola Jobbers! Necesito un/a *${puesto}* para la zona de *${zona}* en *${turno}*. ¿Me podrían ayudar a conseguir postulantes?`);
-            window.open(`https://wa.me/5493510000000?text=${mensaje}`, '_blank');
+            window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
         });
     }
 
