@@ -8,20 +8,19 @@
     --bg-card-hover: #1e1e1e;   /* Un tono más claro para efectos de hover */
 
     /* --- COLOR DE ACENTO (Naranja JOBBERS) --- */
-    /* Este es el naranja específico extraído de los botones principales */
     --accent-orange: #fca311; 
-    --accent-orange-hover: #e5940e; /* Un tono más oscuro para hover */
+    --accent-orange-hover: #e5940e; 
 
     /* --- COLORES DE TEXTO --- */
     --text-white: #ffffff;      /* Texto principal */
     --text-muted: #a0a0a0;      /* Texto secundario y descripciones */
 
     /* --- BORDES Y DIVISIONES --- */
-    --border-color: #333333;    /* Líneas sutiles de división */
+    --border-color: #262626;    /* Líneas sutiles de división */
 
     /* --- ESTADOS Y BADGES --- */
-    --red-badge: #d9534f;       /* Para 'URGENTE' */
-    --green-badge: #5cb85c;     /* Para 'FINDE' o estado activo */
+    --red-badge: #ef4444;       /* Para 'URGENTE' */
+    --green-badge: #10b981;     /* Para 'FINDE' o estado activo */
     --whatsapp-green: #25d366;  /* Color oficial de WhatsApp */
 
     /* --- TIPOGRAFÍA --- */
@@ -54,14 +53,14 @@ a {
 }
 
 /* ==========================================================================
-   HEADER / NAVBAR (Analizado de la web)
+   HEADER / NAVBAR
    ========================================================================== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: rgba(0, 0, 0, 0.95); /* Negro con transparencia */
+    background-color: rgba(0, 0, 0, 0.95);
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
@@ -77,10 +76,9 @@ a {
     line-height: 1;
 }
 
-/* Subtítulo del logo en la imagen */
 .logo-subtitle {
     font-size: 0.65rem;
-    color: var(--text-white); /* En la imagen es blanco */
+    color: var(--text-white);
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -94,13 +92,13 @@ a {
 
 .nav-link {
     font-size: 0.9rem;
-    color: var(--text-white); /* Texto principal blanco */
+    color: var(--text-white);
     transition: color 0.2s;
     font-weight: 500;
 }
 
 .nav-link:hover, .nav-link.active {
-    color: var(--accent-orange); /* Hover en naranja */
+    color: var(--accent-orange);
 }
 
 .dropdown {
@@ -166,7 +164,7 @@ a {
 
 .btn-register {
     background: var(--accent-orange);
-    color: #000000; /* Texto negro sobre naranja */
+    color: #000000;
 }
 
 .btn-register:hover {
@@ -196,24 +194,12 @@ a {
     align-items: center;
 }
 
-/* Ajuste de imagen de fondo según escritorio (opcional si usas img tag o bg) */
-/* .hero-section::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('tu-imagen-de-cocinero.jpg');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.3; /* Para que el texto destaque */
-    z-index: -1;
-} */
-
 .hero-title {
     font-size: 2.5rem;
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: 1rem;
-    text-transform: uppercase; /* Como en la imagen */
+    text-transform: uppercase;
 }
 
 .highlight {
@@ -221,7 +207,7 @@ a {
 }
 
 .hero-subtitle {
-    color: var(--text-white); /* Texto principal es blanco */
+    color: var(--text-white);
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
 }
@@ -242,29 +228,22 @@ a {
     align-items: center;
     gap: 0.5rem;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .btn-primary {
     background: var(--accent-orange);
-    color: #000000; /* Texto negro */
+    color: #000000;
 }
 
 .btn-secondary {
     background: transparent;
-    border: 2px solid var(--accent-orange); /* Borde naranja */
-    color: var(--accent-orange); /* Texto naranja */
+    border: 2px solid var(--accent-orange);
+    color: var(--accent-orange);
 }
 
 .btn-secondary:hover {
-    background: rgba(252, 163, 17, 0.1); /* Ligero fondo naranja */
-}
-
-.hero-features {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    font-size: 0.8rem;
-    color: var(--text-white);
+    background: rgba(252, 163, 17, 0.1);
 }
 
 /* Tarjeta Express */
@@ -297,23 +276,42 @@ a {
     margin-bottom: 1rem;
 }
 
+/* Formularios Generales e Inputs */
 .express-form .form-group {
     margin-bottom: 0.8rem;
 }
 
-.express-form input, .express-form select {
+.express-form input, 
+.express-form select,
+.modal-content input,
+.modal-content select {
     width: 100%;
-    padding: 0.75rem;
-    background: #1e1e1e; /* Fondo de inputs ligeramente más claro */
+    padding: 0.75rem 1rem;
+    background: #1a1a1a;
     border: 1px solid var(--border-color);
     border-radius: 6px;
     color: var(--text-white);
     font-size: 0.9rem;
     outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.express-form input:focus, .express-form select:focus {
+.express-form input:focus, 
+.express-form select:focus,
+.modal-content input:focus,
+.modal-content select:focus {
     border-color: var(--accent-orange);
+    box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.2);
+}
+
+/* Ocultar flechas molestas en input type="number" */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 .btn-whatsapp {
@@ -355,7 +353,7 @@ a {
 }
 
 /* ==========================================================================
-   SECCIONES Y GRIDS
+   SECCIONES, OFERTAS Y GRIDS (NUEVA ESTRUCTURA DE TARJETAS)
    ========================================================================== */
 .categories-section, .main-grid-section, .stats-section, .info-section {
     max-width: 1200px;
@@ -374,50 +372,137 @@ a {
     text-transform: uppercase;
 }
 
+.search-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-white);
+}
+
+.btn-search {
+    padding: 0 1.2rem;
+    background: var(--accent-orange);
+    border: none;
+    border-radius: 6px;
+    color: #000000;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Tarjeta individual para cada Oferta */
+.vacantes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.vacante-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.vacante-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-orange);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.vacante-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.vacante-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.vacante-company {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+.vacante-company .location {
+    color: var(--text-white);
+    font-weight: 500;
+}
+
+/* Contenedor y Estilos de Badges / Cápsulas */
+.badges-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #1e1e1e;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+}
+
+.badge-urgente {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--red-badge);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-finde {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--green-badge);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.vacante-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
 .link-more {
     font-size: 0.85rem;
     color: var(--accent-orange);
     font-weight: 600;
 }
 
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
-}
-
-.category-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem;
+.link-more-full {
+    display: block;
     text-align: center;
-    transition: transform 0.2s, border-color 0.2s;
-    cursor: pointer;
-}
-
-.category-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-orange);
-}
-
-.category-card i {
-    font-size: 1.5rem;
+    margin-top: 1.5rem;
     color: var(--accent-orange);
-    margin-bottom: 0.5rem;
-}
-
-.category-card h4 {
+    font-weight: 600;
     font-size: 0.9rem;
-    color: var(--text-white);
 }
 
-.category-card .count {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-}
-
-/* Main Grid Layout */
+/* ==========================================================================
+   TALENTO Y STATS
+   ========================================================================== */
 .main-grid-section {
     display: grid;
     grid-template-columns: 1fr;
@@ -430,71 +515,9 @@ a {
     }
 }
 
-/* Búsqueda */
-.search-bar {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.search-bar input {
-    flex: 1;
-    padding: 0.75rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    color: var(--text-white);
-}
-
-.btn-search {
-    padding: 0 1rem;
-    background: var(--accent-orange);
-    border: none;
-    border-radius: 6px;
-    color: #000000;
-    cursor: pointer;
-}
-
-.vacantes-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-/* Estilos para Ofertas Destacadas (Mobile Imagen 2) */
-.vacante-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem;
-    display: flex;
-    gap: 1rem;
-}
-
-.vacante-img {
-    width: 60px; height: 60px; border-radius: 8px; background-size: cover;
-}
-
-.vacante-info h4 { font-size: 1rem; color: var(--text-white); }
-.vacante-details { font-size: 0.8rem; color: var(--text-muted); }
-.badge { padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
-.badge-urgente { background: var(--red-badge); color: #fff; }
-.badge-finde { background: var(--green-badge); color: #fff; }
-
-
-.link-more-full {
-    display: block;
-    text-align: center;
-    margin-top: 1rem;
-    color: var(--accent-orange);
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-/* Talento Grid */
 .talent-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -505,12 +528,12 @@ a {
     border-radius: 8px;
     padding: 1rem;
     position: relative;
-    text-align: center; /* Como en escritorio */
+    text-align: center;
 }
 
 .avatar-status {
     position: relative;
-    width: 60px; /* Un poco más grande */
+    width: 60px;
     height: 60px;
     margin: 0 auto 0.5rem auto;
 }
@@ -543,32 +566,7 @@ a {
 .talent-card .role { font-size: 0.8rem; color: var(--accent-orange); font-weight: 600; }
 .talent-card .rating { font-size: 0.75rem; color: #f59e0b; margin: 0.2rem 0; }
 .talent-card .detail { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-.talent-card .location { font-size: 0.7rem; color: var(--text-muted); display: block; }
 
-/* Blog Banner */
-.blog-banner {
-    background: linear-gradient(135deg, #121212 0%, #000000 100%);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-}
-
-.blog-banner h2 { font-size: 1.2rem; margin-bottom: 0.5rem; text-transform: uppercase; }
-.blog-banner p { font-size: 0.85rem; color: var(--text-white); margin-bottom: 1rem; }
-.btn-outline-light {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-white);
-}
-.btn-outline-light:hover {
-    background-color: var(--bg-card-hover);
-}
-
-/* Stats (Escritorio Imagen 1) */
 .stats-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -594,20 +592,20 @@ a {
 .stat-info p { font-size: 0.8rem; color: var(--text-muted); }
 
 /* ==========================================================================
-   MODAL & TOASTS
+   MODAL REDISEÑADO
    ========================================================================== */
 .modal {
     display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 2000;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px);
 }
 
-.modal.show {
+.modal.show, .modal.active {
     display: flex;
 }
 
@@ -619,14 +617,17 @@ a {
     max-width: 450px;
     padding: 2rem 1.5rem 1.5rem 1.5rem;
     position: relative;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
+/* Botón de cierre elegante */
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.8rem;
+    top: 12px;
+    right: 16px;
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
     color: var(--text-muted);
     cursor: pointer;
     line-height: 1;
@@ -647,50 +648,11 @@ a {
 .modal-header .subtitle {
     font-size: 0.85rem;
     color: var(--text-muted);
-    margin-bottom: 1rem;
-}
-
-/* Toast System */
-.toast-container {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    z-index: 3000;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-@media (min-width: 768px) {
-    .toast-container { bottom: 20px; }
-}
-
-.toast-msg {
-    background: var(--bg-card);
-    border-left: 4px solid var(--accent-orange);
-    color: var(--text-white);
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    animation: slideIn 0.3s forwards;
-}
-
-.toast-success { border-color: var(--green-badge); }
-.toast-info { border-color: var(--accent-orange); }
-
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-.toast-msg.fade-out {
-    opacity: 0;
-    transition: opacity 0.3s;
+    margin-bottom: 1.2rem;
 }
 
 /* ==========================================================================
-   MOBILE BOTTOM NAV & FLOATING BUTTON (Imagen 2)
+   MOBILE BOTTOM NAV & FLOATING BUTTON
    ========================================================================== */
 .bottom-nav {
     display: flex;
@@ -716,39 +678,29 @@ a {
     margin-bottom: 0.2rem;
 }
 
-/* Estado activo en mobile */
-.bottom-nav-item.active {
+.bottom-nav-item.active, .bottom-nav-item.highlight-item {
     color: var(--accent-orange);
 }
 
-/* Ítem destacado (Personal YA) */
-.bottom-nav-item.highlight-item {
-    color: var(--accent-orange);
-}
-
-/* Botón flotante de WhatsApp (Mobile Imagen 2) */
 .floating-whatsapp-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 85px; /* Por encima de la bottom nav */
+    bottom: 85px;
     right: 20px;
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
     background-color: var(--whatsapp-green);
     color: #ffffff;
     border-radius: 50%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     z-index: 999;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 @media (min-width: 768px) {
-    .bottom-nav {
-        display: none;
-    }
-    .floating-whatsapp-btn {
+    .bottom-nav, .floating-whatsapp-btn {
         display: none;
     }
 }
