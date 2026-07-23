@@ -43,8 +43,8 @@
 
     <main class="main-content">
         
-        <!-- Hero Section -->
-        <section class="hero-section">
+        <!-- Hero Section con la Imagen de Fondo Integrada -->
+        <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');">
             <div class="hero-overlay"></div>
             <div class="hero-container">
                 <div class="hero-content">
@@ -53,17 +53,17 @@
                     
                     <div class="hero-buttons">
                         <a href="#vacantes-container" class="btn-primary"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> BUSCO TRABAJO</a>
-                        <a href="#express-form-section" class="btn-secondary"><i class="fa-solid fa-user-group" aria-hidden="true"></i> NECESITO PERSONAL</a>
+                        <a href="#express-form-section" class="btn-secondary"><i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i> NECESITO PERSONAL YA</a>
                     </div>
 
                     <div class="hero-features">
+                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> Respuesta rápida</span>
                         <span><i class="fa-regular fa-square-check" aria-hidden="true"></i> Perfiles verificados</span>
-                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> Proceso rápido</span>
                         <span><i class="fa-regular fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
                     </div>
                 </div>
 
-                <!-- Tarjeta Express flotante (Der) -->
+                <!-- Tarjeta Express flotante (Desktop) / Caja CTA (Mobile) -->
                 <div class="hero-card-express" id="express-form-section">
                     <div class="card-header">
                         <i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i>
@@ -112,8 +112,8 @@
         <!-- Categorías / Puestos Más Buscados -->
         <section class="categories-section">
             <div class="section-header">
-                <h2>PUESTOS MÁS BUSCADOS</h2>
-                <a href="#" class="link-more">Ver todos los puestos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                <h2>BUSCÁ POR CATEGORÍA</h2>
+                <a href="#" class="link-more">Ver todas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
             
             <div class="categories-grid">
@@ -275,7 +275,7 @@
         </section>
     </main>
 
-    <!-- Bottom Navigation Bar (Solo visible en Mobile) -->
+    <!-- Bottom Navigation Bar (Mobile) -->
     <nav class="bottom-nav" aria-label="Navegación inferior mobile">
         <a href="#" class="bottom-nav-item active">
             <i class="fa-solid fa-house" aria-hidden="true"></i>
@@ -299,7 +299,7 @@
         </a>
     </nav>
 
-    <!-- Botón Flotante Mobile Personal YA -->
+    <!-- Botón Flotante Mobile Personal YA (Verde WhatsApp) -->
     <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20personal%20gastron%C3%B3mico." 
        class="floating-whatsapp-btn" 
        target="_blank" 
@@ -309,17 +309,17 @@
         <span>PERSONAL YA</span>
     </a>
 
-    <!-- Modal Genérico (Login / Registro / Postulación) -->
+    <!-- Modal Genérico -->
     <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
         <div class="modal-content">
             <button type="button" class="close-btn" onclick="cerrarModal()" aria-label="Cerrar modal">&times;</button>
             <div id="modal-body">
-                <!-- Se inyecta dinámicamente por JS -->
+                <!-- Contenido dinámico -->
             </div>
         </div>
     </div>
 
-    <!-- Contenedor para Toast Notifications -->
+    <!-- Contenedor Toast Notifications -->
     <div id="toast-container" class="toast-container"></div>
 
     <script src="js/main.js"></script>
