@@ -195,7 +195,7 @@ function abrirModal(tipo, ofertaId = null) {
                         <option value="empleador">Soy Empleador</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-whatsapp w-100 mt-1">Registrarme</button>
+                <button type="submit" class="btn-whatsapp w-100 mt-1">REGISTRARME</button>
             </form>
             <div class="modal-footer text-center mt-2">
                 <p class="text-muted text-sm">¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')" class="text-accent fw-600">Iniciá sesión</a></p>
