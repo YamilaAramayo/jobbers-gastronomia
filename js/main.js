@@ -1,3 +1,7 @@
+/* ==========================================================================
+   JOBBERS - LOGICA DE INTERFAZ Y MANEJO DE ESTADOS
+   ========================================================================== */
+
 // Datos locales de prueba (Vacantes activas)
 let vacantesGlobales = [
     { id: 1, titulo: "Cocinero/a", empresa: "Casa Norte", ubicacion: "Nueva Córdoba", tipo_jornada: "Tiempo completo", turno: "Turno Noche", urgente: 1, fecha: "Hace 1h" },
@@ -15,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (expressForm) {
         expressForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const puesto = document.getElementById('puesto').value;
-            const zona = document.getElementById('zona').value;
-            const turno = document.getElementById('turno').value;
+            const puesto = document.getElementById('puesto')?.value || "Personal";
+            const zona = document.getElementById('zona')?.value || "Córdoba";
+            const turno = document.getElementById('turno')?.value || "Indistinto";
             
             const numeroWhatsApp = "5493513080197";
             const mensaje = encodeURIComponent(`Hola Jobbers! Necesito un/a *${puesto}* para la zona de *${zona}* en *${turno}*. ¿Me podrían ayudar a conseguir postulantes?`);
@@ -67,7 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Helper simple para prevenir XSS
+/* ==========================================================================
+   HELPERS & VALIDACIONES
+   ========================================================================== */
+
+// Prevenir XSS en texto inyectado
 function escapeHTML(str) {
     if (!str) return '';
     return String(str)
@@ -78,7 +86,7 @@ function escapeHTML(str) {
         .replace(/'/g, '&#039;');
 }
 
-// Helper para validar la fortaleza y coincidencia de la contraseña
+// Validar fortaleza y coincidencia de contraseña
 function validarSeguridadPassword(password, confirmPassword) {
     if (password !== confirmPassword) {
         return "Las contraseñas no coinciden.";
@@ -95,10 +103,15 @@ function validarSeguridadPassword(password, confirmPassword) {
     return null;
 }
 
-// Desplegable de Recursos
+/* ==========================================================================
+   DROPDOWNS & NAVEGACIÓN
+   ========================================================================== */
+
 function toggleDropdown(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
     const dropdownMenu = document.getElementById('recursos-menu');
     const toggleBtn = document.getElementById('dropdown-recursos');
 
@@ -118,7 +131,6 @@ function cerrarDropdown() {
     if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
 }
 
-// Renderizado de la barra de usuario / login
 function actualizarBarraNavegacion() {
     const navActions = document.getElementById('nav-actions');
     if (!navActions) return;
@@ -132,7 +144,9 @@ function actualizarBarraNavegacion() {
 
     if (usuarioSesion && usuarioSesion.nombre) {
         navActions.innerHTML = `
-            <span class="user-welcome">Hola, <strong>${escapeHTML(usuarioSesion.nombre)}</strong></span>
+            <span class="user-welcome" style="font-size:0.85rem; color: var(--text-muted); align-self:center;">
+                Hola, <strong style="color:var(--text-white);">${escapeHTML(usuarioSesion.nombre)}</strong>
+            </span>
             <button type="button" class="btn-login" onclick="cerrarSesion()">Cerrar Sesión</button>
         `;
     } else {
@@ -143,7 +157,10 @@ function actualizarBarraNavegacion() {
     }
 }
 
-// Modal Dinámico
+/* ==========================================================================
+   MODAL DINÁMICO & AUTENTICACIÓN
+   ========================================================================== */
+
 function abrirModal(tipo, ofertaId = null) {
     const modal = document.getElementById('modal');
     const body = document.getElementById('modal-body');
@@ -164,10 +181,12 @@ function abrirModal(tipo, ofertaId = null) {
                 <div class="form-group">
                     <input type="password" id="auth-password" placeholder="Contraseña" required>
                 </div>
-                <button type="submit" class="btn-whatsapp w-100 mt-1">Entrar</button>
+                <button type="submit" class="btn-whatsapp" style="margin-top:1rem;">Entrar</button>
             </form>
-            <div class="modal-footer text-center mt-2">
-                <p class="text-muted text-sm">¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')" class="text-accent fw-600">Registrate acá</a></p>
+            <div class="modal-footer" style="text-align:center; margin-top:1.2rem;">
+                <p style="font-size:0.8rem; color:var(--text-muted);">
+                    ¿No tenés cuenta? <a href="#" onclick="abrirModal('registro')" style="color:var(--accent-orange); font-weight:600;">Registrate acá</a>
+                </p>
             </div>
         `;
     } else if (tipo === 'registro') {
@@ -195,10 +214,12 @@ function abrirModal(tipo, ofertaId = null) {
                         <option value="empleador">Soy Empleador</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-whatsapp w-100 mt-1">REGISTRARME</button>
+                <button type="submit" class="btn-whatsapp" style="margin-top:1rem;">REGISTRARME</button>
             </form>
-            <div class="modal-footer text-center mt-2">
-                <p class="text-muted text-sm">¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')" class="text-accent fw-600">Iniciá sesión</a></p>
+            <div class="modal-footer" style="text-align:center; margin-top:1.2rem;">
+                <p style="font-size:0.8rem; color:var(--text-muted);">
+                    ¿Ya tenés cuenta? <a href="#" onclick="abrirModal('login')" style="color:var(--accent-orange); font-weight:600;">Iniciá sesión</a>
+                </p>
             </div>
         `;
     } else if (tipo === 'postular') {
@@ -221,7 +242,7 @@ function abrirModal(tipo, ofertaId = null) {
                         <option value="rotativo">Turnos Rotativos</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-whatsapp w-100 mt-1">Enviar Postulación</button>
+                <button type="submit" class="btn-whatsapp" style="margin-top:1rem;">Enviar Postulación</button>
             </form>
         `;
     }
@@ -242,7 +263,6 @@ function cerrarModal() {
     }
 }
 
-// Procesar Registro o Login
 function procesarAutenticacion(e, accion) {
     e.preventDefault();
     const email = document.getElementById('auth-email').value;
@@ -250,7 +270,6 @@ function procesarAutenticacion(e, accion) {
     const nombre = document.getElementById('auth-nombre')?.value || email.split('@')[0];
     const rol = document.getElementById('auth-rol')?.value || 'postulante';
 
-    // Validación si es registro
     if (accion === 'registro') {
         const confirmPassword = document.getElementById('auth-confirm-password')?.value;
         const errorValidacion = validarSeguridadPassword(password, confirmPassword);
@@ -261,7 +280,6 @@ function procesarAutenticacion(e, accion) {
         }
     }
 
-    // Persistencia de sesión
     localStorage.setItem('jobbers_user', JSON.stringify({ nombre, email, rol }));
     
     mostrarToast(accion === 'registro' ? '¡Cuenta creada con éxito!' : '¡Bienvenido de nuevo!', 'success');
@@ -281,38 +299,42 @@ function cerrarSesion() {
     mostrarToast('Has cerrado sesión correctamente', 'info');
 }
 
-// Renderizado de tarjetas usando clases CSS
+/* ==========================================================================
+   RENDERIZADO DE VACANTES & FILTROS
+   ========================================================================== */
+
 function renderizarTarjetasVacantes(ofertas) {
     const container = document.getElementById('vacantes-container');
     if (!container) return;
 
     if (!ofertas || ofertas.length === 0) {
-        container.innerHTML = '<p class="empty-state-msg">No se encontraron vacantes con esa búsqueda.</p>';
+        container.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem; padding:1rem 0;">No se encontraron vacantes con esa búsqueda.</p>';
         return;
     }
 
     container.innerHTML = ofertas.map(o => `
-        <div class="oferta-card" onclick="abrirModal('postular', ${o.id})">
-            <div class="oferta-info">
-                <h4>${escapeHTML(o.titulo)}</h4>
-                <p class="oferta-meta">
-                    <strong>${escapeHTML(o.empresa)}</strong> • 📍 ${escapeHTML(o.ubicacion)}
-                </p>
-                <div class="badges-container">
-                    ${o.urgente ? '<span class="badge badge-urgent">Urgente ⚡</span>' : ''}
-                    <span class="badge">${escapeHTML(o.tipo_jornada)}</span>
-                    <span class="badge">${escapeHTML(o.turno)}</span>
+        <div class="vacante-card" onclick="abrirModal('postular', ${o.id})">
+            <div class="vacante-header">
+                <div>
+                    <h3 class="vacante-title">${escapeHTML(o.titulo)}</h3>
+                    <p class="vacante-company">${escapeHTML(o.empresa)} • <span class="location">${escapeHTML(o.ubicacion)}</span></p>
                 </div>
             </div>
-            <div class="oferta-action">
-                <span class="oferta-fecha">${escapeHTML(o.fecha || 'Reciente')}</span>
-                <span class="oferta-arrow">&#8250;</span>
+            
+            <div class="badges-container">
+                ${o.urgente ? '<span class="badge badge-urgente">⚡ URGENTE</span>' : ''}
+                <span class="badge">${escapeHTML(o.tipo_jornada)}</span>
+                <span class="badge">${escapeHTML(o.turno)}</span>
+            </div>
+
+            <div class="vacante-footer">
+                <span>${escapeHTML(o.fecha || 'Reciente')}</span>
+                <span class="link-more">Postularme &rarr;</span>
             </div>
         </div>
     `).join('');
 }
 
-// Filtro en tiempo real
 function filtrarVacantes() {
     const input = document.getElementById('search-filter');
     if (!input) return;
@@ -326,18 +348,57 @@ function filtrarVacantes() {
     renderizarTarjetasVacantes(filtradas);
 }
 
-// Sistema de Notificaciones Toast
+/* ==========================================================================
+   NOTIFICACIONES TOAST (Manejo dinámico)
+   ========================================================================== */
+
 function mostrarToast(mensaje, tipo = 'info') {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
+    let container = document.getElementById('toast-container');
+    
+    // Si no existe el contenedor de toasts en el DOM, lo crea dinámicamente
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        `;
+        document.body.appendChild(container);
+    }
 
     const toast = document.createElement('div');
-    toast.className = `toast-msg toast-${tipo}`;
+    
+    // Color según tipo
+    let bg = '#181b20';
+    let border = 'var(--border-color)';
+    if (tipo === 'success') { bg = '#064e3b'; border = '#10b981'; }
+    if (tipo === 'warning') { bg = '#78350f'; border = '#f59e0b'; }
+    if (tipo === 'info') { bg = '#1e3a8a'; border = '#3b82f6'; }
+
+    toast.style.cssText = `
+        background: ${bg};
+        border: 1px solid ${border};
+        color: #ffffff;
+        padding: 0.75rem 1.2rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        opacity: 1;
+    `;
+    
     toast.innerHTML = `<span>${escapeHTML(mensaje)}</span>`;
     
     container.appendChild(toast);
+    
     setTimeout(() => {
-        toast.classList.add('fade-out');
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
