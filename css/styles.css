@@ -2,16 +2,29 @@
    VARIABLES GLOBALES & RESET
    ========================================================================== */
 :root {
-    --bg-main: #0f172a;
-    --bg-card: #1e293b;
-    --bg-card-hover: #334155;
-    --accent-orange: #f97316;
-    --accent-orange-hover: #ea580c;
-    --text-white: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: #334155;
-    --red-badge: #ef4444;
-    --green-badge: #22c55e;
+    /* --- FONDO Y SUPERFICIES (Base Oscura) --- */
+    --bg-main: #000000;         /* Negro puro para el fondo */
+    --bg-card: #121212;         /* Gris muy oscuro para tarjetas y componentes */
+    --bg-card-hover: #1e1e1e;   /* Un tono más claro para efectos de hover */
+
+    /* --- COLOR DE ACENTO (Naranja JOBBERS) --- */
+    /* Este es el naranja específico extraído de los botones principales */
+    --accent-orange: #fca311; 
+    --accent-orange-hover: #e5940e; /* Un tono más oscuro para hover */
+
+    /* --- COLORES DE TEXTO --- */
+    --text-white: #ffffff;      /* Texto principal */
+    --text-muted: #a0a0a0;      /* Texto secundario y descripciones */
+
+    /* --- BORDES Y DIVISIONES --- */
+    --border-color: #333333;    /* Líneas sutiles de división */
+
+    /* --- ESTADOS Y BADGES --- */
+    --red-badge: #d9534f;       /* Para 'URGENTE' */
+    --green-badge: #5cb85c;     /* Para 'FINDE' o estado activo */
+    --whatsapp-green: #25d366;  /* Color oficial de WhatsApp */
+
+    /* --- TIPOGRAFÍA --- */
     --font-primary: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
@@ -41,14 +54,14 @@ a {
 }
 
 /* ==========================================================================
-   HEADER / NAVBAR
+   HEADER / NAVBAR (Analizado de la web)
    ========================================================================== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: rgba(15, 23, 42, 0.95);
+    background-color: rgba(0, 0, 0, 0.95); /* Negro con transparencia */
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
@@ -64,11 +77,13 @@ a {
     line-height: 1;
 }
 
+/* Subtítulo del logo en la imagen */
 .logo-subtitle {
     font-size: 0.65rem;
-    color: var(--accent-orange);
+    color: var(--text-white); /* En la imagen es blanco */
     font-weight: 700;
     letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
 .nav-links {
@@ -79,13 +94,13 @@ a {
 
 .nav-link {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--text-white); /* Texto principal blanco */
     transition: color 0.2s;
     font-weight: 500;
 }
 
 .nav-link:hover, .nav-link.active {
-    color: var(--text-white);
+    color: var(--accent-orange); /* Hover en naranja */
 }
 
 .dropdown {
@@ -114,13 +129,13 @@ a {
     display: block;
     padding: 0.75rem 1rem;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--text-white);
     transition: background 0.2s, color 0.2s;
 }
 
 .dropdown-menu a:hover {
     background: var(--bg-card-hover);
-    color: var(--text-white);
+    color: var(--accent-orange);
 }
 
 .nav-actions {
@@ -146,11 +161,12 @@ a {
 
 .btn-login:hover {
     border-color: var(--text-white);
+    background-color: var(--bg-card-hover);
 }
 
 .btn-register {
     background: var(--accent-orange);
-    color: var(--text-white);
+    color: #000000; /* Texto negro sobre naranja */
 }
 
 .btn-register:hover {
@@ -180,11 +196,24 @@ a {
     align-items: center;
 }
 
+/* Ajuste de imagen de fondo según escritorio (opcional si usas img tag o bg) */
+/* .hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('tu-imagen-de-cocinero.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3; /* Para que el texto destaque */
+    z-index: -1;
+} */
+
 .hero-title {
     font-size: 2.5rem;
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: 1rem;
+    text-transform: uppercase; /* Como en la imagen */
 }
 
 .highlight {
@@ -192,7 +221,7 @@ a {
 }
 
 .hero-subtitle {
-    color: var(--text-muted);
+    color: var(--text-white); /* Texto principal es blanco */
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
 }
@@ -212,17 +241,22 @@ a {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    text-transform: uppercase;
 }
 
 .btn-primary {
     background: var(--accent-orange);
-    color: #fff;
+    color: #000000; /* Texto negro */
 }
 
 .btn-secondary {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-white);
+    background: transparent;
+    border: 2px solid var(--accent-orange); /* Borde naranja */
+    color: var(--accent-orange); /* Texto naranja */
+}
+
+.btn-secondary:hover {
+    background: rgba(252, 163, 17, 0.1); /* Ligero fondo naranja */
 }
 
 .hero-features {
@@ -230,7 +264,7 @@ a {
     gap: 1rem;
     flex-wrap: wrap;
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: var(--text-white);
 }
 
 /* Tarjeta Express */
@@ -249,13 +283,17 @@ a {
     margin-bottom: 0.5rem;
 }
 
+.card-header h3 {
+    text-transform: uppercase;
+}
+
 .text-warning {
     color: var(--accent-orange);
 }
 
 .hero-card-express p {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--text-white);
     margin-bottom: 1rem;
 }
 
@@ -266,7 +304,7 @@ a {
 .express-form input, .express-form select {
     width: 100%;
     padding: 0.75rem;
-    background: var(--bg-main);
+    background: #1e1e1e; /* Fondo de inputs ligeramente más claro */
     border: 1px solid var(--border-color);
     border-radius: 6px;
     color: var(--text-white);
@@ -281,7 +319,7 @@ a {
 .btn-whatsapp {
     width: 100%;
     padding: 0.8rem;
-    background: #22c55e;
+    background: var(--whatsapp-green);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -292,10 +330,11 @@ a {
     align-items: center;
     gap: 0.5rem;
     transition: background 0.2s;
+    text-transform: uppercase;
 }
 
 .btn-whatsapp:hover {
-    background: #16a34a;
+    background: #1da851;
 }
 
 .response-tag {
@@ -329,6 +368,10 @@ a {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    text-transform: uppercase;
 }
 
 .link-more {
@@ -366,6 +409,7 @@ a {
 
 .category-card h4 {
     font-size: 0.9rem;
+    color: var(--text-white);
 }
 
 .category-card .count {
@@ -407,7 +451,7 @@ a {
     background: var(--accent-orange);
     border: none;
     border-radius: 6px;
-    color: #fff;
+    color: #000000;
     cursor: pointer;
 }
 
@@ -416,6 +460,27 @@ a {
     flex-direction: column;
     gap: 0.8rem;
 }
+
+/* Estilos para Ofertas Destacadas (Mobile Imagen 2) */
+.vacante-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.vacante-img {
+    width: 60px; height: 60px; border-radius: 8px; background-size: cover;
+}
+
+.vacante-info h4 { font-size: 1rem; color: var(--text-white); }
+.vacante-details { font-size: 0.8rem; color: var(--text-muted); }
+.badge { padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+.badge-urgente { background: var(--red-badge); color: #fff; }
+.badge-finde { background: var(--green-badge); color: #fff; }
+
 
 .link-more-full {
     display: block;
@@ -440,39 +505,41 @@ a {
     border-radius: 8px;
     padding: 1rem;
     position: relative;
+    text-align: center; /* Como en escritorio */
 }
 
 .avatar-status {
     position: relative;
-    width: 40px;
-    height: 40px;
-    margin-bottom: 0.5rem;
+    width: 60px; /* Un poco más grande */
+    height: 60px;
+    margin: 0 auto 0.5rem auto;
 }
 
 .avatar-placeholder {
     width: 100%;
     height: 100%;
-    background: #334155;
+    background: #333333;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.85rem;
+    font-size: 1rem;
+    color: var(--text-white);
 }
 
 .status-badge.active {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     background: var(--green-badge);
     border: 2px solid var(--bg-card);
     border-radius: 50%;
 }
 
-.talent-card h4 { font-size: 0.95rem; }
+.talent-card h4 { font-size: 0.95rem; color: var(--text-white); }
 .talent-card .role { font-size: 0.8rem; color: var(--accent-orange); font-weight: 600; }
 .talent-card .rating { font-size: 0.75rem; color: #f59e0b; margin: 0.2rem 0; }
 .talent-card .detail { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
@@ -480,14 +547,14 @@ a {
 
 /* Blog Banner */
 .blog-banner {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: linear-gradient(135deg, #121212 0%, #000000 100%);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 1.5rem;
 }
 
-.blog-banner h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-.blog-banner p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+.blog-banner h2 { font-size: 1.2rem; margin-bottom: 0.5rem; text-transform: uppercase; }
+.blog-banner p { font-size: 0.85rem; color: var(--text-white); margin-bottom: 1rem; }
 .btn-outline-light {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -495,9 +562,13 @@ a {
     border-radius: 6px;
     font-size: 0.8rem;
     font-weight: 600;
+    color: var(--text-white);
+}
+.btn-outline-light:hover {
+    background-color: var(--bg-card-hover);
 }
 
-/* Stats */
+/* Stats (Escritorio Imagen 1) */
 .stats-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -519,7 +590,7 @@ a {
     color: var(--accent-orange);
 }
 
-.stat-info h4 { font-size: 1.5rem; font-weight: 800; }
+.stat-info h4 { font-size: 1.5rem; font-weight: 800; color: var(--text-white); }
 .stat-info p { font-size: 0.8rem; color: var(--text-muted); }
 
 /* ==========================================================================
@@ -569,6 +640,8 @@ a {
 .modal-header h3 {
     font-size: 1.25rem;
     font-weight: 700;
+    color: var(--text-white);
+    text-transform: uppercase;
 }
 
 .modal-header .subtitle {
@@ -617,7 +690,7 @@ a {
 }
 
 /* ==========================================================================
-   MOBILE BOTTOM NAV & FLOATING BUTTON
+   MOBILE BOTTOM NAV & FLOATING BUTTON (Imagen 2)
    ========================================================================== */
 .bottom-nav {
     display: flex;
@@ -643,20 +716,39 @@ a {
     margin-bottom: 0.2rem;
 }
 
+/* Estado activo en mobile */
 .bottom-nav-item.active {
     color: var(--accent-orange);
 }
 
+/* Ítem destacado (Personal YA) */
 .bottom-nav-item.highlight-item {
     color: var(--accent-orange);
 }
 
+/* Botón flotante de WhatsApp (Mobile Imagen 2) */
 .floating-whatsapp-btn {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 85px; /* Por encima de la bottom nav */
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--whatsapp-green);
+    color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    font-size: 2rem;
 }
 
 @media (min-width: 768px) {
     .bottom-nav {
+        display: none;
+    }
+    .floating-whatsapp-btn {
         display: none;
     }
 }
