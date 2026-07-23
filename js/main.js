@@ -78,6 +78,23 @@ function escapeHTML(str) {
         .replace(/'/g, '&#039;');
 }
 
+// Helper para validar la fortaleza y coincidencia de la contraseña
+function validarSeguridadPassword(password, confirmPassword) {
+    if (password !== confirmPassword) {
+        return "Las contraseñas no coinciden.";
+    }
+    if (password.length < 8) {
+        return "La contraseña debe tener al menos 8 caracteres.";
+    }
+    if (!/[A-Z]/.test(password)) {
+        return "La contraseña debe incluir al menos una letra mayúscula.";
+    }
+    if (!/[0-9]/.test(password)) {
+        return "La contraseña debe incluir al menos un número.";
+    }
+    return null;
+}
+
 // Desplegable de Recursos
 function toggleDropdown(e) {
     e.preventDefault();
@@ -167,6 +184,12 @@ function abrirModal(tipo, ofertaId = null) {
                     <input type="email" id="auth-email" placeholder="Correo electrónico" required>
                 </div>
                 <div class="form-group">
+                    <input type="password" id="auth-password" placeholder="Contraseña (mín. 8 caract., 1 mayúscula, 1 número)" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="auth-confirm-password" placeholder="Repetir contraseña" required>
+                </div>
+                <div class="form-group">
                     <select id="auth-rol" required>
                         <option value="postulante">Soy Postulante</option>
                         <option value="empleador">Soy Empleador</option>
@@ -207,7 +230,6 @@ function abrirModal(tipo, ofertaId = null) {
     modal.classList.add('show');
     modal.setAttribute('aria-hidden', 'false');
 
-    // Foco en el primer input del modal
     const firstInput = body.querySelector('input, select');
     if (firstInput) firstInput.focus();
 }
@@ -220,12 +242,26 @@ function cerrarModal() {
     }
 }
 
+// Procesar Registro o Login
 function procesarAutenticacion(e, accion) {
     e.preventDefault();
     const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password')?.value;
     const nombre = document.getElementById('auth-nombre')?.value || email.split('@')[0];
     const rol = document.getElementById('auth-rol')?.value || 'postulante';
 
+    // Validación si es registro
+    if (accion === 'registro') {
+        const confirmPassword = document.getElementById('auth-confirm-password')?.value;
+        const errorValidacion = validarSeguridadPassword(password, confirmPassword);
+
+        if (errorValidacion) {
+            mostrarToast(errorValidacion, 'warning');
+            return;
+        }
+    }
+
+    // Persistencia de sesión
     localStorage.setItem('jobbers_user', JSON.stringify({ nombre, email, rol }));
     
     mostrarToast(accion === 'registro' ? '¡Cuenta creada con éxito!' : '¡Bienvenido de nuevo!', 'success');
@@ -245,7 +281,7 @@ function cerrarSesion() {
     mostrarToast('Has cerrado sesión correctamente', 'info');
 }
 
-// Renderizado de tarjetas usando clases CSS en lugar de inline styles
+// Renderizado de tarjetas usando clases CSS
 function renderizarTarjetasVacantes(ofertas) {
     const container = document.getElementById('vacantes-container');
     if (!container) return;
