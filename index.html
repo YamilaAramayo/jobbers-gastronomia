@@ -35,7 +35,6 @@
             <a href="#nosotros" class="nav-link">Nosotros</a>
         </nav>
 
-        <!-- Unificado en un solo acceso para evitar confusión en Header -->
         <div id="nav-actions" class="nav-actions">
             <button type="button" class="btn-login" onclick="abrirModal('login')">Ingresar</button>
         </div>
@@ -43,7 +42,7 @@
 
     <main class="main-content">
         
-        <!-- Hero Section con Botones Jerarquizados -->
+        <!-- Hero Section -->
         <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');">
             <div class="hero-overlay"></div>
             <div class="hero-container">
@@ -51,9 +50,7 @@
                     <h1 class="hero-title">LABURO REAL<br><span class="highlight">EN GASTRONOMÍA.</span></h1>
                     <p class="hero-subtitle">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
                     
-                    <!-- Botones Principales Rediseñados -->
                     <div class="hero-buttons">
-                        
                         <!-- Candidato -->
                         <div class="hero-btn-wrapper">
                             <a href="#vacantes-container" class="btn-primary">
@@ -62,14 +59,13 @@
                             <span class="btn-subtext">Postulate o cargá tu CV</span>
                         </div>
 
-                        <!-- Empresa (Sin Registro - Express) -->
+                        <!-- Empresa (Express) -->
                         <div class="hero-btn-wrapper">
                             <a href="#express-form-section" class="btn-secondary btn-express-direct">
                                 <i class="fa-solid fa-bolt" aria-hidden="true"></i> NECESITO PERSONAL YA
                             </a>
                             <span class="btn-subtext highlight-express">⚡ Sin registro • Pedido rápido</span>
                         </div>
-
                     </div>
 
                     <div class="hero-features">
@@ -79,7 +75,7 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta Express flotante (Desktop) / Caja CTA (Mobile) -->
+                <!-- Tarjeta Express -->
                 <div class="hero-card-express" id="express-form-section">
                     <div class="card-header">
                         <i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i>
@@ -125,7 +121,7 @@
             </div>
         </section>
 
-        <!-- Categorías / Puestos Más Buscados -->
+        <!-- Categorías -->
         <section class="categories-section">
             <div class="section-header">
                 <h2>BUSCÁ POR CATEGORÍA</h2>
@@ -176,7 +172,7 @@
             </div>
         </section>
 
-        <!-- Ofertas Destacadas + Talento -->
+        <!-- Ofertas + Talento -->
         <section class="main-grid-section">
             <div class="column-offers">
                 <h2>OFERTAS DESTACADAS</h2>
@@ -187,7 +183,7 @@
                 </div>
 
                 <div id="vacantes-container" class="vacantes-container">
-                    <!-- Dinámico con JS -->
+                    <!-- Contenido dinámico con JS -->
                 </div>
                 
                 <a href="#" class="link-more-full">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
@@ -322,7 +318,6 @@
     <!-- Contenedor Toast -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- Vinculación correcta del archivo JS -->
     <script src="js/app.js"></script>
 </body>
 </html>
