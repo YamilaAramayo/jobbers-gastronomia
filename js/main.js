@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarBarraNavegacion();
     renderizarTarjetasVacantes(vacantesGlobales);
 
-    // Formulario de envío express por WhatsApp
+    // 1. Formulario de envío express por WhatsApp
     const expressForm = document.getElementById('express-form');
     if (expressForm) {
         expressForm.addEventListener('submit', (e) => {
@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Scroll suave para enlaces de navegación
-    document.querySelectorAll('.nav-link, .bottom-nav-item').forEach(link => {
+    // 2. Scroll suave para enlaces de navegación
+    document.querySelectorAll('.nav-link, .bottom-nav-item, a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Cerrar modal o dropdowns al hacer clic afuera o con Escape
+    // 3. Cerrar modal o dropdowns al hacer clic afuera o con Escape
     window.addEventListener('click', (e) => {
         const modal = document.getElementById('modal');
         if (e.target === modal) cerrarModal();
@@ -183,7 +183,7 @@ function abrirModal(tipo, ofertaId = null) {
 
             <div style="text-align:center; border-top:1px solid var(--border-color); padding-top:1rem;">
                 <p style="font-size:0.8rem; color:var(--text-muted);">
-                    ¿Querés pedir personal ya? <a href="#express-form-section" onclick="cerrarModal()" style="color:var(--whatsapp-green); font-weight:700;">Hacé tu pedido directo sin registro</a>
+                    ¿Querés pedir personal ya? <a href="#express-form" onclick="cerrarModal()" style="color:var(--whatsapp-green, #25D366); font-weight:700;">Hacé tu pedido directo sin registro</a>
                 </p>
             </div>
         `;
@@ -355,7 +355,7 @@ function mostrarToast(mensaje, tipo = 'info') {
     const toast = document.createElement('div');
     
     let bg = '#181b20';
-    let border = 'var(--border-color)';
+    let border = 'var(--border-color, #27272a)';
     if (tipo === 'success') { bg = '#064e3b'; border = '#10b981'; }
     if (tipo === 'warning') { bg = '#78350f'; border = '#f59e0b'; }
     if (tipo === 'info') { bg = '#1e3a8a'; border = '#3b82f6'; }
