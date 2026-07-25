@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JOBBERS - LOGICA DE INTERFAZ Y MANEJO DE ESTADOS
+   JOBBERS - LÓGICA DE INTERFAZ Y MANEJO DE ESTADOS COMPLETA
    ========================================================================== */
 
 // Datos locales de prueba (Vacantes activas)
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
    HELPERS & VALIDACIONES
    ========================================================================== */
 
-// Prevenir XSS en texto inyectado
 function escapeHTML(str) {
     if (!str) return '';
     return String(str)
@@ -86,7 +85,6 @@ function escapeHTML(str) {
         .replace(/'/g, '&#039;');
 }
 
-// Validar fortaleza y coincidencia de contraseña
 function validarSeguridadPassword(password, confirmPassword) {
     if (password !== confirmPassword) {
         return "Las contraseñas no coinciden.";
@@ -151,14 +149,13 @@ function actualizarBarraNavegacion() {
         `;
     } else {
         navActions.innerHTML = `
-            <button type="button" class="btn-login" onclick="abrirModal('login')">Iniciar sesión</button>
-            <button type="button" class="btn-register" onclick="abrirModal('registro')">Registrarme</button>
+            <button type="button" class="btn-login" onclick="abrirModal('login')">Ingresar</button>
         `;
     }
 }
 
 /* ==========================================================================
-   MODAL DINÁMICO & SELECCIÓN DE PERFIL
+   MODAL DINÁMICO & FLUJOS DE USUARIO (Postulante vs Empleador)
    ========================================================================== */
 
 function abrirModal(tipo, ofertaId = null) {
@@ -175,7 +172,6 @@ function abrirModal(tipo, ofertaId = null) {
                 <p class="subtitle" style="color:var(--text-muted); font-size:0.85rem;">Elegí cómo querés ingresar a Jobbers</p>
             </div>
 
-            <!-- Selección Clara de Rol -->
             <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.5rem;">
                 <button type="button" class="btn-primary" style="width:100%; justify-content:center;" onclick="mostrarFormularioAuth('postulante')">
                     <i class="fa-solid fa-user"></i> Soy Postulante / Busco Trabajo
@@ -191,6 +187,30 @@ function abrirModal(tipo, ofertaId = null) {
                 </p>
             </div>
         `;
+    } else if (tipo === 'postular') {
+        const oferta = vacantesGlobales.find(v => v.id === ofertaId);
+        if (oferta) {
+            contenidoHTML = `
+                <div class="modal-header" style="margin-bottom:1rem;">
+                    <h3 style="font-size:1.2rem;">Postularme a ${escapeHTML(oferta.titulo)}</h3>
+                    <p style="color:var(--text-muted); font-size:0.85rem;">Empresa: ${escapeHTML(oferta.empresa)} (${escapeHTML(oferta.ubicacion)})</p>
+                </div>
+                <form id="form-postulacion" class="express-form" onsubmit="procesarPostulacion(event, ${oferta.id})">
+                    <div class="form-group">
+                        <input type="text" id="post-nombre" placeholder="Nombre completo" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="post-telefono" placeholder="Número de WhatsApp" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="post-email" placeholder="Correo electrónico" required>
+                    </div>
+                    <button type="submit" class="btn-whatsapp" style="margin-top:1rem; width:100%;">
+                        ENVIAR POSTULACIÓN
+                    </button>
+                </form>
+            `;
+        }
     }
 
     body.innerHTML = contenidoHTML;
@@ -198,7 +218,6 @@ function abrirModal(tipo, ofertaId = null) {
     modal.setAttribute('aria-hidden', 'false');
 }
 
-// Función auxiliar para desplegar los inputs según el rol seleccionado
 function mostrarFormularioAuth(rol) {
     const body = document.getElementById('modal-body');
     const titulo = rol === 'empleador' ? 'Ingreso para Empresas' : 'Ingreso para Candidatos';
@@ -206,21 +225,60 @@ function mostrarFormularioAuth(rol) {
     body.innerHTML = `
         <div class="modal-header" style="margin-bottom:1.2rem;">
             <h3>${titulo}</h3>
-            <p class="subtitle" style="color:var(--text-muted); font-size:0.85rem;">Ingresá tus credenciales</p>
+            <p class="subtitle" style="color:var(--text-muted); font-size:0.85rem;">Ingresá tus credenciales para continuar</p>
         </div>
-        <form id="form-auth" class="express-form" onsubmit="procesarAutenticacion(event, 'login')">
+        <form id="form-auth" class="express-form" onsubmit="procesarAutenticacion(event, '${rol}')">
             <div class="form-group">
                 <input type="email" id="auth-email" placeholder="Correo electrónico" required autofocus>
             </div>
             <div class="form-group">
                 <input type="password" id="auth-password" placeholder="Contraseña" required>
             </div>
-            <button type="submit" class="btn-whatsapp" style="margin-top:1rem;">Ingresar</button>
+            <button type="submit" class="btn-whatsapp" style="margin-top:1rem; width:100%;">Ingresar</button>
         </form>
-        <div style="text-align:center; margin-top:1rem;">
+        <div style="text-align:center; margin-top:1.2rem;">
             <a href="#" onclick="abrirModal('login')" style="color:var(--text-muted); font-size:0.8rem;">&larr; Volver a seleccionar rol</a>
         </div>
     `;
+}
+
+function cerrarModal() {
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+}
+
+function procesarAutenticacion(event, rol) {
+    event.preventDefault();
+    const email = document.getElementById('auth-email').value;
+    const nombreExtraido = email.split('@')[0];
+    const nombreFormateado = nombreExtraido.charAt(0).toUpperCase() + nombreExtraido.slice(1);
+
+    const usuario = {
+        nombre: nombreFormateado,
+        email: email,
+        rol: rol
+    };
+
+    localStorage.setItem('jobbers_user', JSON.stringify(usuario));
+    actualizarBarraNavegacion();
+    cerrarModal();
+    mostrarToast(`¡Bienvenido/a de nuevo, ${nombreFormateado}!`, 'success');
+}
+
+function cerrarSesion() {
+    localStorage.removeItem('jobbers_user');
+    actualizarBarraNavegacion();
+    mostrarToast('Sesión cerrada correctamente.', 'info');
+}
+
+function procesarPostulacion(event, ofertaId) {
+    event.preventDefault();
+    const nombre = document.getElementById('post-nombre').value;
+    cerrarModal();
+    mostrarToast(`¡Gracias ${nombre}! Tu postulación fue enviada con éxito.`, 'success');
 }
 
 /* ==========================================================================
@@ -273,13 +331,12 @@ function filtrarVacantes() {
 }
 
 /* ==========================================================================
-   NOTIFICACIONES TOAST (Manejo dinámico)
+   NOTIFICACIONES TOAST
    ========================================================================== */
 
 function mostrarToast(mensaje, tipo = 'info') {
     let container = document.getElementById('toast-container');
     
-    // Si no existe el contenedor de toasts en el DOM, lo crea dinámicamente
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
@@ -297,7 +354,6 @@ function mostrarToast(mensaje, tipo = 'info') {
 
     const toast = document.createElement('div');
     
-    // Color según tipo
     let bg = '#181b20';
     let border = 'var(--border-color)';
     if (tipo === 'success') { bg = '#064e3b'; border = '#10b981'; }
@@ -317,7 +373,6 @@ function mostrarToast(mensaje, tipo = 'info') {
     `;
     
     toast.innerHTML = `<span>${escapeHTML(mensaje)}</span>`;
-    
     container.appendChild(toast);
     
     setTimeout(() => {
