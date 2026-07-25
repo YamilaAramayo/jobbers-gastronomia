@@ -125,46 +125,46 @@
         <section class="categories-section">
             <div class="section-header">
                 <h2>BUSCÁ POR CATEGORÍA</h2>
-                <a href="#" class="link-more">Ver todas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                <a href="#vacantes-container" class="link-more">Ver todas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
             
             <div class="categories-grid">
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Cocina'; filtrarVacantes();">
                     <i class="fa-solid fa-utensils" aria-hidden="true"></i>
                     <h3>Cocina</h3>
                     <span class="count">1.243 ofertas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Mozo'; filtrarVacantes();">
                     <i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>
                     <h3>Mozo / Salonero</h3>
                     <span class="count">982 ofertas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Barista'; filtrarVacantes();">
                     <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
                     <h3>Barista</h3>
                     <span class="count">567 ofertas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Bartender'; filtrarVacantes();">
                     <i class="fa-solid fa-martini-glass-citrus" aria-hidden="true"></i>
                     <h3>Bartender</h3>
                     <span class="count">458 ofertas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Cajero'; filtrarVacantes();">
                     <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
                     <h3>Cajero</h3>
                     <span class="count">324 ofertas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Delivery'; filtrarVacantes();">
                     <i class="fa-solid fa-motorcycle" aria-hidden="true"></i>
                     <h3>Delivery</h3>
                     <span class="count">1.105 ofertas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Pastelería'; filtrarVacantes();">
                     <i class="fa-solid fa-cake-candles" aria-hidden="true"></i>
                     <h3>Pastelería</h3>
                     <span class="count">256 ofertas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" onclick="document.getElementById('search-filter').value='Encargado'; filtrarVacantes();">
                     <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
                     <h3>Encargado</h3>
                     <span class="count">278 ofertas</span>
@@ -179,20 +179,20 @@
                 
                 <div class="search-bar">
                     <input type="text" id="search-filter" placeholder="Buscar por puesto, empresa o zona..." oninput="filtrarVacantes()" aria-label="Filtrar ofertas por término de búsqueda">
-                    <button type="button" class="btn-search" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                    <button type="button" class="btn-search" onclick="filtrarVacantes()" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
                 </div>
 
                 <div id="vacantes-container" class="vacantes-container">
                     <!-- Contenido dinámico con JS -->
                 </div>
                 
-                <a href="#" class="link-more-full">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                <a href="#vacantes-container" class="link-more-full" onclick="document.getElementById('search-filter').value=''; filtrarVacantes();">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
 
             <div class="column-talent">
                 <div class="section-header">
                     <h2>TALENTO DESTACADO</h2>
-                    <a href="#" class="link-more">Ver todos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                    <a href="#" class="link-more" onclick="return false;">Ver todos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
                 </div>
 
                 <div class="talent-grid">
@@ -237,7 +237,7 @@
                     <div class="blog-banner-content">
                         <h2>FORMÁ PARTE DE LA COMUNIDAD <span class="highlight">JOBBERS</span></h2>
                         <p>Recursos, tips y contenido exclusivo para crecer en gastronomía.</p>
-                        <a href="#blog" class="btn-outline-light">IR AL BLOG</a>
+                        <a href="#nosotros" class="btn-outline-light">SABER MÁS</a>
                     </div>
                 </div>
             </div>
@@ -295,11 +295,11 @@
             <i class="fa-solid fa-bolt" aria-hidden="true"></i>
             <span>Personal YA</span>
         </a>
-        <a href="#" class="bottom-nav-item">
+        <a href="#vacantes-container" class="bottom-nav-item">
             <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
-            <span>Mis empleos</span>
+            <span>Empleos</span>
         </a>
-        <a href="#" class="bottom-nav-item" onclick="abrirModal('login')">
+        <a href="#" class="bottom-nav-item" onclick="abrirModal('login'); return false;">
             <i class="fa-regular fa-user" aria-hidden="true"></i>
             <span>Mi cuenta</span>
         </a>
