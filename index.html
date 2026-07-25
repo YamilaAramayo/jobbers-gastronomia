@@ -35,15 +35,15 @@
             <a href="#nosotros" class="nav-link">Nosotros</a>
         </nav>
 
+        <!-- Unificado en un solo acceso para evitar confusión en Header -->
         <div id="nav-actions" class="nav-actions">
-            <button type="button" class="btn-login" onclick="abrirModal('login')">Iniciar sesión</button>
-            <button type="button" class="btn-register" onclick="abrirModal('registro')">Registrarme</button>
+            <button type="button" class="btn-login" onclick="abrirModal('login')">Ingresar</button>
         </div>
     </header>
 
     <main class="main-content">
         
-        <!-- Hero Section con la Imagen de Fondo Integrada -->
+        <!-- Hero Section con Botones Jerarquizados -->
         <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');">
             <div class="hero-overlay"></div>
             <div class="hero-container">
@@ -51,9 +51,25 @@
                     <h1 class="hero-title">LABURO REAL<br><span class="highlight">EN GASTRONOMÍA.</span></h1>
                     <p class="hero-subtitle">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
                     
+                    <!-- Botones Principales Rediseñados -->
                     <div class="hero-buttons">
-                        <a href="#vacantes-container" class="btn-primary"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> BUSCO TRABAJO</a>
-                        <a href="#express-form-section" class="btn-secondary"><i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i> NECESITO PERSONAL YA</a>
+                        
+                        <!-- Candidato -->
+                        <div class="hero-btn-wrapper">
+                            <a href="#vacantes-container" class="btn-primary">
+                                <i class="fa-solid fa-briefcase" aria-hidden="true"></i> BUSCO TRABAJO
+                            </a>
+                            <span class="btn-subtext">Postulate o cargá tu CV</span>
+                        </div>
+
+                        <!-- Empresa (Sin Registro - Express) -->
+                        <div class="hero-btn-wrapper">
+                            <a href="#express-form-section" class="btn-secondary btn-express-direct">
+                                <i class="fa-solid fa-bolt" aria-hidden="true"></i> NECESITO PERSONAL YA
+                            </a>
+                            <span class="btn-subtext highlight-express">⚡ Sin registro • Pedido rápido</span>
+                        </div>
+
                     </div>
 
                     <div class="hero-features">
@@ -69,9 +85,9 @@
                         <i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i>
                         <h2>¿NECESITÁS PERSONAL HOY?</h2>
                     </div>
-                    <p>Publicá tu búsqueda en segundos y llegá a los mejores perfiles.</p>
+                    <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
                     
-                    <form id="express-form" class="express-form" onsubmit="enviarWhatsAppExpress(event)">
+                    <form id="express-form" class="express-form">
                         <div class="form-group">
                             <select id="puesto" aria-label="Seleccionar puesto requerido" required>
                                 <option value="" disabled selected>Puesto que necesitas</option>
@@ -104,7 +120,7 @@
                             <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
                         </button>
                     </form>
-                    <span class="response-tag">Te respondemos de inmediato</span>
+                    <span class="response-tag">⚡ Conexión inmediata vía WhatsApp</span>
                 </div>
             </div>
         </section>
@@ -160,10 +176,8 @@
             </div>
         </section>
 
-        <!-- Ofertas Destacadas + Talento Destacado + Blog Banner -->
+        <!-- Ofertas Destacadas + Talento -->
         <section class="main-grid-section">
-            
-            <!-- Columna Ofertas -->
             <div class="column-offers">
                 <h2>OFERTAS DESTACADAS</h2>
                 
@@ -173,17 +187,16 @@
                 </div>
 
                 <div id="vacantes-container" class="vacantes-container">
-                    <!-- Se cargan dinámicamente con JS -->
+                    <!-- Dinámico con JS -->
                 </div>
                 
                 <a href="#" class="link-more-full">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
 
-            <!-- Columna Talento -->
             <div class="column-talent">
                 <div class="section-header">
                     <h2>TALENTO DESTACADO</h2>
-                    <a href="#" class="link-more">Ver todos los perfiles <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                    <a href="#" class="link-more">Ver todos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
                 </div>
 
                 <div class="talent-grid">
@@ -224,7 +237,6 @@
                     </div>
                 </div>
 
-                <!-- Blog CTA Box -->
                 <div class="blog-banner">
                     <div class="blog-banner-content">
                         <h2>FORMÁ PARTE DE LA COMUNIDAD <span class="highlight">JOBBERS</span></h2>
@@ -233,7 +245,6 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
         <!-- Estadísticas -->
@@ -268,14 +279,13 @@
             </div>
         </section>
 
-        <!-- Sección Nosotros -->
         <section id="nosotros" class="info-section">
             <h2>Sobre Jobbers</h2>
             <p>Conectamos a los mejores talentos de la gastronomía con bares, restaurantes y hoteles líderes de la región.</p>
         </section>
     </main>
 
-    <!-- Bottom Navigation Bar (Mobile) -->
+    <!-- Bottom Nav Mobile -->
     <nav class="bottom-nav" aria-label="Navegación inferior mobile">
         <a href="#" class="bottom-nav-item active">
             <i class="fa-solid fa-house" aria-hidden="true"></i>
@@ -291,23 +301,13 @@
         </a>
         <a href="#" class="bottom-nav-item">
             <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
-            <span>Mis postulaciones</span>
+            <span>Mis empleos</span>
         </a>
         <a href="#" class="bottom-nav-item" onclick="abrirModal('login')">
             <i class="fa-regular fa-user" aria-hidden="true"></i>
             <span>Mi cuenta</span>
         </a>
     </nav>
-
-    <!-- Botón Flotante Mobile Personal YA (Verde WhatsApp) -->
-    <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20personal%20gastron%C3%B3mico." 
-       class="floating-whatsapp-btn" 
-       target="_blank" 
-       rel="noopener noreferrer"
-       aria-label="Contactar por WhatsApp para solicitar personal de forma inmediata">
-        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-        <span>PERSONAL YA</span>
-    </a>
 
     <!-- Modal Genérico -->
     <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
@@ -319,9 +319,10 @@
         </div>
     </div>
 
-    <!-- Contenedor Toast Notifications -->
+    <!-- Contenedor Toast -->
     <div id="toast-container" class="toast-container"></div>
 
-    <script src="js/main.js"></script>
+    <!-- Vinculación correcta del archivo JS -->
+    <script src="js/app.js"></script>
 </body>
 </html>
