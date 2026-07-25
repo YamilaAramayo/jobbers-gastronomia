@@ -216,6 +216,12 @@ function abrirModal(tipo, ofertaId = null) {
     body.innerHTML = contenidoHTML;
     modal.classList.add('show');
     modal.setAttribute('aria-hidden', 'false');
+
+    // Foco automático en el primer campo habilitado
+    setTimeout(() => {
+        const firstInput = body.querySelector('input[autofocus], input, button');
+        if (firstInput) firstInput.focus();
+    }, 50);
 }
 
 function mostrarFormularioAuth(rol) {
@@ -237,9 +243,14 @@ function mostrarFormularioAuth(rol) {
             <button type="submit" class="btn-whatsapp" style="margin-top:1rem; width:100%;">Ingresar</button>
         </form>
         <div style="text-align:center; margin-top:1.2rem;">
-            <a href="#" onclick="abrirModal('login')" style="color:var(--text-muted); font-size:0.8rem;">&larr; Volver a seleccionar rol</a>
+            <a href="#" onclick="abrirModal('login'); return false;" style="color:var(--text-muted); font-size:0.8rem;">&larr; Volver a seleccionar rol</a>
         </div>
     `;
+
+    setTimeout(() => {
+        const firstInput = body.querySelector('input[autofocus], input');
+        if (firstInput) firstInput.focus();
+    }, 50);
 }
 
 function cerrarModal() {
