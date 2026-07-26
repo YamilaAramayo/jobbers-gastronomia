@@ -125,46 +125,46 @@
         <section class="categories-section">
             <div class="section-header">
                 <h2>BUSCÁ POR CATEGORÍA</h2>
-                <a href="#vacantes-container" class="link-more">Ver todas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                <a href="#vacantes-container" class="link-more" onclick="filtrarPorCategoria('')">Ver todas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
             
             <div class="categories-grid">
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Cocina'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Cocina')">
                     <i class="fa-solid fa-utensils" aria-hidden="true"></i>
                     <h3>Cocina</h3>
                     <span class="count">1.243 ofertas</span>
                 </div>
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Mozo'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Mozo')">
                     <i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>
                     <h3>Mozo / Salonero</h3>
                     <span class="count">982 ofertas</span>
                 </div>
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Barista'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Barista')">
                     <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
                     <h3>Barista</h3>
                     <span class="count">567 ofertas</span>
                 </div>
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Bartender'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Bartender')">
                     <i class="fa-solid fa-martini-glass-citrus" aria-hidden="true"></i>
                     <h3>Bartender</h3>
                     <span class="count">458 ofertas</span>
                 </div>
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Cajero'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Cajero')">
                     <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
                     <h3>Cajero</h3>
                     <span class="count">324 ofertas</span>
                 </div>
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Delivery'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Delivery')">
                     <i class="fa-solid fa-motorcycle" aria-hidden="true"></i>
                     <h3>Delivery</h3>
                     <span class="count">1.105 ofertas</span>
                 </div>
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Pastelería'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Pastelería')">
                     <i class="fa-solid fa-cake-candles" aria-hidden="true"></i>
                     <h3>Pastelería</h3>
                     <span class="count">256 ofertas</span>
                 </div>
-                <div class="category-card" onclick="document.getElementById('search-filter').value='Encargado'; filtrarVacantes();">
+                <div class="category-card" onclick="filtrarPorCategoria('Encargado')">
                     <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
                     <h3>Encargado</h3>
                     <span class="count">278 ofertas</span>
@@ -183,10 +183,10 @@
                 </div>
 
                 <div id="vacantes-container" class="vacantes-container">
-                    <!-- Contenido dinámico con JS -->
+                    <!-- Contenido dinámico generado por JS -->
                 </div>
                 
-                <a href="#vacantes-container" class="link-more-full" onclick="document.getElementById('search-filter').value=''; filtrarVacantes();">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                <a href="#vacantes-container" class="link-more-full" onclick="filtrarPorCategoria('')">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
             </div>
 
             <div class="column-talent">
