@@ -1,25 +1,28 @@
-
 /* ==========================================================================
-   1. VARIABLES & RESET
+   1. VARIABLES & RESET (PALETA MODO OSCURO DE LA IMAGEN)
    ========================================================================== */
 :root {
-  --primary: #FF5A5F;       /* Coral vibrante */
-  --primary-hover: #E0484D;
-  --secondary: #111827;     /* Oscuro elegante */
-  --accent-yellow: #FFB800; /* Para destacados / Express */
-  --whatsapp-green: #25D366;
-  --whatsapp-hover: #1DA851;
-  --bg-light: #F9FAFB;
-  --bg-white: #FFFFFF;
-  --text-main: #1F2937;
-  --text-muted: #6B7280;
-  --border-color: #E5E7EB;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+  --primary: #F39C12;            /* Ámbar / Naranja brillante */
+  --primary-hover: #D68910;
+  --secondary: #0D0D0D;          /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;            /* Fondo de tarjetas y secciones */
+  --card-bg-light: #212428;      /* Hover o tarjetas secundarias */
+  --whatsapp-orange: #F39C12;     /* Botón de acción principal */
+  --whatsapp-hover: #E67E22;
+  
+  --bg-dark: #0A0B0C;
+  --text-main: #FFFFFF;
+  --text-muted: #9CA3AF;
+  --text-dark: #111827;          /* Para texto sobre botones naranjas */
+  --border-color: #2D3137;
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 10px rgba(0,0,0,0.5);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.7);
   --transition: all 0.25s ease-in-out;
 }
 
@@ -31,7 +34,7 @@
 
 body {
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-light);
+  background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.5;
   padding-bottom: 60px; /* Offset para el Bottom Nav mobile */
@@ -53,15 +56,16 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background-color: var(--bg-white);
+  background-color: var(--secondary);
+  border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
 }
 
 .logo h2 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 900;
-  letter-spacing: 1px;
-  color: var(--primary);
+  letter-spacing: 1.5px;
+  color: var(--text-main);
   line-height: 1;
 }
 
@@ -80,8 +84,8 @@ a {
 
 .nav-link {
   font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--text-main);
+  font-size: 0.9rem;
+  color: #D1D5DB;
   transition: var(--transition);
   background: none;
   border: none;
@@ -98,16 +102,21 @@ a {
 }
 
 .dropdown-menu {
-  display: none; /* Controlado con JS o hover */
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background: var(--bg-white);
+  background: var(--card-bg);
   box-shadow: var(--shadow-lg);
   border-radius: var(--radius-sm);
   overflow: hidden;
   min-width: 180px;
   z-index: 10;
+  border: 1px solid var(--border-color);
+}
+
+.dropdown-menu.show {
+  display: block;
 }
 
 .dropdown-menu a {
@@ -118,15 +127,15 @@ a {
 }
 
 .dropdown-menu a:hover {
-  background-color: var(--bg-light);
+  background-color: var(--card-bg-light);
   color: var(--primary);
 }
 
 /* Botones Nav */
 .btn-login {
   background: transparent;
-  border: 2px solid var(--primary);
-  color: var(--primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
   padding: 0.5rem 1.25rem;
   font-weight: 700;
   border-radius: var(--radius-sm);
@@ -135,8 +144,23 @@ a {
 }
 
 .btn-login:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-register {
   background: var(--primary);
-  color: white;
+  border: none;
+  color: var(--text-dark);
+  padding: 0.5rem 1.25rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-register:hover {
+  background: var(--primary-hover);
 }
 
 /* ==========================================================================
@@ -153,7 +177,7 @@ a {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(17,24,39,0.92) 0%, rgba(17,24,39,0.75) 100%);
+  background: linear-gradient(135deg, rgba(10,11,12,0.92) 0%, rgba(10,11,12,0.75) 100%);
 }
 
 .hero-container {
@@ -168,10 +192,11 @@ a {
 }
 
 .hero-title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 900;
   line-height: 1.1;
   margin-bottom: 1rem;
+  letter-spacing: 0.5px;
 }
 
 .hero-title .highlight {
@@ -180,7 +205,7 @@ a {
 
 .hero-subtitle {
   font-size: 1.1rem;
-  color: #D1D5DB;
+  color: var(--text-muted);
   margin-bottom: 2rem;
 }
 
@@ -203,14 +228,19 @@ a {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.85rem 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   border-radius: var(--radius-sm);
   transition: var(--transition);
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
 }
 
 .btn-primary {
   background-color: var(--primary);
-  color: white;
+  color: var(--text-dark);
 }
 
 .btn-primary:hover {
@@ -218,22 +248,19 @@ a {
 }
 
 .btn-secondary {
-  background-color: white;
-  color: var(--secondary);
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: white;
 }
 
 .btn-secondary:hover {
-  background-color: #F3F4F6;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .btn-subtext {
   font-size: 0.75rem;
-  color: #9CA3AF;
-}
-
-.highlight-express {
-  color: var(--accent-yellow);
-  font-weight: 600;
+  color: var(--text-muted);
 }
 
 .hero-features {
@@ -241,12 +268,17 @@ a {
   flex-wrap: wrap;
   gap: 1.5rem;
   font-size: 0.85rem;
-  color: #E5E7EB;
+  color: #D1D5DB;
+}
+
+.hero-features i {
+  color: var(--primary);
 }
 
 /* Tarjeta Express */
 .hero-card-express {
-  background: white;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 2rem;
   border-radius: var(--radius-md);
@@ -261,16 +293,17 @@ a {
 }
 
 .card-header h2 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
+  text-transform: uppercase;
 }
 
 .text-warning {
-  color: var(--accent-yellow);
+  color: var(--primary);
 }
 
 .hero-card-express p {
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   margin-bottom: 1.25rem;
 }
@@ -281,31 +314,34 @@ a {
   gap: 0.85rem;
 }
 
+.express-form input,
 .form-group select {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  background-color: #FAFAFA;
+  background-color: var(--bg-dark);
   font-size: 0.9rem;
   outline: none;
   transition: var(--transition);
+  color: var(--text-main);
 }
 
+.express-form input:focus,
 .form-group select:focus {
   border-color: var(--primary);
-  background-color: white;
 }
 
 .btn-whatsapp {
   width: 100%;
   padding: 0.85rem;
-  background-color: var(--whatsapp-green);
-  color: white;
+  background-color: var(--primary);
+  color: var(--text-dark);
   border: none;
   border-radius: var(--radius-sm);
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -315,7 +351,7 @@ a {
 }
 
 .btn-whatsapp:hover {
-  background-color: var(--whatsapp-hover);
+  background-color: var(--primary-hover);
 }
 
 .response-tag {
@@ -324,7 +360,6 @@ a {
   font-size: 0.75rem;
   color: var(--text-muted);
   margin-top: 0.75rem;
-  font-weight: 600;
 }
 
 /* ==========================================================================
@@ -344,8 +379,9 @@ a {
 }
 
 .section-header h2 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 800;
+  text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
@@ -357,14 +393,14 @@ a {
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.85rem;
 }
 
 .category-card {
-  background: white;
+  background: var(--card-bg);
   padding: 1.25rem 1rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   text-align: center;
   cursor: pointer;
@@ -374,7 +410,7 @@ a {
 .category-card:hover {
   transform: translateY(-3px);
   border-color: var(--primary);
-  box-shadow: var(--shadow-md);
+  background-color: var(--card-bg-light);
 }
 
 .category-card i {
@@ -384,7 +420,7 @@ a {
 }
 
 .category-card h3 {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
 }
 
@@ -413,50 +449,70 @@ a {
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
+  background: var(--card-bg);
+  color: white;
   outline: none;
+  font-size: 0.9rem;
+}
+
+.search-bar input:focus {
+  border-color: var(--primary);
 }
 
 .btn-search {
   background: var(--primary);
-  color: white;
+  color: var(--text-dark);
   border: none;
   padding: 0.75rem 1.25rem;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.btn-search:hover {
+  background: var(--primary-hover);
 }
 
 .talent-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
 .talent-card {
-  background: white;
+  background: var(--card-bg);
   padding: 1.25rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   text-align: center;
+  transition: var(--transition);
+}
+
+.talent-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
 }
 
 .avatar-status {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   margin: 0 auto 0.75rem;
 }
 
 .avatar-placeholder {
   width: 100%;
   height: 100%;
-  background: var(--secondary);
+  background: var(--card-bg-light);
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
+  border: 1px solid var(--border-color);
 }
 
 .status-badge.active {
@@ -465,19 +521,20 @@ a {
   right: 2px;
   width: 12px;
   height: 12px;
-  background: var(--whatsapp-green);
-  border: 2px solid white;
+  background: #2ECC71;
+  border: 2px solid var(--card-bg);
   border-radius: 50%;
 }
 
-.talent-card h3 { font-size: 1rem; font-weight: 700; }
-.talent-card .role { font-size: 0.85rem; color: var(--primary); font-weight: 600; }
-.talent-card .rating { font-size: 0.8rem; color: var(--accent-yellow); margin: 0.25rem 0; }
+.talent-card h3 { font-size: 0.95rem; font-weight: 700; }
+.talent-card .role { font-size: 0.8rem; color: var(--primary); font-weight: 600; }
+.talent-card .rating { font-size: 0.8rem; color: var(--primary); margin: 0.25rem 0; }
 .talent-card .detail { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-.talent-card .location { font-size: 0.75rem; color: var(--text-main); font-weight: 600; }
+.talent-card .location { font-size: 0.75rem; color: #D1D5DB; }
 
 .blog-banner {
-  background: var(--secondary);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   color: white;
   padding: 2rem;
   border-radius: var(--radius-md);
@@ -486,12 +543,41 @@ a {
 .btn-outline-light {
   display: inline-block;
   margin-top: 1rem;
-  border: 1px solid white;
+  border: 1px solid var(--border-color);
   color: white;
   padding: 0.5rem 1.25rem;
   border-radius: var(--radius-sm);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.btn-outline-light:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Tarjetas de oferta con estilo idéntico a la imagen */
+.job-offer-card {
+  background: #D1D5DB;          /* Fondo gris claro como en la captura */
+  color: var(--text-dark);
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-offer-card h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.job-offer-card p {
+  font-size: 0.8rem;
+  color: #4B5563;
 }
 
 /* ==========================================================================
@@ -499,12 +585,12 @@ a {
    ========================================================================== */
 .stats-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1.5rem;
-  background: white;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   padding: 2rem;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
 }
 
 .stat-item {
@@ -518,11 +604,110 @@ a {
   color: var(--primary);
 }
 
-.stat-info h4 { font-size: 1.25rem; font-weight: 800; line-height: 1; }
-.stat-info p { font-size: 0.8rem; color: var(--text-muted); }
+.stat-info h4 { font-size: 1.3rem; font-weight: 900; line-height: 1; }
+.stat-info p { font-size: 0.75rem; color: var(--text-muted); }
 
 /* ==========================================================================
-   7. BOTTOM NAV (MOBILE)
+   7. MODALES Y TOASTS
+   ========================================================================== */
+.jobbers-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.jobbers-modal.active {
+  display: flex !important;
+}
+
+.jobbers-modal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  max-width: 440px;
+  width: 100%;
+  padding: 24px;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  color: var(--text-main);
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.jobbers-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.jobbers-close-btn:hover {
+  color: var(--text-main);
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  #toast-container { bottom: 20px; }
+}
+
+.jobbers-toast {
+  pointer-events: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: white;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.jobbers-toast.success {
+  border-left: 4px solid #2ECC71;
+}
+
+.jobbers-toast.error {
+  border-left: 4px solid var(--primary);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ==========================================================================
+   8. BOTTOM NAV (MOBILE)
    ========================================================================== */
 .bottom-nav {
   position: fixed;
@@ -530,7 +715,7 @@ a {
   left: 0;
   right: 0;
   height: 60px;
-  background: white;
+  background: var(--secondary);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-around;
@@ -555,7 +740,7 @@ a {
 }
 
 /* ==========================================================================
-   8. MEDIA QUERIES (DESKTOP OPTIMIZATION)
+   9. MEDIA QUERIES (DESKTOP OPTIMIZATION)
    ========================================================================== */
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
