@@ -101,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const zona = document.getElementById('zona')?.value || "Córdoba";
             const turno = document.getElementById('turno')?.value || "A convenir";
 
-            const telefono = "5493510000000"; // Reemplazar por número de recepción real
+            // Número configurado de WhatsApp Jobbers Argentina
+            const telefono = "5493513080197"; 
             const texto = `¡Hola Jobbers! 👋 Necesito contratar personal urgente:\n\n` +
                           `📌 *Puesto:* ${puesto}\n` +
                           `📍 *Zona:* ${zona}\n` +
@@ -278,18 +279,18 @@ function abrirModalPostulacion(puesto, empresa) {
             <p style="color:var(--primary); font-size:0.85rem; font-weight:700; margin:0;">${puesto} — ${empresa}</p>
         </div>
 
-        <form onsubmit="procesarPostulacion(event, '${puesto}')" class="express-form">
+        <form onsubmit="procesarPostulacion(event, '${puesto}', '${empresa}')" class="express-form">
             <div class="form-group" style="margin-bottom:0.8rem;">
-                <input type="text" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
+                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
             </div>
             <div class="form-group" style="margin-bottom:0.8rem;">
-                <input type="tel" placeholder="WhatsApp de contacto" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
+                <input type="tel" id="post-telefono" placeholder="WhatsApp de contacto" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
             </div>
             <div class="form-group" style="margin-bottom:1.2rem;">
-                <input type="url" placeholder="Link a tu CV / LinkedIn / Drive" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
+                <input type="url" id="post-link" placeholder="Link a tu CV / LinkedIn / Drive" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
             </div>
             <button type="submit" class="btn-whatsapp" style="width:100%; font-weight:bold; cursor:pointer;">
-                ENVIAR POSTULACIÓN
+                ENVIAR POSTULACIÓN POR WHATSAPP
             </button>
         </form>
     `;
@@ -310,10 +311,21 @@ function completarLogin(e) {
     mostrarToast(`¡Sesión iniciada como ${escapeHTML(nombre)}!`, "success");
 }
 
-function procesarPostulacion(e, puesto) {
+function procesarPostulacion(e, puesto, empresa) {
     e.preventDefault();
+    const nombre = document.getElementById('post-nombre')?.value || "Candidato";
+    const telefonoContacto = document.getElementById('post-telefono')?.value || "";
+    const linkCV = document.getElementById('post-link')?.value || "";
+
+    const telefonoDestino = "5493510000000"; // Número para recibir postulaciones
+    const texto = `¡Hola Jobbers! 👋 Quisiera postularme al puesto de *${puesto}* en *${empresa}*.\n\n` +
+                  `👤 *Nombre:* ${nombre}\n` +
+                  `📱 *Contacto:* ${telefonoContacto}\n` +
+                  `📄 *CV:* ${linkCV}`;
+
     cerrarModal();
-    mostrarToast(`¡Postulación enviada con éxito para ${puesto}!`, "success");
+    mostrarToast(`Enviando postulación para ${puesto}...`, "success");
+    window.open(`https://wa.me/${telefonoDestino}?text=${encodeURIComponent(texto)}`, '_blank');
 }
 
 function cerrarModal() {
