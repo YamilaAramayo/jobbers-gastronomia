@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JOBBERS - SISTEMA INTEGRAL DE INTERACCIÓN, OFERTAS Y MODALES
+   JOBBERS - SISTEMA INTEGRAL DE INTERACCIÓN Y OFERTAS (OPCIÓN A - EXPRESS)
    ========================================================================== */
 
 // HELPER: Sanitización rápida contra XSS
@@ -92,7 +92,6 @@ const vacantesGastronomia = [
 // 2. CARGA E INICIALIZACIÓN
 document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
-    actualizarBarraUsuario();
     renderizarOfertas(vacantesGastronomia);
 
     // Conectar el Formulario Express de WhatsApp (Búsqueda de Personal)
@@ -132,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             cerrarModal();
-            document.getElementById('recursos-menu')?.classList.remove('show');
+            cerrarDropdown();
         }
     });
 });
@@ -140,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 3. DELEGACIÓN GLOBAL DE CLICS
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.dropdown')) {
-        document.getElementById('recursos-menu')?.classList.remove('show');
+        cerrarDropdown();
     }
 });
 
@@ -163,7 +162,7 @@ function renderizarOfertas(lista) {
     }
 
     contenedor.innerHTML = lista.map(item => `
-        <article style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.2rem; margin-bottom:1rem; transition:var(--transition);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <article class="job-offer-card">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
                 <div>
                     <h3 style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-bottom:4px;">${escapeHTML(item.puesto)}</h3>
@@ -181,7 +180,7 @@ function renderizarOfertas(lista) {
 
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color); padding-top:10px; margin-top:8px;">
                 <span style="font-size:0.75rem; color:var(--text-muted);">${escapeHTML(item.tiempo)}</span>
-                <button type="button" onclick="abrirModalPostulacion('${escapeHTML(item.puesto)}', '${escapeHTML(item.empresa)}')" style="background:var(--primary); color:var(--text-dark); border:none; padding:6px 14px; border-radius:var(--radius-sm); font-weight:800; font-size:0.8rem; cursor:pointer; transition:var(--transition);">
+                <button type="button" onclick="abrirModalPostulacion('${escapeHTML(item.puesto)}', '${escapeHTML(item.empresa)}')" class="btn-primary" style="padding:6px 14px; font-size:0.8rem;">
                     Postularme
                 </button>
             </div>
@@ -223,7 +222,7 @@ function filtrarPorCategoria(categoria) {
     document.getElementById('vacantes-container')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 6. SISTEMA MÓDULO DE MODALES Y ACCIONES GLOBALIZADAS
+// 6. SISTEMA DE MODAL Y POSTULACIÓN DIRECTA
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal');
     if (!modal) {
@@ -244,114 +243,6 @@ function asegurarEstructuraModal() {
     });
 }
 
-function abrirModal(tipo) {
-    if (tipo === 'login' || !tipo) {
-        abrirModalLogin();
-    }
-}
-
-// MODAL DE LOGIN ACTUALIZADO CON TABS (CANDIDATO / EMPRESA)
-function abrirModalLogin() {
-    asegurarEstructuraModal();
-    const body = document.getElementById('modal-body');
-    if (!body) return;
-
-    body.innerHTML = `
-        <div style="text-align:center; margin-bottom: 1.2rem;">
-            <h2 style="font-size:1.3rem; font-weight:900; color:var(--text-main); margin-bottom:4px;">¡Hola! Ingresá a Jobbers</h2>
-            <p style="color:var(--text-muted); font-size:0.8rem; margin:0;">Seleccioná tu perfil para continuar</p>
-        </div>
-
-        <!-- Botones selector de Rol -->
-        <div style="display:flex; gap:8px; background:rgba(255,255,255,0.05); padding:4px; border-radius:8px; margin-bottom:1.2rem;">
-            <button type="button" id="tab-cand-btn" onclick="cambiarTabLogin('candidato')" style="flex:1; padding:8px; border:none; background:var(--primary); color:var(--text-dark); font-weight:800; font-size:0.8rem; border-radius:6px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
-                <i class="fa-solid fa-user"></i> Busco Trabajo
-            </button>
-            <button type="button" id="tab-emp-btn" onclick="cambiarTabLogin('empresa')" style="flex:1; padding:8px; border:none; background:transparent; color:var(--text-muted); font-weight:800; font-size:0.8rem; border-radius:6px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
-                <i class="fa-solid fa-building"></i> Soy Empresa
-            </button>
-        </div>
-
-        <!-- FORMULARIO CANDIDATO -->
-        <form id="form-login-candidato" onsubmit="completarLogin(event, 'Candidato')" class="express-form">
-            <div class="form-group" style="margin-bottom:0.8rem;">
-                <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px;">Email</label>
-                <input type="email" id="login-email-cand" placeholder="tu@correo.com" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
-            </div>
-            <div class="form-group" style="margin-bottom:1.2rem;">
-                <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px;">Contraseña</label>
-                <input type="password" required placeholder="••••••••" style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
-            </div>
-            <button type="submit" class="btn-whatsapp" style="width:100%; font-weight:bold; cursor:pointer;">
-                INGRESAR COMO CANDIDATO
-            </button>
-        </form>
-
-        <!-- FORMULARIO EMPRESA -->
-        <form id="form-login-empresa" onsubmit="completarLogin(event, 'Empresa')" class="express-form" style="display:none;">
-            <!-- Acceso Directo Express -->
-            <div onclick="irAExpress()" style="background:rgba(255,183,3,0.1); border:1px solid var(--primary); border-radius:8px; padding:10px; display:flex; align-items:center; gap:10px; margin-bottom:1.2rem; cursor:pointer;">
-                <i class="fa-solid fa-bolt" style="color:var(--primary); font-size:1.2rem;"></i>
-                <div style="text-align:left;">
-                    <strong style="color:var(--primary); font-size:0.8rem; display:block;">¿Búsqueda urgente de personal?</strong>
-                    <span style="color:var(--text-main); font-size:0.75rem;">Publicá ya sin necesidad de registrarte ⚡</span>
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-bottom:0.8rem;">
-                <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px;">Email corporativo</label>
-                <input type="email" id="login-email-emp" placeholder="empresa@ejemplo.com" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
-            </div>
-            <div class="form-group" style="margin-bottom:1.2rem;">
-                <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px;">Contraseña</label>
-                <input type="password" required placeholder="••••••••" style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
-            </div>
-            <button type="submit" class="btn-whatsapp" style="width:100%; font-weight:bold; cursor:pointer;">
-                INGRESAR A PANEL EMPRESA
-            </button>
-        </form>
-    `;
-
-    const modal = document.getElementById('modal');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-// FUNCIÓN AUXILIAR PARA CAMBIAR PESTAÑAS DENTRO DEL MODAL
-function cambiarTabLogin(tipo) {
-    const btnCand = document.getElementById('tab-cand-btn');
-    const btnEmp = document.getElementById('tab-emp-btn');
-    const formCand = document.getElementById('form-login-candidato');
-    const formEmp = document.getElementById('form-login-empresa');
-
-    if (!btnCand || !btnEmp || !formCand || !formEmp) return;
-
-    if (tipo === 'candidato') {
-        btnCand.style.background = 'var(--primary)';
-        btnCand.style.color = 'var(--text-dark)';
-        btnEmp.style.background = 'transparent';
-        btnEmp.style.color = 'var(--text-muted)';
-        formCand.style.display = 'block';
-        formEmp.style.display = 'none';
-    } else {
-        btnEmp.style.background = 'var(--primary)';
-        btnEmp.style.color = 'var(--text-dark)';
-        btnCand.style.background = 'transparent';
-        btnCand.style.color = 'var(--text-muted)';
-        formEmp.style.display = 'block';
-        formCand.style.display = 'none';
-    }
-}
-
-// REDIRECCIÓN DIRECTA AL FORMULARIO EXPRESS DESDE EL MODAL
-function irAExpress() {
-    cerrarModal();
-    const secExpress = document.getElementById('express-form-section');
-    if (secExpress) {
-        secExpress.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
 function abrirModalPostulacion(puesto, empresa) {
     asegurarEstructuraModal();
     const body = document.getElementById('modal-body');
@@ -365,16 +256,16 @@ function abrirModalPostulacion(puesto, empresa) {
 
         <form onsubmit="procesarPostulacion(event, '${puesto}', '${empresa}')" class="express-form">
             <div class="form-group" style="margin-bottom:0.8rem;">
-                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
+                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required>
             </div>
             <div class="form-group" style="margin-bottom:0.8rem;">
-                <input type="tel" id="post-telefono" placeholder="WhatsApp de contacto" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
+                <input type="tel" id="post-telefono" placeholder="WhatsApp de contacto" required>
             </div>
             <div class="form-group" style="margin-bottom:1.2rem;">
-                <input type="url" id="post-link" placeholder="Link a tu CV / LinkedIn / Drive" required style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-main); font-size:0.85rem; box-sizing:border-box;">
+                <input type="url" id="post-link" placeholder="Link a tu CV / LinkedIn / Drive" required>
             </div>
-            <button type="submit" class="btn-whatsapp" style="width:100%; font-weight:bold; cursor:pointer;">
-                ENVIAR POSTULACIÓN POR WHATSAPP
+            <button type="submit" class="btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> ENVIAR POSTULACIÓN
             </button>
         </form>
     `;
@@ -382,18 +273,6 @@ function abrirModalPostulacion(puesto, empresa) {
     const modal = document.getElementById('modal');
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-}
-
-function completarLogin(e, rol = "Candidato") {
-    e.preventDefault();
-    const inputId = rol === "Empresa" ? 'login-email-emp' : 'login-email-cand';
-    const email = document.getElementById(inputId)?.value || "Usuario";
-    const nombre = email.split('@')[0];
-
-    localStorage.setItem('jobbers_usuario', JSON.stringify({ nombre, rol }));
-    actualizarBarraUsuario();
-    cerrarModal();
-    mostrarToast(`¡Sesión iniciada como ${escapeHTML(nombre)} (${rol})!`, "success");
 }
 
 function procesarPostulacion(e, puesto, empresa) {
@@ -412,7 +291,7 @@ function procesarPostulacion(e, puesto, empresa) {
     const urlWA = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
 
     cerrarModal();
-    mostrarToast(`Enviando postulación por WhatsApp...`, "success");
+    mostrarToast(`Redirigiendo a WhatsApp...`, "success");
     
     setTimeout(() => {
         window.location.href = urlWA;
@@ -427,29 +306,11 @@ function cerrarModal() {
     }
 }
 
-function cerrarSesion() {
-    localStorage.removeItem('jobbers_usuario');
-    actualizarBarraUsuario();
-    mostrarToast("Sesión cerrada correctamente", "error");
-}
-
-function actualizarBarraUsuario() {
-    const contenedorAcciones = document.getElementById('nav-actions');
-    if (!contenedorAcciones) return;
-
-    const sesion = JSON.parse(localStorage.getItem('jobbers_usuario') || 'null');
-
-    if (sesion && sesion.nombre) {
-        contenedorAcciones.innerHTML = `
-            <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-size:0.8rem; color:var(--text-muted);">Hola, <strong style="color:var(--text-main);">${escapeHTML(sesion.nombre)}</strong></span>
-                <button type="button" class="btn-login" onclick="cerrarSesion()" style="padding:4px 10px; font-size:0.75rem;">Salir</button>
-            </div>
-        `;
-    } else {
-        contenedorAcciones.innerHTML = `
-            <button type="button" class="btn-login" onclick="abrirModal('login')">Ingresar</button>
-        `;
+function irAExpress() {
+    cerrarModal();
+    const secExpress = document.getElementById('express-form-section');
+    if (secExpress) {
+        secExpress.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
@@ -489,15 +350,10 @@ function mostrarToast(mensaje, tipo = "success") {
 }
 
 // 8. BINDING GLOBAL WINDOW
-window.abrirModal = abrirModal;
-window.abrirModalLogin = abrirModalLogin;
-window.cambiarTabLogin = cambiarTabLogin;
 window.irAExpress = irAExpress;
 window.abrirModalPostulacion = abrirModalPostulacion;
 window.cerrarModal = cerrarModal;
-window.completarLogin = completarLogin;
 window.procesarPostulacion = procesarPostulacion;
-window.cerrarSesion = cerrarSesion;
 window.filtrarVacantes = filtrarVacantes;
 window.filtrarPorCategoria = filtrarPorCategoria;
 window.toggleDropdown = toggleDropdown;
