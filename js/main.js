@@ -200,30 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 4. DELEGACIÓN GLOBAL DE CLICS
 document.addEventListener('click', (e) => {
-    // A) Botón para abrir Modal de Ingreso
-    if (e.target.closest('.btn-login') || e.target.closest('[onclick*="abrirModal(\'login\')"]')) {
-        e.preventDefault();
-        abrirModalLogin();
-        return;
-    }
-
-    // B) Clic en tarjetas de categorías
-    const catCard = e.target.closest('.category-card');
-    if (catCard) {
-        const tituloCategoria = catCard.querySelector('h3')?.innerText.trim() || "";
-        filtrarPorCategoria(tituloCategoria);
-        return;
-    }
-
-    // C) Botón desplegable de Recursos
-    if (e.target.closest('.dropdown-toggle') || e.target.closest('#dropdown-recursos')) {
-        e.preventDefault();
-        const menu = document.getElementById('recursos-menu');
-        if (menu) menu.classList.toggle('show');
-        return;
-    }
-
-    // D) Cerrar dropdowns si se hace clic afuera
+    // Cerrar dropdowns si se hace clic afuera
     if (!e.target.closest('.dropdown')) {
         document.getElementById('recursos-menu')?.classList.remove('show');
     }
@@ -305,12 +282,10 @@ function filtrarPorCategoria(categoria) {
     );
 
     renderizarOfertas(resultado);
-
-    // Scroll suave hacia las vacantes
     document.getElementById('vacantes-container')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 7. SISTEMA MÓDULO DE MODALES (LOGIN Y POSTULACIONES)
+// 7. SISTEMA MÓDULO DE MODALES Y ACCIONES GLOBALIZADAS
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal');
     if (!modal) {
@@ -339,6 +314,12 @@ function asegurarEstructuraModal() {
     modal.addEventListener('click', (e) => {
         if (e.target === modal) cerrarModal();
     });
+}
+
+function abrirModal(tipo) {
+    if (tipo === 'login' || !tipo) {
+        abrirModalLogin();
+    }
 }
 
 function abrirModalLogin() {
@@ -442,9 +423,19 @@ function actualizarBarraUsuario() {
         `;
     } else {
         contenedorAcciones.innerHTML = `
-            <button type="button" class="btn-login" onclick="abrirModalLogin()">Ingresar</button>
+            <button type="button" class="btn-login" onclick="abrirModal('login')">Ingresar</button>
         `;
     }
+}
+
+function toggleDropdown(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById('recursos-menu');
+    if (menu) menu.classList.toggle('show');
+}
+
+function cerrarDropdown() {
+    document.getElementById('recursos-menu')?.classList.remove('show');
 }
 
 // 8. NOTIFICACIONES TOAST MEJORADAS
@@ -471,3 +462,16 @@ function mostrarToast(mensaje, tipo = "success") {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+// 9. EXPONER FUNCIONES AL ÁMBITO GLOBAL (GLOBAL WINDOW BINDING)
+window.abrirModal = abrirModal;
+window.abrirModalLogin = abrirModalLogin;
+window.abrirModalPostulacion = abrirModalPostulacion;
+window.cerrarModal = cerrarModal;
+window.completarLogin = completarLogin;
+window.procesarPostulacion = procesarPostulacion;
+window.cerrarSesion = cerrarSesion;
+window.filtrarVacantes = filtrarVacantes;
+window.filtrarPorCategoria = filtrarPorCategoria;
+window.toggleDropdown = toggleDropdown;
+window.cerrarDropdown = cerrarDropdown;
