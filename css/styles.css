@@ -2,18 +2,18 @@
    1. VARIABLES & RESET (PALETA MODO OSCURO DE LA IMAGEN)
    ========================================================================== */
 :root {
-  --primary: #F39C12;            /* Ámbar / Naranja brillante */
+  --primary: #F39C12;             /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;          /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;            /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;      /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;     /* Botón de acción principal */
+  --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
+  --card-bg-light: #212428;       /* Hover o tarjetas secundarias */
+  --whatsapp-orange: #F39C12;      /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
   
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;          /* Para texto sobre botones naranjas */
+  --text-dark: #111827;           /* Para texto sobre botones naranjas */
   --border-color: #2D3137;
   
   --radius-sm: 6px;
@@ -38,11 +38,18 @@ body {
   color: var(--text-main);
   line-height: 1.5;
   padding-bottom: 60px; /* Offset para el Bottom Nav mobile */
+  overflow-x: hidden;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ==========================================================================
@@ -558,9 +565,9 @@ a {
   color: var(--primary);
 }
 
-/* Tarjetas de oferta con estilo idéntico a la imagen */
+/* Tarjetas de oferta */
 .job-offer-card {
-  background: #D1D5DB;          /* Fondo gris claro como en la captura */
+  background: #D1D5DB;          /* Fondo gris claro */
   color: var(--text-dark);
   padding: 1rem;
   border-radius: var(--radius-sm);
@@ -610,6 +617,7 @@ a {
 /* ==========================================================================
    7. MODALES Y TOASTS
    ========================================================================== */
+.modal,
 .jobbers-modal {
   display: none;
   position: fixed;
@@ -624,10 +632,12 @@ a {
   padding: 16px;
 }
 
+.modal.active,
 .jobbers-modal.active {
   display: flex !important;
 }
 
+.modal-content,
 .jobbers-modal-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -646,6 +656,7 @@ a {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.close-btn,
 .jobbers-close-btn {
   position: absolute;
   top: 14px;
@@ -658,6 +669,7 @@ a {
   line-height: 1;
 }
 
+.close-btn:hover,
 .jobbers-close-btn:hover {
   color: var(--text-main);
 }
