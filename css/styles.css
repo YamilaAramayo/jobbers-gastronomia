@@ -667,11 +667,78 @@ img {
   font-size: 1.8rem;
   cursor: pointer;
   line-height: 1;
+  transition: var(--transition);
 }
 
 .close-btn:hover,
 .jobbers-close-btn:hover {
   color: var(--text-main);
+}
+
+/* Selector de Pestañas (Role Tabs en Modales) */
+.role-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--card-bg-light);
+  padding: 0.3rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.25rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.tab-btn.active {
+  background: var(--primary);
+  color: var(--text-dark);
+}
+
+/* Banner de Búsqueda Urgente dentro del Modal */
+.express-notice-card {
+  background: rgba(243, 156, 18, 0.1);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.express-notice-card:hover {
+  background: rgba(243, 156, 18, 0.2);
+}
+
+.express-notice-card i {
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.express-notice-card strong {
+  color: var(--primary);
+  font-size: 0.8rem;
+  display: block;
+}
+
+.express-notice-card span {
+  color: var(--text-main);
+  font-size: 0.75rem;
 }
 
 /* Toast Notifications */
