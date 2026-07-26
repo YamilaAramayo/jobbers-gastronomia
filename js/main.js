@@ -10,6 +10,9 @@ const escapeHTML = (str) => {
     });
 };
 
+// NÚMERO CENTRAL DE WHATSAPP JOBBERS
+const WHATSAPP_NUMERO = "5493513080197";
+
 // 1. BANCO DE DATOS DE OFERTAS DE EJEMPLO
 const vacantesGastronomia = [
     {
@@ -97,20 +100,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formExpress) {
         formExpress.addEventListener('submit', (e) => {
             e.preventDefault();
+            e.stopPropagation();
+
             const puesto = document.getElementById('puesto')?.value || "Personal Gastronómico";
             const zona = document.getElementById('zona')?.value || "Córdoba";
             const turno = document.getElementById('turno')?.value || "A convenir";
 
-            // Número configurado de WhatsApp Jobbers Argentina
-            const telefono = "5493513080197"; 
             const texto = `¡Hola Jobbers! 👋 Necesito contratar personal urgente:\n\n` +
                           `📌 *Puesto:* ${puesto}\n` +
                           `📍 *Zona:* ${zona}\n` +
                           `⏰ *Turno:* ${turno}\n\n` +
                           `Aguardando respuesta.`;
+
+            const urlWA = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
             
             mostrarToast("Redirigiendo a WhatsApp...", "success");
-            window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`, '_blank');
+            
+            // Redirección directa para evitar bloqueos de popup o saltos en la página
+            setTimeout(() => {
+                window.location.href = urlWA;
+            }, 500);
+
             formExpress.reset();
         });
     }
@@ -141,7 +151,7 @@ function renderizarOfertas(lista) {
             <div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">
                 <i class="fa-solid fa-folder-open" style="font-size:2rem; margin-bottom:10px;"></i>
                 <p>No se encontraron búsquedas activas para este criterio.</p>
-                <button onclick="filtrarPorCategoria('')" style="margin-top:12px; background:var(--primary); color:var(--text-dark); border:none; padding:8px 16px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">
+                <button type="button" onclick="filtrarPorCategoria('')" style="margin-top:12px; background:var(--primary); color:var(--text-dark); border:none; padding:8px 16px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">
                     Mostrar todas las ofertas
                 </button>
             </div>
@@ -313,19 +323,25 @@ function completarLogin(e) {
 
 function procesarPostulacion(e, puesto, empresa) {
     e.preventDefault();
+    e.stopPropagation();
+
     const nombre = document.getElementById('post-nombre')?.value || "Candidato";
     const telefonoContacto = document.getElementById('post-telefono')?.value || "";
     const linkCV = document.getElementById('post-link')?.value || "";
 
-    const telefonoDestino = "5493510000000"; // Número para recibir postulaciones
     const texto = `¡Hola Jobbers! 👋 Quisiera postularme al puesto de *${puesto}* en *${empresa}*.\n\n` +
                   `👤 *Nombre:* ${nombre}\n` +
                   `📱 *Contacto:* ${telefonoContacto}\n` +
                   `📄 *CV:* ${linkCV}`;
 
+    const urlWA = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
+
     cerrarModal();
-    mostrarToast(`Enviando postulación para ${puesto}...`, "success");
-    window.open(`https://wa.me/${telefonoDestino}?text=${encodeURIComponent(texto)}`, '_blank');
+    mostrarToast(`Enviando postulación por WhatsApp...`, "success");
+    
+    setTimeout(() => {
+        window.location.href = urlWA;
+    }, 500);
 }
 
 function cerrarModal() {
