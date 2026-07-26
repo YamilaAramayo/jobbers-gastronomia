@@ -102,11 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             e.stopPropagation();
 
+            const local = document.getElementById('nombre-local')?.value || "Establecimiento";
+            const telefono = document.getElementById('telefono-contacto')?.value || "Sin teléfono";
             const puesto = document.getElementById('puesto')?.value || "Personal Gastronómico";
             const zona = document.getElementById('zona')?.value || "Córdoba";
             const turno = document.getElementById('turno')?.value || "A convenir";
 
             const texto = `¡Hola Jobbers! 👋 Necesito contratar personal urgente:\n\n` +
+                          `🏢 *Local/Empresa:* ${local}\n` +
+                          `📱 *Contacto:* ${telefono}\n` +
                           `📌 *Puesto:* ${puesto}\n` +
                           `📍 *Zona:* ${zona}\n` +
                           `⏰ *Turno:* ${turno}\n\n` +
@@ -116,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             mostrarToast("Redirigiendo a WhatsApp...", "success");
             
-            // Redirección directa para evitar bloqueos de popup o saltos en la página
             setTimeout(() => {
                 window.location.href = urlWA;
             }, 500);
