@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JOBBERS - SISTEMA DE INTERACCIÓN GLOBAL Y OFERTAS DE EJEMPLO
+   JOBBERS - SISTEMA INTEGRAL DE INTERACCIÓN, OFERTAS Y MODALES
    ========================================================================== */
 
 // 1. INYECCIÓN AUTOMÁTICA DE ESTILOS PARA MODAL Y TOASTS
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarBarraUsuario();
     renderizarOfertas(vacantesGastronomia);
 
-    // Conectar el Formulario Express de WhatsApp
+    // Conectar el Formulario Express de WhatsApp (Búsqueda de Personal)
     const formExpress = document.getElementById('express-form');
     if (formExpress) {
         formExpress.addEventListener('submit', (e) => {
@@ -176,18 +176,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const zona = document.getElementById('zona')?.value || "Córdoba";
             const turno = document.getElementById('turno')?.value || "A convenir";
 
-            const telefono = "5493510000000"; // Reemplazar por tu número
-            const texto = `¡Hola Jobbers! Necesito contratar un/a *${puesto}* en la zona de *${zona}* (${turno}).`;
+            const telefono = "5493510000000"; // Reemplazar por tu número real de recepción
+            const texto = `¡Hola Jobbers! 👋 Necesito contratar personal urgente:\n\n` +
+                          `📌 *Puesto:* ${puesto}\n` +
+                          `📍 *Zona:* ${zona}\n` +
+                          `⏰ *Turno:* ${turno}\n\n` +
+                          `Aguardando respuesta.`;
             
             mostrarToast("Redirigiendo a WhatsApp...", "success");
             window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`, '_blank');
+            formExpress.reset();
         });
     }
+
+    // Tecla Escape para cerrar modales y dropdowns
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            cerrarModal();
+            document.getElementById('recursos-menu')?.classList.remove('show');
+        }
+    });
 });
 
-// 4. DELEGACIÓN GLOBAL DE CLICS (Garantiza que todos los botones respondan)
+// 4. DELEGACIÓN GLOBAL DE CLICS
 document.addEventListener('click', (e) => {
-    // A) Botón o enlace para abrir Modal de Ingreso
+    // A) Botón para abrir Modal de Ingreso
     if (e.target.closest('.btn-login') || e.target.closest('[onclick*="abrirModal(\'login\')"]')) {
         e.preventDefault();
         abrirModalLogin();
@@ -203,7 +216,7 @@ document.addEventListener('click', (e) => {
     }
 
     // C) Botón desplegable de Recursos
-    if (e.target.closest('.dropdown-toggle')) {
+    if (e.target.closest('.dropdown-toggle') || e.target.closest('#dropdown-recursos')) {
         e.preventDefault();
         const menu = document.getElementById('recursos-menu');
         if (menu) menu.classList.toggle('show');
@@ -253,7 +266,7 @@ function renderizarOfertas(lista) {
 
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.05); padding-top:10px; margin-top:8px;">
                 <span style="font-size:0.75rem; color:var(--text-muted, #9ca3af);">${item.tiempo}</span>
-                <button type="button" onclick="ejecutarPostulacion('${item.puesto}', '${item.empresa}')" style="background:var(--accent-orange, #f59e0b); color:#000; border:none; padding:6px 14px; border-radius:6px; font-weight:800; font-size:0.8rem; cursor:pointer;">
+                <button type="button" onclick="abrirModalPostulacion('${item.puesto}', '${item.empresa}')" style="background:var(--accent-orange, #f59e0b); color:#000; border:none; padding:6px 14px; border-radius:6px; font-weight:800; font-size:0.8rem; cursor:pointer;">
                     Postularme
                 </button>
             </div>
@@ -261,7 +274,7 @@ function renderizarOfertas(lista) {
     `).join('');
 }
 
-// 6. BUSCADOR Y FILTROS
+// 6. BUSCADOR Y FILTROS EN TIEMPO REAL
 function filtrarVacantes() {
     const input = document.getElementById('search-filter');
     if (!input) return;
@@ -293,11 +306,11 @@ function filtrarPorCategoria(categoria) {
 
     renderizarOfertas(resultado);
 
-    // Scroll suave al contenedor de ofertas
+    // Scroll suave hacia las vacantes
     document.getElementById('vacantes-container')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 7. MODALES (INGRESAR Y POSTULACIÓN)
+// 7. SISTEMA MÓDULO DE MODALES (LOGIN Y POSTULACIONES)
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal');
     if (!modal) {
@@ -323,7 +336,6 @@ function asegurarEstructuraModal() {
         }
     }
 
-    // Cerrar si hace clic fuera del recuadro
     modal.addEventListener('click', (e) => {
         if (e.target === modal) cerrarModal();
     });
@@ -343,14 +355,44 @@ function abrirModalLogin() {
         <form onsubmit="completarLogin(event)" class="express-form">
             <div class="form-group" style="margin-bottom:0.8rem;">
                 <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:4px;">Email</label>
-                <input type="email" id="login-email" placeholder="tu@correo.com" required style="width:100%; padding:10px; background:#181b20; border:1px solid var(--border-color, #27272a); border-radius:6px; color:#fff; font-size:0.85rem;">
+                <input type="email" id="login-email" placeholder="tu@correo.com" required style="width:100%; padding:10px; background:#181b20; border:1px solid var(--border-color, #27272a); border-radius:6px; color:#fff; font-size:0.85rem; box-sizing:border-box;">
             </div>
             <div class="form-group" style="margin-bottom:1.2rem;">
                 <label style="font-size:0.75rem; color:#aaa; display:block; margin-bottom:4px;">Contraseña</label>
-                <input type="password" required placeholder="••••••••" style="width:100%; padding:10px; background:#181b20; border:1px solid var(--border-color, #27272a); border-radius:6px; color:#fff; font-size:0.85rem;">
+                <input type="password" required placeholder="••••••••" style="width:100%; padding:10px; background:#181b20; border:1px solid var(--border-color, #27272a); border-radius:6px; color:#fff; font-size:0.85rem; box-sizing:border-box;">
             </div>
-            <button type="submit" class="btn-whatsapp" style="margin-top:0;">
+            <button type="submit" class="btn-whatsapp" style="width:100%; font-weight:bold; cursor:pointer;">
                 INGRESAR
+            </button>
+        </form>
+    `;
+
+    document.getElementById('modal').classList.add('active');
+}
+
+function abrirModalPostulacion(puesto, empresa) {
+    asegurarEstructuraModal();
+    const body = document.getElementById('modal-body');
+    if (!body) return;
+
+    body.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+            <h2 style="font-size:1.2rem; font-weight:900; color:#fff; margin-bottom:2px;">POSTULARME</h2>
+            <p style="color:var(--accent-orange, #f59e0b); font-size:0.85rem; font-weight:700; margin:0;">${puesto} — ${empresa}</p>
+        </div>
+
+        <form onsubmit="procesarPostulacion(event, '${puesto}')" class="express-form">
+            <div class="form-group" style="margin-bottom:0.8rem;">
+                <input type="text" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; background:#181b20; border:1px solid var(--border-color, #27272a); border-radius:6px; color:#fff; font-size:0.85rem; box-sizing:border-box;">
+            </div>
+            <div class="form-group" style="margin-bottom:0.8rem;">
+                <input type="tel" placeholder="WhatsApp de contacto" required style="width:100%; padding:10px; background:#181b20; border:1px solid var(--border-color, #27272a); border-radius:6px; color:#fff; font-size:0.85rem; box-sizing:border-box;">
+            </div>
+            <div class="form-group" style="margin-bottom:1.2rem;">
+                <input type="url" placeholder="Link a tu CV / LinkedIn / Drive" required style="width:100%; padding:10px; background:#181b20; border:1px solid var(--border-color, #27272a); border-radius:6px; color:#fff; font-size:0.85rem; box-sizing:border-box;">
+            </div>
+            <button type="submit" class="btn-whatsapp" style="width:100%; font-weight:bold; cursor:pointer;">
+                ENVIAR POSTULACIÓN
             </button>
         </form>
     `;
@@ -369,12 +411,14 @@ function completarLogin(e) {
     mostrarToast(`¡Sesión iniciada como ${nombre}!`, "success");
 }
 
-function cerrarModal() {
-    document.getElementById('modal')?.classList.remove('active');
+function procesarPostulacion(e, puesto) {
+    e.preventDefault();
+    cerrarModal();
+    mostrarToast(`¡Postulación enviada con éxito para ${puesto}!`, "success");
 }
 
-function ejecutarPostulacion(puesto, empresa) {
-    mostrarToast(`¡Postulación enviada con éxito para ${puesto}!`, "success");
+function cerrarModal() {
+    document.getElementById('modal')?.classList.remove('active');
 }
 
 function cerrarSesion() {
@@ -403,7 +447,7 @@ function actualizarBarraUsuario() {
     }
 }
 
-// 8. NOTIFICACIONES TOAST
+// 8. NOTIFICACIONES TOAST MEJORADAS
 function mostrarToast(mensaje, tipo = "success") {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -423,7 +467,7 @@ function mostrarToast(mensaje, tipo = "success") {
 
     setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.3s';
+        toast.style.transition = 'opacity 0.3s ease';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
