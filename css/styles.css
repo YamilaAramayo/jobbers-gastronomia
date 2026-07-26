@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. VARIABLES & RESET (PALETA MODO OSCURO DE LA IMAGEN)
+   1. VARIABLES & RESET (PALETA MODO OSCURO)
    ========================================================================== */
 :root {
   --primary: #F39C12;             /* Ámbar / Naranja brillante */
@@ -7,7 +7,7 @@
   --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
   --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
   --card-bg-light: #212428;       /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;      /* Botón de acción principal */
+  --whatsapp-orange: #F39C12;     /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
   
   --bg-dark: #0A0B0C;
@@ -322,7 +322,9 @@ img {
 }
 
 .express-form input,
-.form-group select {
+.express-form select,
+.form-group select,
+.form-group input {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
@@ -335,7 +337,9 @@ img {
 }
 
 .express-form input:focus,
-.form-group select:focus {
+.express-form select:focus,
+.form-group select:focus,
+.form-group input:focus {
   border-color: var(--primary);
 }
 
@@ -565,26 +569,34 @@ img {
   color: var(--primary);
 }
 
-/* Tarjetas de oferta */
+/* Tarjetas de oferta (Modo Oscuro Integrado) */
 .job-offer-card {
-  background: #D1D5DB;          /* Fondo gris claro */
-  color: var(--text-dark);
-  padding: 1rem;
-  border-radius: var(--radius-sm);
-  margin-bottom: 0.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 1.2rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: var(--transition);
+}
+
+.job-offer-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
 }
 
 .job-offer-card h4 {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 800;
+  color: var(--text-main);
 }
 
 .job-offer-card p {
-  font-size: 0.8rem;
-  color: #4B5563;
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 /* ==========================================================================
