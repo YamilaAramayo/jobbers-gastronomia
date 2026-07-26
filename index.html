@@ -84,7 +84,13 @@
                     </div>
                     <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
                     
-                    <form id="express-form" class="express-form">
+                    <form id="express-form" class="express-form" onsubmit="enviarExpressWhatsApp(event)">
+                        <div class="form-group">
+                            <input type="text" id="nombre-local" placeholder="Nombre de tu local / Gastronómico" required style="width: 100%; padding: 0.75rem; border: 1px solid #2D3137; border-radius: 6px; background: #0A0B0C; color: #fff; font-size: 0.85rem;">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto" required style="width: 100%; padding: 0.75rem; border: 1px solid #2D3137; border-radius: 6px; background: #0A0B0C; color: #fff; font-size: 0.85rem;">
+                        </div>
                         <div class="form-group">
                             <select id="puesto" aria-label="Seleccionar puesto requerido" required>
                                 <option value="" disabled selected>Puesto que necesitas</option>
