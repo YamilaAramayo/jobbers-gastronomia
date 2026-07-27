@@ -1,17 +1,18 @@
 /* ==========================================================================
-   JOBBERS - SISTEMA INTEGRAL DE INTERACCIÓN Y OFERTAS (OPCIÓN A - EXPRESS)
+   JOBBERS - SISTEMA INTEGRAL DE INTERACCIÓN Y OFERTAS (POSTULACIÓN DIRECTA AL EMPLEADOR)
    ========================================================================== */
 
 // HELPER: Sanitización rápida contra XSS
 const escapeHTML = (str) => {
+    if (!str && str !== 0) return "";
     return String(str).replace(/[&<>"']/g, (match) => {
         const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
         return map[match];
     });
 };
 
-// NÚMERO CENTRAL DE WHATSAPP JOBBERS
-const WHATSAPP_NUMERO = "5493513080197";
+// NÚMERO POR DEFECTO EN CASO DE QUE LA OFERTA NO TENGA UNO ASIGNADO
+const WHATSAPP_JOBBERS_DEFAULT = "5493513080197";
 
 // Variable global para almacenar las vacantes cargadas desde el JSON
 let vacantesGastronomia = [];
@@ -34,7 +35,7 @@ async function cargarVacantesDesdeJSON() {
             contenedor.innerHTML = `
                 <div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">
                     <i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; color:#EF4444; margin-bottom:10px;"></i>
-                    <p>Error al cargar las ofertas. Asegurate de estar ejecutando el proyecto con un servidor local (Live Server).</p>
+                    <p>Error al cargar las ofertas. Asegúrate de ejecutar el proyecto con Live Server.</p>
                 </div>
             `;
         }
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
 
-    // Conectar el Formulario Express de WhatsApp (Búsqueda de Personal)
+    // Formulario Express para Empleadores (Búsqueda de Personal hacia Jobbers)
     const formExpress = document.getElementById('express-form');
     if (formExpress) {
         formExpress.addEventListener('submit', (e) => {
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                           `⏰ *Turno:* ${turno}\n\n` +
                           `Aguardando respuesta.`;
 
-            const urlWA = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
+            const urlWA = `https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(texto)}`;
             
             mostrarToast("Redirigiendo a WhatsApp...", "success");
             
@@ -113,31 +114,37 @@ function renderizarOfertas(lista) {
         return;
     }
 
-    contenedor.innerHTML = lista.map(item => `
-        <article class="job-offer-card">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
-                <div>
-                    <h3 style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-bottom:4px;">${escapeHTML(item.puesto)}</h3>
-                    <p style="font-size:0.85rem; color:var(--primary); font-weight:700; margin:0;">${escapeHTML(item.empresa)}</p>
+    contenedor.innerHTML = lista.map(item => {
+        const nombrePuesto = item.puesto || item.titulo || "Puesto Gastronómico";
+        const nombreEmpresa = item.empresa || "Empresa Gastronómica";
+        const numeroEmpleador = item.contacto_wa || WHATSAPP_JOBBERS_DEFAULT;
+
+        return `
+            <article class="job-offer-card">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+                    <div>
+                        <h3 style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-bottom:4px;">${escapeHTML(nombrePuesto)}</h3>
+                        <p style="font-size:0.85rem; color:var(--primary); font-weight:700; margin:0;">${escapeHTML(nombreEmpresa)}</p>
+                    </div>
+                    ${item.urgente ? '<span style="background:#EF4444; color:#fff; font-size:0.65rem; font-weight:bold; padding:3px 8px; border-radius:12px;">⚡ URGENTE</span>' : ''}
                 </div>
-                ${item.urgente ? '<span style="background:#EF4444; color:#fff; font-size:0.65rem; font-weight:bold; padding:3px 8px; border-radius:12px;">⚡ URGENTE</span>' : ''}
-            </div>
 
-            <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; font-size:0.75rem; color:var(--text-muted);">
-                <span><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> ${escapeHTML(item.zona)}</span>
-                <span><i class="fa-solid fa-briefcase"></i> ${escapeHTML(item.jornada)}</span>
-                <span><i class="fa-regular fa-clock"></i> ${escapeHTML(item.turno)}</span>
-                <span style="color:#2ECC71; font-weight:bold;">${escapeHTML(item.salario)}</span>
-            </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; font-size:0.75rem; color:var(--text-muted);">
+                    <span><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> ${escapeHTML(item.zona || item.ubicacion || 'Córdoba')}</span>
+                    <span><i class="fa-solid fa-briefcase"></i> ${escapeHTML(item.jornada || item.tipo_jornada || 'A convenir')}</span>
+                    <span><i class="fa-regular fa-clock"></i> ${escapeHTML(item.turno || 'A convenir')}</span>
+                    <span style="color:#2ECC71; font-weight:bold;">${escapeHTML(item.salario || 'A convenir')}</span>
+                </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color); padding-top:10px; margin-top:8px;">
-                <span style="font-size:0.75rem; color:var(--text-muted);">${escapeHTML(item.tiempo)}</span>
-                <button type="button" onclick="abrirModalPostulacion('${escapeHTML(item.puesto)}', '${escapeHTML(item.empresa)}')" class="btn-primary" style="padding:6px 14px; font-size:0.8rem;">
-                    Postularme
-                </button>
-            </div>
-        </article>
-    `).join('');
+                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color); padding-top:10px; margin-top:8px;">
+                    <span style="font-size:0.75rem; color:var(--text-muted);">${escapeHTML(item.tiempo || '')}</span>
+                    <button type="button" onclick="abrirModalPostulacion('${escapeHTML(nombrePuesto)}', '${escapeHTML(nombreEmpresa)}', '${escapeHTML(numeroEmpleador)}')" class="btn-primary" style="padding:6px 14px; font-size:0.8rem;">
+                        Postularme
+                    </button>
+                </div>
+            </article>
+        `;
+    }).join('');
 }
 
 // 5. BUSCADOR Y FILTROS EN TIEMPO REAL
@@ -146,12 +153,14 @@ function filtrarVacantes() {
     if (!input) return;
     const termino = input.value.toLowerCase().trim();
 
-    const resultado = vacantesGastronomia.filter(v =>
-        v.puesto.toLowerCase().includes(termino) ||
-        v.empresa.toLowerCase().includes(termino) ||
-        v.zona.toLowerCase().includes(termino) ||
-        v.categoria.toLowerCase().includes(termino)
-    );
+    const resultado = vacantesGastronomia.filter(v => {
+        const puesto = (v.puesto || v.titulo || "").toLowerCase();
+        const empresa = (v.empresa || "").toLowerCase();
+        const zona = (v.zona || v.ubicacion || "").toLowerCase();
+        const categoria = (v.categoria || "").toLowerCase();
+
+        return puesto.includes(termino) || empresa.includes(termino) || zona.includes(termino) || categoria.includes(termino);
+    });
 
     renderizarOfertas(resultado);
 }
@@ -165,16 +174,19 @@ function filtrarPorCategoria(categoria) {
         return;
     }
 
-    const resultado = vacantesGastronomia.filter(v => 
-        v.categoria.toLowerCase().includes(categoria.toLowerCase()) ||
-        v.puesto.toLowerCase().includes(categoria.toLowerCase())
-    );
+    const resultado = vacantesGastronomia.filter(v => {
+        const puesto = (v.puesto || v.titulo || "").toLowerCase();
+        const cat = (v.categoria || "").toLowerCase();
+        const catBuscada = categoria.toLowerCase();
+
+        return cat.includes(catBuscada) || puesto.includes(catBuscada);
+    });
 
     renderizarOfertas(resultado);
     document.getElementById('vacantes-container')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 6. SISTEMA DE MODAL Y POSTULACIÓN DIRECTA
+// 6. SISTEMA DE MODAL Y POSTULACIÓN DIRECTA AL EMPLEADOR
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal');
     if (!modal) {
@@ -195,7 +207,7 @@ function asegurarEstructuraModal() {
     });
 }
 
-function abrirModalPostulacion(puesto, empresa) {
+function abrirModalPostulacion(puesto, empresa, numeroEmpleador) {
     asegurarEstructuraModal();
     const body = document.getElementById('modal-body');
     if (!body) return;
@@ -206,15 +218,22 @@ function abrirModalPostulacion(puesto, empresa) {
             <p style="color:var(--primary); font-size:0.85rem; font-weight:700; margin:0;">${puesto} — ${empresa}</p>
         </div>
 
-        <form onsubmit="procesarPostulacion(event, '${puesto}', '${empresa}')" class="express-form">
+        <div style="background: rgba(239, 68, 68, 0.1); border-left: 3px solid #EF4444; padding: 10px; border-radius: 4px; margin-bottom: 1rem;">
+            <p style="font-size: 0.78rem; color: var(--text-main); margin: 0;">
+                <i class="fa-solid fa-paperclip" style="color:#EF4444; margin-right: 4px;"></i>
+                <strong>Importante:</strong> Al abrirse WhatsApp, recordá <u>adjuntar tu Currículum Vitae (PDF)</u> junto al mensaje.
+            </p>
+        </div>
+
+        <form onsubmit="procesarPostulacion(event, '${puesto}', '${empresa}', '${numeroEmpleador}')" class="express-form">
             <div class="form-group" style="margin-bottom:0.8rem;">
                 <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required>
             </div>
             <div class="form-group" style="margin-bottom:1.2rem;">
-                <input type="tel" id="post-telefono" placeholder="WhatsApp de contacto" required>
+                <input type="tel" id="post-telefono" placeholder="Tu WhatsApp de contacto" required>
             </div>
             <button type="submit" class="btn-whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> ENVIAR POSTULACIÓN
+                <i class="fa-brands fa-whatsapp"></i> CONTACTAR AL EMPLEADOR
             </button>
         </form>
     `;
@@ -224,21 +243,24 @@ function abrirModalPostulacion(puesto, empresa) {
     document.body.style.overflow = 'hidden';
 }
 
-function procesarPostulacion(e, puesto, empresa) {
+function procesarPostulacion(e, puesto, empresa, numeroEmpleador) {
     e.preventDefault();
     e.stopPropagation();
 
     const nombre = document.getElementById('post-nombre')?.value || "Candidato";
     const telefonoContacto = document.getElementById('post-telefono')?.value || "";
 
-    const texto = `¡Hola Jobbers! 👋 Quisiera postularme al puesto de *${puesto}* en *${empresa}*.\n\n` +
+    // Mensaje dirigido directamente al empleador/local
+    const texto = `¡Hola! 👋 Vi la publicación de la vacante para el puesto de *${puesto}* en *${empresa}* a través de Jobbers.\n\n` +
+                  `Me interesa postularme:\n` +
                   `👤 *Nombre:* ${nombre}\n` +
-                  `📱 *Contacto:* ${telefonoContacto}`;
+                  `📱 *Contacto:* ${telefonoContacto}\n\n` +
+                  `📎 Te adjunto mi CV en formato PDF a continuación para que puedas revisarlo. ¡Quedo a disposición!`;
 
-    const urlWA = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
+    const urlWA = `https://wa.me/${numeroEmpleador}?text=${encodeURIComponent(texto)}`;
 
     cerrarModal();
-    mostrarToast(`Redirigiendo a WhatsApp...`, "success");
+    mostrarToast(`Abriendo WhatsApp de ${empresa}...`, "success");
     
     setTimeout(() => {
         window.location.href = urlWA;
