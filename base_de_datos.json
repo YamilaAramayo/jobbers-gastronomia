@@ -2,7 +2,7 @@
   {
     "id": 1,
     "puesto": "Cocinero / Cocinera de Despacho",
-    "empresa": "Casa Norte",
+    "empresa": "La Caprichosa Resto",
     "zona": "Nueva Córdoba",
     "jornada": "Full Time",
     "turno": "Turno Noche",
@@ -24,5 +24,58 @@
     "categoria": "Mozo",
     "tiempo": "Hace 3 horas",
     "contacto_wa": "5493541696766"
+  },
+  {
+    "id": 3,
+    "puesto": "Barista Especializado",
+    "empresa": "Café Suburbio",
+    "zona": "General Paz",
+    "jornada": "Full Time",
+    "turno": "Turno Mañana",
+    "salario": "$390.000 / mes",
+    "urgente": false,
+    "categoria": "Barista",
+    "tiempo": "Hace 5 horas",
+    "contacto_wa": "5493541582448"
+  },
+  {
+    "id": 4,
+    "puesto": "Bartender Coctelería de Autor",
+    "empresa": "SpeakEasy Club",
+    "zona": "Güemes",
+    "jornada": "Fines de semana",
+    "turno": "Turno Noche",
+    "salario": "$320.000 + Propinas",
+    "urgente": true,
+    "categoria": "Bartender",
+    "tiempo": "Hace 12 horas",
+    "contacto_wa": "5493541696766"
+  },
+  {
+    "id": 5,
+    "puesto": "Ayudante de Cocina / Bachero",
+    "empresa": "Pizzas & Fuegos",
+    "zona": "Centro",
+    "jornada": "Full Time",
+    "turno": "Turno Tarde/Noche",
+    "salario": "$360.000 / mes",
+    "urgente": true,
+    "categoria": "Cocina",
+    "tiempo": "Hace 1 día",
+    "contacto_wa": "5493541582448"
+  },
+  {
+    "id": 6,
+    "puesto": "Encargado / Supervisor de Salón",
+    "empresa": "Bistró Italia",
+    "zona": "Cerro de las Rosas",
+    "jornada": "Full Time",
+    "turno": "Turno Noche",
+    "salario": "A convenir",
+    "urgente": false,
+    "categoria": "Administración",
+    "tiempo": "Hace 2 días",
+    "contacto_wa": "5493541696766"
   }
+]
 ]
