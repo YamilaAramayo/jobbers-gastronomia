@@ -13,86 +13,38 @@ const escapeHTML = (str) => {
 // NÚMERO CENTRAL DE WHATSAPP JOBBERS
 const WHATSAPP_NUMERO = "5493513080197";
 
-// 1. BANCO DE DATOS DE OFERTAS DE EJEMPLO
-const vacantesGastronomia = [
-    {
-        id: 1,
-        puesto: "Cocinero / Cocinera de Despacho",
-        empresa: "La Caprichosa Resto",
-        zona: "Nueva Córdoba",
-        jornada: "Full Time",
-        turno: "Turno Noche",
-        salario: "$450.000 / mes",
-        urgente: true,
-        categoria: "Cocina",
-        tiempo: "Hace 1 hora"
-    },
-    {
-        id: 2,
-        puesto: "Mozo / Salonero de Salón",
-        empresa: "Bar de Fuegos",
-        zona: "Güemes",
-        jornada: "Part Time",
-        turno: "Turno Noche",
-        salario: "$280.000 + Propinas",
-        urgente: false,
-        categoria: "Mozo",
-        tiempo: "Hace 3 horas"
-    },
-    {
-        id: 3,
-        puesto: "Barista Especializado",
-        empresa: "Café Suburbio",
-        zona: "General Paz",
-        jornada: "Full Time",
-        turno: "Turno Mañana",
-        salario: "$390.000 / mes",
-        urgente: false,
-        categoria: "Barista",
-        tiempo: "Hace 5 horas"
-    },
-    {
-        id: 4,
-        puesto: "Bartender Coctelería de Autor",
-        empresa: "SpeakEasy Club",
-        zona: "Güemes",
-        jornada: "Fines de semana",
-        turno: "Turno Noche",
-        salario: "$320.000 + Propinas",
-        urgente: true,
-        categoria: "Bartender",
-        tiempo: "Hace 12 horas"
-    },
-    {
-        id: 5,
-        puesto: "Cajero / Facturación POSNET",
-        empresa: "Pizzería Don Luiggi",
-        zona: "Centro",
-        jornada: "Full Time",
-        turno: "Turno Tarde",
-        salario: "$360.000 / mes",
-        urgente: false,
-        categoria: "Cajero",
-        tiempo: "Hace 1 día"
-    },
-    {
-        id: 6,
-        puesto: "Delivery / Repartidor con Moto",
-        empresa: "Sushi & Roll",
-        zona: "Nueva Córdoba",
-        jornada: "Part Time",
-        turno: "Turno Noche",
-        salario: "$250.000 + Envíos",
-        urgente: true,
-        categoria: "Delivery",
-        tiempo: "Hace 1 día"
+// Variable global para almacenar las vacantes cargadas desde el JSON
+let vacantesGastronomia = [];
+
+// 1. CARGA DE DATOS DESDE EL ARCHIVO JSON
+async function cargarVacantesDesdeJSON() {
+    try {
+        const response = await fetch('./base_de_datos.json');
+        if (!response.ok) {
+            throw new Error(`Error al cargar el JSON: ${response.statusText}`);
+        }
+        vacantesGastronomia = await response.json();
+        renderizarOfertas(vacantesGastronomia);
+    } catch (error) {
+        console.error("Error cargando la base de datos:", error);
+        mostrarToast("No se pudieron cargar las ofertas de empleo", "error");
+        
+        const contenedor = document.getElementById('vacantes-container');
+        if (contenedor) {
+            contenedor.innerHTML = `
+                <div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; color:#EF4444; margin-bottom:10px;"></i>
+                    <p>Error al cargar las ofertas. Asegurate de estar ejecutando el proyecto con un servidor local (Live Server).</p>
+                </div>
+            `;
+        }
     }
-];
+}
 
 // 2. CARGA E INICIALIZACIÓN
 document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
-    renderizarOfertas(vacantesGastronomia);
+    cargarVacantesDesdeJSON();
 
     // Conectar el Formulario Express de WhatsApp (Búsqueda de Personal)
     const formExpress = document.getElementById('express-form');
