@@ -1,32 +1,26 @@
 [
   {
     "id": 1,
-    "titulo": "Cocinero/a",
-    "empresa": "Casa Norte",
-    "ubicacion": "Nueva Córdoba",
-    "tipo_jornada": "Tiempo completo",
+    "puesto": "Cocinero / Cocinera de Despacho",
+    "empresa": "La Caprichosa Resto",
+    "zona": "Nueva Córdoba",
+    "jornada": "Full Time",
     "turno": "Turno Noche",
-    "urgente": 1,
-    "salario": "A convenir"
+    "salario": "$450.000 / mes",
+    "urgente": true,
+    "categoria": "Cocina",
+    "tiempo": "Hace 1 hora"
   },
   {
     "id": 2,
-    "titulo": "Barista",
-    "empresa": "Café Central",
-    "ubicacion": "Güemes",
-    "tipo_jornada": "Part-time",
-    "turno": "Turno Mañana",
-    "urgente": 0,
-    "salario": "A convenir"
-  },
-  {
-    "id": 3,
-    "titulo": "Bartender",
-    "empresa": "Barra Sur",
-    "ubicacion": "Centro",
-    "tipo_jornada": "Tiempo completo",
+    "puesto": "Mozo / Salonero de Salón",
+    "empresa": "Bar de Fuegos",
+    "zona": "Güemes",
+    "jornada": "Part Time",
     "turno": "Turno Noche",
-    "urgente": 0,
-    "salario": "$ 320.000"
+    "salario": "$280.000 + Propinas",
+    "urgente": false,
+    "categoria": "Mozo",
+    "tiempo": "Hace 3 horas"
   }
 ]
