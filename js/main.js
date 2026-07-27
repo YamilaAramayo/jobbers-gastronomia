@@ -258,11 +258,8 @@ function abrirModalPostulacion(puesto, empresa) {
             <div class="form-group" style="margin-bottom:0.8rem;">
                 <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required>
             </div>
-            <div class="form-group" style="margin-bottom:0.8rem;">
-                <input type="tel" id="post-telefono" placeholder="WhatsApp de contacto" required>
-            </div>
             <div class="form-group" style="margin-bottom:1.2rem;">
-                <input type="url" id="post-link" placeholder="Link a tu CV / LinkedIn / Drive" required>
+                <input type="tel" id="post-telefono" placeholder="WhatsApp de contacto" required>
             </div>
             <button type="submit" class="btn-whatsapp">
                 <i class="fa-brands fa-whatsapp"></i> ENVIAR POSTULACIÓN
@@ -281,12 +278,10 @@ function procesarPostulacion(e, puesto, empresa) {
 
     const nombre = document.getElementById('post-nombre')?.value || "Candidato";
     const telefonoContacto = document.getElementById('post-telefono')?.value || "";
-    const linkCV = document.getElementById('post-link')?.value || "";
 
     const texto = `¡Hola Jobbers! 👋 Quisiera postularme al puesto de *${puesto}* en *${empresa}*.\n\n` +
                   `👤 *Nombre:* ${nombre}\n` +
-                  `📱 *Contacto:* ${telefonoContacto}\n` +
-                  `📄 *CV:* ${linkCV}`;
+                  `📱 *Contacto:* ${telefonoContacto}`;
 
     const urlWA = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
 
