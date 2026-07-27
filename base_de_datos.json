@@ -2,14 +2,15 @@
   {
     "id": 1,
     "puesto": "Cocinero / Cocinera de Despacho",
-    "empresa": "La Caprichosa Resto",
+    "empresa": "Casa Norte",
     "zona": "Nueva Córdoba",
     "jornada": "Full Time",
     "turno": "Turno Noche",
     "salario": "$450.000 / mes",
     "urgente": true,
     "categoria": "Cocina",
-    "tiempo": "Hace 1 hora"
+    "tiempo": "Hace 1 hora",
+    "contacto_wa": "5493510000000"
   },
   {
     "id": 2,
@@ -21,6 +22,7 @@
     "salario": "$280.000 + Propinas",
     "urgente": false,
     "categoria": "Mozo",
-    "tiempo": "Hace 3 horas"
+    "tiempo": "Hace 3 horas",
+    "contacto_wa": "5493511111111"
   }
 ]
