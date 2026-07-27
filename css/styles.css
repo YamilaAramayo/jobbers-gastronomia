@@ -2,20 +2,20 @@
    1. VARIABLES & RESET (PALETA MODO OSCURO)
    ========================================================================== */
 :root {
-  --primary: #F39C12;            /* Ámbar / Naranja brillante */
+  --primary: #F39C12;             /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;          /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;            /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;      /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;    /* Botón de acción principal */
+  --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
+  --card-bg-light: #212428;       /* Hover o tarjetas secundarias */
+  --whatsapp-orange: #F39C12;     /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;       /* Badge Urgente */
-  --salary-green: #2ECC71;       /* Sueldos */
+  --danger-badge: #E74C3C;        /* Badge Urgente */
+  --salary-green: #2ECC71;        /* Sueldos */
 
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;          /* Para texto sobre botones naranjas */
+  --text-dark: #111827;           /* Para texto sobre botones naranjas */
   --border-color: #2D3137;
 
   --radius-sm: 6px;
