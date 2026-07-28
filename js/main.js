@@ -11,7 +11,7 @@ const escapeHTML = (str) => {
     });
 };
 
-// NÚMERO POR DEFECTO EN CASO DE QUE LA OFERTA NO TENGA UNO ASIGNADO
+// NÚMERO POR DEFECTO EN CASO DE QUE LA OFERTA NO TENGA UNO ASIGNADO (JOBBERS SOPORTE)
 const WHATSAPP_JOBBERS_DEFAULT = "5493513080197";
 
 // Variable global para almacenar las vacantes cargadas desde el JSON
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
 
-    // Formulario Express para Empleadores
+    // Formulario Express para Empleadores ("Necesito Personal YA")
     const formExpress = document.getElementById('express-form');
     if (formExpress) {
         formExpress.addEventListener('submit', (e) => {
@@ -68,14 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const telefono = document.getElementById('telefono-contacto')?.value || "Sin teléfono";
             const puesto = document.getElementById('puesto')?.value || "Personal Gastronómico";
             const zona = document.getElementById('zona')?.value || "Córdoba";
-            const turno = document.getElementById('turno')?.value || "A convenir";
+            
+            // Captura de Turno y Jornada adaptados al HTML actualizado
+            const horarioTurno = document.getElementById('horario-turno')?.value || "A convenir";
+            const tipoJornada = document.getElementById('tipo-jornada')?.value || "A convenir";
 
             const texto = `¡Hola Jobbers! 👋 Necesito contratar personal urgente:\n\n` +
                           `🏢 *Local/Empresa:* ${local}\n` +
                           `📱 *Contacto:* ${telefono}\n` +
                           `📌 *Puesto:* ${puesto}\n` +
                           `📍 *Zona:* ${zona}\n` +
-                          `⏰ *Turno:* ${turno}\n\n` +
+                          `⏰ *Turno:* ${horarioTurno}\n` +
+                          `💼 *Jornada:* ${tipoJornada}\n\n` +
                           `Aguardando respuesta.`;
 
             const urlWA = `https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(texto)}`;
