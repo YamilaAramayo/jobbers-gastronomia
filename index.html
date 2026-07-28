@@ -44,7 +44,7 @@
                     <h1 class="hero-title">LABURO REAL<br><span class="highlight">EN GASTRONOMÍA.</span></h1>
                     <p class="hero-subtitle">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
                     
-                    <!-- 2 Botones Principales (Se eliminó la redundancia de 'Personal Ya') -->
+                    <!-- 2 Botones Principales -->
                     <div class="hero-buttons">
                         <!-- 1. Busco trabajo -->
                         <div class="hero-btn-wrapper">
@@ -262,60 +262,87 @@
                 </div>
 
                 <div class="talent-grid">
-                    <!-- Candidato 1 -->
+                    <!-- Candidato 1: Lucas R. -->
                     <div class="talent-card">
                         <div class="avatar-status">
                             <div class="avatar-placeholder">LR</div>
                             <span class="status-badge active" title="Disponible"></span>
                         </div>
-                        <h3>Lucas R.</h3>
-                        <p class="role">Cocinero</p>
-                        <div class="rating">★★★★★ <span>(24)</span></div>
-                        <p class="detail">5 años de experiencia<br>Disponibilidad: Inmediata</p>
-                        <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Nueva Córdoba</span>
-                        
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
+                        <h3 class="talent-name">Lucas R.</h3>
+                        <div class="talent-role">Cocinero</div>
+                        <div class="rating">
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <span class="rating-count">(24)</span>
+                        </div>
+                        <p class="detail">5 años de experiencia</p>
+                        <p class="detail">Disponibilidad: <span class="disp-text">Inmediata</span></p>
+                        <div class="location">
+                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Nueva Córdoba
+                        </div>
+                        <button type="button" class="btn-unlock-cv" onclick="desbloquearContacto('Lucas R.')">
                             <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
                         </button>
                     </div>
 
-                    <!-- Candidato 2 -->
+                    <!-- Candidato 2: María F. -->
                     <div class="talent-card">
                         <div class="avatar-status">
                             <div class="avatar-placeholder">MF</div>
                             <span class="status-badge active" title="Disponible"></span>
                         </div>
-                        <h3>María F.</h3>
-                        <p class="role">Barista</p>
-                        <div class="rating">★★★★★ <span>(18)</span></div>
-                        <p class="detail">3 años de experiencia<br>Disponibilidad: Mañana</p>
-                        <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Güemes</span>
-
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
+                        <h3 class="talent-name">María F.</h3>
+                        <div class="talent-role">Barista</div>
+                        <div class="rating">
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <span class="rating-count">(18)</span>
+                        </div>
+                        <p class="detail">3 años de experiencia</p>
+                        <p class="detail">Disponibilidad: <span class="disp-text">Mañana</span></p>
+                        <div class="location">
+                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Güemes
+                        </div>
+                        <button type="button" class="btn-unlock-cv" onclick="desbloquearContacto('María F.')">
                             <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
                         </button>
                     </div>
 
-                    <!-- Candidato 3 -->
+                    <!-- Candidato 3: Santiago M. -->
                     <div class="talent-card">
                         <div class="avatar-status">
                             <div class="avatar-placeholder">SM</div>
                             <span class="status-badge active" title="Disponible"></span>
                         </div>
-                        <h3>Santiago M.</h3>
-                        <p class="role">Mozo</p>
-                        <div class="rating">★★★★★ <span>(31)</span></div>
-                        <p class="detail">4 años de experiencia<br>Disponibilidad: Full time</p>
-                        <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro</span>
-
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
+                        <h3 class="talent-name">Santiago M.</h3>
+                        <div class="talent-role">Mozo</div>
+                        <div class="rating">
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <span class="rating-count">(31)</span>
+                        </div>
+                        <p class="detail">4 años de experiencia</p>
+                        <p class="detail">Disponibilidad: <span class="disp-text">Full time</span></p>
+                        <div class="location">
+                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro
+                        </div>
+                        <button type="button" class="btn-unlock-cv" onclick="desbloquearContacto('Santiago M.')">
                             <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
                         </button>
                     </div>
                 </div>
 
                 <!-- Bloque Comunidad -->
-                <div class="blog-banner">
+                <div class="blog-banner" style="margin-top: 1.5rem;">
                     <div class="blog-banner-content">
                         <h2>FORMÁ PARTE DE LA COMUNIDAD <span class="highlight">JOBBERS</span></h2>
                         <p>Aparecé en nuestra lista de talentos destacados o accedé a contenido exclusivo.</p>
