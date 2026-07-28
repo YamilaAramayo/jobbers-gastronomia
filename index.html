@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+    <!-- Header / Navbar Simplificado -->
     <header class="navbar">
         <div class="logo">
             <h2>JOBBERS</h2>
@@ -20,14 +20,12 @@
         </div>
 
         <nav class="nav-links" aria-label="Navegación principal">
-            <a href="#vacantes-container" class="nav-link active">Buscar empleo</a>
-            <a href="#express-form-section" class="nav-link">Necesito personal</a>
-            <a href="#empresas" class="nav-link">Empresas</a>
             <div class="dropdown">
                 <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
                     Recursos <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu" id="recursos-menu" aria-labelledby="dropdown-recursos">
+                    <a href="#soporte" onclick="cerrarDropdown()">Soporte Técnico</a>
                     <a href="#guias" onclick="cerrarDropdown()">Guías de Contratación</a>
                     <a href="#plantillas" onclick="cerrarDropdown()">Plantillas de CV</a>
                 </div>
@@ -46,21 +44,30 @@
                     <h1 class="hero-title">LABURO REAL<br><span class="highlight">EN GASTRONOMÍA.</span></h1>
                     <p class="hero-subtitle">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
                     
+                    <!-- 3 Botones Principales -->
                     <div class="hero-buttons">
-                        <!-- Candidato -->
+                        <!-- 1. Busco trabajo -->
                         <div class="hero-btn-wrapper">
                             <a href="#vacantes-container" class="btn-primary">
-                                <i class="fa-solid fa-briefcase" aria-hidden="true"></i> BUSCO TRABAJO
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> BUSCO TRABAJO
                             </a>
                             <span class="btn-subtext">Postulate directo por WhatsApp</span>
                         </div>
 
-                        <!-- Empresa (Express) -->
+                        <!-- 2. Necesito personal ya -->
                         <div class="hero-btn-wrapper">
                             <a href="#express-form-section" class="btn-secondary btn-express-direct">
                                 <i class="fa-solid fa-bolt" aria-hidden="true"></i> NECESITO PERSONAL YA
                             </a>
                             <span class="btn-subtext highlight-express">⚡ Sin registro • Pedido rápido</span>
+                        </div>
+
+                        <!-- 3. Publicá un aviso -->
+                        <div class="hero-btn-wrapper">
+                            <a href="#express-form-section" class="btn-accent">
+                                <i class="fa-solid fa-bullhorn" aria-hidden="true"></i> PUBLICÁ UN AVISO
+                            </a>
+                            <span class="btn-subtext">Para empresas y locales</span>
                         </div>
                     </div>
 
