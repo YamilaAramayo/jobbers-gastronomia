@@ -205,7 +205,7 @@ function filtrarPorCategoria(categoria) {
     document.getElementById('vacantes-container')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 6. SISTEMA DE MODAL Y POSTULACIÓN DIRECTA AL EMPLEADOR
+// 6. SISTEMA DE MODAL, POSTULACIÓN DIRECTA Y TALENTO DESTACADO
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal');
     if (!modal) {
@@ -285,6 +285,67 @@ function procesarPostulacion(e, puesto, empresa, numeroEmpleador) {
     }, 500);
 }
 
+// Función para solicitar el perfil/CV de un Talento Destacado
+function desbloquearContacto(nombreCandidato) {
+    asegurarEstructuraModal();
+    const body = document.getElementById('modal-body');
+    if (!body) return;
+
+    body.innerHTML = `
+        <div style="margin-bottom: 1rem; text-align: center;">
+            <i class="fa-solid fa-id-card" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 8px;"></i>
+            <h2 style="font-size:1.2rem; font-weight:900; color:var(--text-main); margin-bottom:2px;">ACCEDER A FICHA DE PERFIL</h2>
+            <p style="color:var(--primary); font-size:0.85rem; font-weight:700; margin:0;">Candidato: ${escapeHTML(nombreCandidato)}</p>
+        </div>
+
+        <div style="background: rgba(255, 193, 7, 0.1); border-left: 3px solid #FFC107; padding: 10px; border-radius: 4px; margin-bottom: 1rem;">
+            <p style="font-size: 0.78rem; color: var(--text-main); margin: 0;">
+                <i class="fa-solid fa-shield-halved" style="color:#FFC107; margin-right: 4px;"></i>
+                Solicitá el contacto directo y CV completo verificando tu empresa o local gastronómico.
+            </p>
+        </div>
+
+        <form onsubmit="procesarDesbloqueoTalento(event, '${escapeHTML(nombreCandidato).replace(/'/g, "\\'")}')" class="express-form">
+            <div class="form-group" style="margin-bottom:0.8rem;">
+                <input type="text" id="empresa-solicitante" placeholder="Nombre de tu local / empresa" required>
+            </div>
+            <div class="form-group" style="margin-bottom:1.2rem;">
+                <input type="tel" id="telefono-solicitante" placeholder="Tu WhatsApp de contacto" required>
+            </div>
+            <button type="submit" class="btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> SOLICITAR CV POR WHATSAPP
+            </button>
+        </form>
+    `;
+
+    const modal = document.getElementById('modal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function procesarDesbloqueoTalento(e, nombreCandidato) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const empresa = document.getElementById('empresa-solicitante')?.value || "Empresa";
+    const telefono = document.getElementById('telefono-solicitante')?.value || "Sin especificar";
+
+    const texto = `¡Hola Jobbers! 👋 Me interesa contratar / ver el CV del talento destacado:\n\n` +
+                  `👤 *Candidato de interés:* ${nombreCandidato}\n` +
+                  `🏢 *Mi Local/Empresa:* ${empresa}\n` +
+                  `📱 *Mi Contacto:* ${telefono}\n\n` +
+                  `¿Me comparten su contacto o currículum vitae?`;
+
+    const urlWA = `https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(texto)}`;
+
+    cerrarModal();
+    mostrarToast("Conectando con Soporte Jobbers...", "success");
+
+    setTimeout(() => {
+        window.location.href = urlWA;
+    }, 500);
+}
+
 function cerrarModal() {
     const modal = document.getElementById('modal');
     if (modal) {
@@ -339,6 +400,8 @@ function mostrarToast(mensaje, tipo = "success") {
 // 8. BINDING GLOBAL WINDOW
 window.irAExpress = irAExpress;
 window.abrirModalPostulacion = abrirModalPostulacion;
+window.desbloquearContacto = desbloquearContacto;
+window.procesarDesbloqueoTalento = procesarDesbloqueoTalento;
 window.cerrarModal = cerrarModal;
 window.procesarPostulacion = procesarPostulacion;
 window.filtrarVacantes = filtrarVacantes;
