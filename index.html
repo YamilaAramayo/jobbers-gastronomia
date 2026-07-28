@@ -35,7 +35,7 @@
             <a href="#nosotros" class="nav-link">Nosotros</a>
         </nav>
 
-        <!-- Botón del Header Exclusivo Empresas (Filtra postulantes) -->
+        <!-- Botón del Header Exclusivo Empresas -->
         <div id="nav-actions" class="nav-actions">
             <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Tengo%20un%20local%20gastron%C3%B3mico%20y%20quiero%20publicar%20una%20b%C3%BAsqueda." 
                target="_blank" 
@@ -146,42 +146,32 @@
                 <div class="category-card" onclick="filtrarPorCategoria('Cocina')">
                     <i class="fa-solid fa-utensils" aria-hidden="true"></i>
                     <h3>Cocina</h3>
-                    <span class="count">1.243 ofertas</span>
+                    <span class="count">Ofertas activas</span>
                 </div>
                 <div class="category-card" onclick="filtrarPorCategoria('Mozo')">
                     <i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>
                     <h3>Mozo / Salonero</h3>
-                    <span class="count">982 ofertas</span>
+                    <span class="count">Ofertas activas</span>
                 </div>
                 <div class="category-card" onclick="filtrarPorCategoria('Barista')">
                     <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
                     <h3>Barista</h3>
-                    <span class="count">567 ofertas</span>
+                    <span class="count">Ofertas activas</span>
                 </div>
                 <div class="category-card" onclick="filtrarPorCategoria('Bartender')">
                     <i class="fa-solid fa-martini-glass-citrus" aria-hidden="true"></i>
                     <h3>Bartender</h3>
-                    <span class="count">458 ofertas</span>
+                    <span class="count">Ofertas activas</span>
                 </div>
                 <div class="category-card" onclick="filtrarPorCategoria('Cajero')">
                     <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
                     <h3>Cajero</h3>
-                    <span class="count">324 ofertas</span>
+                    <span class="count">Ofertas activas</span>
                 </div>
                 <div class="category-card" onclick="filtrarPorCategoria('Delivery')">
                     <i class="fa-solid fa-motorcycle" aria-hidden="true"></i>
                     <h3>Delivery</h3>
-                    <span class="count">1.105 ofertas</span>
-                </div>
-                <div class="category-card" onclick="filtrarPorCategoria('Pastelería')">
-                    <i class="fa-solid fa-cake-candles" aria-hidden="true"></i>
-                    <h3>Pastelería</h3>
-                    <span class="count">256 ofertas</span>
-                </div>
-                <div class="category-card" onclick="filtrarPorCategoria('Encargado')">
-                    <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
-                    <h3>Encargado</h3>
-                    <span class="count">278 ofertas</span>
+                    <span class="count">Ofertas activas</span>
                 </div>
             </div>
         </section>
@@ -197,7 +187,7 @@
                 </div>
 
                 <div id="vacantes-container" class="vacantes-container">
-                    <!-- Contenido dinámico generado por JS -->
+                    <!-- Contenido dinámico generado por main.js -->
                 </div>
                 
                 <a href="#vacantes-container" class="link-more-full" onclick="filtrarPorCategoria('')">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
@@ -223,7 +213,7 @@
                         <p class="detail">5 años de experiencia<br>Disponibilidad: Inmediata</p>
                         <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Nueva Córdoba</span>
                         
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia('Lucas R. - Cocinero')" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
+                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
                             <i class="fa-solid fa-lock"></i> VER CONTACTO / CV
                         </button>
                     </div>
@@ -240,7 +230,7 @@
                         <p class="detail">3 años de experiencia<br>Disponibilidad: Mañana</p>
                         <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Güemes</span>
 
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia('María F. - Barista')" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
+                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
                             <i class="fa-solid fa-lock"></i> VER CONTACTO / CV
                         </button>
                     </div>
@@ -257,18 +247,20 @@
                         <p class="detail">4 años de experiencia<br>Disponibilidad: Full time</p>
                         <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro</span>
 
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia('Santiago M. - Mozo')" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
+                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
                             <i class="fa-solid fa-lock"></i> VER CONTACTO / CV
                         </button>
                     </div>
                 </div>
 
-                <!-- Bloque Retroalimentación Orgánica -->
+                <!-- Bloque Comunidad (Botón Corregido) -->
                 <div class="blog-banner">
                     <div class="blog-banner-content">
                         <h2>FORMÁ PARTE DE LA COMUNIDAD <span class="highlight">JOBBERS</span></h2>
                         <p>Aparecé en nuestra lista de talentos destacados o accedé a contenido exclusivo.</p>
-                        <button type="button" class="btn-outline-light" onclick="abrirModalDestacarme()">DESTACÁ TU PERFIL</button>
+                        <button type="button" class="btn-primary" onclick="irAExpress()" style="width: 100%; font-weight: 800;">
+                            DESTACÁ TU PERFIL
+                        </button>
                     </div>
                 </div>
             </div>
@@ -332,93 +324,13 @@
         </a>
     </nav>
 
-    <!-- Modal Genérico -->
+    <!-- Modal Dinámico Principal -->
     <div id="modal" class="jobbers-modal" aria-hidden="true" role="dialog" aria-modal="true">
         <div class="jobbers-modal-card">
             <button type="button" class="jobbers-close-btn" onclick="cerrarModal()" aria-label="Cerrar modal">&times;</button>
             <div id="modal-body">
-                <!-- Contenido dinámico -->
+                <!-- Contenido dinámico generado por JS -->
             </div>
-        </div>
-    </div>
-
-    <!-- MODAL POSTULARME (Candidatos) -->
-    <div id="modal-postular" class="jobbers-modal" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="jobbers-modal-card">
-            <button type="button" class="jobbers-close-btn" onclick="cerrarModalPostular()">&times;</button>
-            <h2>POSTULARME</h2>
-            <p id="modal-puesto-titulo" style="color: #FF9F0A; font-weight: 700; margin-bottom: 1rem;">
-                Cocinero / Cocinera — La Caprichosa Resto
-            </p>
-
-            <form id="form-postulacion" onsubmit="enviarPostulacion(event)">
-                <div class="form-group" style="margin-bottom: 0.8rem;">
-                    <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required />
-                </div>
-                <div class="form-group" style="margin-bottom: 0.8rem;">
-                    <select id="post-experiencia" required>
-                        <option value="" disabled selected>Experiencia en el puesto...</option>
-                        <option value="Sin experiencia previa">Sin experiencia previa</option>
-                        <option value="Menos de 1 año">Menos de 1 año</option>
-                        <option value="Entre 1 y 3 años">Entre 1 y 3 años</option>
-                        <option value="Más de 3 años">Más de 3 años</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 0.8rem;">
-                    <input type="text" id="post-zona" placeholder="Barrio / Zona donde vivís (Ej: Nueva Córdoba)" required />
-                </div>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <select id="post-disponibilidad" required>
-                        <option value="" disabled selected>Disponibilidad horaria...</option>
-                        <option value="Full-time (Turno rotativo)">Full-time (Turno rotativo)</option>
-                        <option value="Turno Noche / Cierre">Turno Noche / Cierre</option>
-                        <option value="Turno Mañana / Mediodía">Turno Mañana / Mediodía</option>
-                        <option value="Fines de semana / Eventos">Solo Fines de semana / Eventos</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn-whatsapp">
-                    <i class="fa-brands fa-whatsapp"></i> ENVIAR POSTULACIÓN
-                </button>
-
-                <span class="response-tag" style="margin-top: 0.8rem; display: block; font-size: 0.75rem; text-align: center;">
-                    📌 Al abrirse WhatsApp, recordá <strong>adjuntar tu CV en PDF o foto</strong>.
-                </span>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL MEMBRESÍA / PAYWALL (Empresas) -->
-    <div id="modal-membresia" class="jobbers-modal" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="jobbers-modal-card" style="text-align: center;">
-            <button type="button" class="jobbers-close-btn" onclick="cerrarModalMembresia()">&times;</button>
-            
-            <div style="font-size: 2.2rem; color: #FF9F0A; margin-bottom: 0.5rem;">
-                <i class="fa-solid fa-crown"></i>
-            </div>
-            
-            <h2 style="font-size: 1.3rem; margin-bottom: 0.5rem;">ACCESO EXCLUSIVO EMPRESAS</h2>
-            <p style="font-size: 0.85rem; color: #A1A1AA; margin-bottom: 1.2rem;">
-                Para contactar candidatos verificados de 5 estrellas y recibir postulaciones sin límite, activá tu membresía de Jobbers.
-            </p>
-
-            <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #FF9F0A; border-radius: 8px; padding: 1rem; margin-bottom: 1.2rem;">
-                <h3 style="font-size: 1rem; color: #FF9F0A; margin-bottom: 0.3rem;">Plan Gastronómico Premium</h3>
-                <p style="font-size: 1.4rem; font-weight: 900; margin: 0.4rem 0;">$15.000 <span style="font-size: 0.75rem; font-weight: 400; color: #A1A1AA;">/ mes</span></p>
-                <ul style="text-align: left; font-size: 0.78rem; color: #D1D5DB; margin-top: 0.5rem; padding-left: 1.2rem;">
-                    <li>Acceso ilimitado a Base de Talentos 5★</li>
-                    <li>Recepción de CVs directa en tu canal</li>
-                    <li>Publicación de avisos destacados</li>
-                </ul>
-            </div>
-
-            <a href="https://wa.me/5493513080197?text=Hola!%20Quiero%20activar%20la%20Membres%C3%ADa%20Premium%20para%20mi%20local." 
-               target="_blank" 
-               rel="noopener noreferrer"
-               class="btn-whatsapp" 
-               style="text-decoration: none; display: inline-flex; justify-content: center; width: 100%;">
-                <i class="fa-brands fa-whatsapp"></i> ACTIVAR MEMBRESÍA AHORA
-            </a>
         </div>
     </div>
 
