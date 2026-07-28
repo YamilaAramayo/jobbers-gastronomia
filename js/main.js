@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JOBBERS - SISTEMA INTEGRAL DE INTERACCIÓN Y OFERTAS (POSTULACIÓN DIRECTA AL EMPLEADOR)
+   JOBBERS - SISTEMA INTEGRAL DE INTERACCIÓN Y OFERTAS (POSTULACIÓN DIRECTA)
    ========================================================================== */
 
 // HELPER: Sanitización rápida contra XSS
@@ -17,17 +17,27 @@ const WHATSAPP_JOBBERS_DEFAULT = "5493513080197";
 // Variable global para almacenar las vacantes cargadas desde el JSON
 let vacantesGastronomia = [];
 
-// 1. CARGA DE DATOS DESDE EL ARCHIVO JSON
+// 1. CARGA DE DATOS DESDE EL ARCHIVO JSON CON FALLBACK DE RUTA
 async function cargarVacantesDesdeJSON() {
-    try {
-        const response = await fetch('./base_de_datos.json');
-        if (!response.ok) {
-            throw new Error(`Error al cargar el JSON: ${response.statusText}`);
+    const rutasPosibles = ['base_de_datos.json', './base_de_datos.json', '../base_de_datos.json', 'data/base_de_datos.json'];
+    let exito = false;
+
+    for (const ruta of rutasPosibles) {
+        try {
+            const response = await fetch(ruta);
+            if (response.ok) {
+                vacantesGastronomia = await response.json();
+                renderizarOfertas(vacantesGastronomia);
+                exito = true;
+                break;
+            }
+        } catch (e) {
+            // Intenta la siguiente ruta si esta falla
         }
-        vacantesGastronomia = await response.json();
-        renderizarOfertas(vacantesGastronomia);
-    } catch (error) {
-        console.error("Error cargando la base de datos:", error);
+    }
+
+    if (!exito) {
+        console.error("Error: No se pudo localizar o parsear el archivo base_de_datos.json");
         mostrarToast("No se pudieron cargar las ofertas de empleo", "error");
         
         const contenedor = document.getElementById('vacantes-container');
@@ -35,7 +45,7 @@ async function cargarVacantesDesdeJSON() {
             contenedor.innerHTML = `
                 <div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">
                     <i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; color:#EF4444; margin-bottom:10px;"></i>
-                    <p>Error al cargar las ofertas. Asegúrate de ejecutar el proyecto con Live Server.</p>
+                    <p>Error al cargar las ofertas. Asegúrate de verificar la ubicación de base_de_datos.json y ejecutar el proyecto con Live Server.</p>
                 </div>
             `;
         }
@@ -47,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
 
-    // Formulario Express para Empleadores (Búsqueda de Personal hacia Jobbers)
+    // Formulario Express para Empleadores
     const formExpress = document.getElementById('express-form');
     if (formExpress) {
         formExpress.addEventListener('submit', (e) => {
@@ -119,6 +129,11 @@ function renderizarOfertas(lista) {
         const nombreEmpresa = item.empresa || "Empresa Gastronómica";
         const numeroEmpleador = item.contacto_wa || WHATSAPP_JOBBERS_DEFAULT;
 
+        // Escapado especial para evitar romper los atributos de evento onclick
+        const attrPuesto = escapeHTML(nombrePuesto).replace(/'/g, "\\'");
+        const attrEmpresa = escapeHTML(nombreEmpresa).replace(/'/g, "\\'");
+        const attrNumero = escapeHTML(numeroEmpleador).replace(/'/g, "\\'");
+
         return `
             <article class="job-offer-card">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
@@ -138,7 +153,7 @@ function renderizarOfertas(lista) {
 
                 <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color); padding-top:10px; margin-top:8px;">
                     <span style="font-size:0.75rem; color:var(--text-muted);">${escapeHTML(item.tiempo || '')}</span>
-                    <button type="button" onclick="abrirModalPostulacion('${escapeHTML(nombrePuesto)}', '${escapeHTML(nombreEmpresa)}', '${escapeHTML(numeroEmpleador)}')" class="btn-primary" style="padding:6px 14px; font-size:0.8rem;">
+                    <button type="button" onclick="abrirModalPostulacion('${attrPuesto}', '${attrEmpresa}', '${attrNumero}')" class="btn-primary" style="padding:6px 14px; font-size:0.8rem;">
                         Postularme
                     </button>
                 </div>
@@ -225,7 +240,7 @@ function abrirModalPostulacion(puesto, empresa, numeroEmpleador) {
             </p>
         </div>
 
-        <form onsubmit="procesarPostulacion(event, '${puesto}', '${empresa}', '${numeroEmpleador}')" class="express-form">
+        <form onsubmit="procesarPostulacion(event, '${puesto.replace(/'/g, "\\'")}', '${empresa.replace(/'/g, "\\'")}', '${numeroEmpleador}')" class="express-form">
             <div class="form-group" style="margin-bottom:0.8rem;">
                 <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required>
             </div>
@@ -250,7 +265,6 @@ function procesarPostulacion(e, puesto, empresa, numeroEmpleador) {
     const nombre = document.getElementById('post-nombre')?.value || "Candidato";
     const telefonoContacto = document.getElementById('post-telefono')?.value || "";
 
-    // Mensaje dirigido directamente al empleador/local
     const texto = `¡Hola! 👋 Vi la publicación de la vacante para el puesto de *${puesto}* en *${empresa}* a través de Jobbers.\n\n` +
                   `Me interesa postularme:\n` +
                   `👤 *Nombre:* ${nombre}\n` +
