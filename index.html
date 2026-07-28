@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <!-- Header / Navbar Simplificado -->
+    <!-- Header / Navbar -->
     <header class="navbar">
         <div class="logo">
             <h2>JOBBERS</h2>
@@ -37,16 +37,15 @@
     <main class="main-content">
         
         <!-- Hero Section -->
-        <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');">
+        <section class="hero-section">
             <div class="hero-overlay"></div>
             <div class="hero-container">
                 <div class="hero-content">
                     <h1 class="hero-title">LABURO REAL<br><span class="highlight">EN GASTRONOMÍA.</span></h1>
                     <p class="hero-subtitle">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
                     
-                    <!-- 3 Botones Principales -->
+                    <!-- Botones Principales -->
                     <div class="hero-buttons">
-                        <!-- 1. Busco trabajo -->
                         <div class="hero-btn-wrapper">
                             <a href="#vacantes-container" class="btn-primary">
                                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> BUSCO TRABAJO
@@ -54,7 +53,6 @@
                             <span class="btn-subtext">Postulate directo por WhatsApp</span>
                         </div>
 
-                        <!-- 2. Necesito personal ya -->
                         <div class="hero-btn-wrapper">
                             <a href="#express-form-section" class="btn-secondary btn-express-direct">
                                 <i class="fa-solid fa-bolt" aria-hidden="true"></i> NECESITO PERSONAL YA
@@ -62,7 +60,6 @@
                             <span class="btn-subtext highlight-express">⚡ Sin registro • Pedido rápido</span>
                         </div>
 
-                        <!-- 3. Publicá un aviso -->
                         <div class="hero-btn-wrapper">
                             <a href="#express-form-section" class="btn-accent">
                                 <i class="fa-solid fa-bullhorn" aria-hidden="true"></i> PUBLICÁ UN AVISO
@@ -87,22 +84,19 @@
                     <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
                     
                     <form id="express-form" class="express-form">
-                        <!-- Nombre del Local -->
                         <div class="form-group">
                             <input type="text" id="nombre-local" placeholder="Nombre de tu local / Gastronómico" required>
                         </div>
                         
-                        <!-- Teléfono de contacto -->
                         <div class="form-group">
                             <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto" required>
                         </div>
                         
-                        <!-- Puestos Gastronómicos Completos -->
                         <div class="form-group">
                             <select id="puesto" aria-label="Seleccionar puesto requerido" required>
                                 <option value="" disabled selected>Puesto que necesitás</option>
                                 <optgroup label="Cocina & Producción">
-                                    <option value="Cocinero / Cheff">Cocinero / Chef</option>
+                                    <option value="Cocinero / Chef">Cocinero / Chef</option>
                                     <option value="Ayudante de Cocina">Ayudante de Cocina</option>
                                     <option value="Pizzero / Maestro Pizzero">Pizzero / Maestro Pizzero</option>
                                     <option value="Lomitero / Parrillero">Lomitero / Parrillero</option>
@@ -129,7 +123,6 @@
                             </select>
                         </div>
 
-                        <!-- Zonas de Córdoba Capital -->
                         <div class="form-group">
                             <select id="zona" aria-label="Seleccionar zona o barrio" required>
                                 <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
@@ -173,7 +166,6 @@
                             </select>
                         </div>
 
-                        <!-- Fila doble: Horario del Turno y Tipo de Jornada -->
                         <div class="form-row-2col">
                             <div class="form-group">
                                 <select id="horario-turno" aria-label="Seleccionar horario del turno" required>
@@ -266,7 +258,7 @@
             <div class="column-talent">
                 <div class="section-header">
                     <h2>TALENTO DESTACADO</h2>
-                    <a href="javascript:void(0)" class="link-more">Ver todos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                    <a href="#vacantes-container" class="link-more">Ver todos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
                 </div>
 
                 <div class="talent-grid">
@@ -280,10 +272,10 @@
                         <p class="role">Cocinero</p>
                         <div class="rating">★★★★★ <span>(24)</span></div>
                         <p class="detail">5 años de experiencia<br>Disponibilidad: Inmediata</p>
-                        <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Nueva Córdoba</span>
+                        <span class="location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Nueva Córdoba</span>
                         
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
-                            <i class="fa-solid fa-lock"></i> VER CONTACTO / CV
+                        <button type="button" class="btn-primary btn-talent-action" onclick="abrirModalMembresia()">
+                            <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
                         </button>
                     </div>
 
@@ -297,10 +289,10 @@
                         <p class="role">Barista</p>
                         <div class="rating">★★★★★ <span>(18)</span></div>
                         <p class="detail">3 años de experiencia<br>Disponibilidad: Mañana</p>
-                        <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Güemes</span>
+                        <span class="location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Güemes</span>
 
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
-                            <i class="fa-solid fa-lock"></i> VER CONTACTO / CV
+                        <button type="button" class="btn-primary btn-talent-action" onclick="abrirModalMembresia()">
+                            <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
                         </button>
                     </div>
 
@@ -314,10 +306,10 @@
                         <p class="role">Mozo</p>
                         <div class="rating">★★★★★ <span>(31)</span></div>
                         <p class="detail">4 años de experiencia<br>Disponibilidad: Full time</p>
-                        <span class="location" style="margin-bottom: 0.8rem;"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro</span>
+                        <span class="location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro</span>
 
-                        <button type="button" class="btn-primary" onclick="abrirModalMembresia()" style="width: 100%; font-size: 0.75rem; padding: 6px 10px;">
-                            <i class="fa-solid fa-lock"></i> VER CONTACTO / CV
+                        <button type="button" class="btn-primary btn-talent-action" onclick="abrirModalMembresia()">
+                            <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
                         </button>
                     </div>
                 </div>
@@ -327,7 +319,7 @@
                     <div class="blog-banner-content">
                         <h2>FORMÁ PARTE DE LA COMUNIDAD <span class="highlight">JOBBERS</span></h2>
                         <p>Aparecé en nuestra lista de talentos destacados o accedé a contenido exclusivo.</p>
-                        <button type="button" class="btn-primary" onclick="irAExpress()" style="width: 100%; font-weight: 800;">
+                        <button type="button" class="btn-primary btn-full-bold" onclick="irAExpress()">
                             DESTACÁ TU PERFIL
                         </button>
                     </div>
