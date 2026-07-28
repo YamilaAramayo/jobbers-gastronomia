@@ -55,19 +55,25 @@ img {
 }
 
 /* ==========================================================================
-   2. NAVBAR / HEADER
+   2. NAVBAR / HEADER (CENTRADO Y CONTENIDO LIMITADO)
    ========================================================================== */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem 1.5rem;
+  width: 100%;
   background-color: var(--secondary);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
 }
 
 .logo h2 {
@@ -88,7 +94,7 @@ img {
 .nav-links {
   display: none; /* Oculto en mobile, visible en desktop */
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .nav-link {
@@ -198,7 +204,7 @@ img {
   gap: 0.3rem;
 }
 
-.btn-primary, .btn-secondary {
+.btn-primary, .btn-secondary, .btn-accent {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -233,6 +239,16 @@ img {
 .btn-secondary:hover {
   border-color: var(--primary);
   color: var(--primary);
+}
+
+/* Estilo para el botón Publicá un aviso */
+.btn-accent {
+  background-color: #E67E22;
+  color: var(--text-dark);
+}
+
+.btn-accent:hover {
+  background-color: #D35400;
 }
 
 .btn-subtext {
@@ -411,7 +427,7 @@ img {
 }
 
 /* ==========================================================================
-   5. TARJETAS DE OFERTAS DE EMPLEO (DISEÑO CAPTURA)
+   5. TARJETAS DE OFERTAS DE EMPLEO
    ========================================================================== */
 .main-grid-section {
   display: grid;
@@ -461,7 +477,6 @@ img {
   gap: 0.85rem;
 }
 
-/* Estructura Tarjeta Individual */
 .job-offer-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -773,7 +788,6 @@ img {
   color: var(--text-main);
 }
 
-/* Toast Notifications */
 #toast-container {
   position: fixed;
   bottom: 75px;
@@ -842,15 +856,14 @@ img {
 }
 
 /* ==========================================================================
-   10. MEDIA QUERIES (ADAPTACIÓN COMPLETA PARA DESKTOP / PC)
+   10. MEDIA QUERIES (DESKTOP)
    ========================================================================== */
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
   .bottom-nav { display: none; }
   
-  .navbar {
-    justify-content: space-between;
-    padding: 1rem 3rem;
+  .navbar-container {
+    padding: 0.8rem 1rem;
   }
 
   .nav-links { 
@@ -878,7 +891,6 @@ img {
     grid-template-columns: 1.8fr 1.2fr;
   }
 
-  /* Disposición Horizontal de la Tarjeta en Pantallas Medianas/Grandes */
   .job-offer-card {
     grid-template-columns: 1fr 180px;
     align-items: center;
