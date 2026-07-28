@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. VARIABLES & RESET (PALETA MODO OSCURO)
+   1. VARIABLES & RESET (PALETA MODO OSCURO - JOBBERS)
    ========================================================================== */
 :root {
   --primary: #F39C12;             /* Ámbar / Naranja brillante */
@@ -54,8 +54,12 @@ img {
   display: block;
 }
 
+[onclick] {
+  cursor: pointer;
+}
+
 /* ==========================================================================
-   2. NAVBAR / HEADER (CENTRADO Y CONTENIDO LIMITADO)
+   2. NAVBAR / HEADER
    ========================================================================== */
 .navbar {
   position: sticky;
@@ -146,7 +150,7 @@ img {
 }
 
 /* ==========================================================================
-   3. HERO SECTION
+   3. HERO SECTION & FORMULARIO EXPRESS
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -241,7 +245,6 @@ img {
   color: var(--primary);
 }
 
-/* Estilo para el botón Publicá un aviso */
 .btn-accent {
   background-color: #E67E22;
   color: var(--text-dark);
@@ -268,7 +271,7 @@ img {
   color: var(--primary);
 }
 
-/* Tarjeta Express */
+/* Tarjeta Express para Empleadores */
 .hero-card-express {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -685,7 +688,7 @@ img {
 }
 
 /* ==========================================================================
-   7. ESTADÍSTICAS
+   7. ESTADÍSTICAS E INFORMACIÓN
    ========================================================================== */
 .stats-section {
   display: grid;
