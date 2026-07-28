@@ -87,41 +87,114 @@
                     <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
                     
                     <form id="express-form" class="express-form">
+                        <!-- Nombre del Local -->
                         <div class="form-group">
                             <input type="text" id="nombre-local" placeholder="Nombre de tu local / Gastronómico" required>
                         </div>
+                        
+                        <!-- Teléfono de contacto -->
                         <div class="form-group">
                             <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto" required>
                         </div>
+                        
+                        <!-- Puestos Gastronómicos Completos -->
                         <div class="form-group">
                             <select id="puesto" aria-label="Seleccionar puesto requerido" required>
-                                <option value="" disabled selected>Puesto que necesitas</option>
-                                <option value="Cocinero / Cocinera">Cocinero / Cocinera</option>
-                                <option value="Ayudante de Cocina">Ayudante de Cocina</option>
-                                <option value="Mozo / Salonero">Mozo / Salonero</option>
-                                <option value="Barista">Barista</option>
-                                <option value="Bartender">Bartender</option>
-                                <option value="Cajero">Cajero</option>
+                                <option value="" disabled selected>Puesto que necesitás</option>
+                                <optgroup label="Cocina & Producción">
+                                    <option value="Cocinero / Cheff">Cocinero / Chef</option>
+                                    <option value="Ayudante de Cocina">Ayudante de Cocina</option>
+                                    <option value="Pizzero / Maestro Pizzero">Pizzero / Maestro Pizzero</option>
+                                    <option value="Lomitero / Parrillero">Lomitero / Parrillero</option>
+                                    <option value="Sushi Man / Woman">Sushi Man / Woman</option>
+                                    <option value="Pastelero / Repostero">Pastelero / Repostero</option>
+                                    <option value="Panadero">Panadero</option>
+                                    <option value="Bachero / Bacha">Bachero / Bacha</option>
+                                </optgroup>
+                                <optgroup label="Salón & Atención">
+                                    <option value="Mozo / Mesera">Mozo / Mesera</option>
+                                    <option value="Comis / Peón de salón">Comis / Peón de salón</option>
+                                    <option value="Host / Recepcionista">Host / Recepcionista</option>
+                                    <option value="Barista / Cafetero">Barista / Cafetero</option>
+                                    <option value="Bartender / Barra">Bartender / Barra</option>
+                                    <option value="Cajero / Atención al cliente">Cajero / Atención al cliente</option>
+                                </optgroup>
+                                <optgroup label="Gestión & Otros">
+                                    <option value="Encargado / Gerente de local">Encargado / Gerente de local</option>
+                                    <option value="Jefe de Cocina / Sous Chef">Jefe de Cocina / Sous Chef</option>
+                                    <option value="Repartidor / Delivery">Repartidor / Delivery</option>
+                                    <option value="Personal de Limpieza">Personal de Limpieza</option>
+                                    <option value="Otro">Otro puesto...</option>
+                                </optgroup>
                             </select>
                         </div>
+
+                        <!-- Zonas de Córdoba Capital -->
                         <div class="form-group">
                             <select id="zona" aria-label="Seleccionar zona o barrio" required>
-                                <option value="" disabled selected>Zona</option>
-                                <option value="Nueva Córdoba">Nueva Córdoba</option>
-                                <option value="Güemes">Güemes</option>
-                                <option value="Centro">Centro</option>
-                                <option value="General Paz">General Paz</option>
+                                <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
+                                <optgroup label="Polos Gastronómicos & Centro">
+                                    <option value="Nueva Córdoba">Nueva Córdoba</option>
+                                    <option value="Güemes">Güemes</option>
+                                    <option value="Centro / Peatonal">Centro / Peatonal</option>
+                                    <option value="General Paz">General Paz</option>
+                                    <option value="Alberdi">Alberdi</option>
+                                    <option value="Alta Córdoba">Alta Córdoba</option>
+                                </optgroup>
+                                <optgroup label="Zona Norte">
+                                    <option value="Cerro de las Rosas">Cerro de las Rosas</option>
+                                    <option value="Villa Belgrano">Villa Belgrano</option>
+                                    <option value="Urca">Urca</option>
+                                    <option value="Argüello">Argüello</option>
+                                    <option value="Poeta Lugones">Poeta Lugones</option>
+                                    <option value="Marqués de Sobremonte">Marqués de Sobremonte</option>
+                                    <option value="Los Boulevares">Los Boulevares</option>
+                                    <option value="Granja de Funes">Granja de Funes</option>
+                                </optgroup>
+                                <optgroup label="Zona Sur">
+                                    <option value="Jardín / Barrio Jardín">Jardín / Barrio Jardín</option>
+                                    <option value="San Fernando / Roguet">San Fernando / Roguet</option>
+                                    <option value="Villa El Libertador">Villa El Libertador</option>
+                                    <option value="Iponá">Iponá</option>
+                                    <option value="San Carlos">San Carlos</option>
+                                </optgroup>
+                                <optgroup label="Zona Este">
+                                    <option value="Pueyrredón">Pueyrredón</option>
+                                    <option value="Yofre">Yofre</option>
+                                    <option value="San Vicente">San Vicente</option>
+                                    <option value="Empalme">Empalme</option>
+                                </optgroup>
+                                <optgroup label="Otras Zonas & Alrededores">
+                                    <option value="Alto Alberdi">Alto Alberdi</option>
+                                    <option value="Villa Cabrera">Villa Cabrera</option>
+                                    <option value="Rivera Indarte / Saldán">Rivera Indarte / Saldán</option>
+                                    <option value="Otra Zona (Córdoba)">Otra zona de Cba Capital</option>
+                                </optgroup>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <select id="turno" aria-label="Seleccionar tipo de turno" required>
-                                <option value="" disabled selected>Tipo de turno</option>
-                                <option value="Turno Noche">Turno Noche</option>
-                                <option value="Turno Tarde">Turno Tarde</option>
-                                <option value="Turno Mañana">Turno Mañana</option>
-                                <option value="Full Time / Part Time">Full Time / Part Time</option>
-                            </select>
+
+                        <!-- Fila doble: Horario del Turno y Tipo de Jornada -->
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <select id="horario-turno" aria-label="Seleccionar horario del turno" required>
+                                    <option value="" disabled selected>Horario / Turno</option>
+                                    <option value="Turno Mañana">Turno Mañana</option>
+                                    <option value="Turno Tarde">Turno Tarde</option>
+                                    <option value="Turno Noche">Turno Noche</option>
+                                    <option value="Turno Cortado / Rotativo">Cortado / Rotativo</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <select id="tipo-jornada" aria-label="Seleccionar tipo de jornada" required>
+                                    <option value="" disabled selected>Jornada</option>
+                                    <option value="Full Time">Full Time</option>
+                                    <option value="Part Time">Part Time</option>
+                                    <option value="Eventual / Franquero">Eventual / Franquero</option>
+                                </select>
+                            </div>
                         </div>
+
                         <button type="submit" class="btn-whatsapp">
                             <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
                         </button>
