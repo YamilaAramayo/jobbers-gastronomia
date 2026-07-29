@@ -2,22 +2,24 @@
    1. VARIABLES & RESET (PALETA MODO OSCURO - JOBBERS)
    ========================================================================== */
 :root {
-  --primary: #F39C12;               /* Ámbar / Naranja brillante */
+  /* Paleta de colores */
+  --primary: #F39C12;             /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;             /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;               /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;         /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;       /* Botón de acción principal */
+  --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
+  --card-bg-light: #212428;       /* Hover o tarjetas secundarias */
+  --whatsapp-orange: #F39C12;     /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;          /* Badge Urgente */
-  --salary-green: #2ECC71;          /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;        /* Badge Urgente y errores */
+  --salary-green: #2ECC71;        /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;             /* Para texto sobre botones amarillos/naranjas */
+  --text-dark: #111827;           /* Texto sobre botones amarillos/naranjas */
   --border-color: #2D3137;
 
+  /* Bordes y Sombras */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -26,9 +28,16 @@
   --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Capas / Z-Index */
+  --z-dropdown: 10;
+  --z-bottom-nav: 90;
+  --z-navbar: 100;
+  --z-modal: 1000;
+  --z-toast: 2000;
 }
 
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -41,6 +50,7 @@ body {
   line-height: 1.6;
   padding-bottom: 80px; /* Offset para el Bottom Nav mobile */
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -64,10 +74,11 @@ img {
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: var(--z-navbar);
   width: 100%;
   background-color: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   padding: 0.8rem 1.5rem;
@@ -142,7 +153,7 @@ img {
   border-radius: var(--radius-sm);
   overflow: hidden;
   min-width: 200px;
-  z-index: 10;
+  z-index: var(--z-dropdown);
   border: 1px solid var(--border-color);
   padding: 0.4rem 0;
 }
@@ -363,7 +374,6 @@ img {
   color: var(--text-main);
 }
 
-/* Opciones de select e impresiones para navegadores */
 .express-form select option,
 .form-group select option {
   background-color: var(--bg-dark);
@@ -847,7 +857,8 @@ img {
   height: 100%;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(6px);
-  z-index: 10000;
+  -webkit-backdrop-filter: blur(6px);
+  z-index: var(--z-modal);
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -868,6 +879,7 @@ img {
   box-shadow: var(--shadow-lg);
   color: var(--text-main);
   animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
 }
 
 @keyframes modalFadeIn {
@@ -901,7 +913,7 @@ img {
   position: fixed;
   bottom: 85px;
   right: 20px;
-  z-index: 99999;
+  z-index: var(--z-toast);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -924,7 +936,7 @@ img {
 }
 
 .jobbers-toast.success { border-left: 4px solid var(--salary-green); }
-.jobbers-toast.error { border-left: 4px solid var(--primary); }
+.jobbers-toast.error { border-left: 4px solid var(--danger-badge); }
 
 @keyframes toastIn {
   from { opacity: 0; transform: translateX(60px); }
@@ -942,11 +954,12 @@ img {
   height: 65px;
   background: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  z-index: 99;
+  z-index: var(--z-bottom-nav);
   padding: 0 0.5rem;
 }
 
