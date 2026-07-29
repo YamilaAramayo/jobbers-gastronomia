@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Bind Formulario Express con comportamiento TOGGLE (Abre / Cierra al presionar el botón)
+    // Bind Formulario Express con comportamiento TOGGLE y actualización ARIA
     const triggersExpress = document.querySelectorAll('.btn-trigger-express');
     const cardExpress = document.getElementById('formulario-express');
 
@@ -64,10 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Ocultar si ya estaba visible
                     cardExpress.classList.remove('is-visible');
                     cardExpress.style.display = 'none';
+                    btn.setAttribute('aria-expanded', 'false');
                 } else {
                     // Desplegar si estaba oculto
                     cardExpress.style.display = 'block';
                     cardExpress.classList.add('is-visible');
+                    btn.setAttribute('aria-expanded', 'true');
                     cardExpress.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
                     setTimeout(() => {
@@ -344,7 +346,6 @@ function enviarAWhatsApp(event) {
 
     mostrarToast("Redirigiendo a WhatsApp...", "success");
 
-    // Redirección síncrona o con delay mínimo para evitar bloqueos del navegador
     setTimeout(() => {
         window.open(urlWA, '_blank', 'noopener,noreferrer');
     }, 150);
@@ -353,7 +354,7 @@ function enviarAWhatsApp(event) {
 }
 
 /* ==========================================================================
-   6. MODAL DE POSTULACIÓN DE CANDIDATOS
+   6. MODAL DE POSTULACIÓN DE CANDIDATOS (CON FOCUS TRAP)
    ========================================================================== */
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal-jobbers');
@@ -371,7 +372,7 @@ function asegurarEstructuraModal() {
             align-items: center; justify-content: center; padding: 1rem;
         `;
         modal.innerHTML = `
-            <div class="jobbers-modal-card" style="background: #121824; border: 1px solid #2d3748; width: 100%; max-width: 480px; border-radius: 12px; padding: 1.5rem; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.5); color: #fff;">
+            <div class="jobbers-modal-card" tabindex="-1" style="background: #121824; border: 1px solid #2d3748; width: 100%; max-width: 480px; border-radius: 12px; padding: 1.5rem; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.5); color: #fff;">
                 <button type="button" onclick="cerrarModal()" style="position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94a3b8;" aria-label="Cerrar modal">&times;</button>
                 <div id="modal-body"></div>
             </div>
@@ -380,6 +381,29 @@ function asegurarEstructuraModal() {
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) cerrarModal();
+        });
+
+        // Bloqueo de Tab / Focus Trap dentro del modal
+        modal.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+
+            const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (focusables.length === 0) return;
+
+            const firstElement = focusables[0];
+            const lastElement = focusables[focusables.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                    e.preventDefault();
+                }
+            }
         });
     }
 }
@@ -420,7 +444,7 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
     const formModal = document.getElementById('form-postulacion-modal');
     if (formModal) {
         formModal.addEventListener('submit', (e) => {
-            e.preventDefault(); // Previene la recarga inmediata de la página
+            e.preventDefault();
             procesarPostulacion(e, puesto, empresa, numLimpio);
         });
     }
