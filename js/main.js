@@ -69,6 +69,21 @@ document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
 
+    // Event listener para desplegar/ocultar tarjeta express en Hero
+    const btnToggleExpress = document.getElementById('btn-necesito-personal');
+    const cardExpress = document.querySelector('.hero-card-express');
+
+    if (btnToggleExpress && cardExpress) {
+        btnToggleExpress.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isExpanded = cardExpress.classList.toggle('is-visible');
+
+            if (isExpanded) {
+                cardExpress.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    }
+
     // Event listener para el buscador en tiempo real con Debounce (300ms)
     const inputBusqueda = document.getElementById('input-busqueda') || document.getElementById('search-filter');
     if (inputBusqueda) {
