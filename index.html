@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jobbers - La plataforma de empleo especializada en el sector gastronómico. Conectamos candidatos con restaurantes, bares y hoteles.">
+    <meta name="description" content="Jobbers - La plataforma de empleo especializada en el sector gastronómico en Córdoba. Conectamos candidatos con restaurantes, bares y hoteles.">
     <title>Jobbers - Empleo Gastronómico</title>
 
     <link rel="stylesheet" href="css/styles.css">
@@ -25,9 +25,9 @@
                     Recursos <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu" id="recursos-menu" aria-labelledby="dropdown-recursos">
-                    <a href="#soporte" onclick="cerrarDropdown()">Soporte Técnico</a>
-                    <a href="#guias" onclick="cerrarDropdown()">Guías de Contratación</a>
-                    <a href="#plantillas" onclick="cerrarDropdown()">Plantillas de CV</a>
+                    <a href="javascript:void(0)" onclick="cerrarDropdown(); abrirModalRecursos('soporte');">Soporte Técnico</a>
+                    <a href="javascript:void(0)" onclick="cerrarDropdown(); abrirModalRecursos('guias');">Guías de Contratación</a>
+                    <a href="javascript:void(0)" onclick="cerrarDropdown(); abrirModalRecursos('plantillas');">Plantillas de CV</a>
                 </div>
             </div>
             <a href="#nosotros" class="nav-link">Nosotros</a>
@@ -145,7 +145,7 @@
                                 </optgroup>
                                 <optgroup label="Zona Sur">
                                     <option value="Jardín / Barrio Jardín">Jardín / Barrio Jardín</option>
-                                    <option value="San Fernando / Roguet">San Fernando / Roguet</option>
+                                    <option value="San Fernando / Roglio">San Fernando / Roglio</option>
                                     <option value="Villa El Libertador">Villa El Libertador</option>
                                     <option value="Iponá">Iponá</option>
                                     <option value="San Carlos">San Carlos</option>
@@ -204,32 +204,32 @@
             </div>
             
             <div class="categories-grid">
-                <div class="category-card" onclick="filtrarPorCategoria('Cocina')">
+                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Cocina')">
                     <i class="fa-solid fa-utensils" aria-hidden="true"></i>
                     <h3>Cocina</h3>
                     <span class="count">Ofertas activas</span>
                 </div>
-                <div class="category-card" onclick="filtrarPorCategoria('Mozo')">
+                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Mozo')">
                     <i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>
                     <h3>Mozo / Salonero</h3>
                     <span class="count">Ofertas activas</span>
                 </div>
-                <div class="category-card" onclick="filtrarPorCategoria('Barista')">
+                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Barista')">
                     <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
                     <h3>Barista</h3>
                     <span class="count">Ofertas activas</span>
                 </div>
-                <div class="category-card" onclick="filtrarPorCategoria('Bartender')">
+                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Bartender')">
                     <i class="fa-solid fa-martini-glass-citrus" aria-hidden="true"></i>
                     <h3>Bartender</h3>
                     <span class="count">Ofertas activas</span>
                 </div>
-                <div class="category-card" onclick="filtrarPorCategoria('Cajero')">
+                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Cajero')">
                     <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
                     <h3>Cajero</h3>
                     <span class="count">Ofertas activas</span>
                 </div>
-                <div class="category-card" onclick="filtrarPorCategoria('Delivery')">
+                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Delivery')">
                     <i class="fa-solid fa-motorcycle" aria-hidden="true"></i>
                     <h3>Delivery</h3>
                     <span class="count">Ofertas activas</span>
