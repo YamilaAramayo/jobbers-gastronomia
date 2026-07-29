@@ -16,19 +16,13 @@
     <meta property="og:image" content="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=630">
     <meta property="og:url" content="https://jobbers.com.ar">
 
-    <!-- Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Jobbers - Empleo Gastronómico">
-    <meta name="twitter:description" content="Encontrá trabajo o publicá búsquedas gastronómicas en Córdoba.">
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=630">
-
-    <!-- Preload de imagen LCP para rendimiento -->
+    <!-- Preload de imagen LCP -->
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80">
 
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
     
-    <!-- JS diferido para no bloquear el renderizado -->
+    <!-- JS diferido -->
     <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -59,19 +53,54 @@
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');">
-        <div class="container hero-content">
-            <h1>Tu próximo trabajo en gastronomía está acá</h1>
-            <p>Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
+    <!-- HERO SECTION (2 Columnas en Desktop) -->
+    <section class="hero">
+        <div class="container hero-grid">
             
-            <div class="hero-actions">
-                <a href="#vacantes" class="btn btn-primary btn-lg">Buscar Empleo</a>
-                <a href="#publicar" class="btn btn-outline btn-lg">Soy Empleador</a>
+            <!-- Columna Izquierda: Mensaje y Botones -->
+            <div class="hero-text">
+                <h1>Tu próximo trabajo en gastronomía está acá</h1>
+                <p>Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
+                
+                <div class="hero-actions">
+                    <a href="#vacantes" class="btn btn-primary btn-lg">Buscar Empleo</a>
+                </div>
             </div>
+
+            <!-- Columna Derecha: Tarjeta Formulario Express -->
+            <div class="hero-card" id="publicar">
+                <h2>¿Buscás personal para tu local?</h2>
+                <p>Publicá tu aviso en minutos o escribinos directo para asesoramiento personalizado.</p>
+                
+                <form id="form-publicar" onsubmit="enviarAPublicar(event)">
+                    <div class="form-group">
+                        <label for="nombre-empresa">Nombre del Local / Empresa</label>
+                        <input type="text" id="nombre-empresa" placeholder="Ej: Bar Güemes" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="puesto-requerido">Puesto a Buscar</label>
+                        <input type="text" id="puesto-requerido" placeholder="Ej: Ayudante de Cocina" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono-contacto">WhatsApp de Contacto</label>
+                        <input type="tel" id="telefono-contacto" placeholder="Ej: 3511234567 (Sin 0 ni 15)" pattern="[0-9]{10,13}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detalles-busqueda">Detalles del Puesto</label>
+                        <textarea id="detalles-busqueda" rows="3" placeholder="Horarios, requisitos, zona..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Enviar por WhatsApp</button>
+                </form>
+            </div>
+
         </div>
     </section>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="container main-layout">
         
         <!-- SECCIÓN VACANTES Y FILTROS -->
@@ -110,41 +139,9 @@
                 </button>
             </div>
 
-            <!-- CONTENEDOR DE TARJETAS DE VACANTES (Inyectado por JS) -->
+            <!-- CONTENEDOR DE TARJETAS DE VACANTES (JS) -->
             <div id="lista-vacantes" class="vacantes-grid">
                 <!-- Se renderizan dinámicamente desde main.js -->
-            </div>
-        </section>
-
-        <!-- SECCIÓN FORMULARIO PUBLICAR / CONTACTO DIRECTO -->
-        <section id="publicar" class="publicar-section">
-            <div class="card-form">
-                <h2>¿Buscás personal para tu local?</h2>
-                <p>Publicá tu aviso en minutos o escribinos directo para asesoramiento personalizado.</p>
-                
-                <form id="form-publicar" onsubmit="enviarAPublicar(event)">
-                    <div class="form-group">
-                        <label for="nombre-empresa">Nombre del Local / Empresa</label>
-                        <input type="text" id="nombre-empresa" placeholder="Ej: Bar Guemes" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="puesto-requerido">Puesto a Buscar</label>
-                        <input type="text" id="puesto-requerido" placeholder="Ej: Ayudante de Cocina" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="telefono-contacto">WhatsApp de Contacto</label>
-                        <input type="tel" id="telefono-contacto" placeholder="Ej: 3511234567 (Sin 0 ni 15)" pattern="[0-9]{10,13}" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="detalles-busqueda">Detalles del Puesto</label>
-                        <textarea id="detalles-busqueda" rows="4" placeholder="Horarios, requisitos, zona..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block">Enviar por WhatsApp</button>
-                </form>
             </div>
         </section>
 
@@ -162,7 +159,7 @@
         </div>
     </footer>
 
-    <!-- BARRA DE NAVEGACIÓN INFERIOR (MOBILE FIRST) -->
+    <!-- BARRA DE NAVEGACIÓN INFERIOR (Solo en Mobile) -->
     <nav class="bottom-nav" aria-label="Navegación móvil">
         <a href="#vacantes" class="bottom-nav-item active">
             <span class="nav-icon">🔍</span>
