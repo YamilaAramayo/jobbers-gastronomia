@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const puesto = document.getElementById('puesto')?.value || "Personal Gastronómico";
             const zona = document.getElementById('zona')?.value || "Córdoba";
             
-            // Captura de Turno y Jornada adaptados al HTML actualizado
+            // Captura de Turno y Jornada
             const horarioTurno = document.getElementById('horario-turno')?.value || "A convenir";
             const tipoJornada = document.getElementById('tipo-jornada')?.value || "A convenir";
 
@@ -103,10 +103,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 3. DELEGACIÓN GLOBAL DE CLICS
+// 3. DELEGACIÓN GLOBAL DE CLICS Y NAVEGACIÓN POR TECLADO ACCESIBLE
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.dropdown')) {
         cerrarDropdown();
+    }
+});
+
+// Activar botones/tarjetas accesibles con Enter o Espacio
+document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.getAttribute('role') === 'button') {
+        e.preventDefault();
+        e.target.click();
     }
 });
 
@@ -205,7 +213,7 @@ function filtrarPorCategoria(categoria) {
     document.getElementById('vacantes-container')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 6. SISTEMA DE MODAL, POSTULACIÓN DIRECTA Y TALENTO DESTACADO
+// 6. SISTEMA DE MODALES Y RECURSOS
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal');
     if (!modal) {
@@ -346,6 +354,53 @@ function procesarDesbloqueoTalento(e, nombreCandidato) {
     }, 500);
 }
 
+// Modal informativo para la sección Recursos del Nav
+function abrirModalRecursos(tipo) {
+    asegurarEstructuraModal();
+    const body = document.getElementById('modal-body');
+    if (!body) return;
+
+    let titulo = "";
+    let contenido = "";
+
+    if (tipo === 'soporte') {
+        titulo = "Soporte Técnico";
+        contenido = `
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">¿Tuviste algún inconveniente publicando o postulándote? Escribinos directamente por WhatsApp y nuestro equipo te ayuda al instante.</p>
+            <a href="https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent('Hola Jobbers, necesito soporte técnico con la plataforma.')}" class="btn-whatsapp" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> HABLAR CON SOPORTE
+            </a>
+        `;
+    } else if (tipo === 'guias') {
+        titulo = "Guías de Contratación";
+        contenido = `
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">Descargá de forma gratuita nuestras recomendaciones para armar perfiles gastronómicos competitivos y realizar entrevistas efectivas.</p>
+            <button class="btn-primary" onclick="mostrarToast('Descarga de guía iniciada...', 'success'); cerrarModal();" style="width:100%;">
+                <i class="fa-solid fa-file-pdf"></i> DESCARGAR GUÍA (PDF)
+            </button>
+        `;
+    } else if (tipo === 'plantillas') {
+        titulo = "Plantillas de CV Gastronómico";
+        contenido = `
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">Optimizá tu resumen curricular con nuestros formatos adaptados a cocina, barra y servicio de salón.</p>
+            <button class="btn-primary" onclick="mostrarToast('Descargando plantilla de CV...', 'success'); cerrarModal();" style="width:100%;">
+                <i class="fa-solid fa-download"></i> DESCARGAR PLANTILLA
+            </button>
+        `;
+    }
+
+    body.innerHTML = `
+        <div style="margin-bottom: 1rem; text-align: center;">
+            <h2 style="font-size:1.2rem; font-weight:900; color:var(--text-main); margin-bottom:4px;">${titulo}</h2>
+        </div>
+        ${contenido}
+    `;
+
+    const modal = document.getElementById('modal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
 function cerrarModal() {
     const modal = document.getElementById('modal');
     if (modal) {
@@ -402,6 +457,7 @@ window.irAExpress = irAExpress;
 window.abrirModalPostulacion = abrirModalPostulacion;
 window.desbloquearContacto = desbloquearContacto;
 window.procesarDesbloqueoTalento = procesarDesbloqueoTalento;
+window.abrirModalRecursos = abrirModalRecursos;
 window.cerrarModal = cerrarModal;
 window.procesarPostulacion = procesarPostulacion;
 window.filtrarVacantes = filtrarVacantes;
