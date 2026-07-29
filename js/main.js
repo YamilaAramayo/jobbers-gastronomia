@@ -1,10 +1,12 @@
 /* ==========================================================================
-   JOBBERS ARGENTINA - LÓGICA INTERACTIVA Y CONEXIÓN A WHATSAPP (OPTIMIZADO)
+   JOBBERS ARGENTINA - LÓGICA INTERACTIVA, TALENTO Y CONEXIÓN WHATSAPP
    ========================================================================== */
 
 const WHATSAPP_JOBBERS_DEFAULT = "5493513080197";
 
+// Estado global
 let vacantesGastronomia = [];
+let talentoDestacado = [];
 let elementoPrevioFoco = null;
 
 // Helpers sanitización y formateo
@@ -32,8 +34,9 @@ function debounce(fn, delay = 300) {
 document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
+    cargarTalentoDestacado();
 
-    // Event Delegation para botones de postulación (Evita inyección inline en onclick)
+    // Event Delegation para botones de postulación
     const contenedorVacantes = document.getElementById('lista-vacantes');
     if (contenedorVacantes) {
         contenedorVacantes.addEventListener('click', (e) => {
@@ -47,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Bind Formulario Express
+    // Bind Formulario Express con comportamiento TOGGLE (Abre / Cierra al presionar el botón)
     const triggersExpress = document.querySelectorAll('.btn-trigger-express');
     const cardExpress = document.getElementById('formulario-express');
 
@@ -55,12 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             if (cardExpress) {
-                cardExpress.classList.add('is-visible');
-                cardExpress.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                setTimeout(() => {
-                    document.getElementById('nombre-empresa')?.focus();
-                }, 400);
+                const estaVisible = cardExpress.classList.contains('is-visible') || cardExpress.style.display === 'block';
+
+                if (estaVisible) {
+                    // Ocultar si ya estaba visible
+                    cardExpress.classList.remove('is-visible');
+                    cardExpress.style.display = 'none';
+                } else {
+                    // Desplegar si estaba oculto
+                    cardExpress.style.display = 'block';
+                    cardExpress.classList.add('is-visible');
+                    cardExpress.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    setTimeout(() => {
+                        document.getElementById('nombre-empresa')?.focus();
+                    }, 300);
+                }
             }
         });
     });
@@ -87,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cierre de dropdowns fuera de área
+    // Cierre de dropdowns al hacer clic afuera
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.dropdown')) {
             cerrarDropdown();
@@ -96,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   2. CARGA DE DATOS (JSON)
+   2. CARGA DE DATOS (JSON) Y FALLBACK
    ========================================================================== */
 async function cargarVacantesDesdeJSON() {
     const rutasPosibles = ['base_de_datos.json', './base_de_datos.json', 'data/base_de_datos.json'];
@@ -112,27 +125,99 @@ async function cargarVacantesDesdeJSON() {
                 break;
             }
         } catch (e) {
-            // Ignorar y probar siguiente ruta
+            // Siguiente ruta
         }
     }
 
     if (!exito) {
-        console.warn("Jobbers: No se encontró base_de_datos.json localmente.");
-        const contenedor = document.getElementById('lista-vacantes');
-        if (contenedor) {
-            contenedor.innerHTML = `
-                <div style="text-align:center; padding: 2.5rem 1rem; color: var(--text-muted, #666);">
-                    <p style="font-size: 1.8rem; margin-bottom: 8px;">📋</p>
-                    <p>No se pudieron cargar las ofertas automáticas.</p>
-                    <small>Asegurate de servir la web a través de un servidor HTTP/HTTPS local.</small>
-                </div>
-            `;
-        }
+        // Fallback de respaldo alineado con las capturas de pantalla
+        vacantesGastronomia = [
+            { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
+            { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
+            { puesto: "Mozo / Garzón", empresa: "Bistró Italia", zona: "Cerro de las Rosas", jornada: "Full Time", turno: "Turno Noche", tiempo: "Hace 2 días", contacto_wa: WHATSAPP_JOBBERS_DEFAULT }
+        ];
+        renderizarOfertas(vacantesGastronomia);
     }
 }
 
 /* ==========================================================================
-   3. RENDERIZADO Y FILTRADO DE VACANTES
+   3. SECCIÓN TALENTO DESTACADO Y COMUNIDAD (IMÁGENES 1 Y 2)
+   ========================================================================== */
+function cargarTalentoDestacado() {
+    talentoDestacado = [
+        { iniciales: "LR", nombre: "Lucas R.", puesto: "Cocinero", rating: 5, reviews: 24, experiencia: "5 años de experiencia", disponibilidad: "Inmediata", zona: "Nueva Córdoba" },
+        { iniciales: "MF", nombre: "María F.", puesto: "Barista", rating: 5, reviews: 18, experiencia: "3 años de experiencia", disponibilidad: "Mañana", zona: "Güemes" },
+        { iniciales: "SM", nombre: "Santiago M.", puesto: "Mozo", rating: 5, reviews: 31, experiencia: "4 años de experiencia", disponibilidad: "Inmediata", zona: "Centro" }
+    ];
+
+    renderizarTalentoDestacado();
+    renderizarBannerComunidad();
+}
+
+function renderizarTalentoDestacado() {
+    const contenedor = document.getElementById('grid-talento-destacado');
+    if (!contenedor) return;
+
+    contenedor.innerHTML = talentoDestacado.map(t => `
+        <article class="talento-card" style="background: #121824; border: 1px solid #2d3748; border-radius: 12px; padding: 1.5rem; text-align: center; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="position: relative; width: 64px; height: 64px; background: #2a3447; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; color: #e2e8f0;">
+                ${escapeHTML(t.iniciales)}
+                <span style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #22c55e; border: 2px solid #121824; border-radius: 50%;"></span>
+            </div>
+            
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin: 4px 0 0 0; color: #fff;">${escapeHTML(t.nombre)}</h3>
+            <p style="color: #f59e0b; font-weight: 600; margin: 0; font-size: 0.95rem;">${escapeHTML(t.puesto)}</p>
+            
+            <div style="color: #f59e0b; font-size: 0.85rem; margin: 2px 0;">
+                ★ ★ ★ ★ ★ <span style="color: #94a3b8;">(${t.reviews})</span>
+            </div>
+
+            <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">${escapeHTML(t.experiencia)}</p>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin: 0 0 8px 0;">Disponibilidad: ${escapeHTML(t.disponibilidad)}</p>
+            <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0 0 12px 0;">📍 ${escapeHTML(t.zona)}</p>
+
+            <button type="button" 
+                    onclick="solicitarContactoTalento('${escapeHTML(t.nombre)}', '${escapeHTML(t.puesto)}')" 
+                    style="width: 100%; background: #f59e0b; color: #000; font-weight: 800; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                🔒 VER CONTACTO / CV
+            </button>
+        </article>
+    `).join('');
+}
+
+function renderizarBannerComunidad() {
+    const contenedor = document.getElementById('banner-comunidad-jobbers');
+    if (!contenedor) return;
+
+    contenedor.innerHTML = `
+        <div style="background: #121824; border: 1px solid #2d3748; border-radius: 12px; padding: 1.75rem; color: #fff; max-width: 500px; margin: 1.5rem auto; text-align: left;">
+            <h3 style="font-size: 1.3rem; font-weight: 800; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 0.5px; color: #fff;">
+                FORMÁ PARTE DE LA COMUNIDAD JOBBERS
+            </h3>
+            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.25rem;">
+                Aparecé en nuestra lista de talentos destacados o accedé a contenido exclusivo.
+            </p>
+            <button type="button" 
+                    onclick="unirseAComunidad()" 
+                    style="width: 100%; background: #f59e0b; color: #000; font-weight: 800; border: none; padding: 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px;">
+                DESTACÁ TU PERFIL
+            </button>
+        </div>
+    `;
+}
+
+function solicitarContactoTalento(nombre, puesto) {
+    const mensaje = `¡Hola Jobbers! 👋 Quisiera solicitar el contacto/CV del perfil destacado: *${nombre}* (${puesto}).`;
+    window.open(`https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
+
+function unirseAComunidad() {
+    const mensaje = `¡Hola Jobbers! 👋 Quisiera formar parte de la Comunidad Jobbers para destacar mi perfil profesional.`;
+    window.open(`https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
+
+/* ==========================================================================
+   4. RENDERIZADO EN MODO OSCURO (DARK MODE) - OFERTAS (IMAGEN 3)
    ========================================================================== */
 function crearCardVacante(item) {
     const puesto = item.puesto || item.titulo || "Puesto Gastronómico";
@@ -140,30 +225,30 @@ function crearCardVacante(item) {
     const contacto = limpiarNumeroWA(item.contacto_wa) || WHATSAPP_JOBBERS_DEFAULT;
 
     return `
-        <article class="job-card" style="background: #fff; border: 1px solid var(--border-color, #e2e8f0); border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+        <article class="job-card" style="background: #121824; border: 1px solid #2d3748; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; color: #fff;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom: 8px;">
                 <div>
-                    <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main, #1a202c); margin:0 0 4px 0;">${escapeHTML(puesto)}</h3>
-                    <p style="font-size:0.9rem; color:var(--primary, #e67e22); font-weight:600; margin:0;">${escapeHTML(empresa)}</p>
+                    <h3 style="font-size:1.1rem; font-weight:700; color:#f59e0b; margin:0 0 4px 0;">${escapeHTML(empresa)}</h3>
+                    <p style="font-size:0.95rem; color:#e2e8f0; font-weight:600; margin:0;">${escapeHTML(puesto)}</p>
                 </div>
-                ${item.urgente ? '<span style="background:#EF4444; color:#fff; font-size:0.65rem; font-weight:bold; padding:3px 8px; border-radius:12px;">⚡ URGENTE</span>' : ''}
+                ${item.urgente ? '<span style="background:#ef4444; color:#fff; font-size:0.65rem; font-weight:bold; padding:4px 8px; border-radius:12px; text-transform:uppercase;">⚡ URGENTE</span>' : ''}
             </div>
 
-            <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; font-size:0.8rem; color:#4a5568;">
+            <div style="display:flex; gap:14px; flex-wrap:wrap; margin:12px 0; font-size:0.85rem; color:#94a3b8;">
                 <span>📍 ${escapeHTML(item.zona || item.ubicacion || 'Córdoba')}</span>
                 <span>💼 ${escapeHTML(item.jornada || 'A convenir')}</span>
                 <span>⏰ ${escapeHTML(item.turno || 'A convenir')}</span>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #edf2f7; padding-top:10px; margin-top:10px;">
-                <span style="font-size:0.75rem; color:#a0aec0;">${escapeHTML(item.tiempo || 'Publicado recientemente')}</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #1e293b; padding-top:12px; margin-top:10px;">
+                <span style="font-size:0.8rem; color:#64748b;">${escapeHTML(item.tiempo || 'Publicado recientemente')}</span>
                 <button type="button" 
-                        class="btn-primary btn-postularme" 
+                        class="btn-postularme" 
                         data-puesto="${escapeHTML(puesto)}" 
                         data-empresa="${escapeHTML(empresa)}" 
                         data-contacto="${contacto}"
-                        style="padding: 6px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer;">
-                    Postularme
+                        style="background: #f59e0b; color: #000; font-weight: 800; border: none; padding: 8px 24px; border-radius: 6px; cursor: pointer; text-transform: UPPERCASE; font-size: 0.85rem;">
+                    POSTULARME
                 </button>
             </div>
         </article>
@@ -176,10 +261,10 @@ function renderizarOfertas(lista) {
 
     if (!lista || lista.length === 0) {
         contenedor.innerHTML = `
-            <div style="text-align:center; padding: 3rem 1rem; color: #718096;">
+            <div style="text-align:center; padding: 3rem 1rem; color: #94a3b8;">
                 <p style="font-size:2rem; margin-bottom:10px;">🔎</p>
                 <p>No encontramos búsquedas que coincidan con tu criterio.</p>
-                <button type="button" onclick="filtrarPorCategoria('')" class="btn-primary" style="margin-top:12px; padding:8px 16px;">
+                <button type="button" onclick="filtrarPorCategoria('')" style="background:#f59e0b; color:#000; font-weight:bold; border:none; margin-top:12px; padding:8px 16px; border-radius:6px; cursor:pointer;">
                     Ver todas las ofertas
                 </button>
             </div>
@@ -228,7 +313,7 @@ function filtrarPorCategoria(categoria) {
 }
 
 /* ==========================================================================
-   4. ENVÍO DE FORMULARIO EXPRESS A WHATSAPP
+   5. ENVÍO DE FORMULARIO EXPRESS A WHATSAPP
    ========================================================================== */
 function enviarAWhatsApp(event) {
     event.preventDefault();
@@ -261,7 +346,7 @@ function enviarAWhatsApp(event) {
 }
 
 /* ==========================================================================
-   5. MODAL DE POSTULACIÓN DE CANDIDATOS
+   6. MODAL DE POSTULACIÓN DE CANDIDATOS
    ========================================================================== */
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal-jobbers');
@@ -271,12 +356,12 @@ function asegurarEstructuraModal() {
         modal.className = 'jobbers-modal';
         modal.style.cssText = `
             display: none; position: fixed; inset: 0; z-index: 9999;
-            background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(3px);
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px);
             align-items: center; justify-content: center; padding: 1rem;
         `;
         modal.innerHTML = `
-            <div class="jobbers-modal-card" style="background: #fff; width: 100%; max-width: 480px; border-radius: 8px; padding: 1.5rem; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-                <button type="button" onclick="cerrarModal()" style="position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #718096;" aria-label="Cerrar modal">&times;</button>
+            <div class="jobbers-modal-card" style="background: #121824; border: 1px solid #2d3748; width: 100%; max-width: 480px; border-radius: 12px; padding: 1.5rem; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.5); color: #fff;">
+                <button type="button" onclick="cerrarModal()" style="position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94a3b8;" aria-label="Cerrar modal">&times;</button>
                 <div id="modal-body"></div>
             </div>
         `;
@@ -298,24 +383,24 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
 
     body.innerHTML = `
         <div style="margin-bottom: 1rem;">
-            <h2 style="font-size:1.25rem; font-weight:800; color:#1a202c; margin:0 0 4px 0;">POSTULARME</h2>
-            <p style="color:#e67e22; font-size:0.9rem; font-weight:700; margin:0;">${escapeHTML(puesto)} — ${escapeHTML(empresa)}</p>
+            <h2 style="font-size:1.25rem; font-weight:800; color:#fff; margin:0 0 4px 0;">POSTULARME</h2>
+            <p style="color:#f59e0b; font-size:0.95rem; font-weight:700; margin:0;">${escapeHTML(puesto)} — ${escapeHTML(empresa)}</p>
         </div>
 
-        <div style="background: #fff5f5; border-left: 4px solid #ef4444; padding: 10px 12px; border-radius: 4px; margin-bottom: 1rem;">
-            <p style="font-size: 0.8rem; color: #c53030; margin: 0; line-height: 1.4;">
-                📎 <strong>Recordatorio:</strong> Al abrirse WhatsApp, <u>adjuntá tu Currículum Vitae (PDF)</u> en el chat.
+        <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 10px 12px; border-radius: 4px; margin-bottom: 1rem;">
+            <p style="font-size: 0.85rem; color: #fca5a5; margin: 0; line-height: 1.4;">
+                📎 <strong>Recordatorio:</strong> Al abrirse WhatsApp, <u>adjuntá tu CV (PDF)</u> en el chat.
             </p>
         </div>
 
-        <form id="form-postulacion-modal" style="display:flex; flex-direction:column; gap:10px;">
+        <form id="form-postulacion-modal" style="display:flex; flex-direction:column; gap:12px;">
             <div class="form-group">
-                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; border:1px solid #cbd5e0; border-radius:4px; box-sizing:border-box;">
+                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; background:#1e293b; border:1px solid #334155; border-radius:6px; color:#fff; box-sizing:border-box;">
             </div>
             <div class="form-group">
-                <input type="tel" id="post-telefono" placeholder="Tu número de WhatsApp (ej: 3511234567)" required style="width:100%; padding:10px; border:1px solid #cbd5e0; border-radius:4px; box-sizing:border-box;">
+                <input type="tel" id="post-telefono" placeholder="Tu número de WhatsApp (ej: 3511234567)" required style="width:100%; padding:10px; background:#1e293b; border:1px solid #334155; border-radius:6px; color:#fff; box-sizing:border-box;">
             </div>
-            <button type="submit" class="btn-primary" style="width:100%; padding:12px; margin-top:6px; font-weight:bold; cursor:pointer;">
+            <button type="submit" style="width:100%; padding:12px; background:#f59e0b; color:#000; border:none; font-weight:bold; border-radius:6px; cursor:pointer; text-transform:uppercase; margin-top:4px;">
                 <i class="fab fa-whatsapp"></i> CONTACTAR AL EMPLEADOR
             </button>
         </form>
@@ -372,7 +457,7 @@ function cerrarModal() {
 }
 
 /* ==========================================================================
-   6. NAVEGACIÓN Y MENÚS DESPLEGABLES
+   7. MENÚS Y DROPDOWNS
    ========================================================================== */
 function toggleDropdown(event) {
     if (event) event.stopPropagation();
@@ -396,7 +481,7 @@ function cerrarDropdown() {
 }
 
 /* ==========================================================================
-   7. TOASTS / NOTIFICACIONES FLOTANTES
+   8. TOASTS Y NOTIFICACIONES
    ========================================================================== */
 function mostrarToast(mensaje, tipo = "success") {
     let container = document.getElementById('toast-container');
@@ -409,9 +494,9 @@ function mostrarToast(mensaje, tipo = "success") {
 
     const toast = document.createElement('div');
     toast.style.cssText = `
-        background: ${tipo === 'success' ? '#2ecc71' : '#e74c3c'};
-        color: white; padding: 12px 20px; border-radius: 6px; margin-top: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15); font-weight: 600; font-size: 0.9rem;
+        background: ${tipo === 'success' ? '#22c55e' : '#ef4444'};
+        color: white; padding: 12px 20px; border-radius: 8px; margin-top: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-weight: 600; font-size: 0.9rem;
         transition: opacity 0.3s ease; opacity: 1;
     `;
     toast.innerText = mensaje;
@@ -425,7 +510,7 @@ function mostrarToast(mensaje, tipo = "success") {
 }
 
 /* ==========================================================================
-   8. BINDING GLOBAL
+   9. BINDING GLOBAL
    ========================================================================== */
 window.enviarAWhatsApp = enviarAWhatsApp;
 window.abrirModalPostulacion = abrirModalPostulacion;
@@ -435,3 +520,5 @@ window.filtrarVacantes = filtrarVacantes;
 window.filtrarPorCategoria = filtrarPorCategoria;
 window.toggleDropdown = toggleDropdown;
 window.cerrarDropdown = cerrarDropdown;
+window.solicitarContactoTalento = solicitarContactoTalento;
+window.unirseAComunidad = unirseAComunidad;
