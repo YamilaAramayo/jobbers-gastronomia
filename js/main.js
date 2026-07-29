@@ -83,13 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inputBusqueda) {
         inputBusqueda.addEventListener('input', debounce(filtrarVacantes, 300));
         inputBusqueda.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') filtrarVacantes();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                filtrarVacantes();
+            }
         });
     }
 
     const btnSearch = document.querySelector('.btn-search');
     if (btnSearch) {
-        btnSearch.addEventListener('click', filtrarVacantes);
+        btnSearch.addEventListener('click', (e) => {
+            e.preventDefault();
+            filtrarVacantes();
+        });
     }
 
     // Tecla Escape para modales y dropdowns
@@ -130,7 +136,7 @@ async function cargarVacantesDesdeJSON() {
     }
 
     if (!exito) {
-        // Fallback de respaldo alineado con las capturas de pantalla
+        // Fallback de respaldo
         vacantesGastronomia = [
             { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
             { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
@@ -141,7 +147,7 @@ async function cargarVacantesDesdeJSON() {
 }
 
 /* ==========================================================================
-   3. SECCIÓN TALENTO DESTACADO Y COMUNIDAD (IMÁGENES 1 Y 2)
+   3. SECCIÓN TALENTO DESTACADO Y COMUNIDAD
    ========================================================================== */
 function cargarTalentoDestacado() {
     talentoDestacado = [
@@ -208,16 +214,16 @@ function renderizarBannerComunidad() {
 
 function solicitarContactoTalento(nombre, puesto) {
     const mensaje = `¡Hola Jobbers! 👋 Quisiera solicitar el contacto/CV del perfil destacado: *${nombre}* (${puesto}).`;
-    window.open(`https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener,noreferrer');
 }
 
 function unirseAComunidad() {
     const mensaje = `¡Hola Jobbers! 👋 Quisiera formar parte de la Comunidad Jobbers para destacar mi perfil profesional.`;
-    window.open(`https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_JOBBERS_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener,noreferrer');
 }
 
 /* ==========================================================================
-   4. RENDERIZADO EN MODO OSCURO (DARK MODE) - OFERTAS (IMAGEN 3)
+   4. RENDERIZADO EN MODO OSCURO (DARK MODE) - OFERTAS
    ========================================================================== */
 function crearCardVacante(item) {
     const puesto = item.puesto || item.titulo || "Puesto Gastronómico";
@@ -316,7 +322,7 @@ function filtrarPorCategoria(categoria) {
    5. ENVÍO DE FORMULARIO EXPRESS A WHATSAPP
    ========================================================================== */
 function enviarAWhatsApp(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
 
     const empresa = document.getElementById('nombre-empresa')?.value || "";
     const telefono = document.getElementById('telefono-contacto')?.value || "";
@@ -338,9 +344,10 @@ function enviarAWhatsApp(event) {
 
     mostrarToast("Redirigiendo a WhatsApp...", "success");
 
+    // Redirección síncrona o con delay mínimo para evitar bloqueos del navegador
     setTimeout(() => {
-        window.open(urlWA, '_blank');
-    }, 400);
+        window.open(urlWA, '_blank', 'noopener,noreferrer');
+    }, 150);
 
     document.getElementById('form-publicar-express')?.reset();
 }
@@ -354,6 +361,10 @@ function asegurarEstructuraModal() {
         modal = document.createElement('div');
         modal.id = 'modal-jobbers';
         modal.className = 'jobbers-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'modal-title-postulacion');
+        
         modal.style.cssText = `
             display: none; position: fixed; inset: 0; z-index: 9999;
             background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px);
@@ -383,7 +394,7 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
 
     body.innerHTML = `
         <div style="margin-bottom: 1rem;">
-            <h2 style="font-size:1.25rem; font-weight:800; color:#fff; margin:0 0 4px 0;">POSTULARME</h2>
+            <h2 id="modal-title-postulacion" style="font-size:1.25rem; font-weight:800; color:#fff; margin:0 0 4px 0;">POSTULARME</h2>
             <p style="color:#f59e0b; font-size:0.95rem; font-weight:700; margin:0;">${escapeHTML(puesto)} — ${escapeHTML(empresa)}</p>
         </div>
 
@@ -409,6 +420,7 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
     const formModal = document.getElementById('form-postulacion-modal');
     if (formModal) {
         formModal.addEventListener('submit', (e) => {
+            e.preventDefault(); // Previene la recarga inmediata de la página
             procesarPostulacion(e, puesto, empresa, numLimpio);
         });
     }
@@ -423,8 +435,6 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
 }
 
 function procesarPostulacion(e, puesto, empresa, contactoWA) {
-    e.preventDefault();
-
     const nombre = document.getElementById('post-nombre')?.value || "Candidato";
     const telefono = document.getElementById('post-telefono')?.value || "";
 
@@ -440,8 +450,8 @@ function procesarPostulacion(e, puesto, empresa, contactoWA) {
     mostrarToast("Abriendo WhatsApp del empleador...", "success");
 
     setTimeout(() => {
-        window.open(urlWA, '_blank');
-    }, 400);
+        window.open(urlWA, '_blank', 'noopener,noreferrer');
+    }, 150);
 }
 
 function cerrarModal() {
