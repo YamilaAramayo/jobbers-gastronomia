@@ -11,11 +11,23 @@ const escapeHTML = (str) => {
     });
 };
 
+// HELPER: Debounce para limitar frecuencia de filtrado en tiempo real
+function debounce(fn, delay = 300) {
+    let timeoutId;
+    return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
 // NÚMERO POR DEFECTO EN CASO DE QUE LA OFERTA NO TENGA UNO ASIGNADO (JOBBERS SOPORTE)
 const WHATSAPP_JOBBERS_DEFAULT = "5493513080197";
 
 // Variable global para almacenar las vacantes cargadas desde el JSON
 let vacantesGastronomia = [];
+
+// Variable global para restaurar el foco accesible al cerrar modales
+let elementoPrevioFoco = null;
 
 // 1. CARGA DE DATOS DESDE EL ARCHIVO JSON CON FALLBACK DE RUTA
 async function cargarVacantesDesdeJSON() {
@@ -57,10 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
 
-    // Event listener para el buscador en tiempo real
+    // Event listener para el buscador en tiempo real con Debounce (300ms)
     const inputBusqueda = document.getElementById('input-busqueda') || document.getElementById('search-filter');
     if (inputBusqueda) {
-        inputBusqueda.addEventListener('input', filtrarVacantes);
+        inputBusqueda.addEventListener('input', debounce(filtrarVacantes, 300));
     }
 
     // Event listener para el filtro por zona
@@ -78,10 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             e.stopPropagation();
 
-            const local = document.getElementById('nombre-empresa')?.value || document.getElementById('nombre-local')?.value || "Establecimiento";
-            const puesto = document.getElementById('puesto-requerido')?.value || document.getElementById('puesto')?.value || "Personal Gastronómico";
-            const telefono = document.getElementById('telefono-contacto')?.value || "Sin teléfono";
-            const detalles = document.getElementById('detalles-busqueda')?.value || "Sin detalles adicionales";
+            const rawLocal = document.getElementById('nombre-empresa')?.value || document.getElementById('nombre-local')?.value || "Establecimiento";
+            const rawPuesto = document.getElementById('puesto-requerido')?.value || document.getElementById('puesto')?.value || "Personal Gastronómico";
+            const rawTelefono = document.getElementById('telefono-contacto')?.value || "Sin teléfono";
+            const rawDetalles = document.getElementById('detalles-busqueda')?.value || "Sin detalles adicionales";
+
+            // Sanitización previa a armar la cadena
+            const local = escapeHTML(rawLocal);
+            const puesto = escapeHTML(rawPuesto);
+            const telefono = escapeHTML(rawTelefono);
+            const detalles = escapeHTML(rawDetalles);
 
             const texto = `¡Hola Jobbers! 👋 Necesito contratar personal urgente:\n\n` +
                           `🏢 *Local/Empresa:* ${local}\n` +
@@ -126,6 +144,42 @@ document.addEventListener('keydown', (e) => {
 });
 
 // 4. RENDERIZADO DE OFERTAS
+function crearCardVacante(item) {
+    const nombrePuesto = item.puesto || item.titulo || "Puesto Gastronómico";
+    const nombreEmpresa = item.empresa || "Empresa Gastronómica";
+    const numeroEmpleador = item.contacto_wa || WHATSAPP_JOBBERS_DEFAULT;
+
+    const attrPuesto = escapeHTML(nombrePuesto).replace(/'/g, "\\'");
+    const attrEmpresa = escapeHTML(nombreEmpresa).replace(/'/g, "\\'");
+    const attrNumero = escapeHTML(numeroEmpleador).replace(/'/g, "\\'");
+
+    return `
+        <article class="job-offer-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+                <div>
+                    <h3 style="font-size:1.05rem; font-weight:800; color:var(--text-main, #222); margin-bottom:4px;">${escapeHTML(nombrePuesto)}</h3>
+                    <p style="font-size:0.85rem; color:var(--primary, #e67e22); font-weight:700; margin:0;">${escapeHTML(nombreEmpresa)}</p>
+                </div>
+                ${item.urgente ? '<span style="background:#EF4444; color:#fff; font-size:0.65rem; font-weight:bold; padding:3px 8px; border-radius:12px;">⚡ URGENTE</span>' : ''}
+            </div>
+
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; font-size:0.75rem; color:var(--text-muted, #666);">
+                <span>📍 ${escapeHTML(item.zona || item.ubicacion || 'Córdoba')}</span>
+                <span>💼 ${escapeHTML(item.jornada || item.tipo_jornada || 'A convenir')}</span>
+                <span>⏰ ${escapeHTML(item.turno || 'A convenir')}</span>
+                <span style="color:#2ECC71; font-weight:bold;">${escapeHTML(item.salario || 'A convenir')}</span>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color, #eee); padding-top:10px; margin-top:8px;">
+                <span style="font-size:0.75rem; color:var(--text-muted, #888);">${escapeHTML(item.tiempo || '')}</span>
+                <button type="button" onclick="abrirModalPostulacion('${attrPuesto}', '${attrEmpresa}', '${attrNumero}')" class="btn btn-primary" style="padding:6px 14px; font-size:0.8rem;">
+                    Postularme
+                </button>
+            </div>
+        </article>
+    `;
+}
+
 function renderizarOfertas(lista) {
     const contenedor = document.getElementById('lista-vacantes') || document.getElementById('vacantes-container');
     if (!contenedor) return;
@@ -143,41 +197,7 @@ function renderizarOfertas(lista) {
         return;
     }
 
-    contenedor.innerHTML = lista.map(item => {
-        const nombrePuesto = item.puesto || item.titulo || "Puesto Gastronómico";
-        const nombreEmpresa = item.empresa || "Empresa Gastronómica";
-        const numeroEmpleador = item.contacto_wa || WHATSAPP_JOBBERS_DEFAULT;
-
-        const attrPuesto = escapeHTML(nombrePuesto).replace(/'/g, "\\'");
-        const attrEmpresa = escapeHTML(nombreEmpresa).replace(/'/g, "\\'");
-        const attrNumero = escapeHTML(numeroEmpleador).replace(/'/g, "\\'");
-
-        return `
-            <article class="job-offer-card">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
-                    <div>
-                        <h3 style="font-size:1.05rem; font-weight:800; color:var(--text-main, #222); margin-bottom:4px;">${escapeHTML(nombrePuesto)}</h3>
-                        <p style="font-size:0.85rem; color:var(--primary, #e67e22); font-weight:700; margin:0;">${escapeHTML(nombreEmpresa)}</p>
-                    </div>
-                    ${item.urgente ? '<span style="background:#EF4444; color:#fff; font-size:0.65rem; font-weight:bold; padding:3px 8px; border-radius:12px;">⚡ URGENTE</span>' : ''}
-                </div>
-
-                <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; font-size:0.75rem; color:var(--text-muted, #666);">
-                    <span>📍 ${escapeHTML(item.zona || item.ubicacion || 'Córdoba')}</span>
-                    <span>💼 ${escapeHTML(item.jornada || item.tipo_jornada || 'A convenir')}</span>
-                    <span>⏰ ${escapeHTML(item.turno || 'A convenir')}</span>
-                    <span style="color:#2ECC71; font-weight:bold;">${escapeHTML(item.salario || 'A convenir')}</span>
-                </div>
-
-                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color, #eee); padding-top:10px; margin-top:8px;">
-                    <span style="font-size:0.75rem; color:var(--text-muted, #888);">${escapeHTML(item.tiempo || '')}</span>
-                    <button type="button" onclick="abrirModalPostulacion('${attrPuesto}', '${attrEmpresa}', '${attrNumero}')" class="btn btn-primary" style="padding:6px 14px; font-size:0.8rem;">
-                        Postularme
-                    </button>
-                </div>
-            </article>
-        `;
-    }).join('');
+    contenedor.innerHTML = lista.map(crearCardVacante).join('');
 }
 
 // 5. BUSCADOR Y FILTROS EN TIEMPO REAL
@@ -243,6 +263,7 @@ function asegurarEstructuraModal() {
 }
 
 function abrirModalPostulacion(puesto, empresa, numeroEmpleador) {
+    elementoPrevioFoco = document.activeElement;
     asegurarEstructuraModal();
     const body = document.getElementById('modal-body');
     if (!body) return;
@@ -275,6 +296,11 @@ function abrirModalPostulacion(puesto, empresa, numeroEmpleador) {
     const modal = document.getElementById('modal');
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Foco automático en el primer input para mejor UX/Accesibilidad
+    setTimeout(() => {
+        document.getElementById('post-nombre')?.focus();
+    }, 50);
 }
 
 function procesarPostulacion(e, puesto, empresa, numeroEmpleador) {
@@ -302,6 +328,7 @@ function procesarPostulacion(e, puesto, empresa, numeroEmpleador) {
 
 // Modal informativo para la sección Recursos del Nav
 function abrirModalRecursos(tipo) {
+    elementoPrevioFoco = document.activeElement;
     asegurarEstructuraModal();
     const body = document.getElementById('modal-body');
     if (!body) return;
@@ -352,6 +379,10 @@ function cerrarModal() {
     if (modal) {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        if (elementoPrevioFoco) {
+            elementoPrevioFoco.focus();
+            elementoPrevioFoco = null;
+        }
     }
 }
 
