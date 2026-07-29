@@ -3,429 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jobbers - La plataforma de empleo especializada en el sector gastronómico en Córdoba. Conectamos candidatos con restaurantes, bares y hoteles.">
-    <title>Jobbers - Empleo Gastronómico</title>
+    <title>Jobbers - Portal de Empleo Gastronómico en Córdoba</title>
+    
+    <!-- Meta SEO Básico -->
+    <meta name="description" content="Conectamos talentos gastronómicos con los mejores restaurantes, bares y hoteles de Córdoba. Encontrá empleo o publicá tus ofertas rápido y por WhatsApp.">
+    <meta name="robots" content="index, follow">
 
+    <!-- Open Graph / Redes Sociales & WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Jobbers - Empleo Gastronómico en Córdoba">
+    <meta property="og:description" content="Conectamos candidatos con restaurantes, bares y hoteles en Córdoba. Postulate directo por WhatsApp.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=630">
+    <meta property="og:url" content="https://jobbers.com.ar">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jobbers - Empleo Gastronómico">
+    <meta name="twitter:description" content="Encontrá trabajo o publicá búsquedas gastronómicas en Córdoba.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=630">
+
+    <!-- Preload de imagen LCP para rendimiento -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80">
+
+    <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- JS diferido para no bloquear el renderizado -->
+    <script src="js/main.js" defer></script>
 </head>
 <body>
 
-    <!-- Header / Navbar Simplificado -->
-    <header class="navbar">
-        <a href="#" class="logo">
-            <h2>JOBBERS</h2>
-            <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
-        </a>
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span>JOBBERS</span> GASTRONOMÍA
+            </a>
 
-        <nav class="nav-links" aria-label="Navegación principal">
-            <div class="dropdown">
-                <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
-                    Recursos <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-                </button>
-                <div class="dropdown-menu" id="recursos-menu" aria-labelledby="dropdown-recursos">
-                    <a href="javascript:void(0)" onclick="cerrarDropdown(); abrirModalRecursos('soporte');">Soporte Técnico</a>
-                    <a href="javascript:void(0)" onclick="cerrarDropdown(); abrirModalRecursos('guias');">Guías de Contratación</a>
-                    <a href="javascript:void(0)" onclick="cerrarDropdown(); abrirModalRecursos('plantillas');">Plantillas de CV</a>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <a href="#vacantes" class="nav-link">Empleos</a>
+                <a href="#publicar" class="nav-link">Publicar Búsqueda</a>
+                
+                <div class="dropdown">
+                    <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
+                        Recursos ▾
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdown-recursos">
+                        <a href="#" class="dropdown-item">Crear CV Gastronómico</a>
+                        <a href="#" class="dropdown-item">Consejos de Entrevista</a>
+                    </div>
                 </div>
-            </div>
-            <a href="#nosotros" class="nav-link">Nosotros</a>
-        </nav>
+            </nav>
+
+            <a href="#publicar" class="btn btn-primary btn-header">Publicar Oferta</a>
+        </div>
     </header>
 
-    <main class="main-content">
-        
-        <!-- Hero Section -->
-        <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');">
-            <div class="hero-overlay"></div>
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">LABURO REAL<br><span class="highlight">EN GASTRONOMÍA.</span></h1>
-                    <p class="hero-subtitle">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
-                    
-                    <!-- 2 Botones Principales -->
-                    <div class="hero-buttons">
-                        <!-- 1. Busco trabajo -->
-                        <div class="hero-btn-wrapper">
-                            <a href="#vacantes-container" class="btn-primary">
-                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> BUSCO TRABAJO
-                            </a>
-                            <span class="btn-subtext">Postulate directo por WhatsApp</span>
-                        </div>
-
-                        <!-- 2. Publicá un aviso -->
-                        <div class="hero-btn-wrapper">
-                            <a href="#express-form-section" class="btn-accent">
-                                <i class="fa-solid fa-bullhorn" aria-hidden="true"></i> PUBLICÁ UN AVISO
-                            </a>
-                            <span class="btn-subtext">Para empresas y locales</span>
-                        </div>
-                    </div>
-
-                    <div class="hero-features">
-                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> Respuesta rápida</span>
-                        <span><i class="fa-regular fa-square-check" aria-hidden="true"></i> Contacto directo</span>
-                        <span><i class="fa-regular fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
-                    </div>
-                </div>
-
-                <!-- Tarjeta Express -->
-                <div class="hero-card-express" id="express-form-section">
-                    <div class="card-header">
-                        <i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i>
-                        <h2>¿NECESITÁS PERSONAL HOY?</h2>
-                    </div>
-                    <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
-                    
-                    <form id="express-form" class="express-form">
-                        <!-- Nombre del Local -->
-                        <div class="form-group">
-                            <input type="text" id="nombre-local" placeholder="Nombre de tu local / Gastronómico" required>
-                        </div>
-                        
-                        <!-- Teléfono de contacto -->
-                        <div class="form-group">
-                            <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto" required>
-                        </div>
-                        
-                        <!-- Puestos Gastronómicos Completos -->
-                        <div class="form-group">
-                            <select id="puesto" aria-label="Seleccionar puesto requerido" required>
-                                <option value="" disabled selected>Puesto que necesitás</option>
-                                <optgroup label="Cocina & Producción">
-                                    <option value="Cocinero / Chef">Cocinero / Chef</option>
-                                    <option value="Ayudante de Cocina">Ayudante de Cocina</option>
-                                    <option value="Pizzero / Maestro Pizzero">Pizzero / Maestro Pizzero</option>
-                                    <option value="Lomitero / Parrillero">Lomitero / Parrillero</option>
-                                    <option value="Sushi Man / Woman">Sushi Man / Woman</option>
-                                    <option value="Pastelero / Repostero">Pastelero / Repostero</option>
-                                    <option value="Panadero">Panadero</option>
-                                    <option value="Bachero / Bacha">Bachero / Bacha</option>
-                                </optgroup>
-                                <optgroup label="Salón & Atención">
-                                    <option value="Mozo / Mesera">Mozo / Mesera</option>
-                                    <option value="Comis / Peón de salón">Comis / Peón de salón</option>
-                                    <option value="Host / Recepcionista">Host / Recepcionista</option>
-                                    <option value="Barista / Cafetero">Barista / Cafetero</option>
-                                    <option value="Bartender / Barra">Bartender / Barra</option>
-                                    <option value="Cajero / Atención al cliente">Cajero / Atención al cliente</option>
-                                </optgroup>
-                                <optgroup label="Gestión & Otros">
-                                    <option value="Encargado / Gerente de local">Encargado / Gerente de local</option>
-                                    <option value="Jefe de Cocina / Sous Chef">Jefe de Cocina / Sous Chef</option>
-                                    <option value="Repartidor / Delivery">Repartidor / Delivery</option>
-                                    <option value="Personal de Limpieza">Personal de Limpieza</option>
-                                    <option value="Otro">Otro puesto...</option>
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <!-- Zonas de Córdoba Capital -->
-                        <div class="form-group">
-                            <select id="zona" aria-label="Seleccionar zona o barrio" required>
-                                <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
-                                <optgroup label="Polos Gastronómicos & Centro">
-                                    <option value="Nueva Córdoba">Nueva Córdoba</option>
-                                    <option value="Güemes">Güemes</option>
-                                    <option value="Centro / Peatonal">Centro / Peatonal</option>
-                                    <option value="General Paz">General Paz</option>
-                                    <option value="Alberdi">Alberdi</option>
-                                    <option value="Alta Córdoba">Alta Córdoba</option>
-                                </optgroup>
-                                <optgroup label="Zona Norte">
-                                    <option value="Cerro de las Rosas">Cerro de las Rosas</option>
-                                    <option value="Villa Belgrano">Villa Belgrano</option>
-                                    <option value="Urca">Urca</option>
-                                    <option value="Argüello">Argüello</option>
-                                    <option value="Poeta Lugones">Poeta Lugones</option>
-                                    <option value="Marqués de Sobremonte">Marqués de Sobremonte</option>
-                                    <option value="Los Boulevares">Los Boulevares</option>
-                                    <option value="Granja de Funes">Granja de Funes</option>
-                                </optgroup>
-                                <optgroup label="Zona Sur">
-                                    <option value="Jardín / Barrio Jardín">Jardín / Barrio Jardín</option>
-                                    <option value="San Fernando / Roglio">San Fernando / Roglio</option>
-                                    <option value="Villa El Libertador">Villa El Libertador</option>
-                                    <option value="Iponá">Iponá</option>
-                                    <option value="San Carlos">San Carlos</option>
-                                </optgroup>
-                                <optgroup label="Zona Este">
-                                    <option value="Pueyrredón">Pueyrredón</option>
-                                    <option value="Yofre">Yofre</option>
-                                    <option value="San Vicente">San Vicente</option>
-                                    <option value="Empalme">Empalme</option>
-                                </optgroup>
-                                <optgroup label="Otras Zonas & Alrededores">
-                                    <option value="Alto Alberdi">Alto Alberdi</option>
-                                    <option value="Villa Cabrera">Villa Cabrera</option>
-                                    <option value="Rivera Indarte / Saldán">Rivera Indarte / Saldán</option>
-                                    <option value="Otra Zona (Córdoba)">Otra zona de Cba Capital</option>
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <!-- Fila doble: Horario del Turno y Tipo de Jornada -->
-                        <div class="form-row-2col">
-                            <div class="form-group">
-                                <select id="horario-turno" aria-label="Seleccionar horario del turno" required>
-                                    <option value="" disabled selected>Horario / Turno</option>
-                                    <option value="Turno Mañana">Turno Mañana</option>
-                                    <option value="Turno Tarde">Turno Tarde</option>
-                                    <option value="Turno Noche">Turno Noche</option>
-                                    <option value="Turno Cortado / Rotativo">Cortado / Rotativo</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <select id="tipo-jornada" aria-label="Seleccionar tipo de jornada" required>
-                                    <option value="" disabled selected>Jornada</option>
-                                    <option value="Full Time">Full Time</option>
-                                    <option value="Part Time">Part Time</option>
-                                    <option value="Eventual / Franquero">Eventual / Franquero</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn-whatsapp">
-                            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
-                        </button>
-                    </form>
-                    <span class="response-tag">⚡ Conexión inmediata vía WhatsApp</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Categorías -->
-        <section class="categories-section">
-            <div class="section-header">
-                <h2>BUSCÁ POR CATEGORÍA</h2>
-                <a href="#vacantes-container" class="link-more" onclick="filtrarPorCategoria('')">Ver todas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
-            </div>
+    <!-- HERO SECTION -->
+    <section class="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');">
+        <div class="container hero-content">
+            <h1>Tu próximo trabajo en gastronomía está acá</h1>
+            <p>Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
             
+            <div class="hero-actions">
+                <a href="#vacantes" class="btn btn-primary btn-lg">Buscar Empleo</a>
+                <a href="#publicar" class="btn btn-outline btn-lg">Soy Empleador</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container main-layout">
+        
+        <!-- SECCIÓN VACANTES Y FILTROS -->
+        <section id="vacantes" class="vacantes-section">
+            
+            <!-- BARRA DE BÚSQUEDA Y FILTROS -->
+            <div class="search-box">
+                <input type="text" id="input-busqueda" placeholder="Buscar por puesto o zona (Ej: Mozo, Nueva Córdoba)..." aria-label="Buscar empleo">
+                <select id="select-zona" aria-label="Filtrar por zona">
+                    <option value="">Todas las zonas</option>
+                    <option value="nueva-cordoba">Nueva Córdoba</option>
+                    <option value="guemes">Güemes</option>
+                    <option value="centro">Centro</option>
+                    <option value="cerro">Cerro de las Rosas</option>
+                    <option value="general-paz">General Paz</option>
+                </select>
+            </div>
+
+            <!-- FILTRO RÁPIDO POR CATEGORÍAS -->
             <div class="categories-grid">
-                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Cocina')">
-                    <i class="fa-solid fa-utensils" aria-hidden="true"></i>
-                    <h3>Cocina</h3>
-                    <span class="count">Ofertas activas</span>
-                </div>
-                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Mozo')">
-                    <i class="fa-solid fa-concierge-bell" aria-hidden="true"></i>
-                    <h3>Mozo / Salonero</h3>
-                    <span class="count">Ofertas activas</span>
-                </div>
-                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Barista')">
-                    <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
-                    <h3>Barista</h3>
-                    <span class="count">Ofertas activas</span>
-                </div>
-                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Bartender')">
-                    <i class="fa-solid fa-martini-glass-citrus" aria-hidden="true"></i>
-                    <h3>Bartender</h3>
-                    <span class="count">Ofertas activas</span>
-                </div>
-                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Cajero')">
-                    <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
-                    <h3>Cajero</h3>
-                    <span class="count">Ofertas activas</span>
-                </div>
-                <div class="category-card" role="button" tabindex="0" onclick="filtrarPorCategoria('Delivery')">
-                    <i class="fa-solid fa-motorcycle" aria-hidden="true"></i>
-                    <h3>Delivery</h3>
-                    <span class="count">Ofertas activas</span>
-                </div>
+                <button type="button" class="category-card" onclick="filtrarPorCategoria('Cocina')">
+                    <span class="category-icon">🍳</span>
+                    <span>Cocina</span>
+                </button>
+                <button type="button" class="category-card" onclick="filtrarPorCategoria('Salon')">
+                    <span class="category-icon">🍷</span>
+                    <span>Salón / Mozos</span>
+                </button>
+                <button type="button" class="category-card" onclick="filtrarPorCategoria('Barra')">
+                    <span class="category-icon">☕</span>
+                    <span>Barra / Baristas</span>
+                </button>
+                <button type="button" class="category-card" onclick="filtrarPorCategoria('Gestion')">
+                    <span class="category-icon">📋</span>
+                    <span>Encargados / Admin</span>
+                </button>
+            </div>
+
+            <!-- CONTENEDOR DE TARJETAS DE VACANTES (Inyectado por JS) -->
+            <div id="lista-vacantes" class="vacantes-grid">
+                <!-- Se renderizan dinámicamente desde main.js -->
             </div>
         </section>
 
-        <!-- Ofertas + Talento -->
-        <section class="main-grid-section">
-            <div class="column-offers">
-                <h2>OFERTAS DESTACADAS</h2>
+        <!-- SECCIÓN FORMULARIO PUBLICAR / CONTACTO DIRECTO -->
+        <section id="publicar" class="publicar-section">
+            <div class="card-form">
+                <h2>¿Buscás personal para tu local?</h2>
+                <p>Publicá tu aviso en minutos o escribinos directo para asesoramiento personalizado.</p>
                 
-                <div class="search-bar">
-                    <input type="text" id="search-filter" placeholder="Buscar por puesto, empresa o zona..." oninput="filtrarVacantes()" aria-label="Filtrar ofertas por término de búsqueda">
-                    <button type="button" class="btn-search" onclick="filtrarVacantes()" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
-                </div>
-
-                <div id="vacantes-container" class="vacantes-container">
-                    <!-- Contenido dinámico generado por main.js -->
-                </div>
-                
-                <a href="#vacantes-container" class="link-more-full" onclick="filtrarPorCategoria('')">Ver todas las ofertas <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
-            </div>
-
-            <!-- Columna Talento Destacado -->
-            <div class="column-talent">
-                <div class="section-header">
-                    <h2>TALENTO DESTACADO</h2>
-                    <a href="javascript:void(0)" class="link-more">Ver todos <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
-                </div>
-
-                <div class="talent-grid">
-                    <!-- Candidato 1: Lucas R. -->
-                    <div class="talent-card">
-                        <div class="avatar-status">
-                            <div class="avatar-placeholder">LR</div>
-                            <span class="status-badge active" title="Disponible"></span>
-                        </div>
-                        <h3 class="talent-name">Lucas R.</h3>
-                        <div class="talent-role">Cocinero</div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <span class="rating-count">(24)</span>
-                        </div>
-                        <p class="detail">5 años de experiencia</p>
-                        <p class="detail">Disponibilidad: <span class="disp-text">Inmediata</span></p>
-                        <div class="location">
-                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Nueva Córdoba
-                        </div>
-                        <button type="button" class="btn-unlock-cv" onclick="desbloquearContacto('Lucas R.')">
-                            <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
-                        </button>
+                <form id="form-publicar" onsubmit="enviarAPublicar(event)">
+                    <div class="form-group">
+                        <label for="nombre-empresa">Nombre del Local / Empresa</label>
+                        <input type="text" id="nombre-empresa" placeholder="Ej: Bar Guemes" required>
                     </div>
 
-                    <!-- Candidato 2: María F. -->
-                    <div class="talent-card">
-                        <div class="avatar-status">
-                            <div class="avatar-placeholder">MF</div>
-                            <span class="status-badge active" title="Disponible"></span>
-                        </div>
-                        <h3 class="talent-name">María F.</h3>
-                        <div class="talent-role">Barista</div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <span class="rating-count">(18)</span>
-                        </div>
-                        <p class="detail">3 años de experiencia</p>
-                        <p class="detail">Disponibilidad: <span class="disp-text">Mañana</span></p>
-                        <div class="location">
-                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Güemes
-                        </div>
-                        <button type="button" class="btn-unlock-cv" onclick="desbloquearContacto('María F.')">
-                            <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
-                        </button>
+                    <div class="form-group">
+                        <label for="puesto-requerido">Puesto a Buscar</label>
+                        <input type="text" id="puesto-requerido" placeholder="Ej: Ayudante de Cocina" required>
                     </div>
 
-                    <!-- Candidato 3: Santiago M. -->
-                    <div class="talent-card">
-                        <div class="avatar-status">
-                            <div class="avatar-placeholder">SM</div>
-                            <span class="status-badge active" title="Disponible"></span>
-                        </div>
-                        <h3 class="talent-name">Santiago M.</h3>
-                        <div class="talent-role">Mozo</div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <i class="fa-solid fa-star" aria-hidden="true"></i>
-                            <span class="rating-count">(31)</span>
-                        </div>
-                        <p class="detail">4 años de experiencia</p>
-                        <p class="detail">Disponibilidad: <span class="disp-text">Full time</span></p>
-                        <div class="location">
-                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro
-                        </div>
-                        <button type="button" class="btn-unlock-cv" onclick="desbloquearContacto('Santiago M.')">
-                            <i class="fa-solid fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
-                        </button>
+                    <div class="form-group">
+                        <label for="telefono-contacto">WhatsApp de Contacto</label>
+                        <input type="tel" id="telefono-contacto" placeholder="Ej: 3511234567 (Sin 0 ni 15)" pattern="[0-9]{10,13}" required>
                     </div>
-                </div>
 
-                <!-- Bloque Comunidad -->
-                <div class="blog-banner" style="margin-top: 1.5rem;">
-                    <div class="blog-banner-content">
-                        <h2>FORMÁ PARTE DE LA COMUNIDAD <span class="highlight">JOBBERS</span></h2>
-                        <p>Aparecé en nuestra lista de talentos destacados o accedé a contenido exclusivo.</p>
-                        <button type="button" class="btn-primary" onclick="irAExpress()" style="width: 100%; font-weight: 800;">
-                            DESTACÁ TU PERFIL
-                        </button>
+                    <div class="form-group">
+                        <label for="detalles-busqueda">Detalles del Puesto</label>
+                        <textarea id="detalles-busqueda" rows="4" placeholder="Horarios, requisitos, zona..." required></textarea>
                     </div>
-                </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Enviar por WhatsApp</button>
+                </form>
             </div>
         </section>
 
-        <!-- Estadísticas -->
-        <section class="stats-section">
-            <div class="stat-item">
-                <i class="fa-solid fa-users" aria-hidden="true"></i>
-                <div class="stat-info">
-                    <h4>+12.500</h4>
-                    <p>Personas conectadas</p>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-city" aria-hidden="true"></i>
-                <div class="stat-info">
-                    <h4>+1.200</h4>
-                    <p>Empresas confían</p>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
-                <div class="stat-info">
-                    <h4>+3.800</h4>
-                    <p>Ofertas activas</p>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-handshake-angle" aria-hidden="true"></i>
-                <div class="stat-info">
-                    <h4>+18.000</h4>
-                    <p>Contrataciones realizadas</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="nosotros" class="info-section">
-            <h2>Sobre Jobbers</h2>
-            <p>Conectamos a los mejores talentos de la gastronomía con bares, restaurantes y hoteles líderes de la región.</p>
-        </section>
     </main>
 
-    <!-- Bottom Nav Mobile -->
-    <nav class="bottom-nav" aria-label="Navegación inferior mobile">
-        <a href="#" class="bottom-nav-item active">
-            <i class="fa-solid fa-house" aria-hidden="true"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="#vacantes-container" class="bottom-nav-item">
-            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-            <span>Buscar</span>
-        </a>
-        <a href="#express-form-section" class="bottom-nav-item highlight-item">
-            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-            <span>Personal YA</span>
-        </a>
-        <a href="#vacantes-container" class="bottom-nav-item">
-            <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BARRA DE NAVEGACIÓN INFERIOR (MOBILE FIRST) -->
+    <nav class="bottom-nav" aria-label="Navegación móvil">
+        <a href="#vacantes" class="bottom-nav-item active">
+            <span class="nav-icon">🔍</span>
             <span>Empleos</span>
+        </a>
+        <a href="#publicar" class="bottom-nav-item">
+            <span class="nav-icon">➕</span>
+            <span>Publicar</span>
+        </a>
+        <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="bottom-nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Contacto</span>
         </a>
     </nav>
 
-    <!-- Modal Dinámico Principal -->
-    <div id="modal" class="jobbers-modal" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="jobbers-modal-card">
-            <button type="button" class="jobbers-close-btn" onclick="cerrarModal()" aria-label="Cerrar modal">&times;</button>
-            <div id="modal-body">
-                <!-- Contenido dinámico generado por JS -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Contenedor Toast -->
-    <div id="toast-container" class="toast-container"></div>
-
-    <!-- Carga del JavaScript -->
-    <script src="js/main.js"></script>
 </body>
 </html>
