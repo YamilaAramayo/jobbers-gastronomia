@@ -1,15 +1,13 @@
 /* ==========================================================================
-   JOBBERS ARGENTINA - LÓGICA INTERACTIVA Y CONEXIÓN A WHATSAPP
+   JOBBERS ARGENTINA - LÓGICA INTERACTIVA Y CONEXIÓN A WHATSAPP (OPTIMIZADO)
    ========================================================================== */
 
-// Número por defecto de soporte / recepción de Jobbers
 const WHATSAPP_JOBBERS_DEFAULT = "5493513080197";
 
-// Estado global de vacantes y referencia de foco para accesibilidad
 let vacantesGastronomia = [];
 let elementoPrevioFoco = null;
 
-// Helper: Sanitización rápida contra ataques XSS
+// Helpers sanitización y formateo
 const escapeHTML = (str) => {
     if (!str && str !== 0) return "";
     return String(str).replace(/[&<>"']/g, (match) => {
@@ -18,7 +16,8 @@ const escapeHTML = (str) => {
     });
 };
 
-// Helper: Debounce para búsquedas fluidas sin sobrecargar el DOM
+const limpiarNumeroWA = (num) => String(num || "").replace(/\D/g, "");
+
 function debounce(fn, delay = 300) {
     let timeoutId;
     return function (...args) {
@@ -34,7 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
 
-    // Bind para todos los botones que activan/despliegan el Formulario Express
+    // Event Delegation para botones de postulación (Evita inyección inline en onclick)
+    const contenedorVacantes = document.getElementById('lista-vacantes');
+    if (contenedorVacantes) {
+        contenedorVacantes.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-postularme');
+            if (btn) {
+                const puesto = btn.getAttribute('data-puesto');
+                const empresa = btn.getAttribute('data-empresa');
+                const contacto = btn.getAttribute('data-contacto');
+                abrirModalPostulacion(puesto, empresa, contacto);
+            }
+        });
+    }
+
+    // Bind Formulario Express
     const triggersExpress = document.querySelectorAll('.btn-trigger-express');
     const cardExpress = document.getElementById('formulario-express');
 
@@ -45,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 cardExpress.classList.add('is-visible');
                 cardExpress.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 
-                // Enfoque automático al primer campo del formulario
                 setTimeout(() => {
                     document.getElementById('nombre-empresa')?.focus();
                 }, 400);
@@ -53,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Búsqueda en tiempo real desde el input
+    // Búsqueda en tiempo real
     const inputBusqueda = document.getElementById('input-busqueda');
     if (inputBusqueda) {
         inputBusqueda.addEventListener('input', debounce(filtrarVacantes, 300));
@@ -62,13 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Botón manual de búsqueda
     const btnSearch = document.querySelector('.btn-search');
     if (btnSearch) {
         btnSearch.addEventListener('click', filtrarVacantes);
     }
 
-    // Cerrar modales y dropdowns con la tecla Escape
+    // Tecla Escape para modales y dropdowns
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             cerrarModal();
@@ -76,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cierre de dropdowns al hacer clic fuera
+    // Cierre de dropdowns fuera de área
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.dropdown')) {
             cerrarDropdown();
@@ -88,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
    2. CARGA DE DATOS (JSON)
    ========================================================================== */
 async function cargarVacantesDesdeJSON() {
-    const rutasPosibles = ['base_de_datos.json', './base_de_datos.json', '../base_de_datos.json', 'data/base_de_datos.json'];
+    const rutasPosibles = ['base_de_datos.json', './base_de_datos.json', 'data/base_de_datos.json'];
     let exito = false;
 
     for (const ruta of rutasPosibles) {
@@ -101,12 +112,12 @@ async function cargarVacantesDesdeJSON() {
                 break;
             }
         } catch (e) {
-            // Continúa con la siguiente ruta posible
+            // Ignorar y probar siguiente ruta
         }
     }
 
     if (!exito) {
-        console.warn("Jobbers: No se encontró base_de_datos.json o se ejecuta de forma local directa. Cargando fallback vacantes.");
+        console.warn("Jobbers: No se encontró base_de_datos.json localmente.");
         const contenedor = document.getElementById('lista-vacantes');
         if (contenedor) {
             contenedor.innerHTML = `
@@ -126,11 +137,7 @@ async function cargarVacantesDesdeJSON() {
 function crearCardVacante(item) {
     const puesto = item.puesto || item.titulo || "Puesto Gastronómico";
     const empresa = item.empresa || "Establecimiento Gastronómico";
-    const contacto = item.contacto_wa || WHATSAPP_JOBBERS_DEFAULT;
-
-    const attrPuesto = escapeHTML(puesto).replace(/'/g, "\\'");
-    const attrEmpresa = escapeHTML(empresa).replace(/'/g, "\\'");
-    const attrContacto = escapeHTML(contacto).replace(/'/g, "\\'");
+    const contacto = limpiarNumeroWA(item.contacto_wa) || WHATSAPP_JOBBERS_DEFAULT;
 
     return `
         <article class="job-card" style="background: #fff; border: 1px solid var(--border-color, #e2e8f0); border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
@@ -150,7 +157,12 @@ function crearCardVacante(item) {
 
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #edf2f7; padding-top:10px; margin-top:10px;">
                 <span style="font-size:0.75rem; color:#a0aec0;">${escapeHTML(item.tiempo || 'Publicado recientemente')}</span>
-                <button type="button" onclick="abrirModalPostulacion('${attrPuesto}', '${attrEmpresa}', '${attrContacto}')" class="btn-primary" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer;">
+                <button type="button" 
+                        class="btn-primary btn-postularme" 
+                        data-puesto="${escapeHTML(puesto)}" 
+                        data-empresa="${escapeHTML(empresa)}" 
+                        data-contacto="${contacto}"
+                        style="padding: 6px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer;">
                     Postularme
                 </button>
             </div>
@@ -212,13 +224,11 @@ function filtrarPorCategoria(categoria) {
     });
 
     renderizarOfertas(resultado);
-    
-    // Scroll suave hacia los resultados
     document.getElementById('vacantes')?.scrollIntoView({ behavior: 'smooth' });
 }
 
 /* ==========================================================================
-   4. ENVÍO DE FORMULARIO EXPRESS DE EMPLEADORES A WHATSAPP
+   4. ENVÍO DE FORMULARIO EXPRESS A WHATSAPP
    ========================================================================== */
 function enviarAWhatsApp(event) {
     event.preventDefault();
@@ -284,6 +294,8 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
     const body = document.getElementById('modal-body');
     if (!body) return;
 
+    const numLimpio = limpiarNumeroWA(contactoWA) || WHATSAPP_JOBBERS_DEFAULT;
+
     body.innerHTML = `
         <div style="margin-bottom: 1rem;">
             <h2 style="font-size:1.25rem; font-weight:800; color:#1a202c; margin:0 0 4px 0;">POSTULARME</h2>
@@ -296,7 +308,7 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
             </p>
         </div>
 
-        <form onsubmit="procesarPostulacion(event, '${escapeHTML(puesto).replace(/'/g, "\\'")}', '${escapeHTML(empresa).replace(/'/g, "\\'")}', '${escapeHTML(contactoWA)}')" style="display:flex; flex-direction:column; gap:10px;">
+        <form id="form-postulacion-modal" style="display:flex; flex-direction:column; gap:10px;">
             <div class="form-group">
                 <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; border:1px solid #cbd5e0; border-radius:4px; box-sizing:border-box;">
             </div>
@@ -308,6 +320,13 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
             </button>
         </form>
     `;
+
+    const formModal = document.getElementById('form-postulacion-modal');
+    if (formModal) {
+        formModal.addEventListener('submit', (e) => {
+            procesarPostulacion(e, puesto, empresa, numLimpio);
+        });
+    }
 
     const modal = document.getElementById('modal-jobbers');
     modal.style.display = 'flex';
@@ -406,7 +425,7 @@ function mostrarToast(mensaje, tipo = "success") {
 }
 
 /* ==========================================================================
-   8. BINDING GLOBAL PARA MANEJO DESDE EL HTML
+   8. BINDING GLOBAL
    ========================================================================== */
 window.enviarAWhatsApp = enviarAWhatsApp;
 window.abrirModalPostulacion = abrirModalPostulacion;
