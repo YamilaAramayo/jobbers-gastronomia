@@ -1,16 +1,14 @@
 /* ==========================================================================
-   1. VARIABLES & RESET (PALETA MODO OSCURO - JOBBERS)
+   1. VARIABLES & RESET
    ========================================================================== */
 :root {
-  color-scheme: dark;
-
-  /* Paleta de colores */
-  --primary: #F39C12;              /* Ámbar / Naranja brillante */
+  /* Paleta de colores - MODO OSCURO (Default) */
+  --primary: #F39C12;             /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;            /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;              /* Fondo de tarjetas y secciones */
+  --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
   --card-bg-light: #212428;       /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;      /* Botón de acción principal */
+  --whatsapp-orange: #F39C12;     /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
   --danger-badge: #E74C3C;        /* Badge Urgente y errores */
   --salary-green: #2ECC71;        /* Sueldos y Disponibilidad */
@@ -18,7 +16,7 @@
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;            /* Texto sobre botones amarillos/naranjas */
+  --text-dark: #111827;           /* Texto sobre botones amarillos/naranjas */
   --border-color: #2D3137;
 
   /* Bordes y Sombras */
@@ -37,6 +35,44 @@
   --z-navbar: 100;
   --z-modal: 1000;
   --z-toast: 2000;
+
+  /* Assets SVG */
+  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  --hero-overlay-bg: linear-gradient(135deg, rgba(10,11,12,0.96) 0%, rgba(10,11,12,0.85) 100%);
+  --modal-overlay-bg: rgba(0, 0, 0, 0.85);
+  --select-option-bg: #1a1d24;
+}
+
+/* ==========================================================================
+   PALETA MODO CLARO (LIGHT MODE)
+   ========================================================================== */
+[data-theme="light"],
+.light-theme {
+  --primary: #D67E00;             /* Ámbar / Naranja oscuro para contraste */
+  --primary-hover: #B56900;
+  --secondary: #F8FAFC;           /* Fondo ultra claro */
+  --card-bg: #FFFFFF;             /* Blanco puro para tarjetas */
+  --card-bg-light: #F1F5F9;       /* Hover y tarjetas secundarias */
+  --whatsapp-orange: #D67E00;
+  --whatsapp-hover: #B56900;
+  --danger-badge: #DC2626;        /* Rojo semántico contrastado */
+  --salary-green: #16A34A;        /* Verde accesible sobre blanco */
+
+  --bg-dark: #F8FAFC;             /* Mantiene variable para evitar desajustes */
+  --text-main: #0F172A;           /* Azul muy oscuro / Casi negro */
+  --text-muted: #64748B;          /* Texto secundario gris */
+  --text-dark: #FFFFFF;           /* Texto sobre botones primarios */
+  --border-color: #E2E8F0;
+
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+
+  /* Sobrescrituras de Assets para Light Mode */
+  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.97) 0%, rgba(241, 245, 249, 0.90) 100%);
+  --modal-overlay-bg: rgba(15, 23, 42, 0.4);
+  --select-option-bg: #FFFFFF;
 }
 
 *, *::before, *::after {
@@ -89,6 +125,11 @@ img {
   justify-content: space-between;
 }
 
+[data-theme="light"] .navbar,
+.light-theme .navbar {
+  background-color: rgba(255, 255, 255, 0.92);
+}
+
 .logo {
   display: flex;
   flex-direction: column;
@@ -123,7 +164,7 @@ img {
 .nav-link {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #D1D5DB;
+  color: var(--text-muted);
   transition: var(--transition);
   background: none;
   border: none;
@@ -139,6 +180,13 @@ img {
 .nav-link.active {
   color: var(--primary);
   background-color: rgba(243, 156, 18, 0.1);
+}
+
+[data-theme="light"] .nav-link:hover,
+[data-theme="light"] .nav-link.active,
+.light-theme .nav-link:hover,
+.light-theme .nav-link.active {
+  background-color: rgba(214, 126, 0, 0.08);
 }
 
 .dropdown {
@@ -186,13 +234,13 @@ img {
   background-size: cover;
   background-position: center;
   padding: 3.5rem 1.5rem;
-  color: white;
+  color: var(--text-main);
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(10,11,12,0.96) 0%, rgba(10,11,12,0.85) 100%);
+  background: var(--hero-overlay-bg);
 }
 
 .hero-container {
@@ -273,13 +321,18 @@ img {
 .btn-secondary {
   background-color: transparent;
   border: 1px solid var(--border-color);
-  color: white;
+  color: var(--text-main);
 }
 
 .btn-secondary:hover {
-  border-color: #F5B041;
-  color: #F5B041;
-  background-color: rgba(243, 156, 18, 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: rgba(243, 156, 18, 0.05);
+}
+
+[data-theme="light"] .btn-secondary:hover,
+.light-theme .btn-secondary:hover {
+  background-color: rgba(214, 126, 0, 0.08);
 }
 
 .btn-accent {
@@ -294,7 +347,7 @@ img {
 
 .btn-subtext {
   font-size: 0.8rem;
-  color: #a0a6b5;
+  color: var(--text-muted);
   margin-top: 0.2rem;
   display: block;
 }
@@ -309,7 +362,7 @@ img {
   flex-wrap: wrap;
   gap: 1.5rem;
   font-size: 0.85rem;
-  color: #D1D5DB;
+  color: var(--text-muted);
 }
 
 .hero-features i {
@@ -367,7 +420,7 @@ img {
   gap: 0.75rem;
 }
 
-/* Corrección unificada de Inputs y Selects */
+/* Inputs y Selects */
 .express-form input,
 .form-group input {
   width: 100%;
@@ -383,17 +436,17 @@ img {
 
 .express-form input::placeholder,
 .form-group input::placeholder {
-  color: #8e95a2;
-  opacity: 1;
+  color: var(--text-muted);
+  opacity: 0.8;
 }
 
-/* Selects con icono Dropdown personalizado */
+/* Selects adaptables con icono dinámico */
 .express-form select,
 .form-group select {
   width: 100%;
-  background-color: #12151c !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: var(--bg-dark) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 0.85rem 2.5rem 0.85rem 1rem !important;
   font-size: 0.9rem;
@@ -405,7 +458,7 @@ img {
   -moz-appearance: none;
   appearance: none;
 
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E") !important;
+  background-image: var(--select-arrow) !important;
   background-repeat: no-repeat !important;
   background-position: right 1rem center !important;
   background-size: 0.7rem auto !important;
@@ -413,8 +466,8 @@ img {
 
 .express-form select option,
 .form-group select option {
-  background-color: #1a1d24;
-  color: #ffffff;
+  background-color: var(--select-option-bg);
+  color: var(--text-main);
 }
 
 .express-form optgroup,
@@ -559,7 +612,7 @@ img {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: var(--card-bg);
-  color: white;
+  color: var(--text-main);
   outline: none;
   font-size: 0.9rem;
   transition: var(--transition);
@@ -757,7 +810,7 @@ img {
   width: 100%;
   height: 100%;
   background: var(--card-bg-light);
-  color: white;
+  color: var(--text-main);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -805,14 +858,14 @@ img {
 
 .talent-card .location { 
   font-size: 0.75rem; 
-  color: #D1D5DB; 
+  color: var(--text-muted); 
   display: block;
 }
 
 .blog-banner {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  color: white;
+  color: var(--text-main);
   padding: 2rem;
   border-radius: var(--radius-md);
   line-height: 1.6;
@@ -892,7 +945,7 @@ img {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: var(--modal-overlay-bg);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   z-index: var(--z-modal);
@@ -916,9 +969,6 @@ img {
   box-shadow: var(--shadow-lg);
   color: var(--text-main);
   animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.jobbers-modal.active .jobbers-modal-card {
   will-change: transform, opacity;
 }
 
@@ -964,7 +1014,7 @@ img {
   pointer-events: auto;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  color: white;
+  color: var(--text-main);
   padding: 12px 18px;
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
@@ -1001,6 +1051,11 @@ img {
   align-items: center;
   z-index: var(--z-bottom-nav);
   padding: 0 0.5rem;
+}
+
+[data-theme="light"] .bottom-nav,
+.light-theme .bottom-nav {
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .bottom-nav-item {
