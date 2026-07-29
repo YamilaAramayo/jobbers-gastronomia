@@ -30,6 +30,28 @@
 </head>
 <body>
 
+    <!-- MODAL DE SELECCIÓN DE ROL (PASO 0) -->
+    <div id="modal-seleccion-rol" class="rol-modal-overlay">
+        <div class="rol-modal-card">
+            <h2>¡Bienvenido a Jobbers! 👋</h2>
+            <p>Seleccioná cómo querés ingresar para personalizar tu experiencia:</p>
+            
+            <div class="rol-options">
+                <button type="button" class="btn-rol btn-postulante" onclick="seleccionarRol('postulante')">
+                    <span class="rol-icon">🔍</span>
+                    <span class="rol-title">Busco Empleo</span>
+                    <span class="rol-desc">Quiero ver vacantes y postularme directo</span>
+                </button>
+
+                <button type="button" class="btn-rol btn-empresa" onclick="seleccionarRol('empresa')">
+                    <span class="rol-icon">🏢</span>
+                    <span class="rol-title">Busco Personal</span>
+                    <span class="rol-desc">Quiero publicar una oferta o contratar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
         <div class="navbar-container">
@@ -40,8 +62,15 @@
 
             <nav class="nav-links" aria-label="Navegación principal">
                 <a href="#vacantes" class="nav-link">Empleos</a>
-                <button type="button" class="nav-link btn-trigger-express">Publicar Búsqueda</button>
                 
+                <!-- Solo visible para empresas -->
+                <button type="button" class="nav-link btn-trigger-express modo-empresa-only">Publicar Búsqueda</button>
+                
+                <!-- Botón para cambiar de modo/perfil -->
+                <button type="button" class="nav-link btn-cambiar-rol" onclick="reabrirModalRol()">
+                    <i class="fas fa-user-tag"></i> <span id="label-modo-actual">Cambiar Perfil</span>
+                </button>
+
                 <!-- Desplegable Recursos -->
                 <div class="dropdown">
                     <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
@@ -78,8 +107,8 @@
                         <span class="btn-subtext">Postulate directo por WhatsApp</span>
                     </div>
                     
-                    <!-- Botón 2: Disparador del Formulario Express -->
-                    <div class="hero-btn-wrapper">
+                    <!-- Botón 2: Disparador del Formulario Express (Solo Visible para Empresas) -->
+                    <div class="hero-btn-wrapper modo-empresa-only">
                         <button type="button" class="btn-secondary btn-trigger-express" id="btn-necesito-personal">
                             ⚡ NECESITO PERSONAL YA
                         </button>
@@ -94,8 +123,8 @@
                 </div>
             </div>
 
-            <!-- Columna Derecha: Tarjeta Formulario Express -->
-            <div class="hero-card-express" id="formulario-express">
+            <!-- Columna Derecha: Tarjeta Formulario Express (Solo Visible para Empresas) -->
+            <div class="hero-card-express modo-empresa-only" id="formulario-express">
                 <div class="card-header">
                     <span class="text-warning">⚡</span>
                     <h2>¿NECESITÁS PERSONAL HOY?</h2>
@@ -157,7 +186,6 @@
                                 <option value="Argüello">Argüello</option>
                                 <option value="Urca">Urca</option>
                                 <option value="Villa Belgrano">Villa Belgrano</option>
-
                                 <option value="San Martín">San Martín</option>
                                 <option value="Cofico">Cofico</option>
                                 <option value="Poeta Lugones">Poeta Lugones</option>
@@ -235,7 +263,7 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN: TALENTO DESTACADO (Renderizado dinámico desde main.js) -->
+            <!-- SECCIÓN: TALENTO DESTACADO -->
             <div style="margin-top: 2.5rem;">
                 <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem;">
                     🌟 TALENTO DESTACADO
@@ -243,10 +271,10 @@
                 <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;"></div>
             </div>
 
-            <!-- SECCIÓN: BANNER COMUNIDAD (Renderizado dinámico desde main.js) -->
+            <!-- SECCIÓN: BANNER COMUNIDAD -->
             <div id="banner-comunidad-jobbers" style="margin-top: 2rem;"></div>
 
-            <!-- SECCIÓN: LISTA DE VACANTES / EMPLEOS (Renderizado dinámico desde main.js) -->
+            <!-- SECCIÓN: LISTA DE VACANTES / EMPLEOS -->
             <div style="margin-top: 2.5rem;">
                 <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem;">
                     📌 BÚSQUEDAS ACTIVAS
@@ -276,10 +304,18 @@
             <i class="fas fa-search"></i>
             <span>Buscar</span>
         </a>
-        <button type="button" class="bottom-nav-item highlight-item btn-trigger-express" style="background:none; border:none;">
+        
+        <!-- Elemento dinámico según rol -->
+        <button type="button" class="bottom-nav-item highlight-item modo-empresa-only btn-trigger-express" style="background:none; border:none;">
             <i class="fas fa-bolt"></i>
             <span>Personal YA</span>
         </button>
+        
+        <button type="button" class="bottom-nav-item" onclick="reabrirModalRol()" style="background:none; border:none;">
+            <i class="fas fa-user-circle"></i>
+            <span>Perfil</span>
+        </button>
+
         <a href="https://wa.me/5493513080197" target="_blank" rel="noopener noreferrer" class="bottom-nav-item">
             <i class="fab fa-whatsapp"></i>
             <span>Contacto</span>
