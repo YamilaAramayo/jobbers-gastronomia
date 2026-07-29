@@ -19,69 +19,72 @@
     <!-- Preload de imagen LCP -->
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80">
 
-    <!-- Estilos CSS (Ruta corregida) -->
+    <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
     
-    <!-- JS diferido (Ruta corregida) -->
+    <!-- JS diferido -->
     <script src="js/main.js" defer></script>
 </head>
 <body>
 
     <!-- NAVEGACIÓN PRINCIPAL -->
-    <header class="navbar">
-        <div class="logo">
-            <h2>JOBBERS</h2>
-            <span class="logo-subtitle">GASTRONOMÍA</span>
-        </div>
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span>JOBBERS</span> GASTRONOMÍA
+            </a>
 
-        <nav class="nav-links" aria-label="Navegación principal">
-            <a href="#vacantes" class="nav-link active">Empleos</a>
-            <a href="#publicar" class="nav-link">Publicar Búsqueda</a>
-            
-            <div class="dropdown">
-                <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
-                    Recursos ▾
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdown-recursos">
-                    <a href="#" class="dropdown-item" onclick="abrirModalRecursos('plantillas')">Crear CV Gastronómico</a>
-                    <a href="#" class="dropdown-item" onclick="abrirModalRecursos('guias')">Consejos de Entrevista</a>
-                    <a href="#" class="dropdown-item" onclick="abrirModalRecursos('soporte')">Soporte Técnico</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- HERO SECTION (2 Columnas en Desktop) -->
-    <section class="hero-section">
-        <div class="hero-overlay"></div>
-        <div class="hero-container">
-            
-            <!-- Columna Izquierda: Mensaje y Botones -->
-            <div class="hero-left">
-                <h1 class="hero-title">
-                    Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá
-                </h1>
-                <p class="hero-subtitle">
-                    Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.
-                </p>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <a href="#vacantes" class="nav-link">Empleos</a>
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleFormularioExpress()">Publicar Búsqueda</a>
                 
-                <div class="hero-buttons">
-                    <div class="hero-btn-wrapper">
-                        <a href="#vacantes" class="btn-primary">BUSCAR EMPLEO</a>
+                <div class="dropdown">
+                    <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
+                        Recursos ▾
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdown-recursos">
+                        <a href="#" class="dropdown-item">Crear CV Gastronómico</a>
+                        <a href="#" class="dropdown-item">Consejos de Entrevista</a>
                     </div>
                 </div>
+            </nav>
+
+            <button type="button" class="btn btn-primary btn-header" onclick="toggleFormularioExpress()">Publicar Oferta</button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container hero-grid">
+            
+            <!-- Columna Izquierda: Mensaje y Botones de Acción Principal -->
+            <div class="hero-text">
+                <h1>Tu próximo trabajo en gastronomía está acá</h1>
+                <p>Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
+                
+                <div class="hero-actions" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Botón 1: Ir a Vacantes -->
+                    <a href="#vacantes" class="btn btn-primary btn-lg">🔍 BUSCO TRABAJO</a>
+                    
+                    <!-- Botón 2: Disparador del Formulario Express -->
+                    <button type="button" class="btn-toggle-express" onclick="toggleFormularioExpress()">
+                        <span>⚡ NECESITO PERSONAL YA</span>
+                        <span class="btn-subtext">⚡ Sin registro • Pedido rápido</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- Columna Derecha: Tarjeta Formulario Express -->
-            <div class="hero-card-express" id="publicar">
-                <div class="card-header">
-                    <h2>¿Buscás personal para tu local?</h2>
+            <!-- Columna Derecha: Tarjeta Formulario Express (Inicia oculto con la clase hidden) -->
+            <div class="hero-card hidden" id="card-express-form">
+                <div class="card-header-express" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <h2>⚡ ¿NECESITÁS PERSONAL HOY?</h2>
+                    <button type="button" class="btn-close-express" onclick="toggleFormularioExpress()" aria-label="Cerrar">&times;</button>
                 </div>
-                <p>Publicá tu aviso en minutos o escribinos directo para asesoramiento personalizado.</p>
+                <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
                 
-                <form id="form-publicar" class="express-form">
+                <form id="form-publicar" onsubmit="enviarAPublicar(event)">
                     <div class="form-group">
-                        <label for="nombre-empresa">Nombre del Local / Empresa</label>
+                        <label for="nombre-empresa">Nombre de tu local / Gastronómico</label>
                         <input type="text" id="nombre-empresa" placeholder="Ej: Bar Güemes" required>
                     </div>
 
@@ -100,7 +103,7 @@
                         <textarea id="detalles-busqueda" rows="3" placeholder="Horarios, requisitos, zona..." required></textarea>
                     </div>
 
-                    <button type="submit" class="btn-whatsapp">ENVIAR POR WHATSAPP</button>
+                    <button type="submit" class="btn btn-primary btn-block">Enviar por WhatsApp</button>
                 </form>
             </div>
 
@@ -108,13 +111,13 @@
     </section>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-grid-section">
+    <main class="container main-layout">
         
         <!-- SECCIÓN VACANTES Y FILTROS -->
-        <section id="vacantes" style="width: 100%;">
+        <section id="vacantes" class="vacantes-section">
             
             <!-- BARRA DE BÚSQUEDA Y FILTROS -->
-            <div class="search-bar">
+            <div class="search-box">
                 <input type="text" id="input-busqueda" placeholder="Buscar por puesto o zona (Ej: Mozo, Nueva Córdoba)..." aria-label="Buscar empleo">
                 <select id="select-zona" aria-label="Filtrar por zona">
                     <option value="">Todas las zonas</option>
@@ -147,7 +150,7 @@
             </div>
 
             <!-- CONTENEDOR DE TARJETAS DE VACANTES (JS) -->
-            <div id="lista-vacantes" class="vacantes-container">
+            <div id="lista-vacantes" class="vacantes-grid">
                 <!-- Se renderizan dinámicamente desde main.js -->
             </div>
         </section>
@@ -156,12 +159,12 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <div class="footer-container">
+        <div class="container footer-container">
             <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
             <div class="footer-links">
                 <a href="#">Términos y Condiciones</a>
                 <a href="#">Privacidad</a>
-                <a href="#" onclick="abrirModalRecursos('soporte')">Contacto</a>
+                <a href="#">Contacto</a>
             </div>
         </div>
     </footer>
@@ -170,13 +173,13 @@
     <nav class="bottom-nav" aria-label="Navegación móvil">
         <a href="#vacantes" class="bottom-nav-item active">
             <span class="nav-icon">🔍</span>
-            <span>Empleos</span>
+            <span>Buscar</span>
         </a>
-        <a href="#publicar" class="bottom-nav-item">
-            <span class="nav-icon">➕</span>
-            <span>Publicar</span>
+        <a href="javascript:void(0)" class="bottom-nav-item" onclick="toggleFormularioExpress()">
+            <span class="nav-icon">⚡</span>
+            <span>Personal YA</span>
         </a>
-        <a href="https://wa.me/5493513080197" target="_blank" rel="noopener noreferrer" class="bottom-nav-item">
+        <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="bottom-nav-item">
             <span class="nav-icon">💬</span>
             <span>Contacto</span>
         </a>
