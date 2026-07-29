@@ -32,25 +32,31 @@
 
     <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
-        <a href="#" class="logo">
-            <h2>JOBBERS</h2>
-            <span class="logo-subtitle">EMPLEO GASTRANÓMICO</span>
-        </a>
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <h2>JOBBERS</h2>
+                <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
+            </a>
 
-        <nav class="nav-links" aria-label="Navegación principal">
-            <a href="#vacantes" class="nav-link">Empleos</a>
-            <button type="button" class="nav-link btn-trigger-express">Publicar Búsqueda</button>
-            
-            <div class="dropdown">
-                <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
-                    Recursos ▾
-                </button>
-                <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
-                    <a href="#">Crear CV Gastronómico</a>
-                    <a href="#">Consejos de Entrevista</a>
+            <nav class="nav-links" aria-label="Navegación principal">
+                <a href="#vacantes" class="nav-link">Empleos</a>
+                <button type="button" class="nav-link btn-trigger-express">Publicar Búsqueda</button>
+                
+                <!-- Desplegable Recursos -->
+                <div class="dropdown">
+                    <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">
+                        Recursos <i class="fas fa-chevron-down nav-icon-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
+                        <a href="#"><i class="fas fa-file-invoice"></i> Crear CV Gastronómico</a>
+                        <a href="#"><i class="fas fa-comments"></i> Consejos de Entrevista</a>
+                        <a href="#"><i class="fas fa-headset"></i> Soporte Técnico</a>
+                    </div>
                 </div>
-            </div>
-        </nav>
+
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+            </nav>
+        </div>
     </header>
 
     <!-- HERO SECTION -->
@@ -199,8 +205,14 @@
         </section>
     </main>
 
+    <!-- SECCIÓN NOSOTROS -->
+    <section class="info-section" id="nosotros" style="padding: 3rem 1.5rem; background: var(--card-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <h2>Sobre Jobbers</h2>
+        <p>Somos la comunidad y plataforma de empleo especializada en el sector gastronómico de Córdoba. Conectamos talento real con locales, restaurantes y hoteles de forma directa, ágil y transparente.</p>
+    </section>
+
     <!-- FOOTER -->
-    <footer style="text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85rem;">
+    <footer style="text-align: center; padding: 2.5rem 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
     </footer>
 
@@ -222,5 +234,4 @@
 
     <div id="toast-container"></div>
 </body>
-</html>
 </html>
