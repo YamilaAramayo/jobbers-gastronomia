@@ -111,22 +111,62 @@ img {
    2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
    ========================================================================== */
 
-/* Oculta componentes de empresa por defecto */
+/* --------------------------------------------------------------------------
+   A) REGLAS PARA MODO POSTULANTE (Default)
+   -------------------------------------------------------------------------- */
+
+/* Ocultar secciones y botones exclusivos de empresa */
 body.role-postulante .modo-empresa-only,
-body:not(.role-empresa) .modo-empresa-only {
+body:not(.role-empresa) .modo-empresa-only,
+body.role-postulante .empresa-only,
+body:not(.role-empresa) .empresa-only {
   display: none !important;
 }
 
-/* Habilita componentes si el rol activo es Empresa */
-body.role-empresa .modo-empresa-only {
+/* Ocultar el nombre / área de la empresa dentro de las tarjetas de empleos */
+body.role-postulante .job-company,
+body:not(.role-empresa) .job-company,
+body.role-postulante .job-card-empresa,
+body:not(.role-empresa) .job-card-empresa {
+  display: none !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   B) REGLAS PARA MODO EMPRESA
+   -------------------------------------------------------------------------- */
+
+/* Ocultar elementos exclusivos de postulantes cuando la empresa está activa */
+body.role-empresa .postulante-only,
+body.role-empresa .modo-postulante-only {
+  display: none !important;
+}
+
+/* Mostrar bloques, secciones y contenedores exclusivos de empresa */
+body.role-empresa .modo-empresa-only,
+body.role-empresa .empresa-only {
   display: block;
 }
 
+/* Mostrar botones e hipervínculos de empresa en flexbox para conservar su alineación */
 body.role-empresa button.modo-empresa-only,
-body.role-empresa a.modo-empresa-only {
+body.role-empresa a.modo-empresa-only,
+body.role-empresa button.empresa-only,
+body.role-empresa a.empresa-only {
   display: inline-flex;
 }
 
+/* Mostrar y estilizar el nombre/área de la empresa en las tarjetas de empleo */
+body.role-empresa .job-company,
+body.role-empresa .job-card-empresa {
+  display: flex !important;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 0.2rem;
+}
 /* ==========================================================================
    3. NAVBAR / HEADER
    ========================================================================== */
