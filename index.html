@@ -35,49 +35,49 @@
 <body class="role-postulante">
 
     <!-- MODAL DE SELECCIÓN DE PERFIL -->
-<div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
-    <div class="rol-modal-card">
-        <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
-        
-        <!-- VISTA 1: Selección inicial de perfil -->
-        <div id="rol-step-select">
-            <h2 id="modal-title">¿Cómo querés ingresar? 👋</h2>
-            <p>Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
+    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
+        <div class="rol-modal-card">
+            <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
             
-            <div class="rol-options">
-                <!-- Opción Postulante -->
-                <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Busco Empleo">
-                    <span class="rol-icon" aria-hidden="true">🔍</span>
-                    <span class="rol-title">Busco Empleo</span>
-                    <span class="rol-desc">Quiero ver vacantes y postularme directo</span>
-                </button>
+            <!-- VISTA 1: Selección inicial de perfil -->
+            <div id="rol-step-select">
+                <h2 id="modal-title">¿Cómo querés ingresar? 👋</h2>
+                <p>Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
+                
+                <div class="rol-options">
+                    <!-- Opción Postulante -->
+                    <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Busco Empleo">
+                        <span class="rol-icon" aria-hidden="true">🔍</span>
+                        <span class="rol-title">Busco Empleo</span>
+                        <span class="rol-desc">Quiero ver vacantes y postularme directo</span>
+                    </button>
 
-                <!-- Opción Empresa -->
-                <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Soy Empresa / Gastronómico">
-                    <span class="rol-icon" aria-hidden="true">🏢</span>
-                    <span class="rol-title">Soy Empresa / Gastronómico</span>
-                    <span class="rol-desc">Quiero publicar una oferta o contratar</span>
-                </button>
+                    <!-- Opción Empresa -->
+                    <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Soy Empresa / Gastronómico">
+                        <span class="rol-icon" aria-hidden="true">🏢</span>
+                        <span class="rol-title">Soy Empresa / Gastronómico</span>
+                        <span class="rol-desc">Quiero publicar una oferta o contratar</span>
+                    </button>
+                </div>
             </div>
+
+            <!-- VISTA 2: Confirmación previa con nombre de perfil -->
+            <div id="rol-step-confirm" style="display: none; text-align: center;">
+                <h2>¿Estás seguro/a? 🤔</h2>
+                <p style="margin-bottom: 1rem;">Vas a ingresar a la plataforma como:</p>
+                
+                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--primary, #00e676); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <strong id="rol-nombre-confirmar" style="color: var(--primary, #00e676); font-size: 1.2rem; display: block;"></strong>
+                </div>
+
+                <div style="display: flex; gap: 0.75rem;">
+                    <button type="button" class="btn-secondary" id="btn-volver-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Volver</button>
+                    <button type="button" class="btn-primary" id="btn-confirmar-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Ingresar</button>
+                </div>
+            </div>
+
         </div>
-
-        <!-- VISTA 2: Confirmación previa con nombre de perfil -->
-        <div id="rol-step-confirm" style="display: none; text-align: center;">
-            <h2>¿Estás seguro/a? 🤔</h2>
-            <p style="margin-bottom: 1rem;">Vas a ingresar a la plataforma como:</p>
-            
-            <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--primary, #00e676); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                <strong id="rol-nombre-confirmar" style="color: var(--primary, #00e676); font-size: 1.2rem; display: block;"></strong>
-            </div>
-
-            <div style="display: flex; gap: 0.75rem;">
-                <button type="button" class="btn-secondary" id="btn-volver-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Volver</button>
-                <button type="button" class="btn-primary" id="btn-confirmar-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Ingresar</button>
-            </div>
-        </div>
-
     </div>
-</div>
 
     <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
@@ -298,6 +298,88 @@
             <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
         </section>
     </main>
+
+    <!-- SECCIÓN TALENTO DESTACADO (Exclusiva Modo Empresa) -->
+    <section class="talento-section modo-empresa-only" id="talento-destacado">
+        <div class="talento-container">
+            <div class="section-header">
+                <h2>TALENTO DESTACADO</h2>
+                <a href="#" class="link-see-all">Ver todos <i class="fas fa-chevron-right"></i></a>
+            </div>
+
+            <div class="talento-grid">
+                <!-- Tarjeta 1: Lucas R. -->
+                <article class="talento-card">
+                    <div class="avatar-container">
+                        <div class="avatar-circle">LR</div>
+                        <span class="status-dot"></span>
+                    </div>
+                    <h3>Lucas R.</h3>
+                    <p class="puesto-highlight">Cocinero</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(24)</span>
+                    </div>
+                    <p class="talento-info">5 años de experiencia</p>
+                    <p class="talento-info">Disponibilidad: Inmediata</p>
+                    <p class="talento-location"><i class="fas fa-map-marker-alt"></i> Nueva Córdoba</p>
+                    <button type="button" class="btn-lock-cv">
+                        <i class="fas fa-lock"></i> VER CONTACTO / CV
+                    </button>
+                </article>
+
+                <!-- Tarjeta 2: María F. -->
+                <article class="talento-card">
+                    <div class="avatar-container">
+                        <div class="avatar-circle">MF</div>
+                        <span class="status-dot"></span>
+                    </div>
+                    <h3>María F.</h3>
+                    <p class="puesto-highlight">Barista</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(18)</span>
+                    </div>
+                    <p class="talento-info">3 años de experiencia</p>
+                    <p class="talento-info">Disponibilidad: Mañana</p>
+                    <p class="talento-location"><i class="fas fa-map-marker-alt"></i> Güemes</p>
+                    <button type="button" class="btn-lock-cv">
+                        <i class="fas fa-lock"></i> VER CONTACTO / CV
+                    </button>
+                </article>
+
+                <!-- Tarjeta 3: Santiago M. -->
+                <article class="talento-card">
+                    <div class="avatar-container">
+                        <div class="avatar-circle">SM</div>
+                        <span class="status-dot"></span>
+                    </div>
+                    <h3>Santiago M.</h3>
+                    <p class="puesto-highlight">Mozo</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(31)</span>
+                    </div>
+                    <p class="talento-info">4 años de experiencia</p>
+                    <button type="button" class="btn-lock-cv">
+                        <i class="fas fa-lock"></i> VER CONTACTO / CV
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
 
     <!-- SECCIÓN NOSOTROS -->
     <section class="info-section" id="nosotros">
