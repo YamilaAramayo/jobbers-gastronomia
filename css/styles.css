@@ -5,18 +5,18 @@
   /* Paleta de colores - MODO OSCURO (Default) */
   --primary: #F39C12;               /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;             /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;               /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;         /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;       /* Botón de acción principal */
+  --secondary: #0D0D0D;              /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;                /* Fondo de tarjetas y secciones */
+  --card-bg-light: #212428;          /* Hover o tarjetas secundarias */
+  --whatsapp-orange: #F39C12;        /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;          /* Badge Urgente y errores */
-  --salary-green: #2ECC71;          /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;           /* Badge Urgente y errores */
+  --salary-green: #2ECC71;           /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;             /* Texto sobre botones amarillos/naranjas */
+  --text-dark: #111827;              /* Texto sobre botones amarillos/naranjas */
   --border-color: #2D3137;
 
   /* Bordes y Sombras */
@@ -36,9 +36,9 @@
   --z-modal: 1000;
   --z-toast: 2000;
 
-  /* Assets SVG */
+  /* Assets SVG & Overlays */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(10,11,12,0.96) 0%, rgba(10,11,12,0.85) 100%);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.96) 0%, rgba(10, 11, 12, 0.85) 100%);
   --modal-overlay-bg: rgba(0, 0, 0, 0.85);
   --select-option-bg: #1a1d24;
 }
@@ -48,20 +48,20 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;               /* Ámbar / Naranja oscuro para contraste */
+  --primary: #D67E00;                /* Ámbar / Naranja oscuro para contraste */
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;             /* Fondo ultra claro */
-  --card-bg: #FFFFFF;               /* Blanco puro para tarjetas */
-  --card-bg-light: #F1F5F9;         /* Hover y tarjetas secundarias */
+  --secondary: #F8FAFC;              /* Fondo ultra claro */
+  --card-bg: #FFFFFF;                /* Blanco puro para tarjetas */
+  --card-bg-light: #F1F5F9;          /* Hover y tarjetas secundarias */
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;          /* Rojo semántico contrastado */
-  --salary-green: #16A34A;          /* Verde accesible sobre blanco */
+  --danger-badge: #DC2626;           /* Rojo semántico contrastado */
+  --salary-green: #16A34A;           /* Verde accesible sobre blanco */
 
-  --bg-dark: #F8FAFC;              
-  --text-main: #0F172A;             /* Azul muy oscuro / Casi negro */
-  --text-muted: #64748B;            /* Texto secundario gris */
-  --text-dark: #FFFFFF;             /* Texto sobre botones primarios */
+  --bg-dark: #F1F5F9;                
+  --text-main: #0F172A;              /* Azul muy oscuro / Casi negro */
+  --text-muted: #64748B;             /* Texto secundario gris */
+  --text-dark: #FFFFFF;              /* Texto sobre botones primarios */
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
@@ -111,13 +111,13 @@ img {
    2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
    ========================================================================== */
 
-/* Si es postulante (o estado por defecto), oculta componentes de empresa */
+/* Oculta componentes de empresa por defecto */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only {
   display: none !important;
 }
 
-/* Si el rol activo es Empresa, habilita sus elementos */
+/* Habilita componentes si el rol activo es Empresa */
 body.role-empresa .modo-empresa-only {
   display: block;
 }
@@ -491,11 +491,11 @@ body.role-empresa a.modo-empresa-only {
 .express-form select,
 .form-group select {
   width: 100%;
-  background-color: var(--bg-dark) !important;
-  color: var(--text-main) !important;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  padding: 0.85rem 2.5rem 0.85rem 1rem !important;
+  padding: 0.85rem 2.5rem 0.85rem 1rem;
   font-size: 0.9rem;
   cursor: pointer;
   outline: none;
@@ -505,10 +505,10 @@ body.role-empresa a.modo-empresa-only {
   -moz-appearance: none;
   appearance: none;
 
-  background-image: var(--select-arrow) !important;
-  background-repeat: no-repeat !important;
-  background-position: right 1rem center !important;
-  background-size: 0.7rem auto !important;
+  background-image: var(--select-arrow);
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.7rem auto;
 }
 
 .express-form select option,
@@ -732,7 +732,7 @@ body.role-empresa a.modo-empresa-only {
 
 .badge-urgente {
   background: var(--danger-badge);
-  color: white;
+  color: #FFFFFF;
   font-size: 0.68rem;
   font-weight: 900;
   padding: 0.25rem 0.6rem;
@@ -987,7 +987,7 @@ body.role-empresa a.modo-empresa-only {
    9. MODALES GENERALES, MODAL ROL & TOASTS
    ========================================================================== */
 
-/* Estilos para el Modal de Selección de Rol (Paso 0) */
+/* Modal de Selección de Rol (Paso 0) */
 .rol-modal-overlay {
   position: fixed;
   inset: 0;
@@ -996,7 +996,7 @@ body.role-empresa a.modo-empresa-only {
   background: var(--modal-overlay-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  display: none; /* Controlado mediante JS */
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: var(--z-modal);
