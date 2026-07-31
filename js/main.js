@@ -129,42 +129,86 @@ function inicializarModoPerfil() {
     const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil');
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
-    const btnsRol = document.querySelectorAll('.btn-rol');
+
+    // Flujo multi-paso del modal de perfil
+    const stepSelect = document.getElementById('rol-step-select');
+    const stepConfirm = document.getElementById('rol-step-confirm');
+    const labelConfirmar = document.getElementById('rol-nombre-confirmar');
+    const btnVolverRol = document.getElementById('btn-volver-rol');
+    const btnConfirmarRol = document.getElementById('btn-confirmar-rol');
+    const btnsOpcionRol = document.querySelectorAll('.btn-rol');
+
+    let rolSeleccionado = { key: '', nombre: '' };
 
     // 1. Obtener o establecer rol inicial
-    const rolGuardado = localStorage.getItem('jobbers_role') || 'postulante';
-    aplicarRol(rolGuardado);
+    const rolGuardado = localStorage.getItem('jobbers_user_role');
+    if (!rolGuardado) {
+        abrirModalPerfil();
+    } else {
+        aplicarRol(rolGuardado);
+    }
 
-    // 2. Abrir Modal al hacer clic en "Cambiar Perfil"
+    // Reset de estado del modal
+    function resetearModalPerfil() {
+        if (stepSelect) stepSelect.style.display = 'block';
+        if (stepConfirm) stepConfirm.style.display = 'none';
+        rolSeleccionado = { key: '', nombre: '' };
+    }
+
+    // Abrir modal
     btnsCambiarPerfil.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
+            resetearModalPerfil();
             abrirModalPerfil();
         });
     });
 
-    // 3. Cerrar Modal
-    if (btnCerrarModal) {
-        btnCerrarModal.addEventListener('click', cerrarModalPerfil);
-    }
+    // Cerrar modal
+    if (btnCerrarModal) btnCerrarModal.addEventListener('click', cerrarModalPerfil);
 
-    // Cerrar al hacer clic fuera del modal
     window.addEventListener('click', (e) => {
-        if (e.target === modalPerfil) {
-            cerrarModalPerfil();
-        }
+        if (e.target === modalPerfil) cerrarModalPerfil();
     });
 
-    // 4. Cambiar Rol al seleccionar una opción
-    btnsRol.forEach(btn => {
+    // Selección y confirmación de rol
+    btnsOpcionRol.forEach(btn => {
         btn.addEventListener('click', () => {
-            const nuevoRol = btn.getAttribute('data-rol');
-            aplicarRol(nuevoRol);
-            localStorage.setItem('jobbers_role', nuevoRol);
-            cerrarModalPerfil();
-            mostrarToast(`Perfil cambiado a: ${nuevoRol.toUpperCase()}`, 'success');
+            const rolKey = btn.getAttribute('data-rol');
+            const rolNombre = btn.getAttribute('data-nombre') || btn.querySelector('.rol-title')?.textContent || rolKey;
+
+            rolSeleccionado.key = rolKey;
+            rolSeleccionado.nombre = rolNombre;
+
+            if (stepSelect && stepConfirm) {
+                if (labelConfirmar) labelConfirmar.textContent = rolNombre;
+                stepSelect.style.display = 'none';
+                stepConfirm.style.display = 'block';
+            } else {
+                // Si no hay pasos, aplica directo
+                confirmarYGuardarRol(rolKey, rolNombre);
+            }
         });
     });
+
+    if (btnVolverRol) {
+        btnVolverRol.addEventListener('click', resetearModalPerfil);
+    }
+
+    if (btnConfirmarRol) {
+        btnConfirmarRol.addEventListener('click', () => {
+            if (rolSeleccionado.key) {
+                confirmarYGuardarRol(rolSeleccionado.key, rolSeleccionado.nombre);
+            }
+        });
+    }
+}
+
+function confirmarYGuardarRol(key, nombre) {
+    aplicarRol(key);
+    localStorage.setItem('jobbers_user_role', key);
+    cerrarModalPerfil();
+    mostrarToast(`Perfil cambiado a: ${(nombre || key).toUpperCase()}`, 'success');
 }
 
 function abrirModalPerfil() {
@@ -609,105 +653,6 @@ function mostrarToast(mensaje, tipo = "success") {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
-
-   document.addEventListener('DOMContentLoaded', () => {
-    // Referencias a elementos
-    const modalPerfil = document.getElementById('modal-cambiar-perfil');
-    const stepSelect = document.getElementById('rol-step-select');
-    const stepConfirm = document.getElementById('rol-step-confirm');
-    const labelConfirmar = document.getElementById('rol-nombre-confirmar');
-    
-    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
-    const btnVolverRol = document.getElementById('btn-volver-rol');
-    const btnConfirmarRol = document.getElementById('btn-confirmar-rol');
-    const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol');
-    const btnsOpcionRol = document.querySelectorAll('.btn-rol');
-
-    // Variable temporal para el rol seleccionado
-    let rolSeleccionado = {
-        key: '',
-        nombre: ''
-    };
-
-    // 1. Verificar si hay un rol guardado apenas carga la página
-    const rolGuardado = localStorage.getItem('jobbers_user_role');
-
-    if (!rolGuardado) {
-        abrirModalPerfil();
-    } else {
-        aplicarRol(rolGuardado);
-    }
-
-    // 2. Abrir / Cerrar Modal
-    function abrirModalPerfil() {
-        resetearModal();
-        if (modalPerfil) modalPerfil.style.display = 'flex';
-    }
-
-    function cerrarModalPerfil() {
-        if (modalPerfil) modalPerfil.style.display = 'none';
-    }
-
-    function resetearModal() {
-        if (stepSelect) stepSelect.style.display = 'block';
-        if (stepConfirm) stepConfirm.style.display = 'none';
-        rolSeleccionado = { key: '', nombre: '' };
-    }
-
-    // 3. Al hacer clic en un perfil (Preselección)
-    btnsOpcionRol.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const rolKey = btn.getAttribute('data-rol');
-            const rolNombre = btn.getAttribute('data-nombre') || btn.querySelector('.rol-title')?.textContent;
-
-            rolSeleccionado.key = rolKey;
-            rolSeleccionado.nombre = rolNombre;
-
-            if (labelConfirmar) labelConfirmar.textContent = rolNombre;
-
-            // Cambiar a pantalla de confirmación
-            stepSelect.style.display = 'none';
-            stepConfirm.style.display = 'block';
-        });
-    });
-
-    // 4. Volver a la selección de perfil
-    if (btnVolverRol) {
-        btnVolverRol.addEventListener('click', resetearModal);
-    }
-
-    // 5. Confirmar selección e ingresar
-    if (btnConfirmarRol) {
-        btnConfirmarRol.addEventListener('click', () => {
-            if (!rolSeleccionado.key) return;
-
-            // Guardar en Storage y aplicar a la app
-            localStorage.setItem('jobbers_user_role', rolSeleccionado.key);
-            aplicarRol(rolSeleccionado.key);
-
-            cerrarModalPerfil();
-        });
-    }
-
-    // 6. Aplicar cambios según el rol en el <body> y labels
-    function aplicarRol(rol) {
-        document.body.classList.remove('role-postulante', 'role-empresa');
-        
-        const labelModo = document.getElementById('label-modo-actual');
-        
-        if (rol === 'empresa') {
-            document.body.classList.add('role-empresa');
-            if (labelModo) labelModo.textContent = 'Modo: Empresa';
-        } else {
-            document.body.classList.add('role-postulante');
-            if (labelModo) labelModo.textContent = 'Modo: Postulante';
-        }
-    }
-
-    // Eventos de botones
-    btnsCambiarPerfil.forEach(btn => btn.addEventListener('click', abrirModalPerfil));
-    if (btnCerrarModal) btnCerrarModal.addEventListener('click', cerrarModalPerfil);
-});
 }
 
 /* ==========================================================================
