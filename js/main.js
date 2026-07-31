@@ -382,7 +382,80 @@ function asegurarEstructuraModal() {
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) cerrarModal();
-        });
+        }
+                              document.addEventListener('DOMContentLoaded', () => {
+  // Elementos del DOM
+  const btnCambiarPerfil = document.getElementById('btn-cambiar-perfil');
+  const modalPerfil = document.getElementById('modal-cambiar-perfil');
+  const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+  const btnsRol = document.querySelectorAll('.btn-rol');
+
+  // 1. Obtener o establecer rol inicial almacenado (por defecto: postulante)
+  const rolGuardado = localStorage.getItem('jobbers_role') || 'postulante';
+  aplicarRol(rolGuardado);
+
+  // 2. Abrir Modal al hacer clic en "Cambiar Perfil"
+  if (btnCambiarPerfil) {
+    btnCambiarPerfil.addEventListener('click', (e) => {
+      e.preventDefault();
+      abrirModal();
+    });
+  }
+
+  // 3. Cerrar Modal
+  if (btnCerrarModal) {
+    btnCerrarModal.addEventListener('click', cerrarModal);
+  }
+
+  // Cerrar al hacer clic fuera de la tarjeta modal
+  window.addEventListener('click', (e) => {
+    if (e.target === modalPerfil) {
+      cerrarModal();
+    }
+  });
+
+  // Cerrar con la tecla ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalPerfil.style.display === 'flex') {
+      cerrarModal();
+    }
+  });
+
+  // 4. Cambiar Rol al seleccionar una opción
+  btnsRol.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nuevoRol = btn.getAttribute('data-rol');
+      aplicarRol(nuevoRol);
+      localStorage.setItem('jobbers_role', nuevoRol);
+      cerrarModal();
+      
+      // Toast / Notificación opcional (si tenés la función en tu JS)
+      if (typeof mostrarToast === 'function') {
+        mostrarToast(`Perfil cambiado a: ${nuevoRol.toUpperCase()}`, 'success');
+      }
+    });
+  });
+
+  // Funciones auxiliares
+  function abrirModal() {
+    modalPerfil.style.display = 'flex';
+  }
+
+  function cerrarModal() {
+    modalPerfil.style.display = 'none';
+  }
+
+  function aplicarRol(rol) {
+    document.body.classList.remove('role-postulante', 'role-empresa');
+    if (rol === 'empresa') {
+      document.body.classList.add('role-empresa');
+    } else {
+      document.body.classList.add('role-postulante');
+    }
+  }
+}); 
+                              
+                              );
 
         // Focus Trap dentro del modal
         modal.addEventListener('keydown', (e) => {
