@@ -9,7 +9,7 @@ let vacantesGastronomia = [];
 let talentoDestacado = [];
 let elementoPrevioFoco = null;
 
-// Helpers sanitización y formateo
+// Helpers de sanitización y formateo
 const escapeHTML = (str) => {
     if (!str && str !== 0) return "";
     return String(str).replace(/[&<>"']/g, (match) => {
@@ -50,7 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Bind Formulario Express con comportamiento TOGGLE y actualización ARIA
+    // Bind del Formulario Express (evento Submit directo)
+    const formExpress = document.getElementById('form-publicar-express');
+    if (formExpress) {
+        formExpress.addEventListener('submit', enviarAWhatsApp);
+    }
+
+    // Toggle de visibilidad para Formulario Express
     const triggersExpress = document.querySelectorAll('.btn-trigger-express');
     const cardExpress = document.getElementById('formulario-express');
 
@@ -61,12 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const estaVisible = cardExpress.classList.contains('is-visible') || cardExpress.style.display === 'block';
 
                 if (estaVisible) {
-                    // Ocultar si ya estaba visible
                     cardExpress.classList.remove('is-visible');
                     cardExpress.style.display = 'none';
                     btn.setAttribute('aria-expanded', 'false');
                 } else {
-                    // Desplegar si estaba oculto
                     cardExpress.style.display = 'block';
                     cardExpress.classList.add('is-visible');
                     btn.setAttribute('aria-expanded', 'true');
@@ -133,7 +137,7 @@ async function cargarVacantesDesdeJSON() {
                 break;
             }
         } catch (e) {
-            // Siguiente ruta
+            // Continúa a la siguiente ruta si falla
         }
     }
 
@@ -346,10 +350,7 @@ function enviarAWhatsApp(event) {
 
     mostrarToast("Redirigiendo a WhatsApp...", "success");
 
-    setTimeout(() => {
-        window.open(urlWA, '_blank', 'noopener,noreferrer');
-    }, 150);
-
+    window.open(urlWA, '_blank', 'noopener,noreferrer');
     document.getElementById('form-publicar-express')?.reset();
 }
 
@@ -383,7 +384,7 @@ function asegurarEstructuraModal() {
             if (e.target === modal) cerrarModal();
         });
 
-        // Bloqueo de Tab / Focus Trap dentro del modal
+        // Focus Trap dentro del modal
         modal.addEventListener('keydown', (e) => {
             if (e.key !== 'Tab') return;
 
@@ -472,10 +473,7 @@ function procesarPostulacion(e, puesto, empresa, contactoWA) {
 
     cerrarModal();
     mostrarToast("Abriendo WhatsApp del empleador...", "success");
-
-    setTimeout(() => {
-        window.open(urlWA, '_blank', 'noopener,noreferrer');
-    }, 150);
+    window.open(urlWA, '_blank', 'noopener,noreferrer');
 }
 
 function cerrarModal() {
