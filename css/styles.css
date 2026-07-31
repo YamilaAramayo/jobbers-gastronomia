@@ -1,23 +1,22 @@
-
 /* ==========================================================================
    1. VARIABLES & RESET
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;              /* Ámbar / Naranja brillante */
+  --primary: #F39C12;               /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;            /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;              /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;        /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;      /* Botón de acción principal */
+  --secondary: #0D0D0D;             /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;               /* Fondo de tarjetas y secciones */
+  --card-bg-light: #212428;         /* Hover o tarjetas secundarias */
+  --whatsapp-orange: #F39C12;       /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;         /* Badge Urgente y errores */
-  --salary-green: #2ECC71;         /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;          /* Badge Urgente y errores */
+  --salary-green: #2ECC71;          /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;            /* Texto sobre botones amarillos/naranjas */
+  --text-dark: #111827;             /* Texto sobre botones amarillos/naranjas */
   --border-color: #2D3137;
 
   /* Bordes y Sombras */
@@ -49,20 +48,20 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;              /* Ámbar / Naranja oscuro para contraste */
+  --primary: #D67E00;               /* Ámbar / Naranja oscuro para contraste */
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;            /* Fondo ultra claro */
-  --card-bg: #FFFFFF;              /* Blanco puro para tarjetas */
-  --card-bg-light: #F1F5F9;        /* Hover y tarjetas secundarias */
+  --secondary: #F8FAFC;             /* Fondo ultra claro */
+  --card-bg: #FFFFFF;               /* Blanco puro para tarjetas */
+  --card-bg-light: #F1F5F9;         /* Hover y tarjetas secundarias */
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;         /* Rojo semántico contrastado */
-  --salary-green: #16A34A;         /* Verde accesible sobre blanco */
+  --danger-badge: #DC2626;          /* Rojo semántico contrastado */
+  --salary-green: #16A34A;          /* Verde accesible sobre blanco */
 
   --bg-dark: #F8FAFC;              
-  --text-main: #0F172A;            /* Azul muy oscuro / Casi negro */
-  --text-muted: #64748B;           /* Texto secundario gris */
-  --text-dark: #FFFFFF;            /* Texto sobre botones primarios */
+  --text-main: #0F172A;             /* Azul muy oscuro / Casi negro */
+  --text-muted: #64748B;            /* Texto secundario gris */
+  --text-dark: #FFFFFF;             /* Texto sobre botones primarios */
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
@@ -90,6 +89,7 @@ body {
   padding-bottom: 80px; /* Offset para el Bottom Nav mobile */
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -111,7 +111,7 @@ img {
    2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
    ========================================================================== */
 
-/* Si es postulante (o estado por defecto), oculta los componentes exclusivos de empresa */
+/* Si es postulante (o estado por defecto), oculta componentes de empresa */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only {
   display: none !important;
@@ -1173,7 +1173,8 @@ body.role-empresa a.modo-empresa-only {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 65px;
+  height: calc(65px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -1182,7 +1183,8 @@ body.role-empresa a.modo-empresa-only {
   justify-content: space-around;
   align-items: center;
   z-index: var(--z-bottom-nav);
-  padding: 0 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 [data-theme="light"] .bottom-nav,
