@@ -16,7 +16,7 @@
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;               /* Texto sobre botones amarillos/naranjas */
+  --text-dark: #111827;                /* Texto sobre botones amarillos/naranjas */
   --border-color: #2D3137;
 
   /* Bordes y Sombras */
@@ -38,7 +38,7 @@
 
   /* Assets SVG & Overlays */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.96) 0%, rgba(10, 11, 12, 0.85) 100%);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.92) 0%, rgba(10, 11, 12, 0.78) 100%);
   --modal-overlay-bg: rgba(0, 0, 0, 0.85);
   --select-option-bg: #1a1d24;
 }
@@ -70,7 +70,7 @@
 
   /* Sobrescrituras de Assets para Light Mode */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.97) 0%, rgba(241, 245, 249, 0.90) 100%);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.94) 0%, rgba(241, 245, 249, 0.85) 100%);
   --modal-overlay-bg: rgba(15, 23, 42, 0.4);
   --select-option-bg: #FFFFFF;
 }
@@ -111,7 +111,7 @@ img {
    2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
    ========================================================================== */
 
-/* --- 2.1. MODO POSTULANTE (Por defecto o body.role-postulante) --- */
+/* --- 2.1. MODO POSTULANTE (Por defecto) --- */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only,
 body.role-postulante .empresa-only,
@@ -125,20 +125,17 @@ body:not(.role-empresa) .job-company {
   display: none !important;
 }
 
-/* --- 2.2. MODO EMPRESA (body.role-empresa) --- */
+/* --- 2.2. MODO EMPRESA --- */
 body.role-empresa .postulante-only,
-body.role-empresa .modo-postulante-only,
-body.role-empresa .main-grid-section { /* <--- Se agregó esta clase para ocultar vacantes/buscador */
+body.role-empresa .modo-postulante-only {
   display: none !important;
 }
 
-/* Mostrar componentes en bloque para empresa */
 body.role-empresa .modo-empresa-only,
 body.role-empresa .empresa-only {
   display: block;
 }
 
-/* Mostrar botones y enlaces en línea para empresa */
 body.role-empresa button.modo-empresa-only,
 body.role-empresa a.modo-empresa-only,
 body.role-empresa button.empresa-only,
@@ -146,7 +143,6 @@ body.role-empresa a.empresa-only {
   display: inline-flex;
 }
 
-/* Ajuste específico para el botón "Personal YA" del Bottom Nav */
 body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
   display: flex !important;
   flex-direction: column;
@@ -154,7 +150,6 @@ body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
   justify-content: center;
 }
 
-/* Mostrar y personalizar el nombre de la empresa en tarjetas */
 body.role-empresa .job-company {
   display: inline-flex !important;
   align-items: center;
@@ -178,9 +173,9 @@ body.role-empresa .job-company::before {
   top: 0;
   z-index: var(--z-navbar);
   width: 100%;
-  background-color: rgba(13, 13, 13, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(13, 13, 13, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   padding: 0.8rem 1.5rem;
@@ -197,7 +192,7 @@ body.role-empresa .job-company::before {
 
 [data-theme="light"] .navbar,
 .light-theme .navbar {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: rgba(255, 255, 255, 0.90);
 }
 
 .logo {
@@ -303,20 +298,32 @@ body.role-empresa .job-company::before {
 }
 
 /* ==========================================================================
-   4. HERO SECTION & FORMULARIO EXPRESS
+   4. HERO SECTION & FORMULARIO EXPRESS (CON IMAGEN DE FONDO)
    ========================================================================== */
 .hero-section {
   position: relative;
+  background-image: 
+    linear-gradient(rgba(10, 11, 12, 0.75), rgba(10, 11, 12, 0.88)), 
+    url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
-  padding: 3.5rem 1.5rem;
+  background-repeat: no-repeat;
+  padding: 4rem 1.5rem;
   color: var(--text-main);
+}
+
+[data-theme="light"] .hero-section,
+.light-theme .hero-section {
+  background-image: 
+    linear-gradient(rgba(248, 250, 252, 0.85), rgba(241, 245, 249, 0.92)), 
+    url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1920&q=80');
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
   background: var(--hero-overlay-bg);
+  pointer-events: none;
 }
 
 .hero-container {
@@ -331,11 +338,11 @@ body.role-empresa .job-company::before {
 }
 
 .hero-title {
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   font-weight: 900;
   line-height: 1.2;
   margin-bottom: 1rem;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.5px;
 }
 
 .hero-title .highlight {
@@ -343,7 +350,7 @@ body.role-empresa .job-company::before {
 }
 
 .hero-subtitle {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--text-muted);
   margin-bottom: 2rem;
   line-height: 1.6;
@@ -394,7 +401,8 @@ body.role-empresa .job-company::before {
 }
 
 .btn-secondary {
-  background-color: transparent;
+  background-color: rgba(22, 24, 26, 0.6);
+  backdrop-filter: blur(4px);
   border: 1px solid var(--border-color);
   color: var(--text-main);
 }
@@ -402,12 +410,11 @@ body.role-empresa .job-company::before {
 .btn-secondary:hover {
   border-color: var(--primary);
   color: var(--primary);
-  background-color: rgba(243, 156, 18, 0.05);
+  background-color: rgba(243, 156, 18, 0.1);
 }
 
-[data-theme="light"] .btn-secondary:hover,
-.light-theme .btn-secondary:hover {
-  background-color: rgba(214, 126, 0, 0.08);
+[data-theme="light"] .btn-secondary {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .btn-accent {
@@ -436,7 +443,7 @@ body.role-empresa .job-company::before {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
 }
 
@@ -446,13 +453,19 @@ body.role-empresa .job-company::before {
 
 /* Formulario Express */
 .hero-card-express {
-  background: var(--card-bg);
+  background: rgba(22, 24, 26, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 2rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+[data-theme="light"] .hero-card-express {
+  background: rgba(255, 255, 255, 0.90);
 }
 
 .hero-card-express.is-visible {
@@ -572,7 +585,7 @@ body.role-empresa .job-company::before {
 .form-group select:focus,
 .form-group input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
+  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.18);
 }
 
 .btn-whatsapp {
@@ -859,112 +872,130 @@ body.role-empresa .job-company::before {
 }
 
 /* ==========================================================================
-   7. SECCIÓN TALENTO & BLOG
+   7. SECCIÓN TALENTO DESTACADO
    ========================================================================== */
-.talent-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1.2rem;
-  margin-bottom: 2rem;
+.talento-section {
+  max-width: 1200px;
+  margin: 3.5rem auto;
+  padding: 0 1.5rem;
 }
 
-.talent-card {
-  background: var(--card-bg);
-  padding: 1.25rem 1rem;
-  border-radius: var(--radius-sm);
+.talento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.talento-card {
+  background-color: var(--card-bg);
   border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   transition: var(--transition);
+  position: relative;
 }
 
-.talent-card:hover {
+.talento-card:hover {
   border-color: var(--primary);
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
 }
 
-.avatar-status {
+.avatar-container {
   position: relative;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 0.75rem;
+  margin-bottom: 0.8rem;
 }
 
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--card-bg-light);
-  color: var(--text-main);
+.avatar-circle {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
+  background: var(--card-bg-light);
+  border: 2px solid var(--primary);
+  color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 0.95rem;
-  border: 1px solid var(--border-color);
+  font-weight: 800;
+  font-size: 1.1rem;
 }
 
-.status-badge.active {
+.status-dot {
   position: absolute;
   bottom: 2px;
   right: 2px;
   width: 12px;
   height: 12px;
-  background: var(--salary-green);
+  background-color: var(--salary-green);
   border: 2px solid var(--card-bg);
   border-radius: 50%;
 }
 
-.talent-card h3 { 
-  font-size: 0.9rem; 
-  font-weight: 700; 
-  margin-bottom: 0.2rem;
-}
-
-.talent-card .role { 
-  font-size: 0.8rem; 
-  color: var(--primary); 
-  font-weight: 600; 
-  margin-bottom: 0.2rem;
-}
-
-.talent-card .rating { 
-  font-size: 0.78rem; 
-  color: var(--primary); 
-  margin: 0.3rem 0; 
-}
-
-.talent-card .detail { 
-  font-size: 0.75rem; 
-  color: var(--text-muted); 
-  margin-bottom: 0.5rem; 
-}
-
-.talent-card .location { 
-  font-size: 0.75rem; 
-  color: var(--text-muted); 
-  display: block;
-}
-
-.blog-banner {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 2rem;
-  border-radius: var(--radius-md);
-  line-height: 1.6;
-}
-
-.blog-banner h2 {
-  font-size: 1.15rem;
+.talento-card h3 {
+  font-size: 1rem;
   font-weight: 800;
-  margin-bottom: 0.5rem;
+  color: var(--text-main);
+  margin-bottom: 0.2rem;
 }
 
-.blog-banner p {
+.puesto-highlight {
   font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.4rem;
+}
+
+.rating {
+  font-size: 0.78rem;
+  color: var(--primary);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.rating span {
   color: var(--text-muted);
-  margin-bottom: 1.2rem;
+  margin-left: 0.3rem;
+}
+
+.talento-info {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.talento-location {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0.4rem 0 1rem 0;
+}
+
+.btn-lock-cv {
+  width: 100%;
+  padding: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.btn-lock-cv:hover {
+  background-color: var(--primary);
+  color: var(--text-dark);
 }
 
 /* ==========================================================================
@@ -972,11 +1003,11 @@ body.role-empresa .job-company::before {
    ========================================================================== */
 .stats-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 2rem;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  padding: 2rem;
+  padding: 2.2rem;
   border-radius: var(--radius-md);
 }
 
@@ -987,19 +1018,19 @@ body.role-empresa .job-company::before {
 }
 
 .stat-item i {
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: var(--primary);
 }
 
 .stat-info h4 { 
-  font-size: 1.3rem; 
+  font-size: 1.4rem; 
   font-weight: 900; 
   line-height: 1; 
   margin-bottom: 0.2rem;
 }
 
 .stat-info p { 
-  font-size: 0.78rem; 
+  font-size: 0.8rem; 
   color: var(--text-muted); 
 }
 
@@ -1008,23 +1039,22 @@ body.role-empresa .job-company::before {
 }
 
 .info-section h2 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  font-weight: 800;
   margin-bottom: 0.8rem;
 }
 
 .info-section p {
   color: var(--text-muted);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   max-width: 650px;
   margin: 0 auto;
   line-height: 1.7;
 }
 
 /* ==========================================================================
-   9. MODALES GENERALES, MODAL ROL & TOASTS
+   9. MODALES GENERALES & TOASTS
    ========================================================================== */
-
-/* Modal de Selección de Rol (Paso 0) */
 .rol-modal-overlay {
   position: fixed;
   inset: 0;
@@ -1044,12 +1074,13 @@ body.role-empresa .job-company::before {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 2rem;
+  padding: 2.2rem;
   max-width: 440px;
   width: 100%;
   text-align: center;
   box-shadow: var(--shadow-lg);
   color: var(--text-main);
+  position: relative;
   animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1106,40 +1137,6 @@ body.role-empresa .job-company::before {
   margin-top: 0.25rem;
 }
 
-/* Modales Genéricos */
-.jobbers-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--modal-overlay-bg);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  z-index: var(--z-modal);
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.jobbers-modal.active {
-  display: flex !important;
-}
-
-.jobbers-modal-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  max-width: 480px;
-  width: 100%;
-  padding: 24px;
-  position: relative;
-  box-shadow: var(--shadow-lg);
-  color: var(--text-main);
-  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
 @keyframes modalFadeIn {
   from { opacity: 0; transform: translateY(-15px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -1157,9 +1154,8 @@ body.role-empresa .job-company::before {
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  line-height: 1;
   transition: var(--transition);
 }
 
@@ -1190,7 +1186,6 @@ body.role-empresa .job-company::before {
   display: flex;
   align-items: center;
   gap: 10px;
-  will-change: transform, opacity;
   animation: toastIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -1212,9 +1207,9 @@ body.role-empresa .job-company::before {
   right: 0;
   height: calc(65px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: rgba(13, 13, 13, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(13, 13, 13, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-around;
@@ -1237,6 +1232,9 @@ body.role-empresa .job-company::before {
   font-size: 0.7rem;
   color: var(--text-muted);
   transition: var(--transition);
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .bottom-nav-item i { font-size: 1.2rem; }
@@ -1248,172 +1246,15 @@ body.role-empresa .job-company::before {
 }
 
 /* ==========================================================================
-   11. COMPONENTES ADICIONALES: TALENTO DESTACADO & BANNER COMUNIDAD
+   11. FOOTER
    ========================================================================== */
-
-/* Tarjetas de Talento Destacado */
-.talento-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.25rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.main-footer {
   text-align: center;
-  transition: var(--transition);
-  position: relative;
-}
-
-.talento-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-
-.talento-avatar-container {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 0.75rem;
-}
-
-.talento-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--primary);
-  background-color: var(--card-bg-light);
-}
-
-.talento-badge-online {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
-  background-color: var(--salary-green);
-  border: 2px solid var(--card-bg);
-  border-radius: 50%;
-}
-
-.talento-nombre {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.2rem;
-}
-
-.talento-puesto {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.4rem;
-}
-
-.talento-info-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-bottom: 0.8rem;
-}
-
-.talento-exp {
-  font-weight: 600;
-}
-
-.talento-badge-dispo {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--salary-green);
-  background: rgba(46, 204, 113, 0.1);
-  padding: 0.25rem 0.6rem;
-  border-radius: 20px;
-  margin-bottom: 0.8rem;
-}
-
-.btn-contacto-talento {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 800;
-  border-radius: var(--radius-sm);
-  background-color: transparent;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  cursor: pointer;
-  transition: var(--transition);
-  text-transform: uppercase;
-}
-
-.btn-contacto-talento:hover {
-  background-color: var(--primary);
-  color: var(--text-dark);
-}
-
-/* Banner de Comunidad Jobbers */
-.comunidad-banner-card {
-  background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-light) 100%);
-  border: 1px solid var(--border-color);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: var(--shadow-sm);
-}
-
-@media (min-width: 600px) {
-  .comunidad-banner-card {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-.comunidad-banner-content h3 {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.3rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.comunidad-banner-content p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-.btn-comunidad-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  background-color: var(--primary);
-  color: var(--text-dark);
-  font-weight: 800;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border-color);
   font-size: 0.82rem;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: var(--transition);
-}
-
-.btn-comunidad-action:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  color: var(--text-muted);
+  margin-top: 4rem;
 }
 
 /* ==========================================================================
@@ -1434,11 +1275,11 @@ body.role-empresa .job-company::before {
   .bottom-nav { display: none; }
   
   .hero-section {
-    padding: 5rem 2rem;
+    padding: 5.5rem 2rem;
   }
 
   .hero-container {
-    grid-template-columns: 1.25fr 0.75fr;
+    grid-template-columns: 1.2fr 0.8fr;
     gap: 3.5rem;
   }
 
@@ -1448,5 +1289,24 @@ body.role-empresa .job-company::before {
 
   .hero-buttons {
     flex-direction: row;
+    align-items: center;
+  }
+
+  .btn-primary, .btn-secondary, .btn-accent {
+    width: auto;
+  }
+
+  .job-offer-card {
+    grid-template-columns: 1fr auto;
+  }
+
+  .job-action-col {
+    border-top: none;
+    border-left: 1px solid var(--border-color);
+    padding-top: 0;
+    padding-left: 1.5rem;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
   }
 }
