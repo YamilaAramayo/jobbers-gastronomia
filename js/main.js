@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
     cargarVacantesDesdeJSON();
     cargarTalentoDestacado();
+    inicializarModoPerfil();
 
     // Event Delegation para botones de postulación
     const contenedorVacantes = document.getElementById('lista-vacantes');
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Búsqueda en tiempo real
-    const inputBusqueda = document.getElementById('input-busqueda');
+    const inputBusqueda = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
     if (inputBusqueda) {
         inputBusqueda.addEventListener('input', debounce(filtrarVacantes, 300));
         inputBusqueda.addEventListener('keypress', (e) => {
@@ -108,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             cerrarModal();
+            cerrarModalPerfil();
             cerrarDropdown();
         }
     });
@@ -121,7 +123,75 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   2. CARGA DE DATOS (JSON) Y FALLBACK
+   2. SECCIÓN MODO Y CAMBIO DE PERFIL (POSTULANTE / EMPRESA)
+   ========================================================================== */
+function inicializarModoPerfil() {
+    const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil');
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
+    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+    const btnsRol = document.querySelectorAll('.btn-rol');
+
+    // 1. Obtener o establecer rol inicial
+    const rolGuardado = localStorage.getItem('jobbers_role') || 'postulante';
+    aplicarRol(rolGuardado);
+
+    // 2. Abrir Modal al hacer clic en "Cambiar Perfil"
+    btnsCambiarPerfil.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            abrirModalPerfil();
+        });
+    });
+
+    // 3. Cerrar Modal
+    if (btnCerrarModal) {
+        btnCerrarModal.addEventListener('click', cerrarModalPerfil);
+    }
+
+    // Cerrar al hacer clic fuera del modal
+    window.addEventListener('click', (e) => {
+        if (e.target === modalPerfil) {
+            cerrarModalPerfil();
+        }
+    });
+
+    // 4. Cambiar Rol al seleccionar una opción
+    btnsRol.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const nuevoRol = btn.getAttribute('data-rol');
+            aplicarRol(nuevoRol);
+            localStorage.setItem('jobbers_role', nuevoRol);
+            cerrarModalPerfil();
+            mostrarToast(`Perfil cambiado a: ${nuevoRol.toUpperCase()}`, 'success');
+        });
+    });
+}
+
+function abrirModalPerfil() {
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
+    if (modalPerfil) modalPerfil.style.display = 'flex';
+}
+
+function cerrarModalPerfil() {
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
+    if (modalPerfil) modalPerfil.style.display = 'none';
+}
+
+function aplicarRol(rol) {
+    const labelModoActual = document.getElementById('label-modo-actual');
+    document.body.classList.remove('role-postulante', 'role-empresa');
+
+    if (rol === 'empresa') {
+        document.body.classList.add('role-empresa');
+        if (labelModoActual) labelModoActual.textContent = 'Modo: Empresa';
+    } else {
+        document.body.classList.add('role-postulante');
+        if (labelModoActual) labelModoActual.textContent = 'Modo: Postulante';
+    }
+}
+
+/* ==========================================================================
+   3. CARGA DE DATOS (JSON) Y FALLBACK
    ========================================================================== */
 async function cargarVacantesDesdeJSON() {
     const rutasPosibles = ['base_de_datos.json', './base_de_datos.json', 'data/base_de_datos.json'];
@@ -153,7 +223,7 @@ async function cargarVacantesDesdeJSON() {
 }
 
 /* ==========================================================================
-   3. SECCIÓN TALENTO DESTACADO Y COMUNIDAD
+   4. SECCIÓN TALENTO DESTACADO Y COMUNIDAD
    ========================================================================== */
 function cargarTalentoDestacado() {
     talentoDestacado = [
@@ -229,7 +299,7 @@ function unirseAComunidad() {
 }
 
 /* ==========================================================================
-   4. RENDERIZADO EN MODO OSCURO (DARK MODE) - OFERTAS
+   5. RENDERIZADO Y BÚSQUEDA DE OFERTAS
    ========================================================================== */
 function crearCardVacante(item) {
     const puesto = item.puesto || item.titulo || "Puesto Gastronómico";
@@ -268,7 +338,7 @@ function crearCardVacante(item) {
 }
 
 function renderizarOfertas(lista) {
-    const contenedor = document.getElementById('lista-vacantes');
+    const contenedor = document.getElementById('lista-vacantes') || document.querySelector('.vacantes-list');
     if (!contenedor) return;
 
     if (!lista || lista.length === 0) {
@@ -288,7 +358,7 @@ function renderizarOfertas(lista) {
 }
 
 function filtrarVacantes() {
-    const input = document.getElementById('input-busqueda');
+    const input = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
     if (!input) return;
     const termino = input.value.toLowerCase().trim();
 
@@ -305,7 +375,7 @@ function filtrarVacantes() {
 }
 
 function filtrarPorCategoria(categoria) {
-    const input = document.getElementById('input-busqueda');
+    const input = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
     if (input) input.value = categoria;
 
     if (!categoria) {
@@ -325,7 +395,7 @@ function filtrarPorCategoria(categoria) {
 }
 
 /* ==========================================================================
-   5. ENVÍO DE FORMULARIO EXPRESS A WHATSAPP
+   6. ENVÍO DE FORMULARIO EXPRESS A WHATSAPP
    ========================================================================== */
 function enviarAWhatsApp(event) {
     if (event) event.preventDefault();
@@ -355,7 +425,7 @@ function enviarAWhatsApp(event) {
 }
 
 /* ==========================================================================
-   6. MODAL DE POSTULACIÓN DE CANDIDATOS (CON FOCUS TRAP)
+   7. MODAL DE POSTULACIÓN DE CANDIDATOS (CON FOCUS TRAP)
    ========================================================================== */
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal-jobbers');
@@ -382,80 +452,7 @@ function asegurarEstructuraModal() {
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) cerrarModal();
-        }
-                              document.addEventListener('DOMContentLoaded', () => {
-  // Elementos del DOM
-  const btnCambiarPerfil = document.getElementById('btn-cambiar-perfil');
-  const modalPerfil = document.getElementById('modal-cambiar-perfil');
-  const btnCerrarModal = document.getElementById('btn-cerrar-modal');
-  const btnsRol = document.querySelectorAll('.btn-rol');
-
-  // 1. Obtener o establecer rol inicial almacenado (por defecto: postulante)
-  const rolGuardado = localStorage.getItem('jobbers_role') || 'postulante';
-  aplicarRol(rolGuardado);
-
-  // 2. Abrir Modal al hacer clic en "Cambiar Perfil"
-  if (btnCambiarPerfil) {
-    btnCambiarPerfil.addEventListener('click', (e) => {
-      e.preventDefault();
-      abrirModal();
-    });
-  }
-
-  // 3. Cerrar Modal
-  if (btnCerrarModal) {
-    btnCerrarModal.addEventListener('click', cerrarModal);
-  }
-
-  // Cerrar al hacer clic fuera de la tarjeta modal
-  window.addEventListener('click', (e) => {
-    if (e.target === modalPerfil) {
-      cerrarModal();
-    }
-  });
-
-  // Cerrar con la tecla ESC
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modalPerfil.style.display === 'flex') {
-      cerrarModal();
-    }
-  });
-
-  // 4. Cambiar Rol al seleccionar una opción
-  btnsRol.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const nuevoRol = btn.getAttribute('data-rol');
-      aplicarRol(nuevoRol);
-      localStorage.setItem('jobbers_role', nuevoRol);
-      cerrarModal();
-      
-      // Toast / Notificación opcional (si tenés la función en tu JS)
-      if (typeof mostrarToast === 'function') {
-        mostrarToast(`Perfil cambiado a: ${nuevoRol.toUpperCase()}`, 'success');
-      }
-    });
-  });
-
-  // Funciones auxiliares
-  function abrirModal() {
-    modalPerfil.style.display = 'flex';
-  }
-
-  function cerrarModal() {
-    modalPerfil.style.display = 'none';
-  }
-
-  function aplicarRol(rol) {
-    document.body.classList.remove('role-postulante', 'role-empresa');
-    if (rol === 'empresa') {
-      document.body.classList.add('role-empresa');
-    } else {
-      document.body.classList.add('role-postulante');
-    }
-  }
-}); 
-                              
-                              );
+        });
 
         // Focus Trap dentro del modal
         modal.addEventListener('keydown', (e) => {
@@ -562,7 +559,7 @@ function cerrarModal() {
 }
 
 /* ==========================================================================
-   7. MENÚS Y DROPDOWNS
+   8. MENÚS Y DROPDOWNS
    ========================================================================== */
 function toggleDropdown(event) {
     if (event) event.stopPropagation();
@@ -586,7 +583,7 @@ function cerrarDropdown() {
 }
 
 /* ==========================================================================
-   8. TOASTS Y NOTIFICACIONES
+   9. TOASTS Y NOTIFICACIONES
    ========================================================================== */
 function mostrarToast(mensaje, tipo = "success") {
     let container = document.getElementById('toast-container');
@@ -615,11 +612,13 @@ function mostrarToast(mensaje, tipo = "success") {
 }
 
 /* ==========================================================================
-   9. BINDING GLOBAL
+   10. BINDING GLOBAL
    ========================================================================== */
 window.enviarAWhatsApp = enviarAWhatsApp;
 window.abrirModalPostulacion = abrirModalPostulacion;
 window.cerrarModal = cerrarModal;
+window.abrirModalPerfil = abrirModalPerfil;
+window.cerrarModalPerfil = cerrarModalPerfil;
 window.procesarPostulacion = procesarPostulacion;
 window.filtrarVacantes = filtrarVacantes;
 window.filtrarPorCategoria = filtrarPorCategoria;
