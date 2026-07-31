@@ -3,20 +3,20 @@
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;               /* Ámbar / Naranja brillante */
+  --primary: #F39C12;                /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;              /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;                /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;          /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;        /* Botón de acción principal */
+  --secondary: #0D0D0D;               /* Fondo muy oscuro / Casi negro */
+  --card-bg: #16181A;                 /* Fondo de tarjetas y secciones */
+  --card-bg-light: #212428;           /* Hover o tarjetas secundarias */
+  --whatsapp-orange: #F39C12;         /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;           /* Badge Urgente y errores */
-  --salary-green: #2ECC71;           /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;            /* Badge Urgente y errores */
+  --salary-green: #2ECC71;            /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;              /* Texto sobre botones amarillos/naranjas */
+  --text-dark: #111827;               /* Texto sobre botones amarillos/naranjas */
   --border-color: #2D3137;
 
   /* Bordes y Sombras */
@@ -48,20 +48,20 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;                /* Ámbar / Naranja oscuro para contraste */
+  --primary: #D67E00;                 /* Ámbar / Naranja oscuro para contraste */
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;              /* Fondo ultra claro */
-  --card-bg: #FFFFFF;                /* Blanco puro para tarjetas */
-  --card-bg-light: #F1F5F9;          /* Hover y tarjetas secundarias */
+  --secondary: #F8FAFC;               /* Fondo ultra claro */
+  --card-bg: #FFFFFF;                 /* Blanco puro para tarjetas */
+  --card-bg-light: #F1F5F9;           /* Hover y tarjetas secundarias */
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;           /* Rojo semántico contrastado */
-  --salary-green: #16A34A;           /* Verde accesible sobre blanco */
+  --danger-badge: #DC2626;            /* Rojo semántico contrastado */
+  --salary-green: #16A34A;            /* Verde accesible sobre blanco */
 
-  --bg-dark: #F1F5F9;                
-  --text-main: #0F172A;              /* Azul muy oscuro / Casi negro */
-  --text-muted: #64748B;             /* Texto secundario gris */
-  --text-dark: #FFFFFF;              /* Texto sobre botones primarios */
+  --bg-dark: #F1F5F9;                 
+  --text-main: #0F172A;               /* Azul muy oscuro / Casi negro */
+  --text-muted: #64748B;              /* Texto secundario gris */
+  --text-dark: #FFFFFF;               /* Texto sobre botones primarios */
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
@@ -111,11 +111,7 @@ img {
    2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   A) REGLAS PARA MODO POSTULANTE (Default)
-   -------------------------------------------------------------------------- */
-
-/* Ocultar secciones y botones exclusivos de empresa */
+/* --- 2.1. MODO POSTULANTE (Por defecto o body.role-postulante) --- */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only,
 body.role-postulante .empresa-only,
@@ -123,32 +119,25 @@ body:not(.role-empresa) .empresa-only {
   display: none !important;
 }
 
-/* Ocultar el nombre / área de la empresa dentro de las tarjetas de empleos */
+/* Ocultar nombre de la empresa en tarjetas cuando es postulante */
 body.role-postulante .job-company,
-body:not(.role-empresa) .job-company,
-body.role-postulante .job-card-empresa,
-body:not(.role-empresa) .job-card-empresa {
+body:not(.role-empresa) .job-company {
   display: none !important;
 }
 
-
-/* --------------------------------------------------------------------------
-   B) REGLAS PARA MODO EMPRESA
-   -------------------------------------------------------------------------- */
-
-/* Ocultar elementos exclusivos de postulantes cuando la empresa está activa */
+/* --- 2.2. MODO EMPRESA (body.role-empresa) --- */
 body.role-empresa .postulante-only,
 body.role-empresa .modo-postulante-only {
   display: none !important;
 }
 
-/* Mostrar bloques, secciones y contenedores exclusivos de empresa */
+/* Mostrar componentes en bloque para empresa */
 body.role-empresa .modo-empresa-only,
 body.role-empresa .empresa-only {
   display: block;
 }
 
-/* Mostrar botones e hipervínculos de empresa en flexbox para conservar su alineación */
+/* Mostrar botones y enlaces en línea para empresa */
 body.role-empresa button.modo-empresa-only,
 body.role-empresa a.modo-empresa-only,
 body.role-empresa button.empresa-only,
@@ -156,17 +145,30 @@ body.role-empresa a.empresa-only {
   display: inline-flex;
 }
 
-/* Mostrar y estilizar el nombre/área de la empresa en las tarjetas de empleo */
-body.role-empresa .job-company,
-body.role-empresa .job-card-empresa {
+/* Ajuste específico para el botón "Personal YA" del Bottom Nav */
+body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
   display: flex !important;
+  flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  justify-content: center;
+}
+
+/* Mostrar y personalizar el nombre de la empresa en tarjetas */
+body.role-empresa .job-company {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--primary);
-  margin-top: 0.2rem;
+  margin: 0.25rem 0;
 }
+
+body.role-empresa .job-company::before {
+  content: "🏢";
+  font-size: 0.85rem;
+}
+
 /* ==========================================================================
    3. NAVBAR / HEADER
    ========================================================================== */
@@ -782,12 +784,6 @@ body.role-empresa .job-card-empresa {
   align-items: center;
   gap: 0.3rem;
   letter-spacing: 0.5px;
-}
-
-.job-company {
-  font-size: 0.9rem;
-  color: var(--primary);
-  font-weight: 700;
 }
 
 .job-details-row {
