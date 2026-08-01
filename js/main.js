@@ -653,6 +653,30 @@ function mostrarToast(mensaje, tipo = "success") {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
+   document.addEventListener('DOMContentLoaded', () => {
+    const btnRecursos = document.getElementById('dropdown-recursos');
+    const menuRecursos = document.getElementById('menu-recursos');
+
+    if (btnRecursos && menuRecursos) {
+        // Toggle del menú Recursos al hacer clic
+        btnRecursos.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = menuRecursos.classList.contains('show');
+            
+            // Cerrar si está abierto, abrir si está cerrado
+            menuRecursos.classList.toggle('show');
+            btnRecursos.setAttribute('aria-expanded', !isOpen);
+        });
+
+        // Cerrar el menú desplegable si el usuario hace clic fuera de él
+        document.addEventListener('click', (e) => {
+            if (!menuRecursos.contains(e.target) && !btnRecursos.contains(e.target)) {
+                menuRecursos.classList.remove('show');
+                btnRecursos.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+});
 }
 
 /* ==========================================================================
