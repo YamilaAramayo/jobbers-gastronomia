@@ -124,12 +124,7 @@
         </div>
     </header>
 
-                <a href="#nosotros" class="nav-link">Nosotros</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- HERO SECTION (Corregido y Optimizado) -->
+    <!-- HERO SECTION -->
     <section class="hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-container hero-container-clean">
@@ -146,7 +141,7 @@
             </div>
 
             <!-- Formulario Express (Solo para Empresas) -->
-            <div class="hero-card-express modo-empresa-only" id="formulario-express">
+            <div class="hero-card-express modo-empresa-only" id="formulario-express" style="display: none;">
                 <div class="card-header">
                     <span class="text-warning" aria-hidden="true">⚡</span>
                     <h2>¿NECESITÁS PERSONAL HOY?</h2>
@@ -229,70 +224,9 @@
                 <button class="btn-search" type="button"><i class="fas fa-search"></i> Buscar</button>
             </div>
 
-            <div class="vacantes-list">
+            <!-- El JS renderizará la lista de vacantes automáticamente aquí -->
+            <div class="vacantes-list" id="lista-vacantes"></div>
 
-                <article class="job-offer-card" data-categoria="Cocina" data-id="1">
-                    <div class="job-info-main">
-                        <div class="job-header-row">
-                            <h4>Cocinero / Cocinera de Despacho</h4>
-                            <span class="badge-urgente"><i class="fas fa-bolt"></i> Urgente</span>
-                        </div>
-                        <div class="job-company">La Caprichosa Resto</div>
-                        <div class="job-details-row">
-                            <span><i class="fas fa-map-marker-alt"></i> Nueva Córdoba</span>
-                            <span><i class="fas fa-clock"></i> Full Time (Turno Noche)</span>
-                            <span class="job-salary"><i class="fas fa-wallet"></i> $450.000 / mes</span>
-                        </div>
-                    </div>
-                    <div class="job-action-col">
-                        <span class="job-time">Hace 1 hora</span>
-                        <a href="https://wa.me/5493541582448?text=Hola,%20me%20quiero%20postular%20al%20puesto%20de%20Cocinero%20/%20Cocinera%20de%20Despacho%20en%20La%20Caprichosa%20Resto" target="_blank" rel="noopener noreferrer" class="btn-postularme">
-                            Postularme
-                        </a>
-                    </div>
-                </article>
-
-                <article class="job-offer-card" data-categoria="Mozo" data-id="2">
-                    <div class="job-info-main">
-                        <div class="job-header-row">
-                            <h4>Mozo / Salonero de Salón</h4>
-                        </div>
-                        <div class="job-company">Bar de Fuegos</div>
-                        <div class="job-details-row">
-                            <span><i class="fas fa-map-marker-alt"></i> Güemes</span>
-                            <span><i class="fas fa-clock"></i> Part Time (Turno Noche)</span>
-                            <span class="job-salary"><i class="fas fa-wallet"></i> $280.000 + Propinas</span>
-                        </div>
-                    </div>
-                    <div class="job-action-col">
-                        <span class="job-time">Hace 3 horas</span>
-                        <a href="https://wa.me/5493541696766?text=Hola,%20me%20quiero%20postular%20al%20puesto%20de%20Mozo%20/%20Salonero%20de%20Sal%C3%B3n%20en%20Bar%20de%20Fuegos" target="_blank" rel="noopener noreferrer" class="btn-postularme">
-                            Postularme
-                        </a>
-                    </div>
-                </article>
-
-                <article class="job-offer-card" data-categoria="Barista" data-id="3">
-                    <div class="job-info-main">
-                        <div class="job-header-row">
-                            <h4>Barista Especializado</h4>
-                        </div>
-                        <div class="job-company">Café Suburbio</div>
-                        <div class="job-details-row">
-                            <span><i class="fas fa-map-marker-alt"></i> General Paz</span>
-                            <span><i class="fas fa-clock"></i> Full Time (Turno Mañana)</span>
-                            <span class="job-salary"><i class="fas fa-wallet"></i> $390.000 / mes</span>
-                        </div>
-                    </div>
-                    <div class="job-action-col">
-                        <span class="job-time">Hace 5 horas</span>
-                        <a href="https://wa.me/5493541582448?text=Hola,%20me%20quiero%20postular%20al%20puesto%20de%20Barista%20Especializado%20en%20Caf%C3%A9%20Suburbio" target="_blank" rel="noopener noreferrer" class="btn-postularme">
-                            Postularme
-                        </a>
-                    </div>
-                </article>
-
-            </div>
             <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
         </section>
     </main>
@@ -305,77 +239,8 @@
                 <a href="#" class="link-see-all">Ver todos <i class="fas fa-chevron-right"></i></a>
             </div>
 
-            <div class="talento-grid">
-                <!-- Tarjeta 1: Lucas R. -->
-                <article class="talento-card">
-                    <div class="avatar-container">
-                        <div class="avatar-circle">LR</div>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h3>Lucas R.</h3>
-                    <p class="puesto-highlight">Cocinero</p>
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(24)</span>
-                    </div>
-                    <p class="talento-info">5 años de experiencia</p>
-                    <p class="talento-info">Disponibilidad: Inmediata</p>
-                    <p class="talento-location"><i class="fas fa-map-marker-alt"></i> Nueva Córdoba</p>
-                    <button type="button" class="btn-lock-cv">
-                        <i class="fas fa-lock"></i> VER CONTACTO / CV
-                    </button>
-                </article>
-
-                <!-- Tarjeta 2: María F. -->
-                <article class="talento-card">
-                    <div class="avatar-container">
-                        <div class="avatar-circle">MF</div>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h3>María F.</h3>
-                    <p class="puesto-highlight">Barista</p>
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(18)</span>
-                    </div>
-                    <p class="talento-info">3 años de experiencia</p>
-                    <p class="talento-info">Disponibilidad: Mañana</p>
-                    <p class="talento-location"><i class="fas fa-map-marker-alt"></i> Güemes</p>
-                    <button type="button" class="btn-lock-cv">
-                        <i class="fas fa-lock"></i> VER CONTACTO / CV
-                    </button>
-                </article>
-
-                <!-- Tarjeta 3: Santiago M. -->
-                <article class="talento-card">
-                    <div class="avatar-container">
-                        <div class="avatar-circle">SM</div>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h3>Santiago M.</h3>
-                    <p class="puesto-highlight">Mozo</p>
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(31)</span>
-                    </div>
-                    <p class="talento-info">4 años de experiencia</p>
-                    <button type="button" class="btn-lock-cv">
-                        <i class="fas fa-lock"></i> VER CONTACTO / CV
-                    </button>
-                </article>
-            </div>
+            <!-- El JS dinámico renderiza esta grilla mediante renderizarTalentoDestacado() -->
+            <div class="talento-grid" id="grid-talento-destacado"></div>
         </div>
     </section>
 
