@@ -88,27 +88,41 @@
             </a>
 
             <nav class="nav-links" aria-label="Navegación principal">
-                <a href="#vacantes" class="nav-link">Empleos</a>
+                <!-- 1. Empleos (Solo visible en modo postulante) -->
+                <a href="#vacantes" class="nav-link postulante-only">Empleos</a>
                 
-                <!-- Solo visible para empresas -->
+                <!-- 2. Publicar Búsqueda (Solo visible para empresas) -->
                 <button type="button" class="nav-link btn-trigger-express modo-empresa-only">Publicar Búsqueda</button>
                 
-                <!-- Botón de Cambiar Perfil -->
+                <!-- 3. Botón de Cambiar Perfil -->
                 <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
                     <i class="fas fa-user-tag" aria-hidden="true"></i> <span id="label-modo-actual">Cambiar Perfil</span>
                 </button>
 
-                <!-- Desplegable Recursos -->
+                <!-- 4. Desplegable Recursos (Funcional para AMBOS MODOS) -->
                 <div class="dropdown">
                     <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false">
                         Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
-                        <a href="#"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                        <a href="#"><i class="fas fa-comments" aria-hidden="true"></i> Consejos de Entrevista</a>
+                        <!-- Opciones visibles solo para Postulante -->
+                        <a href="#" class="postulante-only"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
+                        <a href="#" class="postulante-only"><i class="fas fa-comments" aria-hidden="true"></i> Consejos de Entrevista</a>
+                        
+                        <!-- Opciones visibles solo para Empresa -->
+                        <a href="#" class="modo-empresa-only"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos de Contratos</a>
+                        <a href="#" class="modo-empresa-only"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora de Horarios</a>
+
+                        <!-- Opción visible para ambos -->
                         <a href="#"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                     </div>
                 </div>
+
+                <!-- 5. Nosotros -->
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+            </nav>
+        </div>
+    </header>
 
                 <a href="#nosotros" class="nav-link">Nosotros</a>
             </nav>
