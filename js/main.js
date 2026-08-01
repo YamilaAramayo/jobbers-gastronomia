@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inicializarModoPerfil();
 
     // Event Delegation para botones de postulación
-    const contenedorVacantes = document.getElementById('lista-vacantes');
+    const contenedorVacantes = document.getElementById('lista-vacantes') || document.querySelector('.vacantes-list');
     if (contenedorVacantes) {
         contenedorVacantes.addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-postularme');
@@ -51,13 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Bind del Formulario Express (evento Submit directo)
+    // Formulario Express
     const formExpress = document.getElementById('form-publicar-express');
     if (formExpress) {
         formExpress.addEventListener('submit', enviarAWhatsApp);
     }
 
-    // Toggle de visibilidad para Formulario Express
+    // Toggle para Formulario Express
     const triggersExpress = document.querySelectorAll('.btn-trigger-express');
     const cardExpress = document.getElementById('formulario-express');
 
@@ -107,14 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dropdown Recursos
     const btnRecursos = document.getElementById('dropdown-recursos');
-    const menuRecursos = document.getElementById('menu-recursos');
-    if (btnRecursos && menuRecursos) {
-        btnRecursos.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = menuRecursos.classList.contains('show');
-            menuRecursos.classList.toggle('show');
-            btnRecursos.setAttribute('aria-expanded', !isOpen);
-        });
+    if (btnRecursos) {
+        btnRecursos.addEventListener('click', toggleDropdown);
     }
 
     // Cierre de dropdowns al hacer clic afuera
@@ -124,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Tecla Escape para modales y dropdowns
+    // Tecla Escape global
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             cerrarModal();
@@ -135,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   2. SECCIÓN MODO Y CAMBIO DE PERFIL (POSTULANTE / EMPRESA)
+   2. SECCIÓN MODO Y CAMBIO DE PERFIL
    ========================================================================== */
 function inicializarModoPerfil() {
     const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil');
@@ -269,7 +263,7 @@ async function cargarVacantesDesdeJSON() {
 }
 
 /* ==========================================================================
-   4. SECCIÓN TALENTO DESTACADO Y COMUNIDAD
+   4. TALENTO DESTACADO Y COMUNIDAD
    ========================================================================== */
 function cargarTalentoDestacado() {
     talentoDestacado = [
@@ -471,7 +465,7 @@ function enviarAWhatsApp(event) {
 }
 
 /* ==========================================================================
-   7. MODAL DE POSTULACIÓN DE CANDIDATOS (CON FOCUS TRAP)
+   7. MODAL DE POSTULACIÓN DE CANDIDATOS
    ========================================================================== */
 function asegurarEstructuraModal() {
     let modal = document.getElementById('modal-jobbers');
@@ -500,7 +494,7 @@ function asegurarEstructuraModal() {
             if (e.target === modal) cerrarModal();
         });
 
-        // Focus Trap dentro del modal
+        // Focus Trap
         modal.addEventListener('keydown', (e) => {
             if (e.key !== 'Tab') return;
 
@@ -658,7 +652,7 @@ function mostrarToast(mensaje, tipo = "success") {
 }
 
 /* ==========================================================================
-   10. BINDING GLOBAL
+   10. BINDING GLOBAL DE FUNCIONES
    ========================================================================== */
 window.enviarAWhatsApp = enviarAWhatsApp;
 window.abrirModalPostulacion = abrirModalPostulacion;
