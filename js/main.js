@@ -105,18 +105,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Dropdown Recursos
+    const btnRecursos = document.getElementById('dropdown-recursos');
+    const menuRecursos = document.getElementById('menu-recursos');
+    if (btnRecursos && menuRecursos) {
+        btnRecursos.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = menuRecursos.classList.contains('show');
+            menuRecursos.classList.toggle('show');
+            btnRecursos.setAttribute('aria-expanded', !isOpen);
+        });
+    }
+
+    // Cierre de dropdowns al hacer clic afuera
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown')) {
+            cerrarDropdown();
+        }
+    });
+
     // Tecla Escape para modales y dropdowns
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             cerrarModal();
             cerrarModalPerfil();
-            cerrarDropdown();
-        }
-    });
-
-    // Cierre de dropdowns al hacer clic afuera
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.dropdown')) {
             cerrarDropdown();
         }
     });
@@ -130,7 +142,6 @@ function inicializarModoPerfil() {
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
 
-    // Flujo multi-paso del modal de perfil
     const stepSelect = document.getElementById('rol-step-select');
     const stepConfirm = document.getElementById('rol-step-confirm');
     const labelConfirmar = document.getElementById('rol-nombre-confirmar');
@@ -140,7 +151,6 @@ function inicializarModoPerfil() {
 
     let rolSeleccionado = { key: '', nombre: '' };
 
-    // 1. Obtener o establecer rol inicial
     const rolGuardado = localStorage.getItem('jobbers_user_role');
     if (!rolGuardado) {
         abrirModalPerfil();
@@ -148,14 +158,12 @@ function inicializarModoPerfil() {
         aplicarRol(rolGuardado);
     }
 
-    // Reset de estado del modal
     function resetearModalPerfil() {
         if (stepSelect) stepSelect.style.display = 'block';
         if (stepConfirm) stepConfirm.style.display = 'none';
         rolSeleccionado = { key: '', nombre: '' };
     }
 
-    // Abrir modal
     btnsCambiarPerfil.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -164,14 +172,12 @@ function inicializarModoPerfil() {
         });
     });
 
-    // Cerrar modal
     if (btnCerrarModal) btnCerrarModal.addEventListener('click', cerrarModalPerfil);
 
     window.addEventListener('click', (e) => {
         if (e.target === modalPerfil) cerrarModalPerfil();
     });
 
-    // Selección y confirmación de rol
     btnsOpcionRol.forEach(btn => {
         btn.addEventListener('click', () => {
             const rolKey = btn.getAttribute('data-rol');
@@ -185,15 +191,12 @@ function inicializarModoPerfil() {
                 stepSelect.style.display = 'none';
                 stepConfirm.style.display = 'block';
             } else {
-                // Si no hay pasos, aplica directo
                 confirmarYGuardarRol(rolKey, rolNombre);
             }
         });
     });
 
-    if (btnVolverRol) {
-        btnVolverRol.addEventListener('click', resetearModalPerfil);
-    }
+    if (btnVolverRol) btnVolverRol.addEventListener('click', resetearModalPerfil);
 
     if (btnConfirmarRol) {
         btnConfirmarRol.addEventListener('click', () => {
@@ -251,12 +254,11 @@ async function cargarVacantesDesdeJSON() {
                 break;
             }
         } catch (e) {
-            // Continúa a la siguiente ruta si falla
+            // Continúa a la siguiente ruta
         }
     }
 
     if (!exito) {
-        // Fallback de respaldo
         vacantesGastronomia = [
             { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
             { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
@@ -653,30 +655,6 @@ function mostrarToast(mensaje, tipo = "success") {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
-   document.addEventListener('DOMContentLoaded', () => {
-    const btnRecursos = document.getElementById('dropdown-recursos');
-    const menuRecursos = document.getElementById('menu-recursos');
-
-    if (btnRecursos && menuRecursos) {
-        // Toggle del menú Recursos al hacer clic
-        btnRecursos.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = menuRecursos.classList.contains('show');
-            
-            // Cerrar si está abierto, abrir si está cerrado
-            menuRecursos.classList.toggle('show');
-            btnRecursos.setAttribute('aria-expanded', !isOpen);
-        });
-
-        // Cerrar el menú desplegable si el usuario hace clic fuera de él
-        document.addEventListener('click', (e) => {
-            if (!menuRecursos.contains(e.target) && !btnRecursos.contains(e.target)) {
-                menuRecursos.classList.remove('show');
-                btnRecursos.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
-});
 }
 
 /* ==========================================================================
