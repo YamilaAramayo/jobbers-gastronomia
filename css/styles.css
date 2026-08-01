@@ -1,33 +1,36 @@
+/* Importación de fuente moderna y limpia */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 /* ==========================================================================
    1. VARIABLES & RESET
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;                /* Ámbar / Naranja brillante */
+  --primary: #F39C12;                 /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;               /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;                  /* Fondo de tarjetas y secciones */
+  --secondary: #0D0D0D;               /* Fondo muy oscuro */
+  --card-bg: #16181A;                  /* Fondo de tarjetas */
   --card-bg-light: #212428;            /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;          /* Botón de acción principal */
+  --whatsapp-orange: #F39C12;
   --whatsapp-hover: #E67E22;
   --danger-badge: #E74C3C;             /* Badge Urgente y errores */
   --salary-green: #2ECC71;             /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
-  --text-main: #FFFFFF;
-  --text-muted: #9CA3AF;
-  --text-dark: #111827;                /* Texto sobre botones amarillos/naranjas */
-  --border-color: #2D3137;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-dark: #0F172A;                /* Texto sobre botones brillantes */
+  --border-color: #26292E;
 
-  /* Bordes y Sombras */
+  /* Bordes y Sombras estilizados */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
-  --transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Capas / Z-Index */
   --z-dropdown: 10;
@@ -37,10 +40,10 @@
   --z-toast: 2000;
 
   /* Assets SVG & Overlays */
-  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.92) 0%, rgba(10, 11, 12, 0.78) 100%);
-  --modal-overlay-bg: rgba(0, 0, 0, 0.85);
-  --select-option-bg: #1a1d24;
+  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F39C12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.94) 0%, rgba(10, 11, 12, 0.82) 100%);
+  --modal-overlay-bg: rgba(0, 0, 0, 0.8);
+  --select-option-bg: #16181A;
 }
 
 /* ==========================================================================
@@ -48,30 +51,29 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;                  /* Ámbar / Naranja oscuro para contraste */
+  --primary: #D67E00;                  
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;                /* Fondo ultra claro */
-  --card-bg: #FFFFFF;                  /* Blanco puro para tarjetas */
-  --card-bg-light: #F1F5F9;            /* Hover y tarjetas secundarias */
+  --secondary: #F8FAFC;                
+  --card-bg: #FFFFFF;                  
+  --card-bg-light: #F1F5F9;            
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;             /* Rojo semántico contrastado */
-  --salary-green: #16A34A;             /* Verde accesible sobre blanco */
+  --danger-badge: #DC2626;             
+  --salary-green: #16A34A;             
 
-  --bg-dark: #F1F5F9;                  
-  --text-main: #0F172A;                /* Azul muy oscuro / Casi negro */
-  --text-muted: #64748B;               /* Texto secundario gris */
-  --text-dark: #FFFFFF;                /* Texto sobre botones primarios */
+  --bg-dark: #F8FAFC;                  
+  --text-main: #0F172A;                
+  --text-muted: #64748B;               
+  --text-dark: #FFFFFF;                
   --border-color: #E2E8F0;
 
-  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 32px rgba(15, 23, 42, 0.12);
 
-  /* Sobrescrituras de Assets para Light Mode */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.94) 0%, rgba(241, 245, 249, 0.85) 100%);
-  --modal-overlay-bg: rgba(15, 23, 42, 0.4);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.88) 100%);
+  --modal-overlay-bg: rgba(15, 23, 42, 0.5);
   --select-option-bg: #FFFFFF;
 }
 
@@ -82,11 +84,11 @@
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
-  padding-bottom: 80px; /* Offset para el Bottom Nav mobile */
+  padding-bottom: 80px;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -108,10 +110,8 @@ img {
 }
 
 /* ==========================================================================
-   2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
+   2. CONTROL DE VISIBILIDAD DE ROLES
    ========================================================================== */
-
-/* --- 2.1. MODO POSTULANTE (Default o body no tiene .role-empresa) --- */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only,
 body.role-postulante .empresa-only,
@@ -119,23 +119,19 @@ body:not(.role-empresa) .empresa-only {
   display: none !important;
 }
 
-/* Ocultar nombre de la empresa en tarjetas cuando es postulante */
 body.role-postulante .job-company,
 body:not(.role-empresa) .job-company {
   display: none !important;
 }
 
-/* --- 2.2. MODO EMPRESA --- */
-/* Ocultar elementos exclusivos de postulante */
 body.role-empresa .postulante-only,
 body.role-empresa .modo-postulante-only,
-body.role-empresa .main-grid-section,  /* Oculta buscador + tarjetas de empleos */
-body.role-empresa .categories-section, /* Oculta categorías de búsqueda si aplica */
+body.role-empresa .main-grid-section,
+body.role-empresa .categories-section,
 body.role-empresa .btn-postularme {
   display: none !important;
 }
 
-/* Mostrar elementos exclusivos de Empresa con su display original adecuado */
 body.role-empresa div.modo-empresa-only,
 body.role-empresa div.empresa-only,
 body.role-empresa section.modo-empresa-only,
@@ -150,6 +146,7 @@ body.role-empresa a.empresa-only,
 body.role-empresa .nav-link.modo-empresa-only {
   display: inline-flex !important;
   align-items: center;
+  justify-content: center;
 }
 
 body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
@@ -182,12 +179,17 @@ body.role-empresa .job-company::before {
   top: 0;
   z-index: var(--z-navbar);
   width: 100%;
-  background-color: rgba(13, 13, 13, 0.88);
+  background-color: rgba(13, 13, 13, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
-  padding: 0.8rem 1.5rem;
+  padding: 0.75rem 1.5rem;
+}
+
+[data-theme="light"] .navbar,
+.light-theme .navbar {
+  background-color: rgba(255, 255, 255, 0.88);
 }
 
 .navbar-container {
@@ -199,11 +201,6 @@ body.role-empresa .job-company::before {
   width: 100%;
 }
 
-[data-theme="light"] .navbar,
-.light-theme .navbar {
-  background-color: rgba(255, 255, 255, 0.90);
-}
-
 .logo {
   display: flex;
   flex-direction: column;
@@ -212,9 +209,9 @@ body.role-empresa .job-company::before {
 }
 
 .logo h2 {
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: 1.8px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 1px;
   color: var(--text-main);
   line-height: 1;
   margin: 0;
@@ -225,20 +222,20 @@ body.role-empresa .job-company::before {
   font-weight: 700;
   color: var(--primary);
   letter-spacing: 1.5px;
-  margin-top: 4px;
+  margin-top: 3px;
   text-transform: uppercase;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.5rem;
   margin-left: auto;
 }
 
 .nav-link {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
   transition: var(--transition);
   background: none;
@@ -246,7 +243,7 @@ body.role-empresa .job-company::before {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   padding: 0.5rem 0.85rem;
   border-radius: var(--radius-sm);
   white-space: nowrap;
@@ -256,13 +253,6 @@ body.role-empresa .job-company::before {
 .nav-link.active {
   color: var(--primary);
   background-color: rgba(243, 156, 18, 0.1);
-}
-
-[data-theme="light"] .nav-link:hover,
-[data-theme="light"] .nav-link.active,
-.light-theme .nav-link:hover,
-.light-theme .nav-link.active {
-  background-color: rgba(214, 126, 0, 0.08);
 }
 
 /* Dropdown */
@@ -277,24 +267,24 @@ body.role-empresa .job-company::before {
   right: 0;
   background: var(--card-bg);
   box-shadow: var(--shadow-lg);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  min-width: 210px;
+  min-width: 220px;
   z-index: var(--z-dropdown);
   border: 1px solid var(--border-color);
-  padding: 0.4rem 0;
+  padding: 0.5rem 0;
 }
 
 .dropdown-menu.show {
   display: block;
-  animation: fadeIn 0.2s ease-in-out;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dropdown-menu a {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1.2rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
   font-size: 0.88rem;
   color: var(--text-main);
   transition: var(--transition);
@@ -307,7 +297,7 @@ body.role-empresa .job-company::before {
 }
 
 /* ==========================================================================
-   4. HERO SECTION & FORMULARIO EXPRESS (CON IMAGEN DE FONDO)
+   4. HERO SECTION & FORMULARIO EXPRESS
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -317,14 +307,14 @@ body.role-empresa .job-company::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 4rem 1.5rem;
+  padding: 3.5rem 1.5rem;
   color: var(--text-main);
 }
 
 [data-theme="light"] .hero-section,
 .light-theme .hero-section {
   background-image: 
-    linear-gradient(rgba(248, 250, 252, 0.85), rgba(241, 245, 249, 0.92)), 
+    linear-gradient(rgba(248, 250, 252, 0.88), rgba(241, 245, 249, 0.94)), 
     url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1920&q=80');
 }
 
@@ -342,15 +332,15 @@ body.role-empresa .job-company::before {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 2.5rem;
   align-items: center;
 }
 
 .hero-title {
-  font-size: 2.5rem;
-  font-weight: 900;
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 0.85rem;
   letter-spacing: -0.5px;
 }
 
@@ -359,17 +349,17 @@ body.role-empresa .job-company::before {
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--text-muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
   line-height: 1.6;
 }
 
 .hero-buttons {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
 }
 
 .hero-btn-wrapper {
@@ -385,17 +375,18 @@ body.role-empresa .job-company::before {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0.95rem 1.5rem;
-  font-weight: 800;
+  padding: 0.85rem 1.5rem;
+  font-weight: 700;
   border-radius: var(--radius-sm);
   transition: var(--transition);
   border: none;
   cursor: pointer;
   text-transform: uppercase;
-  font-size: 0.88rem;
-  letter-spacing: 0.6px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
   text-align: center;
   width: 100%;
+  min-height: 48px;
 }
 
 .btn-primary {
@@ -411,7 +402,7 @@ body.role-empresa .job-company::before {
 
 .btn-secondary {
   background-color: rgba(22, 24, 26, 0.6);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-color);
   color: var(--text-main);
 }
@@ -423,7 +414,7 @@ body.role-empresa .job-company::before {
 }
 
 [data-theme="light"] .btn-secondary {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 .btn-accent {
@@ -437,9 +428,8 @@ body.role-empresa .job-company::before {
 }
 
 .btn-subtext {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  margin-top: 0.2rem;
   display: block;
 }
 
@@ -451,13 +441,14 @@ body.role-empresa .job-company::before {
 .hero-features {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  font-size: 0.88rem;
+  gap: 1.25rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
 }
 
 .hero-features i {
   color: var(--primary);
+  margin-right: 0.35rem;
 }
 
 /* Formulario Express */
@@ -467,14 +458,14 @@ body.role-empresa .job-company::before {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   color: var(--text-main);
-  padding: 2rem;
+  padding: 1.8rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 [data-theme="light"] .hero-card-express {
-  background: rgba(255, 255, 255, 0.90);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .hero-card-express.is-visible {
@@ -483,38 +474,30 @@ body.role-empresa .job-company::before {
 }
 
 @keyframes slideDownExpress {
-  from {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .card-header {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-header h2 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.text-warning {
-  color: var(--primary);
-}
+.text-warning { color: var(--primary); }
 
 .hero-card-express p {
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   line-height: 1.5;
 }
 
@@ -526,25 +509,31 @@ body.role-empresa .job-company::before {
 
 .form-group {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-row-2col {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .express-form input,
-.form-group input {
+.form-group input,
+.express-form select,
+.form-group select {
   width: 100%;
-  padding: 0.85rem 1rem;
+  height: 46px;
+  padding: 0 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background-color: var(--bg-dark);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   outline: none;
   transition: var(--transition);
   color: var(--text-main);
+  font-family: inherit;
 }
 
 .express-form input::placeholder,
@@ -555,21 +544,11 @@ body.role-empresa .job-company::before {
 
 .express-form select,
 .form-group select {
-  width: 100%;
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem 2.5rem 0.85rem 1rem;
-  font-size: 0.9rem;
+  padding-right: 2.5rem;
   cursor: pointer;
-  outline: none;
-  transition: var(--transition);
-
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
   background-image: var(--select-arrow);
   background-repeat: no-repeat;
   background-position: right 1rem center;
@@ -599,16 +578,17 @@ body.role-empresa .job-company::before {
 
 .btn-whatsapp {
   width: 100%;
-  padding: 0.95rem;
+  min-height: 48px;
+  padding: 0.85rem;
   background-color: var(--primary);
   color: var(--text-dark);
   border: none;
   border-radius: var(--radius-sm);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   text-transform: uppercase;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
@@ -626,7 +606,7 @@ body.role-empresa .job-company::before {
   text-align: center;
   font-size: 0.75rem;
   color: var(--text-muted);
-  margin-top: 0.8rem;
+  margin-top: 0.6rem;
 }
 
 /* ==========================================================================
@@ -642,14 +622,14 @@ body.role-empresa .job-company::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
 }
 
 .section-header h2 {
   font-size: 1.15rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
 }
 
 .link-more {
@@ -665,35 +645,39 @@ body.role-empresa .job-company::before {
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
 }
 
 .category-card {
   background: var(--card-bg);
-  padding: 1.4rem 1rem;
+  padding: 1.25rem 1rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   text-align: center;
   cursor: pointer;
   transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--primary);
   background-color: var(--card-bg-light);
   box-shadow: var(--shadow-md);
 }
 
 .category-card i {
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   color: var(--primary);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .category-card h3 {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 700;
   margin-bottom: 0.2rem;
 }
@@ -707,26 +691,28 @@ body.role-empresa .job-company::before {
    6. TARJETAS DE OFERTAS DE EMPLEO
    ========================================================================== */
 .main-grid-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .search-bar {
   display: flex;
   gap: 0.75rem;
-  margin-bottom: 1.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .search-bar input {
   flex: 1;
-  padding: 0.85rem 1.1rem;
+  height: 48px;
+  padding: 0 1.25rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: var(--card-bg);
   color: var(--text-main);
   outline: none;
   font-size: 0.9rem;
+  font-family: inherit;
   transition: var(--transition);
 }
 
@@ -739,10 +725,15 @@ body.role-empresa .job-company::before {
   background: var(--primary);
   color: var(--text-dark);
   border: none;
-  padding: 0.85rem 1.4rem;
+  padding: 0 1.5rem;
+  height: 48px;
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   transition: var(--transition);
 }
 
@@ -754,14 +745,14 @@ body.role-empresa .job-company::before {
 .vacantes-container {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
 .job-offer-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 1.35rem 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.2rem;
@@ -778,18 +769,18 @@ body.role-empresa .job-company::before {
 .job-info-main {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .job-header-row {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .job-offer-card h4 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.3;
@@ -798,9 +789,9 @@ body.role-empresa .job-company::before {
 .badge-urgente {
   background: var(--danger-badge);
   color: #FFFFFF;
-  font-size: 0.68rem;
-  font-weight: 900;
-  padding: 0.25rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
   border-radius: 4px;
   text-transform: uppercase;
   display: inline-flex;
@@ -813,20 +804,25 @@ body.role-empresa .job-company::before {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1rem;
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+.job-details-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .job-details-row i {
   color: var(--primary);
-  margin-right: 0.3rem;
 }
 
 .job-salary {
   color: var(--salary-green);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .job-action-col {
@@ -840,7 +836,7 @@ body.role-empresa .job-company::before {
 }
 
 .job-time {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   line-height: 1.3;
 }
@@ -849,8 +845,8 @@ body.role-empresa .job-company::before {
   background-color: var(--primary);
   color: var(--text-dark);
   font-weight: 800;
-  font-size: 0.82rem;
-  padding: 0.7rem 1.25rem;
+  font-size: 0.8rem;
+  padding: 0.65rem 1.25rem;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
@@ -858,21 +854,24 @@ body.role-empresa .job-company::before {
   letter-spacing: 0.5px;
   transition: var(--transition);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-postularme:hover {
   background-color: var(--primary-hover);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
 
 .link-more-full {
   display: block;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   color: var(--primary);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   transition: var(--transition);
 }
 
@@ -891,15 +890,15 @@ body.role-empresa .job-company::before {
 
 .talento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.25rem;
 }
 
 .talento-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 1.5rem 1.2rem;
+  padding: 1.5rem 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -920,8 +919,8 @@ body.role-empresa .job-company::before {
 }
 
 .avatar-circle {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: var(--card-bg-light);
   border: 2px solid var(--primary);
@@ -930,7 +929,7 @@ body.role-empresa .job-company::before {
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .status-dot {
@@ -945,14 +944,14 @@ body.role-empresa .job-company::before {
 }
 
 .talento-card h3 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: var(--text-main);
   margin-bottom: 0.2rem;
 }
 
 .puesto-highlight {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 0.4rem;
@@ -964,24 +963,23 @@ body.role-empresa .job-company::before {
   margin-bottom: 0.6rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.2rem;
 }
 
 .rating span {
   color: var(--text-muted);
-  margin-left: 0.3rem;
+  margin-left: 0.25rem;
 }
 
-.talento-info {
+.talento-info, .talento-location {
   font-size: 0.78rem;
   color: var(--text-muted);
   margin-bottom: 0.2rem;
 }
 
 .talento-location {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin: 0.4rem 0 1rem 0;
+  margin-bottom: 1.25rem;
 }
 
 .btn-lock-cv {
@@ -996,10 +994,11 @@ body.role-empresa .job-company::before {
   cursor: pointer;
   transition: var(--transition);
   text-transform: uppercase;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  margin-top: auto;
 }
 
 .btn-lock-cv:hover {
@@ -1023,18 +1022,19 @@ body.role-empresa .job-company::before {
 .stat-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .stat-item i {
   font-size: 2.2rem;
   color: var(--primary);
+  flex-shrink: 0;
 }
 
 .stat-info h4 { 
   font-size: 1.4rem; 
-  font-weight: 900; 
-  line-height: 1; 
+  font-weight: 800; 
+  line-height: 1.1; 
   margin-bottom: 0.2rem;
 }
 
@@ -1055,7 +1055,7 @@ body.role-empresa .job-company::before {
 
 .info-section p {
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   max-width: 650px;
   margin: 0 auto;
   line-height: 1.7;
@@ -1083,7 +1083,7 @@ body.role-empresa .job-company::before {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 2.2rem;
+  padding: 2rem;
   max-width: 440px;
   width: 100%;
   text-align: center;
@@ -1094,28 +1094,28 @@ body.role-empresa .job-company::before {
 }
 
 .rol-modal-card h2 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .rol-modal-card p {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   margin-bottom: 1.5rem;
 }
 
 .rol-options {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .btn-rol {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.25rem 1rem;
+  padding: 1.2rem 1rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--card-bg-light);
@@ -1131,23 +1131,23 @@ body.role-empresa .job-company::before {
 }
 
 .rol-icon {
-  font-size: 2rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
 }
 
 .rol-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
 }
 
 .rol-desc {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
 }
 
 @keyframes modalFadeIn {
-  from { opacity: 0; transform: translateY(-15px) scale(0.98); }
+  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -1163,9 +1163,12 @@ body.role-empresa .job-company::before {
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   cursor: pointer;
   transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .jobbers-close-btn:hover {
@@ -1195,14 +1198,14 @@ body.role-empresa .job-company::before {
   display: flex;
   align-items: center;
   gap: 10px;
-  animation: toastIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .jobbers-toast.success { border-left: 4px solid var(--salary-green); }
 .jobbers-toast.error { border-left: 4px solid var(--danger-badge); }
 
 @keyframes toastIn {
-  from { opacity: 0; transform: translateX(60px); }
+  from { opacity: 0; transform: translateX(50px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
@@ -1237,6 +1240,7 @@ body.role-empresa .job-company::before {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 3px;
   font-size: 0.7rem;
   color: var(--text-muted);
@@ -1244,6 +1248,7 @@ body.role-empresa .job-company::before {
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0.25rem;
 }
 
 .bottom-nav-item i { font-size: 1.2rem; }
@@ -1259,7 +1264,7 @@ body.role-empresa .job-company::before {
    ========================================================================== */
 .main-footer {
   text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   border-top: 1px solid var(--border-color);
   font-size: 0.82rem;
   color: var(--text-muted);
@@ -1288,12 +1293,12 @@ body.role-empresa .job-company::before {
   }
 
   .hero-container {
-    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-columns: 1.1fr 0.9fr;
     gap: 3.5rem;
   }
 
   .hero-title {
-    font-size: 3.2rem;
+    font-size: 3rem;
   }
 
   .hero-buttons {
