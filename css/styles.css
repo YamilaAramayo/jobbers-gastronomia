@@ -111,7 +111,7 @@ img {
    2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
    ========================================================================== */
 
-/* --- 2.1. MODO POSTULANTE (Por defecto) --- */
+/* --- 2.1. MODO POSTULANTE (Default o body no tiene .role-empresa) --- */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only,
 body.role-postulante .empresa-only,
@@ -126,29 +126,30 @@ body:not(.role-empresa) .job-company {
 }
 
 /* --- 2.2. MODO EMPRESA --- */
+/* Ocultar elementos exclusivos de postulante */
 body.role-empresa .postulante-only,
-body.role-empresa .modo-postulante-only {
+body.role-empresa .modo-postulante-only,
+body.role-empresa .main-grid-section,  /* Oculta buscador + tarjetas de empleos */
+body.role-empresa .categories-section, /* Oculta categorías de búsqueda si aplica */
+body.role-empresa .btn-postularme {
   display: none !important;
 }
 
-/* ⚠️ CORRECCIÓN: Se usa inline-flex por defecto para elementos del navbar */
-body.role-empresa .modo-empresa-only,
-body.role-empresa .empresa-only {
-  display: inline-flex;
-  align-items: center;
+/* Mostrar elementos exclusivos de Empresa con su display original adecuado */
+body.role-empresa div.modo-empresa-only,
+body.role-empresa div.empresa-only,
+body.role-empresa section.modo-empresa-only,
+body.role-empresa section.empresa-only {
+  display: block;
 }
 
 body.role-empresa button.modo-empresa-only,
 body.role-empresa a.modo-empresa-only,
 body.role-empresa button.empresa-only,
-body.role-empresa a.empresa-only {
-  display: inline-flex;
-}
-
-/* Regla específica si el elemento es un bloque dentro de un contenedor */
-body.role-empresa div.modo-empresa-only,
-body.role-empresa div.empresa-only {
-  display: block;
+body.role-empresa a.empresa-only,
+body.role-empresa .nav-link.modo-empresa-only {
+  display: inline-flex !important;
+  align-items: center;
 }
 
 body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
@@ -172,6 +173,7 @@ body.role-empresa .job-company::before {
   content: "🏢";
   font-size: 0.85rem;
 }
+
 /* ==========================================================================
    3. NAVBAR / HEADER
    ========================================================================== */
@@ -266,18 +268,6 @@ body.role-empresa .job-company::before {
 /* Dropdown */
 .dropdown {
   position: relative;
-  display: inline-block;
-}
-
-.dropdown-toggle .nav-icon-arrow {
-  font-size: 0.75rem;
-  margin-left: 0.25rem;
-  transition: transform 0.25s ease;
-}
-
-/* Rotación de la flechita cuando el menú está desplegado */
-.dropdown-toggle[aria-expanded="true"] .nav-icon-arrow {
-  transform: rotate(180deg);
 }
 
 .dropdown-menu {
@@ -285,57 +275,35 @@ body.role-empresa .job-company::before {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  background-color: var(--card-bg);
+  background: var(--card-bg);
   box-shadow: var(--shadow-lg);
   border-radius: var(--radius-sm);
-  min-width: 230px;
+  overflow: hidden;
+  min-width: 210px;
   z-index: var(--z-dropdown);
   border: 1px solid var(--border-color);
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
 }
 
-/* Clase activada mediante JavaScript al hacer click */
 .dropdown-menu.show {
-  display: flex;
-  flex-direction: column;
+  display: block;
   animation: fadeIn 0.2s ease-in-out;
 }
 
 .dropdown-menu a {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   padding: 0.75rem 1.2rem;
   font-size: 0.88rem;
   color: var(--text-main);
   transition: var(--transition);
   font-weight: 500;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.dropdown-menu a i {
-  color: var(--primary);
-  width: 16px;
-  text-align: center;
 }
 
 .dropdown-menu a:hover {
   background-color: var(--card-bg-light);
   color: var(--primary);
-}
-
-/* Respeta la visibilidad por rol dentro del menú desplegable */
-body.role-empresa .dropdown-menu a.postulante-only {
-  display: none !important;
-}
-
-body:not(.role-empresa) .dropdown-menu a.modo-empresa-only {
-  display: none !important;
-}
-
-body.role-empresa .dropdown-menu a.modo-empresa-only {
-  display: flex !important;
 }
 
 /* ==========================================================================
