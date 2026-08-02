@@ -1331,11 +1331,11 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
     justify-content: center;
   }
 
-   /* ==========================================================================
-   12. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS
+ /* ==========================================================================
+   12. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS (EXCLUSIVO MODO POSTULANTE)
    ========================================================================== */
 
-/* Contenedor principal de los chips (Scroll horizontal suave en móviles) */
+/* Contenedor principal de los chips con scroll horizontal */
 .category-chips-container {
   width: 100%;
   max-width: 500px;
@@ -1344,21 +1344,29 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   white-space: nowrap;
   padding-bottom: 0.4rem;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox: oculta barra */
+  scrollbar-width: none;
 }
 
 .category-chips-container::-webkit-scrollbar {
-  display: none; /* Chrome/Safari: oculta barra */
+  display: none;
 }
 
-/* Flexbox para alinear los botones chip */
+/* Ocultar estrictamente en Modo Empresa */
+body.role-empresa .category-chips-container {
+  display: none !important;
+}
+
+/* Mostrar explícitamente en Modo Postulante */
+body.role-postulante .category-chips-container {
+  display: block !important;
+}
+
 .category-chips {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* Estilo individual del Chip */
 .chip {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -1377,7 +1385,6 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   user-select: none;
 }
 
-/* Hover en chips inactivnos */
 .chip:hover {
   border-color: var(--primary);
   color: var(--text-main);
@@ -1385,7 +1392,6 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   transform: translateY(-1px);
 }
 
-/* Chip Estado Activo/Seleccionado */
 .chip.active {
   background-color: var(--primary);
   border-color: var(--primary);
