@@ -4,7 +4,47 @@
  * Búsqueda/Filtro, Integración WhatsApp, Modales, Dropdowns y Toasts.
  */
 
+// Variables globales para la postulación por modal
+let whatsappEmpleadorActual = "";
+let tituloPuestoActual = "";
+
+// Funciones del Modal de Postulación (Globales para invocación inline/eventos)
+window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
+    whatsappEmpleadorActual = whatsappTel;
+    tituloPuestoActual = `${puesto} — ${empresa}`;
+
+    const titleEl = document.getElementById('modal-job-title');
+    const modalEl = document.getElementById('postular-modal');
+    
+    if (titleEl) titleEl.innerText = tituloPuestoActual;
+    if (modalEl) modalEl.style.display = 'flex';
+};
+
+window.cerrarModalPostulacion = function() {
+    const modalEl = document.getElementById('postular-modal');
+    const formEl = document.getElementById('form-postularme');
+    if (modalEl) modalEl.style.display = 'none';
+    if (formEl) formEl.reset();
+};
+
+window.enviarPostulacionWhatsApp = function(e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById('postular-nombre')?.value.trim();
+    const telefono = document.getElementById('postular-phone')?.value.trim();
+
+    if (!nombre || !telefono) return;
+
+    const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme a la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
+    const url = `https://wa.me/${whatsappEmpleadorActual}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, '_blank');
+    cerrarModalPostulacion();
+};
+
+
 document.addEventListener('DOMContentLoaded', () => {
+
     // -------------------------------------------------------------------------
     // 1. DATOS SIMULADOS (MOCK DATA)
     // -------------------------------------------------------------------------
@@ -91,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------------------
     let rolSeleccionadoTemp = null;
 
-    // Control de Modales
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const stepSelect = document.getElementById('rol-step-select');
     const stepConfirm = document.getElementById('rol-step-confirm');
@@ -100,16 +139,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function initRol() {
         const rolGuardado = localStorage.getItem('jobbers_role');
         
-        // Renderizamos ambos contenedores al iniciar para garantizar datos al alternar
         renderizarVacantes(MOCK_VACANTES);
         renderizarTalento(MOCK_TALENTO);
         
         if (rolGuardado) {
-            // Usuario recurrente: aplicamos su rol guardado y nos aseguramos de cerrar el modal
             aplicarRol(rolGuardado);
             cerrarModalPerfil();
         } else {
-            // Primera visita: aplicamos un rol visual base y desplegamos el modal automáticamente
             aplicarRol('postulante');
             abrirModalPerfil();
         }
@@ -120,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add(`role-${rol}`);
         localStorage.setItem('jobbers_role', rol);
 
-        // Actualizar etiquetas en pantalla
         const labelModo = document.getElementById('label-modo-actual');
         if (labelModo) {
             labelModo.textContent = rol === 'empresa' ? 'Modo Empresa' : 'Modo Postulante';
@@ -140,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         rolSeleccionadoTemp = null;
     }
 
-    // Eventos de Cambio de Perfil (Navbar, Footer, etc.)
     document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -149,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
-        // Si cierra con la 'X' sin elegir rol en primera visita, mantiene 'postulante' por defecto
         if (!localStorage.getItem('jobbers_role')) {
             localStorage.setItem('jobbers_role', 'postulante');
         }
@@ -171,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const nombreRol = btn.getAttribute('data-nombre');
             
             if (nombreConfirmar) nombreConfirmar.textContent = nombreRol;
-            
             if (stepSelect) stepSelect.style.display = 'none';
             if (stepConfirm) stepConfirm.style.display = 'block';
         });
@@ -227,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div class="job-action-col">
                     <span class="job-time">${v.tiempo}</span>
-                    <button type="button" class="btn-postularme" onclick="postularmeWhatsApp('${v.titulo}', '${v.empresa}', '${v.telefono}')">
+                    <button type="button" class="btn-postularme" onclick="abrirModalPostulacion('${v.titulo}', '${v.empresa}', '${v.telefono}')">
                         <i class="fab fa-whatsapp" style="margin-right: 0.4rem; font-size: 1rem;"></i> Postularme
                     </button>
                 </div>
@@ -321,19 +353,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 6. ACCIONES DE WHATSAPP GLOBAL
+    // 6. ACCIONES DE WHATSAPP GLOBAL (TALENTO & EVENTOS)
     // -------------------------------------------------------------------------
-    window.postularmeWhatsApp = function(titulo, empresa, telefono) {
-        const mensaje = `Hola! 👋 Me interesa postularme a la vacante de *${titulo}* publicada para *${empresa}* a través de Jobbers. ¿Sigue disponible?`;
-        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-        window.open(url, '_blank');
-    };
-
     window.contactarTalento = function(nombre, puesto) {
         const mensaje = `Hola Jobbers! 👋 Vimos el perfil destacado de *${nombre}* (${puesto}) en la plataforma y nos gustaría contactarlo/a para una entrevista.`;
         const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
         window.open(url, '_blank');
     };
+
+    // Vincular submit del formulario del modal de postulación si existe
+    document.getElementById('form-postularme')?.addEventListener('submit', enviarPostulacionWhatsApp);
 
     // -------------------------------------------------------------------------
     // 7. DROPDOWN DE RECURSOS & INTERACTIVIDAD
@@ -377,43 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.style.transition = 'all 0.3s ease';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
-        // Variable global para almacenar el número de WhatsApp de la oferta seleccionada
-let whatsappEmpleadorActual = "";
-let tituloPuestoActual = "";
-
-// Función para abrir el modal desde cualquier botón "POSTULARME"
-function abrirModalPostulacion(puesto, empresa, whatsappTel) {
-  whatsappEmpleadorActual = whatsappTel;
-  tituloPuestoActual = `${puesto} — ${empresa}`;
-
-  document.getElementById('modal-job-title').innerText = tituloPuestoActual;
-  document.getElementById('postular-modal').style.display = 'flex';
-}
-
-function cerrarModalPostulacion() {
-  document.getElementById('postular-modal').style.display = 'none';
-  document.getElementById('form-postularme').reset();
-}
-
-// Envío y apertura directa a WhatsApp
-function enviarPostulacionWhatsApp(e) {
-  e.preventDefault();
-
-  const nombre = document.getElementById('postular-nombre').value.trim();
-  const telefono = document.getElementById('postular-phone').value.trim();
-
-  if (!nombre || !telefono) return;
-
-  // Redacción del mensaje automático
-  const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme a la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
-
-  const url = `https://wa.me/${whatsappEmpleadorActual}?text=${encodeURIComponent(mensaje)}`;
-
-  // Abre WhatsApp en pestaña nueva
-  window.open(url, '_blank');
-  
-  cerrarModalPostulacion();
-}
     }
 
     // Inicializar app
