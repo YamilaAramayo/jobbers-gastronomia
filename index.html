@@ -109,155 +109,207 @@
         </div>
     </header>
 
-  <!-- HERO SECTION ADAPTATIVO -->
-<section class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-container hero-container-centered">
-        
-        <div class="hero-content">
+    <!-- HERO SECTION ADAPTATIVO -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-container hero-container-centered">
             
-            <!-- ================= MODO POSTULANTE ================= -->
-            <div class="postulante-only">
-                <h1 class="hero-title">Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá</h1>
-                <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
-
-                <div class="hero-features">
-                    <span><i class="fas fa-clock" aria-hidden="true"></i> Respuesta rápida</span>
-                    <span><i class="fas fa-check-circle" aria-hidden="true"></i> Contacto directo</span>
-                    <span><i class="fas fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
-                </div>
-
-                <!-- Buscador centrado dentro del Hero -->
-                <div class="search-bar hero-search-bar">
-                    <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
-                    <button class="btn-search" type="button"><i class="fas fa-search"></i> Buscar</button>
-                </div>
-            </div>
-
-            <!-- Modal de Postulación por WhatsApp -->
-<div id="postular-modal" class="rol-modal-overlay">
-  <div class="modal-postular-card">
-    <button type="button" class="jobbers-close-btn" onclick="cerrarModalPostulacion()">&times;</button>
-    
-    <h2 class="modal-postular-title">POSTULARME</h2>
-    <p id="modal-job-title" class="modal-job-title">Título del Puesto — Nombre Empresa</p>
-
-    <div class="postular-alert-box">
-      <span class="alert-icon">📎</span>
-      <p><strong>Importante:</strong> Al abrirse WhatsApp, recordá <u>adjuntar tu Currículum Vitae (PDF)</u> junto al mensaje.</p>
-    </div>
-
-    <form id="form-postularme" onsubmit="enviarPostulacionWhatsApp(event)" class="postular-form">
-      <div class="form-group">
-        <input type="text" id="postular-nombre" placeholder="Nombre y Apellido" required />
-      </div>
-
-      <div class="form-group">
-        <input type="tel" id="postular-phone" placeholder="Tu WhatsApp de contacto" required />
-      </div>
-
-      <button type="submit" class="btn-contactar-empleador">
-        <i class="fab fa-whatsapp"></i> CONTACTAR AL EMPLEADOR
-      </button>
-    </form>
-  </div>
-</div>
-
-            <!-- ================= MODO EMPRESA (ENCABEZADO + FORMULARIO) ================= -->
-            <div class="modo-empresa-only width-full-express">
+            <div class="hero-content">
                 
-                <!-- Banner Titular similar al de Postulantes -->
-                <div class="hero-empresa-header">
-                    <h1 class="hero-title">
-                        CONTRATÁ EL MEJOR <span class="highlight">TALENTO GASTRONÓMICO</span> PARA TU LOCAL
-                    </h1>
-                    <p class="hero-subtitle">
-                        Publicá tus búsquedas en segundos y conectá de forma directa con mozos, cocineros, baristas y personal calificado de Córdoba.
-                    </p>
+                <!-- ================= MODO POSTULANTE ================= -->
+                <div class="postulante-only">
+                    <h1 class="hero-title">Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá</h1>
+                    <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
+
                     <div class="hero-features">
-                        <span><i class="fas fa-bolt" aria-hidden="true"></i> Publicación rápida</span>
-                        <span><i class="fas fa-user-check" aria-hidden="true"></i> Perfiles verificados</span>
-                        <span><i class="fab fa-whatsapp" aria-hidden="true"></i> Contacto directo</span>
+                        <span><i class="fas fa-clock" aria-hidden="true"></i> Respuesta rápida</span>
+                        <span><i class="fas fa-check-circle" aria-hidden="true"></i> Contacto directo</span>
+                        <span><i class="fas fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
+                    </div>
+
+                    <!-- Buscador centrado dentro del Hero -->
+                    <div class="search-bar hero-search-bar">
+                        <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
+                        <button class="btn-search" type="button"><i class="fas fa-search"></i> Buscar</button>
                     </div>
                 </div>
 
-                <!-- Formulario Express -->
-                <div class="hero-card-express" id="formulario-express">
-                    <div class="card-header">
-                        <span class="text-warning" aria-hidden="true">⚡</span>
-                        <h2>¿NECESITÁS PERSONAL HOY?</h2>
+                <!-- Modal de Postulación por WhatsApp -->
+                <div id="postular-modal" class="rol-modal-overlay">
+                    <div class="modal-postular-card">
+                        <button type="button" class="jobbers-close-btn" onclick="cerrarModalPostulacion()">&times;</button>
+                        
+                        <h2 class="modal-postular-title">POSTULARME</h2>
+                        <p id="modal-job-title" class="modal-job-title">Título del Puesto — Nombre Empresa</p>
+
+                        <div class="postular-alert-box">
+                            <span class="alert-icon">📎</span>
+                            <p><strong>Importante:</strong> Al abrirse WhatsApp, recordá <u>adjuntar tu Currículum Vitae (PDF)</u> junto al mensaje.</p>
+                        </div>
+
+                        <form id="form-postularme" onsubmit="enviarPostulacionWhatsApp(event)" class="postular-form">
+                            <div class="form-group">
+                                <input type="text" id="postular-nombre" placeholder="Nombre y Apellido" required />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="tel" id="postular-phone" placeholder="Tu WhatsApp de contacto" required />
+                            </div>
+
+                            <button type="submit" class="btn-contactar-empleador">
+                                <i class="fab fa-whatsapp"></i> CONTACTAR AL EMPLEADOR
+                            </button>
+                        </form>
                     </div>
-                    <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
+                </div>
+
+                <!-- ================= MODO EMPRESA (ENCABEZADO + FORMULARIO) ================= -->
+                <div class="modo-empresa-only width-full-express">
                     
-                    <form class="express-form" id="form-publicar-express">
-                        <div class="form-group">
-                            <input type="text" id="nombre-empresa" placeholder="Nombre de tu local / Gastronómico" required>
+                    <!-- Banner Titular similar al de Postulantes -->
+                    <div class="hero-empresa-header">
+                        <h1 class="hero-title">
+                            CONTRATÁ EL MEJOR <span class="highlight">TALENTO GASTRONÓMICO</span> PARA TU LOCAL
+                        </h1>
+                        <p class="hero-subtitle">
+                            Publicá tus búsquedas en segundos y conectá de forma directa con mozos, cocineros, baristas y personal calificado de Córdoba.
+                        </p>
+                        <div class="hero-features">
+                            <span><i class="fas fa-bolt" aria-hidden="true"></i> Publicación rápida</span>
+                            <span><i class="fas fa-user-check" aria-hidden="true"></i> Perfiles verificados</span>
+                            <span><i class="fab fa-whatsapp" aria-hidden="true"></i> Contacto directo</span>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required>
+                    <!-- Formulario Express -->
+                    <div class="hero-card-express" id="formulario-express">
+                        <div class="card-header">
+                            <span class="text-warning" aria-hidden="true">⚡</span>
+                            <h2>¿NECESITÁS PERSONAL HOY?</h2>
                         </div>
-
-                        <div class="form-group">
-                            <select id="puesto-requerido" required>
-                                <option value="" disabled selected>Puesto que necesitás</option>
-                                <optgroup label="Cocina y Producción">
-                                    <option value="Cocinero / Cocinera">Cocinero / Cocinera</option>
-                                    <option value="Ayudante de Cocina">Ayudante de Cocina</option>
-                                    <option value="Bachero / Bachera">Bachero / Bachera</option>
-                                    <option value="Chef / Jefe de Cocina">Chef / Jefe de Cocina</option>
-                                </optgroup>
-                                <optgroup label="Salón, Bar y Servicio">
-                                    <option value="Mozo / Moza">Mozo / Moza</option>
-                                    <option value="Barista">Barista</option>
-                                    <option value="Bartender / Barman">Bartender / Barman</option>
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <select id="zona-local" required>
-                                <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
-                                <option value="Nueva Córdoba">Nueva Córdoba</option>
-                                <option value="Güemes">Güemes</option>
-                                <option value="General Paz">General Paz</option>
-                                <option value="Centro">Centro</option>
-                                <option value="Cerro de las Rosas">Cerro de las Rosas</option>
-                            </select>
-                        </div>
-
-                        <div class="form-row-2col">
+                        <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
+                        
+                        <form class="express-form" id="form-publicar-express">
                             <div class="form-group">
-                                <select id="turno-puesto" required>
-                                    <option value="" disabled selected>Turno</option>
-                                    <option value="Turno Mañana">Turno Mañana</option>
-                                    <option value="Turno Tarde">Turno Tarde</option>
-                                    <option value="Turno Noche">Turno Noche</option>
-                                    <option value="Rotativo">Rotativo</option>
+                                <input type="text" id="nombre-empresa" placeholder="Nombre de tu local / Gastronómico" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required>
+                            </div>
+
+                            <div class="form-group">
+                                <select id="puesto-requerido" required>
+                                    <option value="" disabled selected>Puesto que necesitás</option>
+                                    <optgroup label="Cocina y Producción">
+                                        <option value="Chef / Chef Ejecutivo">Chef / Chef Ejecutivo</option>
+                                        <option value="Encargado / Jefe de Cocina">Encargado / Jefe de Cocina</option>
+                                        <option value="Cocinero / Cocinera">Cocinero / Cocinera</option>
+                                        <option value="Ayudante de Cocina">Ayudante de Cocina</option>
+                                        <option value="Pizzero / Maestro Pizzero">Pizzero / Maestro Pizzero</option>
+                                        <option value="Lomitero / Planchero">Lomitero / Planchero</option>
+                                        <option value="SushiMAN / SushiWOMAN">SushiMAN / SushiWOMAN</option>
+                                        <option value="Pastelero / Repostero">Pastelero / Repostero</option>
+                                        <option value="Panadero">Panadero</option>
+                                        <option value="Bachero / Limpieza">Bachero / Limpieza de Cocina</option>
+                                    </optgroup>
+                                    <optgroup label="Salón y Atención">
+                                        <option value="Mozo / Moza de Salón">Mozo / Moza de Salón</option>
+                                        <option value="Commis / Ayudante de Mozo">Commis / Ayudante de Mozo</option>
+                                        <option value="Hostess / Recepcionista">Hostess / Recepcionista</option>
+                                        <option value="Bartender / Barman">Bartender / Barman</option>
+                                        <option value="Barista Professional">Barista Profesional</option>
+                                        <option value="Cajero / Cajera">Cajero / Cajera</option>
+                                        <option value="Mano Derecha / Encargado de Salón">Encargado de Salón / Maitre</option>
+                                    </optgroup>
+                                    <optgroup label="Delivery y Operaciones">
+                                        <option value="Repartidor / Delivery (Moto)">Repartidor / Delivery (Moto)</option>
+                                        <option value="Empaquetador / Armador de Pedidos">Empaquetador / Armador de Pedidos</option>
+                                        <option value="Personal de Limpieza General">Personal de Limpieza General</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <select id="jornada-puesto" required>
-                                    <option value="" disabled selected>Jornada</option>
-                                    <option value="Full Time">Full Time</option>
-                                    <option value="Part Time">Part Time</option>
-                                    <option value="Franco / Refuerzo">Franco / Refuerzo</option>
+                                <select id="zona-local" required>
+                                    <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
+                                    <optgroup label="Polos Gastronómicos">
+                                        <option value="Güemes">Güemes</option>
+                                        <option value="Nueva Córdoba">Nueva Córdoba</option>
+                                        <option value="General Paz">General Paz</option>
+                                        <option value="Cerro de las Rosas">Cerro de las Rosas</option>
+                                        <option value="Centro">Centro</option>
+                                        <option value="Alta Córdoba">Alta Córdoba</option>
+                                        <option value="Jardín / Barrio Jardín">Barrio Jardín</option>
+                                        <option value="Urca / Gauss">Urca / Av. Gauss</option>
+                                        <option value="Manantiales">Manantiales</option>
+                                        <option value="Villa Belgrano">Villa Belgrano</option>
+                                        <option value="Recta Martinoli">Recta Martinoli</option>
+                                    </optgroup>
+                                    <optgroup label="Zona Norte / Noroeste">
+                                        <option value="Argüello">Argüello</option>
+                                        <option value="Poeta Lugones">Poeta Lugones</option>
+                                        <option value="Marqués de Sobremonte">Marqués de Sobremonte</option>
+                                        <option value="Los Boulevares">Los Boulevares</option>
+                                        <option value="La Carolina">La Carolina</option>
+                                        <option value="Granja de Funes">Granja de Funes</option>
+                                    </optgroup>
+                                    <optgroup label="Zona Sur / Suroeste">
+                                        <option value="Inaudi">Inaudi</option>
+                                        <option value="San Fernando">San Fernando</option>
+                                        <option value="Santa Isabel">Santa Isabel</option>
+                                        <option value="Villa El Libertador">Villa El Libertador</option>
+                                        <option value="Avenida O'Higgins">Avenida O'Higgins</option>
+                                    </optgroup>
+                                    <optgroup label="Zona Este / Noreste">
+                                        <option value="Pueyrredón">Pueyrredón</option>
+                                        <option value="Yofre">Yofre</option>
+                                        <option value="San Vicente">San Vicente</option>
+                                        <option value="Bajo Palermo">Bajo Palermo</option>
+                                        <option value="Talleres (E y O)">Talleres</option>
+                                    </optgroup>
+                                    <optgroup label="Zona Oeste">
+                                        <option value="Alberdi">Alberdi</option>
+                                        <option value="Alto Alberdi">Alto Alberdi</option>
+                                        <option value="Duarte Quirós">Duarte Quirós</option>
+                                        <option value="Villa Cabrera">Villa Cabrera</option>
+                                    </optgroup>
+                                    <option value="Otras zonas (Córdoba Capital)">Otras zonas (Córdoba Capital)</option>
                                 </select>
                             </div>
-                        </div>
 
-                        <button type="submit" class="btn-whatsapp">
-                            <i class="fab fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
-                        </button>
-                    </form>
+                            <div class="form-row-2col">
+                                <div class="form-group">
+                                    <select id="turno-puesto" required>
+                                        <option value="" disabled selected>Turno</option>
+                                        <option value="Turno Mañana">Turno Mañana</option>
+                                        <option value="Turno Tarde">Turno Tarde</option>
+                                        <option value="Turno Noche">Turno Noche</option>
+                                        <option value="Rotativo">Rotativo</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <select id="jornada-puesto" required>
+                                        <option value="" disabled selected>Jornada</option>
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Part Time">Part Time</option>
+                                        <option value="Franco / Refuerzo">Franco / Refuerzo</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-whatsapp">
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
+                            </button>
+                        </form>
+                    </div>
                 </div>
+
             </div>
 
         </div>
-
-    </div>
-</section>
+    </section>
 
     <!-- LISTADO DE EMPLEOS Y TARJETA COMUNIDAD (Vista Postulantes) -->
     <main class="main-grid-section postulante-only" id="vacantes">
@@ -333,5 +385,4 @@
 
     <div id="toast-container"></div>
 </body>
-</html>
 </html>
