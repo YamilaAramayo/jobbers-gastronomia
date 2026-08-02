@@ -1330,8 +1330,9 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
     align-items: flex-end;
     justify-content: center;
   }
+}} /* Cierre correcto del media query (min-width: 900px) */
 
- /* ==========================================================================
+/* ==========================================================================
    12. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS (EXCLUSIVO MODO POSTULANTE)
    ========================================================================== */
 
@@ -1352,7 +1353,8 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 }
 
 /* Ocultar estrictamente en Modo Empresa */
-body.role-empresa .category-chips-container {
+body.role-empresa .category-chips-container,
+body:not(.role-postulante) .category-chips-container {
   display: none !important;
 }
 
@@ -1394,15 +1396,7 @@ body.role-postulante .category-chips-container {
 
 .chip.active {
   background-color: var(--primary);
+  color: var(--text-dark);
   border-color: var(--primary);
-  color: var(--text-dark);
-  font-weight: 800;
-  box-shadow: 0 0 12px rgba(243, 156, 18, 0.35);
-}
-
-.chip.active:hover {
-  background-color: var(--primary-hover);
-  border-color: var(--primary-hover);
-  color: var(--text-dark);
-}
+  font-weight: 700;
 }
