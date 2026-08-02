@@ -91,14 +91,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------------------
     let rolSeleccionadoTemp = null;
 
+    // Control de Modales
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
+    const stepSelect = document.getElementById('rol-step-select');
+    const stepConfirm = document.getElementById('rol-step-confirm');
+    const nombreConfirmar = document.getElementById('rol-nombre-confirmar');
+
     function initRol() {
-        const rolGuardado = localStorage.getItem('jobbers_role') || 'postulante';
+        const rolGuardado = localStorage.getItem('jobbers_role');
         
         // Renderizamos ambos contenedores al iniciar para garantizar datos al alternar
         renderizarVacantes(MOCK_VACANTES);
         renderizarTalento(MOCK_TALENTO);
         
-        aplicarRol(rolGuardado);
+        if (rolGuardado) {
+            // Usuario recurrente: aplicamos su rol guardado y nos aseguramos de cerrar el modal
+            aplicarRol(rolGuardado);
+            cerrarModalPerfil();
+        } else {
+            // Primera visita: aplicamos un rol visual base y desplegamos el modal automáticamente
+            aplicarRol('postulante');
+            abrirModalPerfil();
+        }
     }
 
     function aplicarRol(rol) {
@@ -113,16 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Control de Modales
-    const modalPerfil = document.getElementById('modal-cambiar-perfil');
-    const stepSelect = document.getElementById('rol-step-select');
-    const stepConfirm = document.getElementById('rol-step-confirm');
-    const nombreConfirmar = document.getElementById('rol-nombre-confirmar');
-
     function abrirModalPerfil() {
         if (!modalPerfil) return;
-        stepSelect.style.display = 'block';
-        stepConfirm.style.display = 'none';
+        if (stepSelect) stepSelect.style.display = 'block';
+        if (stepConfirm) stepConfirm.style.display = 'none';
         modalPerfil.style.display = 'flex';
     }
 
@@ -132,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rolSeleccionadoTemp = null;
     }
 
-    // Eventos de Cambio de Perfil
+    // Eventos de Cambio de Perfil (Navbar, Footer, etc.)
     document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -140,10 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.getElementById('btn-cerrar-modal')?.addEventListener('click', cerrarModalPerfil);
+    document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
+        // Si cierra con la 'X' sin elegir rol en primera visita, mantiene 'postulante' por defecto
+        if (!localStorage.getItem('jobbers_role')) {
+            localStorage.setItem('jobbers_role', 'postulante');
+        }
+        cerrarModalPerfil();
+    });
 
     modalPerfil?.addEventListener('click', (e) => {
-        if (e.target === modalPerfil) cerrarModalPerfil();
+        if (e.target === modalPerfil) {
+            if (!localStorage.getItem('jobbers_role')) {
+                localStorage.setItem('jobbers_role', 'postulante');
+            }
+            cerrarModalPerfil();
+        }
     });
 
     document.querySelectorAll('.btn-rol').forEach(btn => {
@@ -153,14 +172,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (nombreConfirmar) nombreConfirmar.textContent = nombreRol;
             
-            stepSelect.style.display = 'none';
-            stepConfirm.style.display = 'block';
+            if (stepSelect) stepSelect.style.display = 'none';
+            if (stepConfirm) stepConfirm.style.display = 'block';
         });
     });
 
     document.getElementById('btn-volver-rol')?.addEventListener('click', () => {
-        stepConfirm.style.display = 'none';
-        stepSelect.style.display = 'block';
+        if (stepConfirm) stepConfirm.style.display = 'none';
+        if (stepSelect) stepSelect.style.display = 'block';
+        rolSeleccionadoTemp = null;
     });
 
     document.getElementById('btn-confirmar-rol')?.addEventListener('click', () => {
