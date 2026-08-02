@@ -1142,4 +1142,70 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
     align-items: flex-end;
     justify-content: center;
   }
+
+   /* ==========================================================================
+   13. ESTILOS DEDICADOS: MODO EMPRESA - HERO & ENCABEZADO
+   ========================================================================== */
+
+/* Alineación y estructura del contenedor en Modo Empresa */
+.width-full-express {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-empresa-header {
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.hero-empresa-header .hero-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.hero-empresa-header .hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0 auto 1.25rem auto;
+  line-height: 1.5;
+}
+
+.hero-empresa-header .hero-features {
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.hero-empresa-header .hero-features i {
+  color: var(--primary);
+  margin-right: 0.35rem;
+}
+
+/* Ajustes de integración para la tarjeta express dentro del Hero */
+.modo-empresa-only .hero-card-express {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 899px) {
+  .hero-empresa-header .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-empresa-header .hero-subtitle {
+    font-size: 0.92rem;
+  }
+}
 }
