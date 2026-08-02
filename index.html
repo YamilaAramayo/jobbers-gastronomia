@@ -95,6 +95,7 @@
                         Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
+                        <a href="#comunidad-blog" class="postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias Laborales</a>
                         <a href="#" class="postulante-only"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
                         <a href="#" class="postulante-only"><i class="fas fa-comments" aria-hidden="true"></i> Consejos de Entrevista</a>
                         <a href="#" class="modo-empresa-only"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos de Contratos</a>
@@ -212,12 +213,30 @@
         </div>
     </section>
 
-    <!-- LISTADO DE EMPLEOS (Visión para Postulantes) -->
+    <!-- LISTADO DE EMPLEOS Y TARJETA COMUNIDAD (Vista Postulantes) -->
     <main class="main-grid-section postulante-only" id="vacantes">
         <section class="vacantes-container">
-            <!-- El JS renderizará la lista de vacantes automáticamente aquí -->
+            <!-- Renderizado dinámico de vacantes por JS -->
             <div class="vacantes-list" id="lista-vacantes"></div>
             <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
+            
+            <!-- TARJETA COMUNIDAD & NOTICIAS LABORALES -->
+            <div class="card-comunidad" id="comunidad-blog" style="margin-top: 2.5rem; background: #1a1a1a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 2rem; text-align: center;">
+                <h3 style="font-size: 1.4rem; color: #ffffff; margin-bottom: 0.75rem; font-weight: 800; letter-spacing: 0.5px;">
+                    FORMÁ PARTE DE LA COMUNIDAD JOBBERS
+                </h3>
+                <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+                    Aparecé en nuestra lista de talentos destacados, leé las últimas noticias del sector gastronómico y accedé a contenido exclusivo para impulsar tu carrera.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button type="button" class="btn-primary" style="background: #f39c12; border: none; color: #000; font-weight: 800; padding: 0.85rem 1.75rem; border-radius: 6px; cursor: pointer; text-transform: uppercase;" onclick="contactarTalento('Nuevo Candidato', 'Registro Comunidad')">
+                        DESTACÁ TU PERFIL
+                    </button>
+                    <a href="#" class="btn-secondary" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 0.85rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-newspaper"></i> Leer Noticias
+                    </a>
+                </div>
+            </div>
         </section>
     </main>
 
