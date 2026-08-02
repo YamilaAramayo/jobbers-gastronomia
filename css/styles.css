@@ -6,20 +6,20 @@
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;                   /* Ámbar / Naranja brillante */
+  --primary: #F39C12;                    /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;                 /* Fondo muy oscuro */
-  --card-bg: #16181A;                   /* Fondo de tarjetas */
-  --card-bg-light: #212428;             /* Hover o tarjetas secundarias */
+  --secondary: #0D0D0D;                  /* Fondo muy oscuro */
+  --card-bg: #16181A;                    /* Fondo de tarjetas */
+  --card-bg-light: #212428;              /* Hover o tarjetas secundarias */
   --whatsapp-orange: #F39C12;
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;              /* Badge Urgente y errores */
-  --salary-green: #2ECC71;              /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;               /* Badge Urgente y errores */
+  --salary-green: #2ECC71;               /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
-  --text-dark: #0F172A;                 /* Texto sobre botones brillantes */
+  --text-dark: #0F172A;                  /* Texto sobre botones brillantes */
   --border-color: #26292E;
 
   /* Bordes y Sombras estilizados */
@@ -51,9 +51,9 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;                  
+  --primary: #D67E00;                     
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;                
+  --secondary: #F8FAFC;                 
   --card-bg: #FFFFFF;                  
   --card-bg-light: #F1F5F9;            
   --whatsapp-orange: #D67E00;
@@ -63,7 +63,7 @@
 
   --bg-dark: #F8FAFC;                  
   --text-main: #0F172A;                
-  --text-muted: #64748B;               
+  --text-muted: #64748B;                
   --text-dark: #FFFFFF;                
   --border-color: #E2E8F0;
 
@@ -191,7 +191,7 @@ body.role-empresa .job-company::before {
 }
 
 /* ==========================================================================
-   3. NAVBAR / HEADER
+   3. NAVBAR / HEADER & BADGE DE CAMBIO DE ROLES
    ========================================================================== */
 .navbar {
   position: sticky;
@@ -272,6 +272,45 @@ body.role-empresa .job-company::before {
 .nav-link.active {
   color: var(--primary);
   background-color: rgba(243, 156, 18, 0.1);
+}
+
+/* Badge/Pill interactivo de Cambio de Perfil */
+.btn-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(243, 156, 18, 0.12);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0.45rem 0.85rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.btn-role-badge:hover {
+  background: var(--primary);
+  color: var(--text-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.25);
+}
+
+.badge-change-indicator {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  margin-left: 0.2rem;
+}
+
+.btn-role-badge:hover .badge-change-indicator {
+  background: rgba(0, 0, 0, 0.15);
+  color: var(--text-dark);
 }
 
 /* Dropdown */
@@ -991,8 +1030,28 @@ body.role-empresa .job-company::before {
 }
 
 /* ==========================================================================
-   12. MEDIA QUERIES (DESKTOP / TABLET)
+   12. MEDIA QUERIES (DESKTOP / TABLET / RESPONSIVE OPTIMIZATIONS)
    ========================================================================== */
+@media (max-width: 899px) {
+  .nav-links {
+    gap: 0.35rem;
+  }
+  
+  .nav-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .btn-role-badge {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
+  }
+
+  .badge-change-indicator {
+    display: none; /* Oculta etiqueta secundaria en mobile para evitar desbordes */
+  }
+}
+
 @media (min-width: 600px) {
   .form-row-2col {
     flex-direction: row;
