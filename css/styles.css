@@ -1330,4 +1330,73 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
     align-items: flex-end;
     justify-content: center;
   }
+
+   /* ==========================================================================
+   12. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS
+   ========================================================================== */
+
+/* Contenedor principal de los chips (Scroll horizontal suave en móviles) */
+.category-chips-container {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 0.4rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox: oculta barra */
+}
+
+.category-chips-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari: oculta barra */
+}
+
+/* Flexbox para alinear los botones chip */
+.category-chips {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Estilo individual del Chip */
+.chip {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Hover en chips inactivnos */
+.chip:hover {
+  border-color: var(--primary);
+  color: var(--text-main);
+  background-color: var(--card-bg-light);
+  transform: translateY(-1px);
+}
+
+/* Chip Estado Activo/Seleccionado */
+.chip.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--text-dark);
+  font-weight: 800;
+  box-shadow: 0 0 12px rgba(243, 156, 18, 0.35);
+}
+
+.chip.active:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: var(--text-dark);
+}
 }
