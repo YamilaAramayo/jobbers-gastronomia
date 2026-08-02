@@ -91,9 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------------------
     let rolSeleccionadoTemp = null;
 
-    // Cargar rol persistido o establecer por defecto
     function initRol() {
         const rolGuardado = localStorage.getItem('jobbers_role') || 'postulante';
+        
+        // Renderizamos ambos contenedores al iniciar para garantizar datos al alternar
+        renderizarVacantes(MOCK_VACANTES);
+        renderizarTalento(MOCK_TALENTO);
+        
         aplicarRol(rolGuardado);
     }
 
@@ -107,16 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (labelModo) {
             labelModo.textContent = rol === 'empresa' ? 'Modo Empresa' : 'Modo Postulante';
         }
-
-        // Renderizar vistas correspondientes
-        if (rol === 'postulante') {
-            renderizarVacantes(MOCK_VACANTES);
-        } else {
-            renderizarTalento(MOCK_TALENTO);
-        }
     }
 
-    // Modal Control
+    // Control de Modales
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const stepSelect = document.getElementById('rol-step-select');
     const stepConfirm = document.getElementById('rol-step-confirm');
@@ -183,8 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (vacantes.length === 0) {
             contenedor.innerHTML = `
-                <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary);"></i>
+                <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted, #888);">
+                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary, #00e676);"></i>
                     <p>No encontramos búsquedas que coincidan con tu criterio.</p>
                 </div>`;
             return;
@@ -225,16 +222,16 @@ document.addEventListener('DOMContentLoaded', () => {
         contenedor.innerHTML = talento.map(t => `
             <div class="job-offer-card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                    <h4 style="color: var(--primary); font-size: 1.1rem;">${t.nombre}</h4>
-                    <span style="font-size: 0.75rem; background: rgba(46, 204, 113, 0.15); color: var(--salary-green); padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700;">Disponible</span>
+                    <h4 style="color: var(--primary, #00e676); font-size: 1.1rem;">${t.nombre}</h4>
+                    <span style="font-size: 0.75rem; background: rgba(46, 204, 113, 0.15); color: #2ecc71; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700;">Disponible</span>
                 </div>
                 <div>
                     <strong style="display: block; font-size: 0.95rem;">${t.puesto}</strong>
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">${t.experiencia}</span>
+                    <span style="font-size: 0.85rem; color: #aaa;">${t.experiencia}</span>
                 </div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.5rem; width: 100%;">
-                    <div><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> ${t.zona}</div>
-                    <div><i class="fas fa-user-clock" style="color: var(--primary);"></i> ${t.disponibilidad}</div>
+                <div style="font-size: 0.82rem; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.5rem; width: 100%;">
+                    <div><i class="fas fa-map-marker-alt" style="color: var(--primary, #00e676);"></i> ${t.zona}</div>
+                    <div style="margin-top: 0.2rem;"><i class="fas fa-user-clock" style="color: var(--primary, #00e676);"></i> ${t.disponibilidad}</div>
                 </div>
                 <button type="button" class="btn-whatsapp" style="width: 100%; margin-top: 0.5rem; height: 38px; font-size: 0.78rem;" onclick="contactarTalento('${t.nombre}', '${t.puesto}')">
                     <i class="fab fa-whatsapp"></i> Contactar Perfil
@@ -336,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 8. SITEMA DE NOTIFICACIONES TOAST
+    // 8. SISTEMA DE NOTIFICACIONES TOAST
     // -------------------------------------------------------------------------
     function mostrarToast(mensaje, tipo = 'success') {
         let container = document.getElementById('toast-container');
