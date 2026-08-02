@@ -134,6 +134,35 @@
                 </div>
             </div>
 
+            <!-- Modal de Postulación por WhatsApp -->
+<div id="postular-modal" class="rol-modal-overlay">
+  <div class="modal-postular-card">
+    <button type="button" class="jobbers-close-btn" onclick="cerrarModalPostulacion()">&times;</button>
+    
+    <h2 class="modal-postular-title">POSTULARME</h2>
+    <p id="modal-job-title" class="modal-job-title">Título del Puesto — Nombre Empresa</p>
+
+    <div class="postular-alert-box">
+      <span class="alert-icon">📎</span>
+      <p><strong>Importante:</strong> Al abrirse WhatsApp, recordá <u>adjuntar tu Currículum Vitae (PDF)</u> junto al mensaje.</p>
+    </div>
+
+    <form id="form-postularme" onsubmit="enviarPostulacionWhatsApp(event)" class="postular-form">
+      <div class="form-group">
+        <input type="text" id="postular-nombre" placeholder="Nombre y Apellido" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" id="postular-phone" placeholder="Tu WhatsApp de contacto" required />
+      </div>
+
+      <button type="submit" class="btn-contactar-empleador">
+        <i class="fab fa-whatsapp"></i> CONTACTAR AL EMPLEADOR
+      </button>
+    </form>
+  </div>
+</div>
+
             <!-- ================= MODO EMPRESA (ENCABEZADO + FORMULARIO) ================= -->
             <div class="modo-empresa-only width-full-express">
                 
