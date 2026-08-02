@@ -377,6 +377,43 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.style.transition = 'all 0.3s ease';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
+        // Variable global para almacenar el número de WhatsApp de la oferta seleccionada
+let whatsappEmpleadorActual = "";
+let tituloPuestoActual = "";
+
+// Función para abrir el modal desde cualquier botón "POSTULARME"
+function abrirModalPostulacion(puesto, empresa, whatsappTel) {
+  whatsappEmpleadorActual = whatsappTel;
+  tituloPuestoActual = `${puesto} — ${empresa}`;
+
+  document.getElementById('modal-job-title').innerText = tituloPuestoActual;
+  document.getElementById('postular-modal').style.display = 'flex';
+}
+
+function cerrarModalPostulacion() {
+  document.getElementById('postular-modal').style.display = 'none';
+  document.getElementById('form-postularme').reset();
+}
+
+// Envío y apertura directa a WhatsApp
+function enviarPostulacionWhatsApp(e) {
+  e.preventDefault();
+
+  const nombre = document.getElementById('postular-nombre').value.trim();
+  const telefono = document.getElementById('postular-phone').value.trim();
+
+  if (!nombre || !telefono) return;
+
+  // Redacción del mensaje automático
+  const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme a la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
+
+  const url = `https://wa.me/${whatsappEmpleadorActual}?text=${encodeURIComponent(mensaje)}`;
+
+  // Abre WhatsApp en pestaña nueva
+  window.open(url, '_blank');
+  
+  cerrarModalPostulacion();
+}
     }
 
     // Inicializar app
