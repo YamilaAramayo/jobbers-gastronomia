@@ -1,3 +1,4 @@
+
 /* Importación de fuente moderna y limpia */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -5,6 +6,8 @@
    1. VARIABLES & RESET GLOBAL
    ========================================================================== */
 :root {
+  color-scheme: dark;
+
   /* Paleta de colores - MODO OSCURO (Default) */
   --primary: #F39C12;                         /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
@@ -51,6 +54,7 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
+  color-scheme: light;
   --primary: #D67E00;                         
   --primary-hover: #B56900;
   --secondary: #F8FAFC;                       
@@ -61,10 +65,10 @@
   --danger-badge: #DC2626;                    
   --salary-green: #16A34A;                    
 
-  --bg-dark: #F8FAFC;                        
-  --text-main: #0F172A;                      
-  --text-muted: #475569;                    
-  --text-dark: #FFFFFF;                      
+  --bg-dark: #F8FAFC;                         
+  --text-main: #0F172A;                       
+  --text-muted: #475569;                     
+  --text-dark: #FFFFFF;                       
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
@@ -119,38 +123,22 @@ select:focus-visible {
 }
 
 /* ==========================================================================
-   2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES (CORREGIDO)
+   2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES (OPTIMIZADO)
    ========================================================================== */
 
-/* Por defecto o MODO POSTULANTE: Ocultar solo lo exclusivo de empresas */
-body.role-postulante .empresa-only,
-body.role-postulante .modo-empresa-only,
-body.role-postulante .seccion-empresa,
-body.role-postulante .job-company,
+/* Ocultar elementos exclusivos de empresas cuando está en MODO POSTULANTE o por defecto */
 body:not(.role-empresa) .empresa-only,
 body:not(.role-empresa) .modo-empresa-only,
 body:not(.role-empresa) .seccion-empresa,
-body:not(.role-empresa) .job-company {
+body:not(.role-empresa) .job-company,
+body.role-postulante .empresa-only,
+body.role-postulante .modo-empresa-only,
+body.role-postulante .seccion-empresa,
+body.role-postulante .job-company {
   display: none !important;
 }
 
-/* Asegurar visibilidad de secciones de postulante */
-body.role-postulante .postulante-only,
-body.role-postulante .modo-postulante-only,
-body.role-postulante .seccion-postulante,
-body.role-postulante .main-grid-section,
-body.role-postulante .categories-section,
-body:not(.role-empresa) .main-grid-section,
-body:not(.role-empresa) .categories-section {
-  display: block !important;
-}
-
-body.role-postulante .btn-postularme,
-body:not(.role-empresa) .btn-postularme {
-  display: inline-flex !important;
-}
-
-/* --- MODO EMPRESA ACTIVO --- */
+/* Ocultar elementos exclusivos de postulantes cuando está en MODO EMPRESA */
 body.role-empresa .postulante-only,
 body.role-empresa .modo-postulante-only,
 body.role-empresa .seccion-postulante,
@@ -160,17 +148,6 @@ body.role-empresa .btn-postularme {
   display: none !important;
 }
 
-body.role-empresa div.modo-empresa-only,
-body.role-empresa div.empresa-only,
-body.role-empresa section.modo-empresa-only,
-body.role-empresa section.empresa-only,
-body.role-empresa .seccion-empresa {
-  display: block !important;
-}
-
-body.role-empresa .talento-section {
-  display: block !important;
-}
 /* ==========================================================================
    3. NAVBAR / HEADER & NAVEGACIÓN
    ========================================================================== */
@@ -275,6 +252,7 @@ body.role-empresa .talento-section {
 .dropdown-container {
   position: relative;
   display: inline-block;
+  touch-action: manipulation;
 }
 
 .dropdown-menu {
