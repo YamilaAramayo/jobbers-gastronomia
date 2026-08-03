@@ -4,50 +4,92 @@
  * Búsqueda/Filtro, Integración WhatsApp, Modales, Dropdowns y Toasts.
  */
 
-// Variables globales para la postulación por modal
+// =========================================================================
+// 1. FUNCIONES GLOBALES (Definidas PRIMERO para garantizar disponibilidad)
+// =========================================================================
 let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
 
-// Funciones del Modal de Postulación (Globales para invocación inline/eventos)
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
-    whatsappEmpleadorActual = whatsappTel;
+    whatsappEmpleadorActual = whatsappTel || "5493513080197";
     tituloPuestoActual = `${puesto} — ${empresa}`;
 
     const titleEl = document.getElementById('modal-job-title');
     const modalEl = document.getElementById('postular-modal');
     
     if (titleEl) titleEl.innerText = tituloPuestoActual;
-    if (modalEl) modalEl.style.display = 'flex';
+    if (modalEl) {
+        modalEl.style.display = 'flex';
+        modalEl.classList.add('show'); // Por si usas clases CSS para mostrar
+    }
 };
 
 window.cerrarModalPostulacion = function() {
     const modalEl = document.getElementById('postular-modal');
     const formEl = document.getElementById('form-postularme');
-    if (modalEl) modalEl.style.display = 'none';
+    if (modalEl) {
+        modalEl.style.display = 'none';
+        modalEl.classList.remove('show');
+    }
     if (formEl) formEl.reset();
 };
 
 window.enviarPostulacionWhatsApp = function(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     const nombre = document.getElementById('postular-nombre')?.value.trim();
     const telefono = document.getElementById('postular-phone')?.value.trim();
 
-    if (!nombre || !telefono) return;
+    if (!nombre || !telefono) {
+        if (typeof window.mostrarToast === 'function') {
+            window.mostrarToast('Completá tu nombre y teléfono para continuar.', 'error');
+        }
+        return;
+    }
 
     const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme a la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
     const url = `https://wa.me/${whatsappEmpleadorActual}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(url, '_blank');
-    cerrarModalPostulacion();
+    window.cerrarModalPostulacion();
 };
 
+window.contactarTalento = function(nombre, puesto) {
+    const mensaje = `Hola Jobbers! 👋 Vimos el perfil destacado de *${nombre}* (${puesto}) en la plataforma y nos gustaría contactarlo/a para una entrevista.`;
+    const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+};
 
+window.mostrarToast = function(mensaje, tipo = 'success') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `jobbers-toast ${tipo}`;
+    
+    const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+    toast.innerHTML = `<i class="fas ${icono}"></i> <span>${mensaje}</span>`;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(50px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+};
+
+// =========================================================================
+// 2. LÓGICA PRINCIPAL AL CARGAR EL DOM
+// =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-    // -------------------------------------------------------------------------
-    // 1. DATOS SIMULADOS (MOCK DATA)
-    // -------------------------------------------------------------------------
+    // --- MOCK DATA ---
     const MOCK_VACANTES = [
         {
             id: 1,
@@ -126,9 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // -------------------------------------------------------------------------
-    // 2. GESTIÓN Y CAMBIO DE ROLES (POSTULANTE / EMPRESA)
-    // -------------------------------------------------------------------------
+    // --- GESTIÓN DE ROLES ---
     let rolSeleccionadoTemp = null;
 
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
@@ -218,14 +258,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-confirmar-rol')?.addEventListener('click', () => {
         if (rolSeleccionadoTemp) {
             aplicarRol(rolSeleccionadoTemp);
-            mostrarToast(`Perfil cambiado a ${rolSeleccionadoTemp === 'empresa' ? 'Empresa' : 'Postulante'}`);
+            window.mostrarToast(`Perfil cambiado a ${rolSeleccionadoTemp === 'empresa' ? 'Empresa' : 'Postulante'}`);
             cerrarModalPerfil();
         }
     });
 
-    // -------------------------------------------------------------------------
-    // 3. RENDERIZADO DINÁMICO DE VACANTES Y TALENTO
-    // -------------------------------------------------------------------------
+    // --- RENDERIZADO DE VACANTES Y TALENTO ---
     function renderizarVacantes(vacantes) {
         const contenedor = document.getElementById('lista-vacantes');
         if (!contenedor) return;
@@ -259,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div class="job-action-col">
                     <span class="job-time">${v.tiempo}</span>
-                    <button type="button" class="btn-postularme" onclick="abrirModalPostulacion('${v.titulo}', '${v.empresa}', '${v.telefono}')">
+                    <button type="button" class="btn-postularme" onclick="window.abrirModalPostulacion('${v.titulo.replace(/'/g, "\\'")}', '${v.empresa.replace(/'/g, "\\'")}', '${v.telefono}')">
                         <i class="fab fa-whatsapp" style="margin-right: 0.4rem; font-size: 1rem;"></i> Postularme
                     </button>
                 </div>
@@ -285,16 +323,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div><i class="fas fa-map-marker-alt" style="color: var(--primary, #00e676);"></i> ${t.zona}</div>
                     <div style="margin-top: 0.2rem;"><i class="fas fa-user-clock" style="color: var(--primary, #00e676);"></i> ${t.disponibilidad}</div>
                 </div>
-                <button type="button" class="btn-whatsapp" style="width: 100%; margin-top: 0.5rem; height: 38px; font-size: 0.78rem;" onclick="contactarTalento('${t.nombre}', '${t.puesto}')">
+                <button type="button" class="btn-whatsapp" style="width: 100%; margin-top: 0.5rem; height: 38px; font-size: 0.78rem;" onclick="window.contactarTalento('${t.nombre.replace(/'/g, "\\'")}', '${t.puesto.replace(/'/g, "\\'")}')">
                     <i class="fab fa-whatsapp"></i> Contactar Perfil
                 </button>
             </div>
         `).join('');
     }
 
-    // -------------------------------------------------------------------------
-    // 4. BUSCADOR EN TIEMPO REAL
-    // -------------------------------------------------------------------------
+    // --- BUSCADOR ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
 
@@ -314,23 +350,21 @@ document.addEventListener('DOMContentLoaded', () => {
     inputBuscador?.addEventListener('input', filtrarEmpleos);
     btnBuscador?.addEventListener('click', filtrarEmpleos);
 
-    // -------------------------------------------------------------------------
-    // 5. ENVÍO DE FORMULARIO EXPRESS (EMPRESA -> WHATSAPP)
-    // -------------------------------------------------------------------------
+    // --- FORMULARIO EXPRESS EMPRESAS ---
     const formExpress = document.getElementById('form-publicar-express');
 
     formExpress?.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const empresa = document.getElementById('nombre-empresa').value.trim();
-        const telefono = document.getElementById('telefono-contacto').value.trim();
-        const puesto = document.getElementById('puesto-requerido').value;
-        const zona = document.getElementById('zona-local').value;
-        const turno = document.getElementById('turno-puesto').value;
-        const jornada = document.getElementById('jornada-puesto').value;
+        const empresa = document.getElementById('nombre-empresa')?.value.trim();
+        const telefono = document.getElementById('telefono-contacto')?.value.trim();
+        const puesto = document.getElementById('puesto-requerido')?.value;
+        const zona = document.getElementById('zona-local')?.value;
+        const turno = document.getElementById('turno-puesto')?.value;
+        const jornada = document.getElementById('jornada-puesto')?.value;
 
         if (!empresa || !telefono || !puesto || !zona || !turno || !jornada) {
-            mostrarToast('Por favor, completá todos los campos.', 'error');
+            window.mostrarToast('Por favor, completá todos los campos.', 'error');
             return;
         }
 
@@ -345,28 +379,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
         
-        mostrarToast('Redirigiendo a WhatsApp...', 'success');
+        window.mostrarToast('Redirigiendo a WhatsApp...', 'success');
         setTimeout(() => {
             window.open(url, '_blank');
             formExpress.reset();
         }, 1000);
     });
 
-    // -------------------------------------------------------------------------
-    // 6. ACCIONES DE WHATSAPP GLOBAL (TALENTO & EVENTOS)
-    // -------------------------------------------------------------------------
-    window.contactarTalento = function(nombre, puesto) {
-        const mensaje = `Hola Jobbers! 👋 Vimos el perfil destacado de *${nombre}* (${puesto}) en la plataforma y nos gustaría contactarlo/a para una entrevista.`;
-        const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
-        window.open(url, '_blank');
-    };
+    // --- ESCUCHADORES EXTRA DE MODALES Y BINDINGS ---
+    document.getElementById('form-postularme')?.addEventListener('submit', window.enviarPostulacionWhatsApp);
 
-    // Vincular submit del formulario del modal de postulación si existe
-    document.getElementById('form-postularme')?.addEventListener('submit', enviarPostulacionWhatsApp);
+    // Cierre de modal de postulación si existe botón o backdrop
+    document.querySelectorAll('.btn-cerrar-postular, .modal-close-btn').forEach(btn => {
+        btn.addEventListener('click', window.cerrarModalPostulacion);
+    });
 
-    // -------------------------------------------------------------------------
-    // 7. DROPDOWN DE RECURSOS & INTERACTIVIDAD
-    // -------------------------------------------------------------------------
+    const modalPostularme = document.getElementById('postular-modal');
+    modalPostularme?.addEventListener('click', (e) => {
+        if (e.target === modalPostularme) {
+            window.cerrarModalPostulacion();
+        }
+    });
+
+    // --- DROPDOWN RECURSOS ---
     const dropdownToggle = document.getElementById('dropdown-recursos');
     const dropdownMenu = document.getElementById('menu-recursos');
 
@@ -380,33 +415,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdownMenu.classList.remove('show');
         }
     });
-
-    // -------------------------------------------------------------------------
-    // 8. SISTEMA DE NOTIFICACIONES TOAST
-    // -------------------------------------------------------------------------
-    function mostrarToast(mensaje, tipo = 'success') {
-        let container = document.getElementById('toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toast-container';
-            document.body.appendChild(container);
-        }
-
-        const toast = document.createElement('div');
-        toast.className = `jobbers-toast ${tipo}`;
-        
-        const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-        toast.innerHTML = `<i class="fas ${icono}"></i> <span>${mensaje}</span>`;
-
-        container.appendChild(toast);
-
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(50px)';
-            toast.style.transition = 'all 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
 
     // Inicializar app
     initRol();
