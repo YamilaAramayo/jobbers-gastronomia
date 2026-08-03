@@ -60,17 +60,17 @@
             </div>
 
             <!-- PASO 2: Confirmación -->
-            <div id="rol-step-confirm" style="display: none; text-align: center;">
+            <div id="rol-step-confirm" class="rol-confirm-box" style="display: none;">
                 <h2>¿Estás seguro/a? 🤔</h2>
-                <p style="margin-bottom: 1rem;">Vas a ingresar a la plataforma como:</p>
+                <p class="confirm-subtitle">Vas a ingresar a la plataforma como:</p>
                 
-                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--primary); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <strong id="rol-nombre-confirmar" style="color: var(--primary); font-size: 1.2rem; display: block;"></strong>
+                <div class="confirm-badge-container">
+                    <strong id="rol-nombre-confirmar" class="confirm-badge-text"></strong>
                 </div>
 
-                <div style="display: flex; gap: 0.75rem;">
-                    <button type="button" class="btn-secondary" id="btn-volver-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Volver</button>
-                    <button type="button" class="btn-primary" id="btn-confirmar-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Ingresar</button>
+                <div class="confirm-actions">
+                    <button type="button" class="btn-secondary" id="btn-volver-rol">Volver</button>
+                    <button type="button" class="btn-primary" id="btn-confirmar-rol">Ingresar</button>
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="tel" id="postular-phone" placeholder="Tu WhatsApp de contacto" required />
+                    <input type="tel" id="postular-phone" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required />
                 </div>
 
                 <button type="submit" class="btn-contactar-empleador">
@@ -105,7 +105,7 @@
         </div>
     </div>
 
-    <!-- NAVEGACIÓN PRINCIPAL (SINCRONIZADA CON CSS) -->
+    <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
         <a href="#" class="logo" aria-label="Inicio Jobbers">
             <h1 class="logo-title">JOBBERS</h1>
@@ -163,14 +163,17 @@
                     </div>
                 </div>
 
-                <!-- Categorías Rápidas -->
+                <!-- Categorías Rápidas Ampliadas -->
                 <div class="category-chips-container modo-postulante-only">
                     <nav class="category-chips" aria-label="Filtrar vacantes por categoría">
-                        <button type="button" class="chip active" data-cat="todas">Todas</button>
+                        <button type="button" class="chip active" data-cat="todas"><i class="fas fa-border-all" aria-hidden="true"></i> Todas</button>
                         <button type="button" class="chip" data-cat="cocina">🍳 Cocina</button>
                         <button type="button" class="chip" data-cat="salon">🍷 Salón</button>
                         <button type="button" class="chip" data-cat="barismo">☕ Barismo / Barra</button>
                         <button type="button" class="chip" data-cat="delivery">🛵 Delivery</button>
+                        <button type="button" class="chip" data-cat="limpieza">🧽 Bacha / Limpieza</button>
+                        <button type="button" class="chip" data-cat="rrhh">💼 RRHH / Gestión</button>
+                        <button type="button" class="chip" data-cat="administracion">📊 Administración / Cajas</button>
                     </nav>
                 </div>
 
@@ -208,9 +211,10 @@
                             </div>
 
                             <div class="form-group">
-                                <select id="puesto-requerido" required>
-                                    <option value="" disabled selected>Puesto que necesitás</option>
-                                    <optgroup label="Cocina y Producción">
+                                <select id="puesto-requerido" class="form-control" required>
+                                    <option value="" disabled selected>Puesto que necesitás...</option>
+
+                                    <optgroup label="🍳 Cocina & Producción">
                                         <option value="Chef / Chef Ejecutivo">Chef / Chef Ejecutivo</option>
                                         <option value="Encargado / Jefe de Cocina">Encargado / Jefe de Cocina</option>
                                         <option value="Cocinero / Cocinera">Cocinero / Cocinera</option>
@@ -220,21 +224,36 @@
                                         <option value="SushiMAN / SushiWOMAN">SushiMAN / SushiWOMAN</option>
                                         <option value="Pastelero / Repostero">Pastelero / Repostero</option>
                                         <option value="Panadero">Panadero</option>
-                                        <option value="Bachero / Limpieza">Bachero / Limpieza de Cocina</option>
                                     </optgroup>
-                                    <optgroup label="Salón y Atención">
+
+                                    <optgroup label="🍷 Salón & Atención">
                                         <option value="Mozo / Moza de Salón">Mozo / Moza de Salón</option>
                                         <option value="Commis / Ayudante de Mozo">Commis / Ayudante de Mozo</option>
                                         <option value="Hostess / Recepcionista">Hostess / Recepcionista</option>
-                                        <option value="Bartender / Barman">Bartender / Barman</option>
-                                        <option value="Barista Professional">Barista Profesional</option>
-                                        <option value="Cajero / Cajera">Cajero / Cajera</option>
-                                        <option value="Mano Derecha / Encargado de Salón">Encargado de Salón / Maitre</option>
+                                        <option value="Encargado de Salón / Maitre">Encargado de Salón / Maître</option>
                                     </optgroup>
-                                    <optgroup label="Delivery y Operaciones">
+
+                                    <optgroup label="🍸 Barra & Cafetería">
+                                        <option value="Bartender / Barman">Bartender / Barman</option>
+                                        <option value="Barista Profesional">Barista Profesional</option>
+                                        <option value="Jefe de Barra">Jefe de Barra</option>
+                                    </optgroup>
+
+                                    <optgroup label="💼 RRHH & Administración Gastronómica">
+                                        <option value="Gerente / Administrador de Local">Gerente / Administrador de Local</option>
+                                        <option value="Analista de RRHH Gastronómico">Analista de RRHH Gastronómico</option>
+                                        <option value="Cajero / Cajera">Cajero / Cajera</option>
+                                        <option value="Encargado de Compras / Stock">Encargado de Compras / Stock</option>
+                                    </optgroup>
+
+                                    <optgroup label="🧽 Mantenimiento & Limpieza">
+                                        <option value="Bachero / Operario de Limpieza">Bachero / Operario de Limpieza</option>
+                                        <option value="Personal de Mantenimiento">Personal de Mantenimiento</option>
+                                    </optgroup>
+
+                                    <optgroup label="🛵 Logística & Delivery">
                                         <option value="Repartidor / Delivery (Moto)">Repartidor / Delivery (Moto)</option>
                                         <option value="Empaquetador / Armador de Pedidos">Empaquetador / Armador de Pedidos</option>
-                                        <option value="Personal de Limpieza General">Personal de Limpieza General</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -250,7 +269,7 @@
                                         <option value="Centro">Centro</option>
                                         <option value="Alta Córdoba">Alta Córdoba</option>
                                         <option value="Jardín / Barrio Jardín">Barrio Jardín</option>
-                                        <option value="Urca / Gauss">Urca / Av. Gauss</option>
+                                        <option value="Urca / Av. Gauss">Urca / Av. Gauss</option>
                                         <option value="Manantiales">Manantiales</option>
                                         <option value="Villa Belgrano">Villa Belgrano</option>
                                         <option value="Recta Martinoli">Recta Martinoli</option>
@@ -275,7 +294,7 @@
                                         <option value="Yofre">Yofre</option>
                                         <option value="San Vicente">San Vicente</option>
                                         <option value="Bajo Palermo">Bajo Palermo</option>
-                                        <option value="Talleres (E y O)">Talleres</option>
+                                        <option value="Talleres">Talleres (E y O)</option>
                                     </optgroup>
                                     <optgroup label="Zona Oeste">
                                         <option value="Alberdi">Alberdi</option>
@@ -328,18 +347,16 @@
             <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
             
             <!-- TARJETA COMUNIDAD & NOTICIAS LABORALES -->
-            <div class="card-comunidad" id="comunidad-blog" style="margin-top: 2.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
-                <h3 style="font-size: 1.4rem; color: var(--text-main); margin-bottom: 0.75rem; font-weight: 800; letter-spacing: 0.5px;">
-                    FORMÁ PARTE DE LA COMUNIDAD JOBBERS
-                </h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+            <div class="card-comunidad" id="comunidad-blog">
+                <h3 class="comunidad-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS</h3>
+                <p class="comunidad-desc">
                     Aparecé en nuestra lista de talentos destacados, leé las últimas noticias del sector gastronómico y accedé a contenido exclusivo para impulsar tu carrera.
                 </p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button type="button" class="btn-primary" style="background: var(--primary); border: none; color: var(--text-dark); font-weight: 800; padding: 0.85rem 1.75rem; border-radius: var(--radius-sm); cursor: pointer; text-transform: uppercase;" onclick="window.contactarTalento('Nuevo Candidato', 'Registro Comunidad')">
+                <div class="comunidad-actions">
+                    <button type="button" class="btn-primary btn-destacar" onclick="window.contactarTalento('Nuevo Candidato', 'Registro Comunidad')">
                         DESTACÁ TU PERFIL
                     </button>
-                    <a href="#" class="btn-secondary" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 0.85rem 1.5rem; border-radius: var(--radius-sm); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <a href="#" class="btn-secondary btn-noticias">
                         <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Noticias
                     </a>
                 </div>
