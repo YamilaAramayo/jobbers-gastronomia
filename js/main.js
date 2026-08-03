@@ -141,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- CARGA ASÍNCRONA DESDE JSON ---
     async function cargarVacantes() {
         try {
-            const respuesta = await fetch('base_de_datos.json');
+            // Se fuerza la ruta relativa explícita a la raíz
+            const respuesta = await fetch('./base_de_datos.json');
             if (!respuesta.ok) throw new Error(`Status: ${respuesta.status}`);
 
             const datos = await respuesta.json();
@@ -365,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
 
-            // Preferir la lectura de data-cat si está disponible
             const catAttr = chip.getAttribute('data-cat');
             if (catAttr) {
                 categoriaActual = catAttr.toLowerCase();
@@ -454,6 +454,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Arrancar la app
+    // Arrancar la aplicación
     initRol();
 });
