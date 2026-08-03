@@ -6,20 +6,20 @@
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;                        /* Ámbar / Naranja brillante */
+  --primary: #F39C12;                         /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;                      /* Fondo muy oscuro */
-  --card-bg: #16181A;                        /* Fondo de tarjetas */
-  --card-bg-light: #212428;                  /* Hover o tarjetas secundarias */
+  --secondary: #0D0D0D;                       /* Fondo muy oscuro */
+  --card-bg: #16181A;                         /* Fondo de tarjetas */
+  --card-bg-light: #212428;                   /* Hover o tarjetas secundarias */
   --whatsapp-orange: #F39C12;
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;                   /* Badge Urgente y errores */
-  --salary-green: #2ECC71;                   /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;                    /* Badge Urgente y errores */
+  --salary-green: #2ECC71;                    /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
-  --text-main: #F8FAFC;                      /* Blanco puro para máxima legibilidad */
-  --text-muted: #CBD5E1;                     /* Gris claro brillante para enlaces y texto secundario */
-  --text-dark: #0F172A;                      /* Texto oscuro sobre superficies de alto contraste */
+  --text-main: #F8FAFC;                       /* Blanco puro para máxima legibilidad */
+  --text-muted: #CBD5E1;                      /* Gris claro brillante */
+  --text-dark: #0F172A;                       /* Texto oscuro sobre superficies claras */
   --border-color: #26292E;
 
   /* Bordes y Sombras estilizados */
@@ -51,20 +51,20 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;                        
+  --primary: #D67E00;                         
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;                      
-  --card-bg: #FFFFFF;                        
-  --card-bg-light: #F1F5F9;                
+  --secondary: #F8FAFC;                       
+  --card-bg: #FFFFFF;                         
+  --card-bg-light: #F1F5F9;                 
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;                 
-  --salary-green: #16A34A;                 
+  --danger-badge: #DC2626;                  
+  --salary-green: #16A34A;                  
 
-  --bg-dark: #F8FAFC;                      
-  --text-main: #0F172A;                    
-  --text-muted: #475569;                  
-  --text-dark: #FFFFFF;                    
+  --bg-dark: #F8FAFC;                       
+  --text-main: #0F172A;                     
+  --text-muted: #475569;                   
+  --text-dark: #FFFFFF;                     
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
@@ -113,7 +113,7 @@ img {
    2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES
    ========================================================================== */
 
-/* --- A. MODO POSTULANTE ACTIVO --- */
+/* --- A. MODO POSTULANTE ACTIVO (DEFAULT) --- */
 body.role-postulante .empresa-only,
 body.role-postulante .modo-empresa-only,
 body.role-postulante .seccion-empresa,
@@ -1197,9 +1197,8 @@ body.role-empresa .job-company::before {
 
 .jobbers-toast {
   pointer-events: auto;
-  background: var(--card-bg);
   border: 1px solid var(--border-color);
-  color: var(--text-main);
+  color: #FFFFFF !important;
   padding: 12px 18px;
   border-radius: var(--radius-sm);
   font-size: 0.88rem;
@@ -1209,9 +1208,6 @@ body.role-empresa .job-company::before {
   gap: 10px;
   animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.jobbers-toast.success { border-left: 4px solid var(--salary-green); }
-.jobbers-toast.error { border-left: 4px solid var(--danger-badge); }
 
 /* Keyframes */
 @keyframes modalFadeIn {
@@ -1304,6 +1300,11 @@ body.role-empresa .job-company::before {
     border-top: 1px solid var(--border-color);
     padding-top: 1rem;
     margin-top: 0.5rem;
+  }
+
+  .btn-postularme {
+    flex: 1;
+    max-width: 200px;
   }
 
   .form-row-2col {
