@@ -6,20 +6,20 @@
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;                       /* Ámbar / Naranja brillante */
+  --primary: #F39C12;                        /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;                     /* Fondo muy oscuro */
-  --card-bg: #16181A;                       /* Fondo de tarjetas */
-  --card-bg-light: #212428;                 /* Hover o tarjetas secundarias */
+  --secondary: #0D0D0D;                      /* Fondo muy oscuro */
+  --card-bg: #16181A;                        /* Fondo de tarjetas */
+  --card-bg-light: #212428;                  /* Hover o tarjetas secundarias */
   --whatsapp-orange: #F39C12;
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;                  /* Badge Urgente y errores */
-  --salary-green: #2ECC71;                  /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;                   /* Badge Urgente y errores */
+  --salary-green: #2ECC71;                   /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
-  --text-main: #F8FAFC;                     /* Blanco puro para máxima legibilidad */
-  --text-muted: #CBD5E1;                    /* Gris claro brillante para enlaces y texto secundario */
-  --text-dark: #0F172A;                     /* Texto oscuro sobre superficies de alto contraste */
+  --text-main: #F8FAFC;                      /* Blanco puro para máxima legibilidad */
+  --text-muted: #CBD5E1;                     /* Gris claro brillante para enlaces y texto secundario */
+  --text-dark: #0F172A;                      /* Texto oscuro sobre superficies de alto contraste */
   --border-color: #26292E;
 
   /* Bordes y Sombras estilizados */
@@ -30,7 +30,7 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
-  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Capas / Z-Index */
   --z-dropdown: 1000;
@@ -51,20 +51,20 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;                     
+  --primary: #D67E00;                      
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;                   
-  --card-bg: #FFFFFF;                     
-  --card-bg-light: #F1F5F9;             
+  --secondary: #F8FAFC;                    
+  --card-bg: #FFFFFF;                      
+  --card-bg-light: #F1F5F9;              
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;              
-  --salary-green: #16A34A;              
+  --danger-badge: #DC2626;               
+  --salary-green: #16A34A;               
 
-  --bg-dark: #F8FAFC;                   
-  --text-main: #0F172A;                 
-  --text-muted: #475569;               
-  --text-dark: #FFFFFF;                 
+  --bg-dark: #F8FAFC;                    
+  --text-main: #0F172A;                  
+  --text-muted: #475569;                
+  --text-dark: #FFFFFF;                  
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
@@ -196,17 +196,17 @@ body.role-empresa .job-company::before {
   top: 0;
   z-index: var(--z-navbar);
   width: 100%;
-  background-color: rgba(13, 13, 13, 0.95);
+  background-color: rgba(13, 13, 13, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 1.75rem;
 }
 
 [data-theme="light"] .navbar,
 .light-theme .navbar {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.88);
 }
 
 .navbar-container {
@@ -226,9 +226,9 @@ body.role-empresa .job-company::before {
 }
 
 .logo h2 {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   color: var(--text-main);
   line-height: 1;
   margin: 0;
@@ -239,14 +239,14 @@ body.role-empresa .job-company::before {
   font-weight: 700;
   color: var(--primary);
   letter-spacing: 1.5px;
-  margin-top: 3px;
+  margin-top: 4px;
   text-transform: uppercase;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.85rem;
   margin-left: auto;
 }
 
@@ -262,8 +262,8 @@ body.role-empresa .job-company::before {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 0.85rem;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
   border-radius: var(--radius-sm);
   white-space: nowrap;
 }
@@ -288,38 +288,43 @@ body.role-empresa .job-company::before {
 }
 
 /* Badge / Botón de Cambiar Modo (Postulante <-> Empresa) */
-.btn-role-badge {
+.btn-role-badge,
+.btn-cambiar-rol {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(243, 156, 18, 0.12);
-  border: 1px solid var(--primary);
-  color: var(--text-main);
-  padding: 0.5rem 0.95rem;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, rgba(243, 156, 18, 0.15) 0%, rgba(243, 156, 18, 0.05) 100%);
+  border: 1px solid rgba(243, 156, 18, 0.5) !important;
+  color: var(--text-main) !important;
+  padding: 0.55rem 1.1rem;
   border-radius: 50px;
   font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
   transition: var(--transition);
   white-space: nowrap;
-  margin-left: 0.25rem;
-  box-shadow: 0 0 12px rgba(243, 156, 18, 0.15);
+  margin-left: 0.4rem;
+  box-shadow: 0 2px 10px rgba(243, 156, 18, 0.12);
 }
 
-.btn-role-badge i {
+.btn-role-badge i,
+.btn-cambiar-rol i {
   font-size: 1rem;
   color: var(--primary);
   transition: var(--transition);
 }
 
-.btn-role-badge:hover {
-  background: var(--primary);
-  color: var(--text-dark);
+.btn-role-badge:hover,
+.btn-cambiar-rol:hover {
+  background: var(--primary) !important;
+  color: var(--text-dark) !important;
+  border-color: var(--primary) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(243, 156, 18, 0.4);
+  box-shadow: 0 4px 18px rgba(243, 156, 18, 0.35);
 }
 
-.btn-role-badge:hover i {
+.btn-role-badge:hover i,
+.btn-cambiar-rol:hover i {
   color: var(--text-dark);
 }
 
@@ -328,14 +333,14 @@ body.role-empresa .job-company::before {
   font-weight: 600;
   opacity: 0.9;
   background: rgba(0, 0, 0, 0.3);
-  padding: 0.15rem 0.45rem;
+  padding: 0.15rem 0.5rem;
   border-radius: 10px;
   margin-left: 0.2rem;
   color: var(--primary);
 }
 
 .btn-role-badge:hover .badge-change-indicator {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.2);
   color: var(--text-dark);
 }
 
@@ -348,7 +353,7 @@ body.role-empresa .nav-link.modo-empresa-only {
   font-weight: 800 !important;
   padding: 0.55rem 1.25rem !important;
   border-radius: var(--radius-sm) !important;
-  box-shadow: 0 0 14px rgba(243, 156, 18, 0.4);
+  box-shadow: 0 0 14px rgba(243, 156, 18, 0.35);
   transition: var(--transition);
   letter-spacing: 0.3px;
   text-transform: uppercase;
@@ -361,7 +366,7 @@ body.role-empresa .nav-btn-publicar:hover,
 body.role-empresa .nav-link.modo-empresa-only:hover {
   background: var(--primary-hover) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(243, 156, 18, 0.55);
+  box-shadow: 0 4px 20px rgba(243, 156, 18, 0.5);
 }
 
 /* ==========================================================================
@@ -375,13 +380,13 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 12px);
   right: 0;
   min-width: 240px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 0.5rem 0;
+  padding: 0.6rem 0;
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
@@ -404,8 +409,8 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .dropdown-item {
   display: flex !important;
   align-items: center !important;
-  gap: 0.75rem !important;
-  padding: 0.7rem 1.25rem !important;
+  gap: 0.85rem !important;
+  padding: 0.75rem 1.25rem !important;
   font-size: 0.88rem !important;
   color: var(--text-main) !important;
   transition: var(--transition) !important;
@@ -429,6 +434,18 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   color: var(--primary) !important;
 }
 
+/* Flechas indicadoras de dropdown */
+.nav-icon-arrow {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  transition: transform 0.25s ease;
+}
+
+.dropdown:hover .nav-icon-arrow {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
 /* ==========================================================================
    5. HERO SECTION & BUSCADOR
    ========================================================================== */
@@ -440,7 +457,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 4.5rem 1.5rem;
+  padding: 5rem 1.5rem;
   color: var(--text-main);
   display: flex;
   justify-content: center;
@@ -477,14 +494,14 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   align-items: center;
   text-align: center;
   width: 100%;
-  max-width: 750px;
+  max-width: 780px;
 }
 
 .hero-title {
   font-size: 2.8rem;
   font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 0.85rem;
+  line-height: 1.18;
+  margin-bottom: 1rem;
   letter-spacing: -0.5px;
   text-transform: uppercase;
 }
@@ -496,30 +513,30 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .hero-subtitle {
   font-size: 1.05rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   line-height: 1.6;
-  max-width: 600px;
+  max-width: 620px;
 }
 
 .hero-features {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.25rem;
-  font-size: 0.88rem;
+  gap: 1.5rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
 }
 
 .hero-features i {
   color: var(--primary);
-  margin-right: 0.35rem;
+  margin-right: 0.4rem;
 }
 
 /* Buscador Integrado */
 .hero-search-bar {
   width: 100%;
-  max-width: 600px;
+  max-width: 620px;
   display: flex;
   gap: 0.75rem;
   margin: 0 auto;
@@ -548,7 +565,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   background: var(--primary);
   color: var(--text-dark);
   border: none;
-  padding: 0 1.75rem;
+  padding: 0 1.85rem;
   height: 52px;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -566,13 +583,94 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 }
 
 /* ==========================================================================
-   6. FORMULARIO EXPRESS & TARJETAS DEL HERO
+   6. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS
+   ========================================================================== */
+.category-chips-container {
+  width: 100%;
+  max-width: 650px;
+  margin: 1.5rem auto 0 auto;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0.4rem 0.2rem 0.6rem 0.2rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  display: flex;
+  justify-content: center;
+}
+
+.category-chips-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ocultar estrictamente en Modo Empresa */
+body.role-empresa .category-chips-container,
+body:not(.role-postulante) .category-chips-container {
+  display: none !important;
+}
+
+/* Mostrar explícitamente en Modo Postulante */
+body.role-postulante .category-chips-container {
+  display: flex !important;
+}
+
+.category-chips {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0 auto;
+}
+
+.chip {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1.05rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.chip:hover {
+  background-color: var(--card-bg-light);
+  color: var(--text-main);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.chip.active {
+  background-color: var(--primary);
+  color: var(--text-dark);
+  border-color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 3px 12px rgba(243, 156, 18, 0.3);
+}
+
+.chip i {
+  font-size: 0.85rem;
+  color: var(--primary);
+  transition: var(--transition);
+}
+
+.chip.active i {
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   7. FORMULARIO EXPRESS & TARJETAS DEL HERO
    ========================================================================== */
 .express-section-bottom {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 4rem 1.5rem;
+  padding: 4.5rem 1.5rem;
   background-color: var(--bg-dark);
 }
 
@@ -586,7 +684,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 }
 
 .hero-empresa-header {
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
   text-align: center;
   width: 100%;
 }
@@ -610,12 +708,12 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 
 .hero-card-express {
   width: 100%;
-  max-width: 520px;
+  max-width: 540px;
   background: rgba(22, 24, 26, 0.95);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   color: var(--text-main);
-  padding: 2rem;
+  padding: 2.2rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -631,11 +729,11 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .card-header h2 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -644,17 +742,17 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .text-warning { color: var(--primary); }
 
 .hero-card-express p {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
-  margin-bottom: 1.25rem;
-  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  line-height: 1.45;
   text-align: center;
 }
 
 .express-form {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
 .form-group {
@@ -666,7 +764,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .form-row-2col {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
 .express-form input,
@@ -674,12 +772,12 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .express-form select,
 .form-group select {
   width: 100%;
-  height: 46px;
-  padding: 0 1rem;
+  height: 48px;
+  padding: 0 1.1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background-color: #0A0B0C;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   outline: none;
   transition: var(--transition);
   color: var(--text-main);
@@ -728,60 +826,60 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 
 .btn-whatsapp {
   width: 100%;
-  min-height: 48px;
+  min-height: 50px;
   padding: 0.85rem;
   background-color: var(--primary);
   color: var(--text-dark);
   border: none;
   border-radius: var(--radius-sm);
   font-weight: 800;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   transition: var(--transition);
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
 }
 
 .btn-whatsapp:hover {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(243, 156, 18, 0.35);
+  box-shadow: 0 4px 16px rgba(243, 156, 18, 0.35);
 }
 
 .express-footer-note {
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  margin-top: 0.6rem;
+  margin-top: 0.75rem;
 }
 
 /* ==========================================================================
-   7. LISTADO DE VACANTES & TALENTO
+   8. LISTADO DE VACANTES & TALENTO
    ========================================================================== */
 .main-grid-section, .info-section, .talento-section {
   max-width: 1100px;
-  margin: 3.5rem auto;
+  margin: 3.8rem auto;
   padding: 0 1.5rem;
 }
 
 .vacantes-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .job-offer-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 1.35rem 1.5rem;
+  padding: 1.45rem 1.65rem;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.2rem;
+  gap: 1.25rem;
   align-items: center;
   transition: var(--transition);
 }
@@ -795,18 +893,18 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .job-info-main {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .job-header-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
   flex-wrap: wrap;
 }
 
 .job-offer-card h4 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.3;
@@ -815,14 +913,14 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .badge-urgente {
   background: var(--danger-badge);
   color: #FFFFFF;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  padding: 0.2rem 0.5rem;
+  padding: 0.22rem 0.55rem;
   border-radius: 4px;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.35rem;
   letter-spacing: 0.5px;
 }
 
@@ -830,16 +928,16 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
-  font-size: 0.85rem;
+  gap: 1.15rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
 }
 
 .job-details-row span {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .job-details-row i {
@@ -857,22 +955,22 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--border-color);
-  padding-top: 1rem;
+  padding-top: 1.1rem;
   gap: 1rem;
 }
 
 .job-time {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .btn-postularme {
   background-color: var(--primary);
   color: var(--text-dark);
   font-weight: 800;
-  font-size: 0.8rem;
-  padding: 0.65rem 1.25rem;
+  font-size: 0.82rem;
+  padding: 0.7rem 1.35rem;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
@@ -894,10 +992,10 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .link-more-full {
   display: block;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   color: var(--primary);
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   transition: var(--transition);
 }
 
@@ -907,33 +1005,33 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 
 .talento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.35rem;
 }
 
 /* ==========================================================================
-   8. INFORMACIÓN Y NOSOTROS
+   9. INFORMACIÓN Y NOSOTROS
    ========================================================================== */
 .info-section {
   text-align: center;
 }
 
 .info-section h2 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.85rem;
 }
 
 .info-section p {
   color: var(--text-muted);
-  font-size: 0.92rem;
-  max-width: 650px;
+  font-size: 0.95rem;
+  max-width: 680px;
   margin: 0 auto;
   line-height: 1.7;
 }
 
 /* ==========================================================================
-   9. MODALES GENERALES, MODAL POSTULAR & TOASTS
+   10. MODALES GENERALES, MODAL POSTULAR & TOASTS
    ========================================================================== */
 .rol-modal-overlay {
   position: fixed;
@@ -954,8 +1052,8 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 2rem;
-  max-width: 440px;
+  padding: 2.2rem;
+  max-width: 450px;
   width: 100%;
   text-align: center;
   box-shadow: var(--shadow-lg);
@@ -965,28 +1063,28 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 }
 
 .rol-modal-card h2 {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
 }
 
 .rol-modal-card p {
   color: var(--text-muted);
-  font-size: 0.88rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 1.6rem;
 }
 
 .rol-options {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
 .btn-rol {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.2rem 1rem;
+  padding: 1.25rem 1rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--card-bg-light);
@@ -1002,17 +1100,17 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 }
 
 .rol-icon {
-  font-size: 1.8rem;
-  margin-bottom: 0.3rem;
+  font-size: 1.85rem;
+  margin-bottom: 0.35rem;
 }
 
 .rol-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 800;
 }
 
 .rol-desc {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   margin-top: 0.2rem;
 }
@@ -1023,7 +1121,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 2.2rem 2rem;
-  max-width: 440px;
+  max-width: 450px;
   width: 100%;
   text-align: left;
   box-shadow: var(--shadow-lg);
@@ -1037,14 +1135,14 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   font-weight: 800;
   letter-spacing: 0.5px;
   color: var(--text-main);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .modal-job-title {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: var(--primary);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.35rem;
   line-height: 1.4;
 }
 
@@ -1052,23 +1150,23 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   background-color: rgba(231, 76, 60, 0.08);
   border-left: 3px solid var(--danger-badge);
   border-radius: var(--radius-sm);
-  padding: 0.85rem 1rem;
+  padding: 0.9rem 1.1rem;
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.8rem;
   margin-bottom: 1.5rem;
 }
 
 .postular-alert-box .alert-icon {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1;
 }
 
 .postular-alert-box p {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   color: #E2E8F0;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .postular-alert-box u {
@@ -1079,13 +1177,13 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 .postular-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .postular-form input {
   width: 100%;
   height: 48px;
-  padding: 0 1rem;
+  padding: 0 1.1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background-color: #0A0B0C;
@@ -1114,14 +1212,14 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   border: none;
   border-radius: var(--radius-sm);
   font-weight: 800;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   transition: var(--transition);
   margin-top: 0.5rem;
 }
@@ -1144,8 +1242,8 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 
 .jobbers-close-btn {
   position: absolute;
-  top: 16px;
-  right: 20px;
+  top: 18px;
+  right: 22px;
   background: none;
   border: none;
   color: var(--text-muted);
@@ -1168,7 +1266,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   z-index: var(--z-toast);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   pointer-events: none;
 }
 
@@ -1179,7 +1277,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   color: var(--text-main);
   padding: 12px 18px;
   border-radius: var(--radius-sm);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
@@ -1196,7 +1294,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 }
 
 /* ==========================================================================
-   10. BOTTOM NAV (MOBILE) & FOOTER
+   11. BOTTOM NAV (MOBILE) & FOOTER
    ========================================================================== */
 .bottom-nav {
   position: fixed;
@@ -1228,7 +1326,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   transition: var(--transition);
   background: none;
@@ -1237,7 +1335,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   padding: 0.25rem;
 }
 
-.bottom-nav-item i { font-size: 1.2rem; }
+.bottom-nav-item i { font-size: 1.25rem; }
 .bottom-nav-item.active { color: var(--primary); }
 
 .bottom-nav-item.highlight-item {
@@ -1247,15 +1345,15 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 
 .main-footer {
   text-align: center;
-  padding: 2.5rem 1.5rem;
+  padding: 2.8rem 1.5rem;
   border-top: 1px solid var(--border-color);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  margin-top: 4rem;
+  margin-top: 4.5rem;
 }
 
 /* ==========================================================================
-   11. MEDIA QUERIES
+   12. MEDIA QUERIES (RESPONSIVE DESIGN)
    ========================================================================== */
 @media (max-width: 899px) {
   .hero-container-centered {
@@ -1267,17 +1365,18 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   }
 
   .nav-links {
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
   
   .nav-link {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.82rem;
   }
 
-  .btn-role-badge {
-    padding: 0.35rem 0.65rem;
-    font-size: 0.78rem;
+  .btn-role-badge,
+  .btn-cambiar-rol {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
   }
 
   .badge-change-indicator {
@@ -1285,11 +1384,11 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   }
 
   .hero-empresa-header .hero-title {
-    font-size: 1.75rem;
+    font-size: 1.8rem;
   }
   
   .hero-empresa-header .hero-subtitle {
-    font-size: 0.92rem;
+    font-size: 0.94rem;
   }
 
   .hero-search-bar {
@@ -1321,7 +1420,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
   }
   
   .hero-section {
-    padding: 5.5rem 2rem;
+    padding: 6rem 2rem;
   }
 
   .job-offer-card {
@@ -1332,7 +1431,7 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
     border-top: none;
     border-left: 1px solid var(--border-color);
     padding-top: 0;
-    padding-left: 1.5rem;
+    padding-left: 1.65rem;
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
@@ -1340,76 +1439,15 @@ body.role-empresa .nav-link.modo-empresa-only:hover {
 }
 
 /* ==========================================================================
-   12. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS
+   13. UTILIDADES ADICIONALES
    ========================================================================== */
-.category-chips-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 1.25rem auto 0 auto;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding-bottom: 0.4rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  display: flex;
-  justify-content: center;
-}
+.text-center { text-align: center; }
+.text-muted  { color: var(--text-muted); }
+.text-bold   { font-weight: 700; }
+.d-none      { display: none !important; }
+.d-flex      { display: flex !important; }
 
-.category-chips-container::-webkit-scrollbar {
-  display: none;
-}
-
-/* Ocultar estrictamente en Modo Empresa */
-body.role-empresa .category-chips-container,
-body:not(.role-postulante) .category-chips-container {
-  display: none !important;
-}
-
-/* Mostrar explícitamente en Modo Postulante */
-body.role-postulante .category-chips-container {
-  display: flex !important;
-}
-
-.category-chips {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0 auto;
-}
-
-.chip {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 0.45rem 0.95rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  white-space: nowrap;
-  user-select: none;
-}
-
-.chip:hover {
-  background-color: var(--card-bg-light);
-  border-color: var(--primary);
-  color: var(--text-main);
-  transform: translateY(-1px);
-}
-
-.chip.active {
-  background-color: var(--primary);
-  border-color: var(--primary);
-  color: var(--text-dark);
-  font-weight: 700;
-  box-shadow: 0 2px 10px rgba(243, 156, 18, 0.3);
-}
-
-.chip i {
-  font-size: 0.85rem;
+/* Transición suave al cambiar de tema */
+.card-bg, .job-offer-card, .modal-postular-card, .hero-card-express {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
