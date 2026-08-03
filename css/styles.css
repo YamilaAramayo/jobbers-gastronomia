@@ -191,182 +191,49 @@ body.role-empresa .job-company::before {
 /* ==========================================================================
    3. NAVBAR / HEADER & NAVEGACIÓN
    ========================================================================== */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-navbar);
-  width: 100%;
-  background-color: rgba(13, 13, 13, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-  padding: 0.85rem 1.75rem;
-}
 
-[data-theme="light"] .navbar,
-.light-theme .navbar {
-  background-color: rgba(255, 255, 255, 0.88);
-}
+/* ... (conservar tu código de .navbar, .logo, .nav-links, etc.) ... */
 
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.logo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-decoration: none;
-}
-
-.logo h2 {
-  font-size: 1.45rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--text-main);
-  line-height: 1;
-  margin: 0;
-}
-
-.logo-subtitle {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 1.5px;
-  margin-top: 4px;
-  text-transform: uppercase;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-left: auto;
-}
-
-/* Enlaces navegables generales */
-.nav-link,
-.dropdown-trigger {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: var(--text-main);
-  transition: var(--transition);
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 0.9rem;
-  border-radius: var(--radius-sm);
-  white-space: nowrap;
-}
-
-.nav-link i,
-.dropdown-trigger i {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  transition: var(--transition);
-}
-
-.nav-link:hover, 
-.dropdown-trigger:hover,
-.nav-link.active {
-  color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-.nav-link:hover i,
-.dropdown-trigger:hover i {
-  color: var(--primary);
-}
-
-/* Badge / Botón de Cambiar Modo (Postulante <-> Empresa) */
-.btn-role-badge,
-.btn-cambiar-rol {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  background: linear-gradient(135deg, rgba(243, 156, 18, 0.15) 0%, rgba(243, 156, 18, 0.05) 100%);
-  border: 1px solid rgba(243, 156, 18, 0.5) !important;
-  color: var(--text-main) !important;
-  padding: 0.55rem 1.1rem;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 0.88rem;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-  margin-left: 0.4rem;
-  box-shadow: 0 2px 10px rgba(243, 156, 18, 0.12);
-}
-
-.btn-role-badge i,
-.btn-cambiar-rol i {
-  font-size: 1rem;
-  color: var(--primary);
-  transition: var(--transition);
-}
-
-.btn-role-badge:hover,
-.btn-cambiar-rol:hover {
-  background: var(--primary) !important;
-  color: var(--text-dark) !important;
-  border-color: var(--primary) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(243, 156, 18, 0.35);
-}
-
-.btn-role-badge:hover i,
-.btn-cambiar-rol:hover i {
-  color: var(--text-dark);
-}
-
-.badge-change-indicator {
-  font-size: 0.7rem;
-  font-weight: 600;
-  opacity: 0.9;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 0.15rem 0.5rem;
-  border-radius: 10px;
-  margin-left: 0.2rem;
-  color: var(--primary);
-}
-
-.btn-role-badge:hover .badge-change-indicator {
-  background: rgba(0, 0, 0, 0.2);
-  color: var(--text-dark);
-}
-
-/* Call to Action Principal: "Publicar Búsqueda" */
+/* Call to Action Principal (Sólido Naranja + Resplandor): 
+   Aplicado a "PUBLICAR BÚSQUEDA" (Empresa) y "Empleos" / "Ver Empleos" (Postulante) */
 .btn-cta-empresa,
+.nav-btn-publicar,
+.nav-btn-empleos,
 body.role-empresa .nav-btn-publicar,
-body.role-empresa .nav-link.modo-empresa-only {
+body.role-empresa .nav-link.modo-empresa-only,
+body.role-postulante .nav-link.modo-postulante-only.btn-cta-postulante,
+body.role-postulante .nav-link[href*="vacantes"],
+body.role-postulante .nav-link[href*="empleos"] {
   background: var(--primary) !important;
   color: var(--text-dark) !important;
   font-weight: 800 !important;
   padding: 0.55rem 1.25rem !important;
   border-radius: var(--radius-sm) !important;
-  box-shadow: 0 0 14px rgba(243, 156, 18, 0.35);
-  transition: var(--transition);
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  font-size: 0.85rem;
+  box-shadow: 0 0 14px rgba(243, 156, 18, 0.35) !important;
+  transition: var(--transition) !important;
+  letter-spacing: 0.3px !important;
+  text-transform: uppercase !important;
+  font-size: 0.85rem !important;
   border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
 }
 
+/* Efecto Hover para ambos botones CTA */
 .btn-cta-empresa:hover,
+.nav-btn-publicar:hover,
+.nav-btn-empleos:hover,
 body.role-empresa .nav-btn-publicar:hover,
-body.role-empresa .nav-link.modo-empresa-only:hover {
+body.role-empresa .nav-link.modo-empresa-only:hover,
+body.role-postulante .nav-link.modo-postulante-only.btn-cta-postulante:hover,
+body.role-postulante .nav-link[href*="vacantes"]:hover,
+body.role-postulante .nav-link[href*="empleos"]:hover {
   background: var(--primary-hover) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(243, 156, 18, 0.5);
+  color: var(--text-dark) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 20px rgba(243, 156, 18, 0.5) !important;
 }
 
 /* ==========================================================================
