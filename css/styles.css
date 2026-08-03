@@ -285,6 +285,7 @@ body.role-empresa .btn-postularme {
   visibility: hidden;
   transform: translateY(-8px);
   transition: var(--transition);
+  pointer-events: none; /* CORRECCIÓN 2: Previene clics mientras permanece cerrado */
 }
 
 .dropdown-container:hover .dropdown-menu,
@@ -292,6 +293,7 @@ body.role-empresa .btn-postularme {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  pointer-events: auto; /* CORRECCIÓN 2: Habilita interacción cuando está abierto */
 }
 
 .dropdown-item {
@@ -480,6 +482,8 @@ body.role-empresa .btn-postularme {
   scrollbar-width: none;
   display: flex;
   justify-content: center;
+  scroll-snap-type: x mandatory; /* CORRECCIÓN 3: Desplazamiento inercial suave */
+  scroll-behavior: smooth;
 }
 
 .category-chips-container::-webkit-scrollbar {
@@ -511,6 +515,7 @@ body.role-empresa .btn-postularme {
   white-space: nowrap;
   user-select: none;
   flex-shrink: 0;
+  scroll-snap-align: start; /* CORRECCIÓN 3: Alineación táctil limpia */
 }
 
 .chip:hover {
@@ -1254,6 +1259,11 @@ body.role-empresa .btn-postularme {
    12. RESPONSIVE DESIGN (MEDIA QUERIES)
    ========================================================================== */
 @media (max-width: 768px) {
+  /* CORRECCIÓN 1: Ajuste dinámico de padding del body según el dispositivo */
+  body {
+    padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
+  }
+
   .hero-title {
     font-size: 2rem;
   }
@@ -1299,7 +1309,7 @@ body.role-empresa .btn-postularme {
   }
 
   #toast-container {
-    bottom: 90px;
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px));
     right: 15px;
     left: 15px;
   }
