@@ -1,3 +1,5 @@
+
+
 /* Importación de fuente moderna y limpia */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -2610,6 +2612,33 @@ body.role-postulante .category-chips-container {
 
 }
 
+
+
+/* ==========================================================================
+
+   13. UTILIDADES ADICIONALES
+
+   ========================================================================== */
+
+.text-center { text-align: center; }
+
+.text-muted  { color: var(--text-muted); }
+
+.text-bold   { font-weight: 700; }
+
+.d-none      { display: none !important; }
+
+.d-flex      { display: flex !important; }
+
+
+
+/* Transición suave al cambiar de tema */
+
+.card-bg, .job-offer-card, .modal-postular-card, .hero-card-express {
+
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+} 
 
 
 /* ==========================================================================
