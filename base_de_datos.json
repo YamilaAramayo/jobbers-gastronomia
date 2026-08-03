@@ -155,4 +155,33 @@
     "urgente": false,
     "contacto_wa": "5493513080197"
   }
+[
+  {
+    "id": 13,
+    "puesto": "Analista de Selección y RRHH Gastronómico",
+    "empresa": "Grupo Gastronómico Córdoba",
+    "zona": "Nueva Córdoba",
+    "jornada": "Full Time",
+    "turno": "Lunes a Viernes (09:00 a 18:00 hs)",
+    "sueldo": "$650.000 - $800.000",
+    "categoria": "rrhh",
+    "tiempo": "Hace 1 hora",
+    "urgente": true,
+    "contacto_wa": "5493513080197"
+  },
+  {
+    "id": 14,
+    "puesto": "Bachero y Operario de Limpieza",
+    "empresa": "Resto Bar Güemes",
+    "zona": "Güemes",
+    "jornada": "Part Time",
+    "turno": "Turno Noche",
+    "sueldo": "$320.000 + Propinas",
+    "categoria": "limpieza",
+    "tiempo": "Hace 3 horas",
+    "urgente": false,
+    "contacto_wa": "5493513080197"
+  }
+]
+  
 ]
