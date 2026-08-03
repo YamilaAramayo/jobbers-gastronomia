@@ -1245,24 +1245,100 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   12. RESPONSIVE DESIGN (MEDIA QUERIES)
+   12. RESPONSIVE DESIGN & MOBILE OPTIMIZATION (MEJORADO)
    ========================================================================== */
+
+/* Dispositivos Tablets y Celulares (< 768px) */
 @media (max-width: 768px) {
+  
+  /* Ajuste de espaciados generales */
+  body {
+    padding-bottom: 90px; /* Asegura que el Bottom Nav no tape contenido */
+  }
+
+  .main-grid-section, 
+  .info-section, 
+  .talento-section {
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  /* --- HERO & BUSCADOR --- */
+  .hero-section {
+    padding: 2.5rem 1rem;
+  }
+
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-features {
+    gap: 0.75rem;
+    font-size: 0.82rem;
   }
 
   .hero-search-bar {
     flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .hero-search-bar input {
+    width: 100%;
+    height: 48px;
   }
 
   .btn-search {
     width: 100%;
+    height: 48px;
   }
 
+  /* --- CHIPS DE CATEGORÍAS EN MOBILE --- */
+  .category-chips-container {
+    justify-content: flex-start;
+    padding: 0.5rem 0.5rem;
+  }
+
+  .chip {
+    padding: 0.45rem 0.95rem;
+    font-size: 0.8rem;
+  }
+
+  /* --- FORMULARIO EXPRESS HERO --- */
+  .hero-card-express {
+    padding: 1.25rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .form-row-2col {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* --- TARJETAS DE VACANTES --- */
   .job-offer-card {
     flex-direction: column;
     align-items: flex-start;
+    padding: 1.15rem;
+    gap: 1rem;
+  }
+
+  .job-header-row {
+    gap: 0.5rem;
+  }
+
+  .job-offer-card h4 {
+    font-size: 1.05rem;
+  }
+
+  .job-details-row {
+    gap: 0.75rem;
+    font-size: 0.82rem;
   }
 
   .job-action-col {
@@ -1271,20 +1347,43 @@ body.role-empresa .btn-postularme {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid var(--border-color);
-    padding-top: 1rem;
-    margin-top: 0.5rem;
+    padding-top: 0.85rem;
+    margin-top: 0.25rem;
   }
 
   .btn-postularme {
     flex: 1;
-    max-width: 200px;
+    max-width: none; /* Permite que ocupe el espacio óptimo disponible */
+    padding: 0.65rem 1rem;
+    font-size: 0.8rem;
   }
 
-  .form-row-2col {
-    flex-direction: column;
-  }
-
+  /* --- NAVEGACIÓN Y MODALES --- */
   .nav-links {
-    display: none; /* Ocultar links en mobile, reemplazados por Bottom Nav */
+    display: none; /* Se delega la navegación completa al Bottom Nav Móvil */
+  }
+
+  .rol-modal-card, 
+  .modal-postular-card {
+    padding: 1.5rem;
+    margin: 0 0.5rem;
+  }
+}
+
+/* Teléfonos Pequeños (< 400px) */
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 1.55rem;
+  }
+
+  .comunidad-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-destacar, 
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
   }
 }
