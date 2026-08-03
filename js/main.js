@@ -328,63 +328,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- BUSCADOR Y FILTRADO POR CATEGORÍA ---
-    const inputBuscador = document.getElementById('job-search-input');
-    const btnBuscador = document.querySelector('.btn-search');
-    const categoryChips = document.querySelectorAll('.category-chips .chip, .hero-chips .chip, .chip');
+const inputBuscador = document.getElementById('job-search-input');
+const btnBuscador = document.querySelector('.btn-search');
+const categoryChips = document.querySelectorAll('.category-chips .chip, .hero-chips .chip, .chip');
 
-    function filtrarEmpleos() {
-        const termino = inputBuscador ? inputBuscador.value.toLowerCase().trim() : '';
+// Mapper helper para normalizar alias de categorías
+function normalizarCategoria(cat) {
+    if (!cat) return '';
+    const c = cat.toLowerCase().trim();
+    if (c.includes('todas') || c === 'all') return 'todas';
+    if (c.includes('cocina')) return 'cocina';
+    if (c.includes('salón') || c.includes('salon')) return 'salon';
+    if (c.includes('barismo') || c.includes('barra') || c.includes('bar')) return 'barra';
+    if (c.includes('delivery')) return 'delivery';
+    if (c.includes('limpieza') || c.includes('bachero')) return 'limpieza';
+    if (c.includes('rrhh') || c.includes('recursos')) return 'rrhh';
+    return c;
+}
 
-        const resultados = listaVacantesBD.filter(v => {
-            const titulo = (v.titulo || '').toLowerCase();
-            const empresa = (v.empresa || '').toLowerCase();
-            const zona = (v.zona || '').toLowerCase();
-            const categoria = (v.categoria || '').toLowerCase();
+function filtrarEmpleos() {
+    const termino = inputBuscador ? inputBuscador.value.toLowerCase().trim() : '';
 
-            const coincideTexto = !termino || 
-                titulo.includes(termino) || 
-                empresa.includes(termino) || 
-                zona.includes(termino);
+    const resultados = listaVacantesBD.filter(v => {
+        const titulo = (v.titulo || '').toLowerCase();
+        const empresa = (v.empresa || '').toLowerCase();
+        const zona = (v.zona || '').toLowerCase();
+        const categoria = normalizarCategoria(v.categoria || v.titulo);
 
-            let coincideCategoria = true;
-            if (categoriaActual !== 'todas') {
-                coincideCategoria = categoria.includes(categoriaActual) || titulo.includes(categoriaActual);
-            }
+        const coincideTexto = !termino || 
+            titulo.includes(termino) || 
+            empresa.includes(termino) || 
+            zona.includes(termino);
 
-            return coincideTexto && coincideCategoria;
-        });
+        let coincideCategoria = true;
+        if (categoriaActual !== 'todas') {
+            // Compara la categoría normalizada o busca si el título contiene la palabra clave
+            coincideCategoria = (categoria === categoriaActual) || 
+                                 categoria.includes(categoriaActual) || 
+                                 titulo.includes(categoriaActual);
+        }
 
-        renderizarVacantes(resultados);
-    }
-
-    categoryChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            categoryChips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-
-            const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
-            if (catAttr) {
-                categoriaActual = catAttr.toLowerCase();
-            } else {
-                const textoChip = chip.textContent.trim().toLowerCase();
-                if (textoChip.includes('todas')) categoriaActual = 'todas';
-                else if (textoChip.includes('cocina')) categoriaActual = 'cocina';
-                else if (textoChip.includes('salón') || textoChip.includes('salon')) categoriaActual = 'salon';
-                else if (textoChip.includes('barismo') || textoChip.includes('barra')) categoriaActual = 'bar';
-                else if (textoChip.includes('delivery')) categoriaActual = 'delivery';
-                else categoriaActual = textoChip;
-            }
-
-            filtrarEmpleos();
-        });
+        return coincideTexto && coincideCategoria;
     });
 
-    inputBuscador?.addEventListener('input', filtrarEmpleos);
-    btnBuscador?.addEventListener('click', (e) => {
-        e.preventDefault();
+    renderizarVacantes(resultados);
+}
+
+categoryChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+        categoryChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
+        const rawCategory = catAttr || chip.textContent;
+        
+        categoriaActual = normalizarCategoria(rawCategory);
+
         filtrarEmpleos();
     });
-
+});
     // --- FORMULARIO EXPRESS EMPRESAS ---
     const formExpress = document.getElementById('form-publicar-express');
 
