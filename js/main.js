@@ -107,6 +107,7 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
 document.addEventListener('DOMContentLoaded', () => {
 
     let listaVacantesBD = [];
+    let categoriaActual = 'todas';
 
     const MOCK_TALENTO = [
         {
@@ -146,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             listaVacantesBD = datos.map(v => ({
                 id: v.id,
                 titulo: v.puesto || v.titulo || "Puesto Gastronómico",
+                categoria: (v.categoria || v.puesto || v.titulo || "").toLowerCase(),
                 empresa: v.empresa || "Confidencial",
                 zona: v.zona || "Córdoba",
                 turno: v.turno || "A convenir",
@@ -321,25 +323,63 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // --- BUSCADOR ---
+    // --- BUSCADOR Y FILTRADO POR CATEGORÍA ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
+    const categoryChips = document.querySelectorAll('.category-chips .chip, .hero-chips .chip, .chip');
 
     function filtrarEmpleos() {
-        if (!inputBuscador) return;
-        const termino = inputBuscador.value.toLowerCase().trim();
+        const termino = inputBuscador ? inputBuscador.value.toLowerCase().trim() : '';
 
-        const resultados = listaVacantesBD.filter(v => 
-            (v.titulo && v.titulo.toLowerCase().includes(termino)) ||
-            (v.empresa && v.empresa.toLowerCase().includes(termino)) ||
-            (v.zona && v.zona.toLowerCase().includes(termino))
-        );
+        const resultados = listaVacantesBD.filter(v => {
+            const titulo = (v.titulo || '').toLowerCase();
+            const empresa = (v.empresa || '').toLowerCase();
+            const zona = (v.zona || '').toLowerCase();
+            const categoria = (v.categoria || '').toLowerCase();
+
+            // 1. Validar Filtro por Texto del Input
+            const coincideTexto = !termino || 
+                titulo.includes(termino) || 
+                empresa.includes(termino) || 
+                zona.includes(termino);
+
+            // 2. Validar Filtro por Categoria seleccionada en Chip
+            let coincideCategoria = true;
+            if (categoriaActual !== 'todas') {
+                coincideCategoria = categoria.includes(categoriaActual) || titulo.includes(categoriaActual);
+            }
+
+            return coincideTexto && coincideCategoria;
+        });
 
         renderizarVacantes(resultados);
     }
 
+    // Eventos para Selección de Chips
+    categoryChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            // Manejar clase active visual
+            categoryChips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            // Determinar categoría elegida
+            const textoChip = chip.textContent.trim().toLowerCase();
+            if (textoChip.includes('todas')) categoriaActual = 'todas';
+            else if (textoChip.includes('cocina')) categoriaActual = 'cocina';
+            else if (textoChip.includes('salón') || textoChip.includes('salon')) categoriaActual = 'salón';
+            else if (textoChip.includes('barismo') || textoChip.includes('barra')) categoriaActual = 'bar';
+            else if (textoChip.includes('delivery')) categoriaActual = 'delivery';
+            else categoriaActual = textoChip;
+
+            filtrarEmpleos();
+        });
+    });
+
     inputBuscador?.addEventListener('input', filtrarEmpleos);
-    btnBuscador?.addEventListener('click', filtrarEmpleos);
+    btnBuscador?.addEventListener('click', (e) => {
+        e.preventDefault();
+        filtrarEmpleos();
+    });
 
     // --- FORMULARIO EXPRESS EMPRESAS ---
     const formExpress = document.getElementById('form-publicar-express');
