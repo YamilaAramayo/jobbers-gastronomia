@@ -381,101 +381,159 @@ body.role-empresa .job-company::before {
 
 
 /* ==========================================================================
-
-   3. NAVBAR / HEADER & NAVEGACIÓN
-
+   3. NAVBAR / HEADER & NAVEGACIÓN (SINCRONIZADO CON HTML)
    ========================================================================== */
 
-
-
-/* ... (conservar tu código de .navbar, .logo, .nav-links, etc.) ... */
-
-
-
-/* Call to Action Principal (Sólido Naranja + Resplandor): 
-
-   Aplicado a "PUBLICAR BÚSQUEDA" (Empresa) y "Empleos" / "Ver Empleos" (Postulante) */
-
-.btn-cta-empresa,
-
-.nav-btn-publicar,
-
-.nav-btn-empleos,
-
-body.role-empresa .nav-btn-publicar,
-
-body.role-empresa .nav-link.modo-empresa-only,
-
-body.role-postulante .nav-link.modo-postulante-only.btn-cta-postulante,
-
-body.role-postulante .nav-link[href*="vacantes"],
-
-body.role-postulante .nav-link[href*="empleos"] {
-
-  background: var(--primary) !important;
-
-  color: var(--text-dark) !important;
-
-  font-weight: 800 !important;
-
-  padding: 0.55rem 1.25rem !important;
-
-  border-radius: var(--radius-sm) !important;
-
-  box-shadow: 0 0 14px rgba(243, 156, 18, 0.35) !important;
-
-  transition: var(--transition) !important;
-
-  letter-spacing: 0.3px !important;
-
-  text-transform: uppercase !important;
-
-  font-size: 0.85rem !important;
-
-  border: none !important;
-
-  display: inline-flex !important;
-
-  align-items: center !important;
-
-  justify-content: center !important;
-
-  text-decoration: none !important;
-
+.navbar {
+  width: 100%;
+  height: 70px;
+  background-color: var(--secondary, #121824);
+  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-
-
-/* Efecto Hover para ambos botones CTA */
-
-.btn-cta-empresa:hover,
-
-.nav-btn-publicar:hover,
-
-.nav-btn-empleos:hover,
-
-body.role-empresa .nav-btn-publicar:hover,
-
-body.role-empresa .nav-link.modo-empresa-only:hover,
-
-body.role-postulante .nav-link.modo-postulante-only.btn-cta-postulante:hover,
-
-body.role-postulante .nav-link[href*="vacantes"]:hover,
-
-body.role-postulante .nav-link[href*="empleos"]:hover {
-
-  background: var(--primary-hover) !important;
-
-  color: var(--text-dark) !important;
-
-  transform: translateY(-1px) !important;
-
-  box-shadow: 0 4px 20px rgba(243, 156, 18, 0.5) !important;
-
+/* --- LOGO --- */
+.logo {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
 }
 
+.logo-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main, #ffffff);
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin: 0;
+}
 
+.logo-subtitle {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--primary, #f39c12);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
 
+/* --- NAV LINKS & RESET DE BOTONES --- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Limpieza total de botones y enlaces en la barra de navegación */
+.navbar .nav-link,
+.navbar button,
+.dropdown-container > button {
+  background: transparent;
+  border: 1px solid transparent;
+  outline: none;
+  color: var(--text-main, #ffffff);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  /* Quita bisel y degradado nativo de Chrome/Windows */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.navbar .nav-link:hover,
+.dropdown-container > button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--primary, #f39c12);
+}
+
+/* --- BOTÓN DE CAMBIO DE PERFIL (#btn-cambiar-perfil) --- */
+.btn-role-badge,
+#btn-cambiar-perfil {
+  background: rgba(243, 156, 18, 0.1) !important;
+  border: 1px solid rgba(243, 156, 18, 0.3) !important;
+  color: var(--primary, #f39c12) !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  padding: 0.45rem 0.9rem !important;
+  border-radius: 50px !important;
+}
+
+.btn-role-badge:hover,
+#btn-cambiar-perfil:hover {
+  background: rgba(243, 156, 18, 0.2) !important;
+  border-color: var(--primary, #f39c12) !important;
+  transform: translateY(-1px);
+}
+
+/* --- DROPDOWN RECURSOS --- */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none; /* Se activa por JS o CSS :hover */
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background-color: var(--card-bg, #1e293b);
+  min-width: 200px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border-radius: var(--radius-sm, 8px);
+  padding: 0.5rem 0;
+  z-index: 1010;
+}
+
+/* Desplegar al hacer hover en desktop (opcional si usas JS) */
+.dropdown-container:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+  color: var(--text-main, #ffffff);
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--primary, #f39c12);
+}
+
+/* Icono flechita giratoria */
+.nav-icon-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+}
+
+.dropdown-container:hover .nav-icon-arrow {
+  transform: rotate(180deg);
+}
 /* ==========================================================================
 
    4. DESPLEGABLE DE RECURSOS (DROPDOWN MENU)
