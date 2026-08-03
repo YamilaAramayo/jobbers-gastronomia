@@ -15,7 +15,7 @@ function getVal(id) {
     return el ? el.value.trim() : "";
 }
 
-// Helper para escapar strings dentro de atributos HTML (Evita errores sintácticos)
+// Helper para escapar strings dentro de atributos HTML (Evita vulnerabilidades y errores sintácticos)
 function escapeHTML(str) {
     if (!str) return "";
     return String(str)
@@ -37,6 +37,7 @@ window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
     if (modalEl) {
         modalEl.style.display = 'flex';
         modalEl.classList.add('show');
+        modalEl.setAttribute('aria-hidden', 'false');
     }
 };
 
@@ -46,6 +47,7 @@ window.cerrarModalPostulacion = function() {
     if (modalEl) {
         modalEl.style.display = 'none';
         modalEl.classList.remove('show');
+        modalEl.setAttribute('aria-hidden', 'true');
     }
     if (formEl) formEl.reset();
 };
@@ -90,7 +92,7 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:all 0.3s ease;`;
     
     const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-    toast.innerHTML = `<i class="fas ${icono}"></i> <span>${mensaje}</span>`;
+    toast.innerHTML = `<i class="fas ${icono}"></i> <span>${escapeHTML(mensaje)}</span>`;
 
     container.appendChild(toast);
 
@@ -204,11 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stepSelect) stepSelect.style.display = 'block';
         if (stepConfirm) stepConfirm.style.display = 'none';
         modalPerfil.style.display = 'flex';
+        modalPerfil.setAttribute('aria-hidden', 'false');
     }
 
     function cerrarModalPerfil() {
         if (!modalPerfil) return;
         modalPerfil.style.display = 'none';
+        modalPerfil.setAttribute('aria-hidden', 'true');
         rolSeleccionadoTemp = null;
     }
 
@@ -355,21 +359,25 @@ document.addEventListener('DOMContentLoaded', () => {
         renderizarVacantes(resultados);
     }
 
-    // Eventos para Selección de Chips
+    // Eventos para Selección de Chips usando data-cat
     categoryChips.forEach(chip => {
         chip.addEventListener('click', () => {
-            // Manejar clase active visual
             categoryChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
 
-            // Determinar categoría elegida
-            const textoChip = chip.textContent.trim().toLowerCase();
-            if (textoChip.includes('todas')) categoriaActual = 'todas';
-            else if (textoChip.includes('cocina')) categoriaActual = 'cocina';
-            else if (textoChip.includes('salón') || textoChip.includes('salon')) categoriaActual = 'salón';
-            else if (textoChip.includes('barismo') || textoChip.includes('barra')) categoriaActual = 'bar';
-            else if (textoChip.includes('delivery')) categoriaActual = 'delivery';
-            else categoriaActual = textoChip;
+            // Preferir la lectura de data-cat si está disponible
+            const catAttr = chip.getAttribute('data-cat');
+            if (catAttr) {
+                categoriaActual = catAttr.toLowerCase();
+            } else {
+                const textoChip = chip.textContent.trim().toLowerCase();
+                if (textoChip.includes('todas')) categoriaActual = 'todas';
+                else if (textoChip.includes('cocina')) categoriaActual = 'cocina';
+                else if (textoChip.includes('salón') || textoChip.includes('salon')) categoriaActual = 'salon';
+                else if (textoChip.includes('barismo') || textoChip.includes('barra')) categoriaActual = 'bar';
+                else if (textoChip.includes('delivery')) categoriaActual = 'delivery';
+                else categoriaActual = textoChip;
+            }
 
             filtrarEmpleos();
         });
@@ -429,22 +437,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modalPostularme) window.cerrarModalPostulacion();
     });
 
-    // --- DROPDOWN RECURSOS ---
+    // --- DROPDOWN RECURSOS CON ACCESIBILIDAD ---
     const dropdownToggle = document.getElementById('dropdown-recursos');
     const dropdownMenu = document.getElementById('menu-recursos');
 
     dropdownToggle?.addEventListener('click', (e) => {
         e.stopPropagation();
-        dropdownMenu?.classList.toggle('show');
+        const estaAbierto = dropdownMenu?.classList.toggle('show');
+        dropdownToggle.setAttribute('aria-expanded', Boolean(estaAbierto));
     });
 
     document.addEventListener('click', (e) => {
         if (dropdownMenu && !dropdownMenu.contains(e.target) && !dropdownToggle?.contains(e.target)) {
             dropdownMenu.classList.remove('show');
+            dropdownToggle?.setAttribute('aria-expanded', 'false');
         }
     });
 
     // Arrancar la app
     initRol();
-});
 });
