@@ -1,11 +1,11 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal: Gestión de Roles (Postulante / Empresa), Renderizado Dinámico,
+ * Lógica principal: Carga asíncrona (JSON), Gestión de Roles, Renderizado Dinámico,
  * Búsqueda/Filtro, Integración WhatsApp, Modales, Dropdowns y Toasts.
  */
 
 // =========================================================================
-// 1. FUNCIONES GLOBALES (Definidas PRIMERO para garantizar disponibilidad)
+// 1. FUNCIONES GLOBALES
 // =========================================================================
 let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
@@ -20,7 +20,7 @@ window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
     if (titleEl) titleEl.innerText = tituloPuestoActual;
     if (modalEl) {
         modalEl.style.display = 'flex';
-        modalEl.classList.add('show'); // Por si usas clases CSS para mostrar
+        modalEl.classList.add('show');
     }
 };
 
@@ -89,58 +89,10 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- MOCK DATA ---
-    const MOCK_VACANTES = [
-        {
-            id: 1,
-            titulo: "Cocinero / Cocinera de Minutas y Plancha",
-            empresa: "Bar Güemes Resto",
-            zona: "Güemes",
-            turno: "Noche",
-            jornada: "Full Time",
-            sueldo: "$450.000 - $550.000",
-            urgente: true,
-            tiempo: "Publicado hace 2 horas",
-            telefono: "5493513080197"
-        },
-        {
-            id: 2,
-            titulo: "Mozo / Moza para Salón y Terraza",
-            empresa: "Bistró General Paz",
-            zona: "General Paz",
-            turno: "Tarde/Noche",
-            jornada: "Full Time",
-            sueldo: "$400.000 + Propinas",
-            urgente: false,
-            tiempo: "Publicado hace 5 horas",
-            telefono: "5493513080197"
-        },
-        {
-            id: 3,
-            titulo: "Barista Profesional Especialidad",
-            empresa: "Café de Especialidad",
-            zona: "Nueva Córdoba",
-            turno: "Mañana",
-            jornada: "Part Time",
-            sueldo: "A convenir",
-            urgente: true,
-            tiempo: "Publicado hoy",
-            telefono: "5493513080197"
-        },
-        {
-            id: 4,
-            titulo: "Bachero / Ayudante de Cocina",
-            empresa: "Pizzería Tradicional",
-            zona: "Centro",
-            turno: "Noche",
-            jornada: "Franco / Refuerzo",
-            sueldo: "$25.000 por turno",
-            urgente: false,
-            tiempo: "Publicado ayer",
-            telefono: "5493513080197"
-        }
-    ];
+    // --- VARIABLES DE ESTADO ---
+    let listaVacantesBD = []; // Almacenará las vacantes obtenidas del JSON
 
+    // MOCK DE TALENTO DESTACADO
     const MOCK_TALENTO = [
         {
             id: 101,
@@ -168,6 +120,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    // --- CARGA ASÍNCRONA DESDE LA BASE DE DATOS (JSON) ---
+    async function cargarVacantes() {
+        try {
+            const respuesta = await fetch('base_de_datos.json');
+            if (!respuesta.ok) {
+                throw new Error(`Error en la petición: ${respuesta.status}`);
+            }
+
+            const datos = await respuesta.json();
+
+            // Adaptamos las claves de base_de_datos.json al formato que usa el renderizador
+            listaVacantesBD = datos.map(v => ({
+                id: v.id,
+                titulo: v.puesto || v.titulo,
+                empresa: v.empresa,
+                zona: v.zona,
+                turno: v.turno,
+                jornada: v.jornada,
+                sueldo: v.sueldo || "A convenir",
+                urgente: Boolean(v.urgente),
+                tiempo: v.tiempo,
+                telefono: v.contacto_wa || v.telefono || "5493513080197"
+            }));
+
+            renderizarVacantes(listaVacantesBD);
+
+        } catch (error) {
+            console.error("Error al cargar las vacantes desde base_de_datos.json:", error);
+            window.mostrarToast('No se pudieron cargar las ofertas de empleo', 'error');
+        }
+    }
+
     // --- GESTIÓN DE ROLES ---
     let rolSeleccionadoTemp = null;
 
@@ -179,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initRol() {
         const rolGuardado = localStorage.getItem('jobbers_role');
         
-        renderizarVacantes(MOCK_VACANTES);
+        cargarVacantes(); // Iniciamos la carga del JSON
         renderizarTalento(MOCK_TALENTO);
         
         if (rolGuardado) {
@@ -338,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!inputBuscador) return;
         const termino = inputBuscador.value.toLowerCase().trim();
 
-        const resultados = MOCK_VACANTES.filter(v => 
+        const resultados = listaVacantesBD.filter(v => 
             v.titulo.toLowerCase().includes(termino) ||
             v.empresa.toLowerCase().includes(termino) ||
             v.zona.toLowerCase().includes(termino)
