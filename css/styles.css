@@ -55,16 +55,16 @@
   --primary-hover: #B56900;
   --secondary: #F8FAFC;                       
   --card-bg: #FFFFFF;                         
-  --card-bg-light: #F1F5F9;                 
+  --card-bg-light: #F1F5F9;                   
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;                  
-  --salary-green: #16A34A;                  
+  --danger-badge: #DC2626;                    
+  --salary-green: #16A34A;                    
 
-  --bg-dark: #F8FAFC;                       
-  --text-main: #0F172A;                     
-  --text-muted: #475569;                   
-  --text-dark: #FFFFFF;                     
+  --bg-dark: #F8FAFC;                        
+  --text-main: #0F172A;                      
+  --text-muted: #475569;                    
+  --text-dark: #FFFFFF;                      
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
@@ -91,7 +91,7 @@ body {
   padding-bottom: 80px;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 a {
@@ -107,6 +107,15 @@ img {
 
 [onclick] {
   cursor: pointer;
+}
+
+/* Foco Accesible Global (Teclado) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 /* ==========================================================================
@@ -238,7 +247,7 @@ body.role-empresa .job-company::before {
 }
 
 .navbar .nav-link,
-.navbar button,
+.navbar .btn-nav,
 .dropdown-container > button {
   background: transparent;
   border: 1px solid transparent;
@@ -262,6 +271,7 @@ body.role-empresa .job-company::before {
 }
 
 .navbar .nav-link:hover,
+.navbar .btn-nav:hover,
 .dropdown-container > button:hover {
   background: rgba(255, 255, 255, 0.08);
   color: var(--primary);
@@ -650,7 +660,7 @@ body.role-empresa .job-company::before {
   background-image: var(--select-arrow);
   background-repeat: no-repeat;
   background-position: right 1rem center;
-  background-size: 0.7rem auto;
+  background-size: 12px auto;
 }
 
 .express-form select option,
@@ -1248,6 +1258,8 @@ body.role-empresa .job-company::before {
 }
 
 .bottom-nav-item {
+  min-width: 48px;
+  min-height: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
