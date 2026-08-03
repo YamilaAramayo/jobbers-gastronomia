@@ -1,14 +1,30 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal: Carga asíncrona (JSON), Gestión de Roles, Renderizado Dinámico,
- * Búsqueda/Filtro, Integración WhatsApp, Modales, Dropdowns y Toasts.
+ * Lógica principal limpia, optimizada y blindada contra fallos de DOM.
  */
 
 // =========================================================================
-// 1. FUNCIONES GLOBALES
+// 1. FUNCIONES GLOBALES & HELPERS
 // =========================================================================
 let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
+
+// Helper para obtener valor de un input de forma segura sin romper el script
+function getVal(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+}
+
+// Helper para escapar strings dentro de atributos HTML (Evita errores sintácticos)
+function escapeHTML(str) {
+    if (!str) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
     whatsappEmpleadorActual = whatsappTel || "5493513080197";
@@ -35,15 +51,13 @@ window.cerrarModalPostulacion = function() {
 };
 
 window.enviarPostulacionWhatsApp = function(e) {
-    if (e) e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
-    const nombre = document.getElementById('postular-nombre')?.value.trim();
-    const telefono = document.getElementById('postular-phone')?.value.trim();
+    const nombre = getVal('postular-nombre');
+    const telefono = getVal('postular-phone');
 
     if (!nombre || !telefono) {
-        if (typeof window.mostrarToast === 'function') {
-            window.mostrarToast('Completá tu nombre y teléfono para continuar.', 'error');
-        }
+        window.mostrarToast('Completá tu nombre y teléfono para continuar.', 'error');
         return;
     }
 
@@ -65,11 +79,15 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
+        container.style.cssText = 'position:fixed; bottom:20px; right:20px; z-index:99999; display:flex; flex-direction:column; gap:10px;';
         document.body.appendChild(container);
     }
 
     const toast = document.createElement('div');
     toast.className = `jobbers-toast ${tipo}`;
+    
+    const bgColor = tipo === 'success' ? '#2ecc71' : '#e74c3c';
+    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:all 0.3s ease;`;
     
     const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
     toast.innerHTML = `<i class="fas ${icono}"></i> <span>${mensaje}</span>`;
@@ -79,7 +97,6 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(50px)';
-        toast.style.transition = 'all 0.3s ease';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 };
@@ -89,10 +106,8 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- VARIABLES DE ESTADO ---
-    let listaVacantesBD = []; // Almacenará las vacantes obtenidas del JSON
+    let listaVacantesBD = [];
 
-    // MOCK DE TALENTO DESTACADO
     const MOCK_TALENTO = [
         {
             id: 101,
@@ -120,41 +135,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // --- CARGA ASÍNCRONA DESDE LA BASE DE DATOS (JSON) ---
+    // --- CARGA ASÍNCRONA DESDE JSON ---
     async function cargarVacantes() {
         try {
             const respuesta = await fetch('base_de_datos.json');
-            if (!respuesta.ok) {
-                throw new Error(`Error en la petición: ${respuesta.status}`);
-            }
+            if (!respuesta.ok) throw new Error(`Status: ${respuesta.status}`);
 
             const datos = await respuesta.json();
 
-            // Adaptamos las claves de base_de_datos.json al formato que usa el renderizador
             listaVacantesBD = datos.map(v => ({
                 id: v.id,
-                titulo: v.puesto || v.titulo,
-                empresa: v.empresa,
-                zona: v.zona,
-                turno: v.turno,
-                jornada: v.jornada,
+                titulo: v.puesto || v.titulo || "Puesto Gastronómico",
+                empresa: v.empresa || "Confidencial",
+                zona: v.zona || "Córdoba",
+                turno: v.turno || "A convenir",
+                jornada: v.jornada || "Completa",
                 sueldo: v.sueldo || "A convenir",
                 urgente: Boolean(v.urgente),
-                tiempo: v.tiempo,
+                tiempo: v.tiempo || "Reciente",
                 telefono: v.contacto_wa || v.telefono || "5493513080197"
             }));
 
             renderizarVacantes(listaVacantesBD);
 
         } catch (error) {
-            console.error("Error al cargar las vacantes desde base_de_datos.json:", error);
-            window.mostrarToast('No se pudieron cargar las ofertas de empleo', 'error');
+            console.error("Error al cargar base_de_datos.json:", error);
+            window.mostrarToast('No se pudieron cargar las ofertas de empleo.', 'error');
         }
     }
 
     // --- GESTIÓN DE ROLES ---
     let rolSeleccionadoTemp = null;
-
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const stepSelect = document.getElementById('rol-step-select');
     const stepConfirm = document.getElementById('rol-step-confirm');
@@ -163,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initRol() {
         const rolGuardado = localStorage.getItem('jobbers_role');
         
-        cargarVacantes(); // Iniciamos la carga del JSON
+        cargarVacantes();
         renderizarTalento(MOCK_TALENTO);
         
         if (rolGuardado) {
@@ -207,17 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
-        if (!localStorage.getItem('jobbers_role')) {
-            localStorage.setItem('jobbers_role', 'postulante');
-        }
+        if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
         cerrarModalPerfil();
     });
 
     modalPerfil?.addEventListener('click', (e) => {
         if (e.target === modalPerfil) {
-            if (!localStorage.getItem('jobbers_role')) {
-                localStorage.setItem('jobbers_role', 'postulante');
-            }
+            if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
             cerrarModalPerfil();
         }
     });
@@ -225,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.btn-rol').forEach(btn => {
         btn.addEventListener('click', () => {
             rolSeleccionadoTemp = btn.getAttribute('data-rol');
-            const nombreRol = btn.getAttribute('data-nombre');
+            const nombreRol = btn.getAttribute('data-nombre') || rolSeleccionadoTemp;
             
             if (nombreConfirmar) nombreConfirmar.textContent = nombreRol;
             if (stepSelect) stepSelect.style.display = 'none';
@@ -252,10 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const contenedor = document.getElementById('lista-vacantes');
         if (!contenedor) return;
 
-        if (vacantes.length === 0) {
+        if (!vacantes || vacantes.length === 0) {
             contenedor.innerHTML = `
-                <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted, #888);">
-                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary, #00e676);"></i>
+                <div style="text-align: center; padding: 3rem 1rem; color: #888;">
+                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: #00e676;"></i>
                     <p>No encontramos búsquedas que coincidan con tu criterio.</p>
                 </div>`;
             return;
@@ -265,23 +272,23 @@ document.addEventListener('DOMContentLoaded', () => {
             <article class="job-offer-card">
                 <div class="job-info-main">
                     <div class="job-header-row">
-                        <h4>${v.titulo}</h4>
+                        <h4>${escapeHTML(v.titulo)}</h4>
                         ${v.urgente ? `<span class="badge-urgente"><i class="fas fa-bolt"></i> Urgente</span>` : ''}
                     </div>
                     
-                    <span class="job-company">${v.empresa}</span>
+                    <span class="job-company">${escapeHTML(v.empresa)}</span>
 
                     <div class="job-details-row">
-                        <span><i class="fas fa-map-marker-alt"></i> ${v.zona}</span>
-                        <span><i class="fas fa-clock"></i> ${v.turno}</span>
-                        <span><i class="fas fa-briefcase"></i> ${v.jornada}</span>
-                        <span class="job-salary"><i class="fas fa-dollar-sign"></i> ${v.sueldo}</span>
+                        <span><i class="fas fa-map-marker-alt"></i> ${escapeHTML(v.zona)}</span>
+                        <span><i class="fas fa-clock"></i> ${escapeHTML(v.turno)}</span>
+                        <span><i class="fas fa-briefcase"></i> ${escapeHTML(v.jornada)}</span>
+                        <span class="job-salary"><i class="fas fa-dollar-sign"></i> ${escapeHTML(v.sueldo)}</span>
                     </div>
                 </div>
 
                 <div class="job-action-col">
-                    <span class="job-time">${v.tiempo}</span>
-                    <button type="button" class="btn-postularme" onclick="window.abrirModalPostulacion('${v.titulo.replace(/'/g, "\\'")}', '${v.empresa.replace(/'/g, "\\'")}', '${v.telefono}')">
+                    <span class="job-time">${escapeHTML(v.tiempo)}</span>
+                    <button type="button" class="btn-postularme" onclick="window.abrirModalPostulacion('${escapeHTML(v.titulo)}', '${escapeHTML(v.empresa)}', '${escapeHTML(v.telefono)}')">
                         <i class="fab fa-whatsapp" style="margin-right: 0.4rem; font-size: 1rem;"></i> Postularme
                     </button>
                 </div>
@@ -296,18 +303,18 @@ document.addEventListener('DOMContentLoaded', () => {
         contenedor.innerHTML = talento.map(t => `
             <div class="job-offer-card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                    <h4 style="color: var(--primary, #00e676); font-size: 1.1rem;">${t.nombre}</h4>
+                    <h4 style="color: var(--primary, #00e676); font-size: 1.1rem;">${escapeHTML(t.nombre)}</h4>
                     <span style="font-size: 0.75rem; background: rgba(46, 204, 113, 0.15); color: #2ecc71; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700;">Disponible</span>
                 </div>
                 <div>
-                    <strong style="display: block; font-size: 0.95rem;">${t.puesto}</strong>
-                    <span style="font-size: 0.85rem; color: #aaa;">${t.experiencia}</span>
+                    <strong style="display: block; font-size: 0.95rem;">${escapeHTML(t.puesto)}</strong>
+                    <span style="font-size: 0.85rem; color: #aaa;">${escapeHTML(t.experiencia)}</span>
                 </div>
                 <div style="font-size: 0.82rem; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.5rem; width: 100%;">
-                    <div><i class="fas fa-map-marker-alt" style="color: var(--primary, #00e676);"></i> ${t.zona}</div>
-                    <div style="margin-top: 0.2rem;"><i class="fas fa-user-clock" style="color: var(--primary, #00e676);"></i> ${t.disponibilidad}</div>
+                    <div><i class="fas fa-map-marker-alt" style="color: var(--primary, #00e676);"></i> ${escapeHTML(t.zona)}</div>
+                    <div style="margin-top: 0.2rem;"><i class="fas fa-user-clock" style="color: var(--primary, #00e676);"></i> ${escapeHTML(t.disponibilidad)}</div>
                 </div>
-                <button type="button" class="btn-whatsapp" style="width: 100%; margin-top: 0.5rem; height: 38px; font-size: 0.78rem;" onclick="window.contactarTalento('${t.nombre.replace(/'/g, "\\'")}', '${t.puesto.replace(/'/g, "\\'")}')">
+                <button type="button" class="btn-whatsapp" style="width: 100%; margin-top: 0.5rem; height: 38px; font-size: 0.78rem;" onclick="window.contactarTalento('${escapeHTML(t.nombre)}', '${escapeHTML(t.puesto)}')">
                     <i class="fab fa-whatsapp"></i> Contactar Perfil
                 </button>
             </div>
@@ -323,9 +330,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const termino = inputBuscador.value.toLowerCase().trim();
 
         const resultados = listaVacantesBD.filter(v => 
-            v.titulo.toLowerCase().includes(termino) ||
-            v.empresa.toLowerCase().includes(termino) ||
-            v.zona.toLowerCase().includes(termino)
+            (v.titulo && v.titulo.toLowerCase().includes(termino)) ||
+            (v.empresa && v.empresa.toLowerCase().includes(termino)) ||
+            (v.zona && v.zona.toLowerCase().includes(termino))
         );
 
         renderizarVacantes(resultados);
@@ -340,12 +347,12 @@ document.addEventListener('DOMContentLoaded', () => {
     formExpress?.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const empresa = document.getElementById('nombre-empresa')?.value.trim();
-        const telefono = document.getElementById('telefono-contacto')?.value.trim();
-        const puesto = document.getElementById('puesto-requerido')?.value;
-        const zona = document.getElementById('zona-local')?.value;
-        const turno = document.getElementById('turno-puesto')?.value;
-        const jornada = document.getElementById('jornada-puesto')?.value;
+        const empresa = getVal('nombre-empresa');
+        const telefono = getVal('telefono-contacto');
+        const puesto = getVal('puesto-requerido');
+        const zona = getVal('zona-local');
+        const turno = getVal('turno-puesto');
+        const jornada = getVal('jornada-puesto');
 
         if (!empresa || !telefono || !puesto || !zona || !turno || !jornada) {
             window.mostrarToast('Por favor, completá todos los campos.', 'error');
@@ -373,16 +380,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- ESCUCHADORES EXTRA DE MODALES Y BINDINGS ---
     document.getElementById('form-postularme')?.addEventListener('submit', window.enviarPostulacionWhatsApp);
 
-    // Cierre de modal de postulación si existe botón o backdrop
     document.querySelectorAll('.btn-cerrar-postular, .modal-close-btn').forEach(btn => {
         btn.addEventListener('click', window.cerrarModalPostulacion);
     });
 
     const modalPostularme = document.getElementById('postular-modal');
     modalPostularme?.addEventListener('click', (e) => {
-        if (e.target === modalPostularme) {
-            window.cerrarModalPostulacion();
-        }
+        if (e.target === modalPostularme) window.cerrarModalPostulacion();
     });
 
     // --- DROPDOWN RECURSOS ---
@@ -395,11 +399,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('click', (e) => {
-        if (dropdownMenu && !dropdownMenu.contains(e.target) && !dropdownToggle.contains(e.target)) {
+        if (dropdownMenu && !dropdownMenu.contains(e.target) && !dropdownToggle?.contains(e.target)) {
             dropdownMenu.classList.remove('show');
         }
     });
 
-    // Inicializar app
+    // Arrancar la app
     initRol();
 });
