@@ -9,13 +9,11 @@
 let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
 
-// Helper para obtener valor de un input de forma segura sin romper el script
 function getVal(id) {
     const el = document.getElementById(id);
     return el ? el.value.trim() : "";
 }
 
-// Helper para escapar strings dentro de atributos HTML (Evita vulnerabilidades y errores sintácticos)
 function escapeHTML(str) {
     if (!str) return "";
     return String(str)
@@ -138,129 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // --- CARGA ASÍNCRONA DESDE JSON ---
-    async function cargarVacantes() {
-        try {
-            // Se fuerza la ruta relativa explícita a la raíz
-            const respuesta = await fetch('./base_de_datos.json');
-            if (!respuesta.ok) throw new Error(`Status: ${respuesta.status}`);
-
-            const datos = await respuesta.json();
-
-            listaVacantesBD = datos.map(v => ({
-                id: v.id,
-                titulo: v.puesto || v.titulo || "Puesto Gastronómico",
-                categoria: (v.categoria || v.puesto || v.titulo || "").toLowerCase(),
-                empresa: v.empresa || "Confidencial",
-                zona: v.zona || "Córdoba",
-                turno: v.turno || "A convenir",
-                jornada: v.jornada || "Completa",
-                sueldo: v.sueldo || "A convenir",
-                urgente: Boolean(v.urgente),
-                tiempo: v.tiempo || "Reciente",
-                telefono: v.contacto_wa || v.telefono || "5493513080197"
-            }));
-
-            renderizarVacantes(listaVacantesBD);
-
-        } catch (error) {
-            console.error("Error al cargar base_de_datos.json:", error);
-            window.mostrarToast('No se pudieron cargar las ofertas de empleo.', 'error');
-        }
-    }
-
-    // --- GESTIÓN DE ROLES ---
-    let rolSeleccionadoTemp = null;
-    const modalPerfil = document.getElementById('modal-cambiar-perfil');
-    const stepSelect = document.getElementById('rol-step-select');
-    const stepConfirm = document.getElementById('rol-step-confirm');
-    const nombreConfirmar = document.getElementById('rol-nombre-confirmar');
-
-    function initRol() {
-        const rolGuardado = localStorage.getItem('jobbers_role');
-        
-        cargarVacantes();
-        renderizarTalento(MOCK_TALENTO);
-        
-        if (rolGuardado) {
-            aplicarRol(rolGuardado);
-            cerrarModalPerfil();
-        } else {
-            aplicarRol('postulante');
-            abrirModalPerfil();
-        }
-    }
-
-    function aplicarRol(rol) {
-        document.body.classList.remove('role-postulante', 'role-empresa');
-        document.body.classList.add(`role-${rol}`);
-        localStorage.setItem('jobbers_role', rol);
-
-        const labelModo = document.getElementById('label-modo-actual');
-        if (labelModo) {
-            labelModo.textContent = rol === 'empresa' ? 'Modo Empresa' : 'Modo Postulante';
-        }
-    }
-
-    function abrirModalPerfil() {
-        if (!modalPerfil) return;
-        if (stepSelect) stepSelect.style.display = 'block';
-        if (stepConfirm) stepConfirm.style.display = 'none';
-        modalPerfil.style.display = 'flex';
-        modalPerfil.setAttribute('aria-hidden', 'false');
-    }
-
-    function cerrarModalPerfil() {
-        if (!modalPerfil) return;
-        modalPerfil.style.display = 'none';
-        modalPerfil.setAttribute('aria-hidden', 'true');
-        rolSeleccionadoTemp = null;
-    }
-
-    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            abrirModalPerfil();
-        });
-    });
-
-    document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
-        if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
-        cerrarModalPerfil();
-    });
-
-    modalPerfil?.addEventListener('click', (e) => {
-        if (e.target === modalPerfil) {
-            if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
-            cerrarModalPerfil();
-        }
-    });
-
-    document.querySelectorAll('.btn-rol').forEach(btn => {
-        btn.addEventListener('click', () => {
-            rolSeleccionadoTemp = btn.getAttribute('data-rol');
-            const nombreRol = btn.getAttribute('data-nombre') || rolSeleccionadoTemp;
-            
-            if (nombreConfirmar) nombreConfirmar.textContent = nombreRol;
-            if (stepSelect) stepSelect.style.display = 'none';
-            if (stepConfirm) stepConfirm.style.display = 'block';
-        });
-    });
-
-    document.getElementById('btn-volver-rol')?.addEventListener('click', () => {
-        if (stepConfirm) stepConfirm.style.display = 'none';
-        if (stepSelect) stepSelect.style.display = 'block';
-        rolSeleccionadoTemp = null;
-    });
-
-    document.getElementById('btn-confirmar-rol')?.addEventListener('click', () => {
-        if (rolSeleccionadoTemp) {
-            aplicarRol(rolSeleccionadoTemp);
-            window.mostrarToast(`Perfil cambiado a ${rolSeleccionadoTemp === 'empresa' ? 'Empresa' : 'Postulante'}`);
-            cerrarModalPerfil();
-        }
-    });
-
     // --- RENDERIZADO DE VACANTES Y TALENTO ---
     function renderizarVacantes(vacantes) {
         const contenedor = document.getElementById('lista-vacantes');
@@ -328,6 +203,130 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
+    // --- CARGA ASÍNCRONA DESDE JSON ---
+    async function cargarVacantes() {
+        try {
+            // Se usa './' para asegurar resolución de la raíz local del servidor
+            const respuesta = await fetch('./base_de_datos.json');
+            if (!respuesta.ok) throw new Error(`Status: ${respuesta.status}`);
+
+            const datos = await respuesta.json();
+
+            listaVacantesBD = datos.map(v => ({
+                id: v.id,
+                titulo: v.puesto || v.titulo || "Puesto Gastronómico",
+                categoria: (v.categoria || v.puesto || v.titulo || "").toLowerCase(),
+                empresa: v.empresa || "Confidencial",
+                zona: v.zona || "Córdoba",
+                turno: v.turno || "A convenir",
+                jornada: v.jornada || "Completa",
+                sueldo: v.sueldo || "A convenir",
+                urgente: Boolean(v.urgente),
+                tiempo: v.tiempo || "Reciente",
+                telefono: v.contacto_wa || v.telefono || "5493513080197"
+            }));
+
+            renderizarVacantes(listaVacantesBD);
+
+        } catch (error) {
+            console.error("Error al cargar base_de_datos.json:", error);
+            window.mostrarToast('No se pudieron cargar las ofertas de empleo.', 'error');
+        }
+    }
+
+    // --- GESTIÓN DE ROLES ---
+    let rolSeleccionadoTemp = null;
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
+    const stepSelect = document.getElementById('rol-step-select');
+    const stepConfirm = document.getElementById('rol-step-confirm');
+    const nombreConfirmar = document.getElementById('rol-nombre-confirmar');
+
+    function aplicarRol(rol) {
+        document.body.classList.remove('role-postulante', 'role-empresa');
+        document.body.classList.add(`role-${rol}`);
+        localStorage.setItem('jobbers_role', rol);
+
+        const labelModo = document.getElementById('label-modo-actual');
+        if (labelModo) {
+            labelModo.textContent = rol === 'empresa' ? 'Modo Empresa' : 'Modo Postulante';
+        }
+    }
+
+    function abrirModalPerfil() {
+        if (!modalPerfil) return;
+        if (stepSelect) stepSelect.style.display = 'block';
+        if (stepConfirm) stepConfirm.style.display = 'none';
+        modalPerfil.style.display = 'flex';
+        modalPerfil.setAttribute('aria-hidden', 'false');
+    }
+
+    function cerrarModalPerfil() {
+        if (!modalPerfil) return;
+        modalPerfil.style.display = 'none';
+        modalPerfil.setAttribute('aria-hidden', 'true');
+        rolSeleccionadoTemp = null;
+    }
+
+    function initRol() {
+        const rolGuardado = localStorage.getItem('jobbers_role');
+        
+        cargarVacantes();
+        renderizarTalento(MOCK_TALENTO);
+        
+        if (rolGuardado) {
+            aplicarRol(rolGuardado);
+            cerrarModalPerfil();
+        } else {
+            aplicarRol('postulante');
+            abrirModalPerfil();
+        }
+    }
+
+    // Eventos Modal Perfil
+    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            abrirModalPerfil();
+        });
+    });
+
+    document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
+        if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
+        cerrarModalPerfil();
+    });
+
+    modalPerfil?.addEventListener('click', (e) => {
+        if (e.target === modalPerfil) {
+            if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
+            cerrarModalPerfil();
+        }
+    });
+
+    document.querySelectorAll('.btn-rol').forEach(btn => {
+        btn.addEventListener('click', () => {
+            rolSeleccionadoTemp = btn.dataset.rol || btn.getAttribute('data-rol');
+            const nombreRol = btn.dataset.nombre || btn.getAttribute('data-nombre') || rolSeleccionadoTemp;
+            
+            if (nombreConfirmar) nombreConfirmar.textContent = nombreRol;
+            if (stepSelect) stepSelect.style.display = 'none';
+            if (stepConfirm) stepConfirm.style.display = 'block';
+        });
+    });
+
+    document.getElementById('btn-volver-rol')?.addEventListener('click', () => {
+        if (stepConfirm) stepConfirm.style.display = 'none';
+        if (stepSelect) stepSelect.style.display = 'block';
+        rolSeleccionadoTemp = null;
+    });
+
+    document.getElementById('btn-confirmar-rol')?.addEventListener('click', () => {
+        if (rolSeleccionadoTemp) {
+            aplicarRol(rolSeleccionadoTemp);
+            window.mostrarToast(`Perfil cambiado a ${rolSeleccionadoTemp === 'empresa' ? 'Empresa' : 'Postulante'}`);
+            cerrarModalPerfil();
+        }
+    });
+
     // --- BUSCADOR Y FILTRADO POR CATEGORÍA ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
@@ -342,13 +341,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const zona = (v.zona || '').toLowerCase();
             const categoria = (v.categoria || '').toLowerCase();
 
-            // 1. Validar Filtro por Texto del Input
             const coincideTexto = !termino || 
                 titulo.includes(termino) || 
                 empresa.includes(termino) || 
                 zona.includes(termino);
 
-            // 2. Validar Filtro por Categoria seleccionada en Chip
             let coincideCategoria = true;
             if (categoriaActual !== 'todas') {
                 coincideCategoria = categoria.includes(categoriaActual) || titulo.includes(categoriaActual);
@@ -360,13 +357,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderizarVacantes(resultados);
     }
 
-    // Eventos para Selección de Chips usando data-cat
     categoryChips.forEach(chip => {
         chip.addEventListener('click', () => {
             categoryChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
 
-            const catAttr = chip.getAttribute('data-cat');
+            const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
             if (catAttr) {
                 categoriaActual = catAttr.toLowerCase();
             } else {
@@ -454,6 +450,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Arrancar la aplicación
+    // Arrancar la app (las funciones ya están definidas en memoria)
     initRol();
 });
