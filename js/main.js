@@ -1,6 +1,6 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal limpia, optimizada y blindada contra fallos de DOM.
+ * Lógica principal optimizada, reactiva y blindada contra fallos de DOM.
  */
 
 // =========================================================================
@@ -25,7 +25,7 @@ function escapeHTML(str) {
 }
 
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
-    whatsappEmpleadorActual = whatsappTel || "5493513080197";
+    whatsappEmpleadorActual = whatsappTel && whatsappTel !== "undefined" ? whatsappTel : "5493513080197";
     tituloPuestoActual = `${puesto} — ${empresa}`;
 
     const titleEl = document.getElementById('modal-job-title');
@@ -150,15 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        contenedor.innerHTML = vacantes.map(v => `
+        contenedor.innerHTML = vacantes.map(v => {
+            const tituloEsc = escapeHTML(v.titulo);
+            const empresaEsc = escapeHTML(v.empresa);
+            const telEsc = escapeHTML(v.telefono);
+
+            return `
             <article class="job-offer-card">
                 <div class="job-info-main">
                     <div class="job-header-row">
-                        <h4>${escapeHTML(v.titulo)}</h4>
+                        <h4>${tituloEsc}</h4>
                         ${v.urgente ? `<span class="badge-urgente"><i class="fas fa-bolt"></i> Urgente</span>` : ''}
                     </div>
                     
-                    <span class="job-company">${escapeHTML(v.empresa)}</span>
+                    <span class="job-company">${empresaEsc}</span>
 
                     <div class="job-details-row">
                         <span><i class="fas fa-map-marker-alt"></i> ${escapeHTML(v.zona)}</span>
@@ -170,12 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div class="job-action-col">
                     <span class="job-time">${escapeHTML(v.tiempo)}</span>
-                    <button type="button" class="btn-postularme" onclick="window.abrirModalPostulacion('${escapeHTML(v.titulo)}', '${escapeHTML(v.empresa)}', '${escapeHTML(v.telefono)}')">
+                    <button type="button" class="btn-postularme" onclick="window.abrirModalPostulacion('${tituloEsc}', '${empresaEsc}', '${telEsc}')">
                         <i class="fab fa-whatsapp" style="margin-right: 0.4rem; font-size: 1rem;"></i> Postularme
                     </button>
                 </div>
             </article>
-        `).join('');
+        `}).join('');
     }
 
     function renderizarTalento(talento) {
@@ -206,7 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- CARGA ASÍNCRONA DESDE JSON ---
     async function cargarVacantes() {
         try {
-            // Se usa './' para asegurar resolución de la raíz local del servidor
             const respuesta = await fetch('./base_de_datos.json');
             if (!respuesta.ok) throw new Error(`Status: ${respuesta.status}`);
 
@@ -328,65 +332,71 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- BUSCADOR Y FILTRADO POR CATEGORÍA ---
-const inputBuscador = document.getElementById('job-search-input');
-const btnBuscador = document.querySelector('.btn-search');
-const categoryChips = document.querySelectorAll('.category-chips .chip, .hero-chips .chip, .chip');
+    const inputBuscador = document.getElementById('job-search-input');
+    const btnBuscador = document.querySelector('.btn-search');
+    const categoryChips = document.querySelectorAll('.category-chips .chip, .hero-chips .chip, .chip');
 
-// Mapper helper para normalizar alias de categorías
-function normalizarCategoria(cat) {
-    if (!cat) return '';
-    const c = cat.toLowerCase().trim();
-    if (c.includes('todas') || c === 'all') return 'todas';
-    if (c.includes('cocina')) return 'cocina';
-    if (c.includes('salón') || c.includes('salon')) return 'salon';
-    if (c.includes('barismo') || c.includes('barra') || c.includes('bar')) return 'barra';
-    if (c.includes('delivery')) return 'delivery';
-    if (c.includes('limpieza') || c.includes('bachero')) return 'limpieza';
-    if (c.includes('rrhh') || c.includes('recursos')) return 'rrhh';
-    return c;
-}
+    function normalizarCategoria(cat) {
+        if (!cat) return '';
+        const c = cat.toLowerCase().trim();
+        if (c.includes('todas') || c === 'all') return 'todas';
+        if (c.includes('cocina')) return 'cocina';
+        if (c.includes('salón') || c.includes('salon')) return 'salon';
+        if (c.includes('barismo') || c.includes('barra') || c.includes('bar')) return 'barra';
+        if (c.includes('delivery')) return 'delivery';
+        if (c.includes('limpieza') || c.includes('bachero')) return 'limpieza';
+        if (c.includes('rrhh') || c.includes('recursos')) return 'rrhh';
+        return c;
+    }
 
-function filtrarEmpleos() {
-    const termino = inputBuscador ? inputBuscador.value.toLowerCase().trim() : '';
+    function filtrarEmpleos() {
+        const termino = inputBuscador ? inputBuscador.value.toLowerCase().trim() : '';
 
-    const resultados = listaVacantesBD.filter(v => {
-        const titulo = (v.titulo || '').toLowerCase();
-        const empresa = (v.empresa || '').toLowerCase();
-        const zona = (v.zona || '').toLowerCase();
-        const categoria = normalizarCategoria(v.categoria || v.titulo);
+        const resultados = listaVacantesBD.filter(v => {
+            const titulo = (v.titulo || '').toLowerCase();
+            const empresa = (v.empresa || '').toLowerCase();
+            const zona = (v.zona || '').toLowerCase();
+            const categoria = normalizarCategoria(v.categoria || v.titulo);
 
-        const coincideTexto = !termino || 
-            titulo.includes(termino) || 
-            empresa.includes(termino) || 
-            zona.includes(termino);
+            const coincideTexto = !termino || 
+                titulo.includes(termino) || 
+                empresa.includes(termino) || 
+                zona.includes(termino);
 
-        let coincideCategoria = true;
-        if (categoriaActual !== 'todas') {
-            // Compara la categoría normalizada o busca si el título contiene la palabra clave
-            coincideCategoria = (categoria === categoriaActual) || 
-                                 categoria.includes(categoriaActual) || 
-                                 titulo.includes(categoriaActual);
-        }
+            let coincideCategoria = true;
+            if (categoriaActual !== 'todas') {
+                coincideCategoria = (categoria === categoriaActual) || 
+                                   categoria.includes(categoriaActual) || 
+                                   titulo.includes(categoriaActual);
+            }
 
-        return coincideTexto && coincideCategoria;
-    });
+            return coincideTexto && coincideCategoria;
+        });
 
-    renderizarVacantes(resultados);
-}
+        renderizarVacantes(resultados);
+    }
 
-categoryChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-        categoryChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-
-        const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
-        const rawCategory = catAttr || chip.textContent;
-        
-        categoriaActual = normalizarCategoria(rawCategory);
-
+    // LISTENER EN VIVO EN EL INPUT DE BÚSQUEDA
+    inputBuscador?.addEventListener('input', filtrarEmpleos);
+    btnBuscador?.addEventListener('click', (e) => {
+        e.preventDefault();
         filtrarEmpleos();
     });
-});
+
+    categoryChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            categoryChips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
+            const rawCategory = catAttr || chip.textContent;
+            
+            categoriaActual = normalizarCategoria(rawCategory);
+
+            filtrarEmpleos();
+        });
+    });
+
     // --- FORMULARIO EXPRESS EMPRESAS ---
     const formExpress = document.getElementById('form-publicar-express');
 
@@ -452,6 +462,6 @@ categoryChips.forEach(chip => {
         }
     });
 
-    // Arrancar la app (las funciones ya están definidas en memoria)
+    // Arrancar la app
     initRol();
 });
