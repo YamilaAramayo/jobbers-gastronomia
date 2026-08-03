@@ -447,3 +447,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Arrancar la app
     initRol();
 });
+});
