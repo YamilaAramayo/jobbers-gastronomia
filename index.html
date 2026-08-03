@@ -91,10 +91,12 @@
 
             <form id="form-postularme" class="postular-form">
                 <div class="form-group">
+                    <label for="postular-nombre" class="sr-only">Nombre y Apellido</label>
                     <input type="text" id="postular-nombre" placeholder="Nombre y Apellido" required />
                 </div>
 
                 <div class="form-group">
+                    <label for="postular-phone" class="sr-only">Teléfono de contacto</label>
                     <input type="tel" id="postular-phone" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required />
                 </div>
 
@@ -108,7 +110,7 @@
     <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
         <a href="#" class="logo" aria-label="Inicio Jobbers">
-            <h1 class="logo-title">JOBBERS</h1>
+            <span class="logo-title">JOBBERS</span>
             <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
         </a>
 
@@ -122,7 +124,7 @@
             </button>
 
             <div class="dropdown-container">
-                <button type="button" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false">
+                <button type="button" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" class="dropdown-btn">
                     Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
@@ -158,6 +160,7 @@
                     </div>
 
                     <div class="search-bar hero-search-bar">
+                        <label for="job-search-input" class="sr-only">Buscar puesto o zona</label>
                         <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
                         <button class="btn-search" type="button"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
                     </div>
@@ -180,9 +183,9 @@
                 <!-- MODO EMPRESA -->
                 <div class="modo-empresa-only width-full-express">
                     <div class="hero-empresa-header">
-                        <h1 class="hero-title">
+                        <h2 class="hero-title">
                             CONTRATÁ EL MEJOR <span class="highlight">TALENTO GASTRONÓMICO</span> PARA TU LOCAL
-                        </h1>
+                        </h2>
                         <p class="hero-subtitle">
                             Publicá tus búsquedas en segundos y conectá de forma directa con mozos, cocineros, baristas y personal calificado de Córdoba.
                         </p>
@@ -203,14 +206,17 @@
                         
                         <form class="express-form" id="form-publicar-express">
                             <div class="form-group">
+                                <label for="nombre-empresa" class="sr-only">Nombre del local</label>
                                 <input type="text" id="nombre-empresa" placeholder="Nombre de tu local / Gastronómico" required>
                             </div>
 
                             <div class="form-group">
+                                <label for="telefono-contacto" class="sr-only">Teléfono WhatsApp</label>
                                 <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required>
                             </div>
 
                             <div class="form-group">
+                                <label for="puesto-requerido" class="sr-only">Puesto requerido</label>
                                 <select id="puesto-requerido" class="form-control" required>
                                     <option value="" disabled selected>Puesto que necesitás...</option>
 
@@ -259,6 +265,7 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="zona-local" class="sr-only">Zona o Barrio</label>
                                 <select id="zona-local" required>
                                     <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
                                     <optgroup label="Polos Gastronómicos">
@@ -308,6 +315,7 @@
 
                             <div class="form-row-2col">
                                 <div class="form-group">
+                                    <label for="turno-puesto" class="sr-only">Turno</label>
                                     <select id="turno-puesto" required>
                                         <option value="" disabled selected>Turno</option>
                                         <option value="Turno Mañana">Turno Mañana</option>
@@ -318,6 +326,7 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="jornada-puesto" class="sr-only">Jornada</label>
                                     <select id="jornada-puesto" required>
                                         <option value="" disabled selected>Jornada</option>
                                         <option value="Full Time">Full Time</option>
