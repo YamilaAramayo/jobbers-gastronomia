@@ -9,7 +9,7 @@
     <meta name="description" content="Conectamos talentos gastronómicos con los mejores restaurantes, bares y hoteles de Córdoba. Encontrá empleo o publicá tus ofertas rápido y por WhatsApp.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jobbers.com.ar">
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="#0a0c0e">
 
     <!-- Open Graph / Redes Sociales & WhatsApp -->
     <meta property="og:type" content="website">
@@ -56,7 +56,7 @@
                         <span class="rol-title">Busco Personal</span>
                         <span class="rol-desc">Quiero publicar una oferta o contratar</span>
                     </button>
-                </div> <!-- Se cierra correctamente .rol-options -->
+                </div>
             </div>
 
             <!-- PASO 2: Confirmación -->
@@ -64,8 +64,8 @@
                 <h2>¿Estás seguro/a? 🤔</h2>
                 <p style="margin-bottom: 1rem;">Vas a ingresar a la plataforma como:</p>
                 
-                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--primary, #00e676); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <strong id="rol-nombre-confirmar" style="color: var(--primary, #00e676); font-size: 1.2rem; display: block;"></strong>
+                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--primary); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <strong id="rol-nombre-confirmar" style="color: var(--primary); font-size: 1.2rem; display: block;"></strong>
                 </div>
 
                 <div style="display: flex; gap: 0.75rem;">
@@ -105,39 +105,38 @@
         </div>
     </div>
 
-    <!-- NAVEGACIÓN PRINCIPAL -->
+    <!-- NAVEGACIÓN PRINCIPAL (SINCRONIZADA CON CSS) -->
     <header class="navbar">
-        <div class="navbar-container">
-            <a href="#" class="logo" aria-label="Inicio Jobbers">
-                <h2>JOBBERS</h2>
-                <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
-            </a>
+        <a href="#" class="logo" aria-label="Inicio Jobbers">
+            <h1 class="logo-title">JOBBERS</h1>
+            <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
+        </a>
 
-            <nav class="nav-links" aria-label="Navegación principal">
-                <a href="#vacantes" class="nav-link postulante-only">Empleos</a>
-                <a href="#formulario-express" class="nav-link modo-empresa-only">Publicar Búsqueda</a>
-                
-                <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
-                    <i class="fas fa-user-tag" aria-hidden="true"></i> <span id="label-modo-actual">Cambiar Perfil</span>
+        <nav class="nav-links" aria-label="Navegación principal">
+            <a href="#vacantes" class="nav-link modo-postulante-only btn-cta-postulante">Ver Empleos</a>
+            <a href="#formulario-express" class="nav-link modo-empresa-only btn-cta-empresa">Publicar Búsqueda</a>
+            
+            <button type="button" class="btn-cambiar-rol btn-role-badge" id="btn-cambiar-perfil">
+                <i class="fas fa-user-tag" aria-hidden="true"></i> 
+                <span id="label-modo-actual">Cambiar Perfil</span>
+            </button>
+
+            <div class="dropdown-container">
+                <button type="button" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false">
+                    Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                 </button>
-
-                <div class="dropdown">
-                    <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false">
-                        Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
-                    </button>
-                    <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
-                        <a href="#comunidad-blog" class="postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias Laborales</a>
-                        <a href="#" class="postulante-only"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                        <a href="#" class="postulante-only"><i class="fas fa-comments" aria-hidden="true"></i> Consejos de Entrevista</a>
-                        <a href="#" class="modo-empresa-only"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos de Contratos</a>
-                        <a href="#" class="modo-empresa-only"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora de Horarios</a>
-                        <a href="#"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
-                    </div>
+                <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
+                    <a href="#comunidad-blog" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
+                    <a href="#" class="dropdown-item modo-postulante-only"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
+                    <a href="#" class="dropdown-item modo-postulante-only"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
+                    <a href="#" class="dropdown-item modo-empresa-only"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
+                    <a href="#" class="dropdown-item modo-empresa-only"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                 </div>
+            </div>
 
-                <a href="#nosotros" class="nav-link">Nosotros</a>
-            </nav>
-        </div>
+            <a href="#nosotros" class="nav-link">Nosotros</a>
+        </nav>
     </header>
 
     <!-- HERO SECTION ADAPTATIVO -->
@@ -148,7 +147,7 @@
             <div class="hero-content">
                 
                 <!-- MODO POSTULANTE -->
-                <div class="postulante-only">
+                <div class="modo-postulante-only">
                     <h1 class="hero-title">Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá</h1>
                     <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
 
@@ -165,7 +164,7 @@
                 </div>
 
                 <!-- Categorías Rápidas -->
-                <div class="category-chips-container postulante-only">
+                <div class="category-chips-container modo-postulante-only">
                     <nav class="category-chips" aria-label="Filtrar vacantes por categoría">
                         <button type="button" class="chip active" data-cat="todas">Todas</button>
                         <button type="button" class="chip" data-cat="cocina">🍳 Cocina</button>
@@ -322,25 +321,25 @@
     </section>
 
     <!-- LISTADO DE EMPLEOS Y TARJETA COMUNIDAD -->
-    <main class="main-grid-section postulante-only" id="vacantes">
+    <main class="main-grid-section modo-postulante-only" id="vacantes">
         <section class="vacantes-container">
             <!-- Renderizado dinámico de vacantes por JS -->
             <div class="vacantes-list" id="lista-vacantes"></div>
             <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
             
             <!-- TARJETA COMUNIDAD & NOTICIAS LABORALES -->
-            <div class="card-comunidad" id="comunidad-blog" style="margin-top: 2.5rem; background: #1a1a1a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 2rem; text-align: center;">
-                <h3 style="font-size: 1.4rem; color: #ffffff; margin-bottom: 0.75rem; font-weight: 800; letter-spacing: 0.5px;">
+            <div class="card-comunidad" id="comunidad-blog" style="margin-top: 2.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+                <h3 style="font-size: 1.4rem; color: var(--text-main); margin-bottom: 0.75rem; font-weight: 800; letter-spacing: 0.5px;">
                     FORMÁ PARTE DE LA COMUNIDAD JOBBERS
                 </h3>
-                <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
                     Aparecé en nuestra lista de talentos destacados, leé las últimas noticias del sector gastronómico y accedé a contenido exclusivo para impulsar tu carrera.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button type="button" class="btn-primary" style="background: #f39c12; border: none; color: #000; font-weight: 800; padding: 0.85rem 1.75rem; border-radius: 6px; cursor: pointer; text-transform: uppercase;" onclick="window.contactarTalento('Nuevo Candidato', 'Registro Comunidad')">
+                    <button type="button" class="btn-primary" style="background: var(--primary); border: none; color: var(--text-dark); font-weight: 800; padding: 0.85rem 1.75rem; border-radius: var(--radius-sm); cursor: pointer; text-transform: uppercase;" onclick="window.contactarTalento('Nuevo Candidato', 'Registro Comunidad')">
                         DESTACÁ TU PERFIL
                     </button>
-                    <a href="#" class="btn-secondary" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 0.85rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <a href="#" class="btn-secondary" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 0.85rem 1.5rem; border-radius: var(--radius-sm); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                         <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Noticias
                     </a>
                 </div>
@@ -372,7 +371,7 @@
 
     <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile) -->
     <nav class="bottom-nav" aria-label="Navegación móvil">
-        <a href="#vacantes" class="bottom-nav-item active postulante-only">
+        <a href="#vacantes" class="bottom-nav-item active modo-postulante-only">
             <i class="fas fa-search" aria-hidden="true"></i>
             <span>Buscar</span>
         </a>
