@@ -6,7 +6,7 @@
 // =========================================================================
 // 1. FUNCIONES GLOBALES & HELPERS
 // =========================================================================
-let whatsappEmpleadorActual = "";
+let whatsappEmpleadorActual = "5493513080197";
 let tituloPuestoActual = "";
 
 function getVal(id) {
@@ -25,7 +25,9 @@ function escapeHTML(str) {
 }
 
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
-    whatsappEmpleadorActual = whatsappTel && whatsappTel !== "undefined" ? whatsappTel : "5493513080197";
+    whatsappEmpleadorActual = (whatsappTel && whatsappTel !== "undefined" && whatsappTel !== "") 
+        ? whatsappTel 
+        : "5493513080197";
     tituloPuestoActual = `${puesto} — ${empresa}`;
 
     const titleEl = document.getElementById('modal-job-title');
@@ -86,7 +88,7 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     toast.className = `jobbers-toast ${tipo}`;
     
     const bgColor = tipo === 'success' ? '#2ecc71' : '#e74c3c';
-    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:all 0.3s ease;`;
+    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:all 0.3s ease; margin-bottom: 8px;`;
     
     const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
     toast.innerHTML = `<i class="fas ${icono}"></i> <span>${escapeHTML(mensaje)}</span>`;
@@ -470,5 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Arrancar la app
+    initRol();
+});
     initRol();
 });
