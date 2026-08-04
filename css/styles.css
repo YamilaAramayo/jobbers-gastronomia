@@ -118,7 +118,8 @@ button,
 .btn-contactar-empleador,
 .chip,
 .bottom-nav-item,
-.dropdown-item {
+.dropdown-item,
+.btn-categoria {
   cursor: pointer !important;
   touch-action: manipulation;
   user-select: none;
@@ -475,74 +476,88 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   6. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS
+   6. GRILLA DE CATEGORÍAS MODERNA
    ========================================================================== */
-.category-chips-container {
-  width: 100%;
-  max-width: 1000px;
-  margin: 1.5rem auto 0 auto;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
+.categorias-grid-container {
+    width: 100%;
+    max-width: 720px;
+    margin: 1.5rem auto 0 auto;
+    text-align: left;
 }
 
-.category-chips,
-.hero-chips {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding: 10px 20px;
-  margin: 0 auto;
-  max-width: 100%;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+.categorias-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+    padding: 0 0.2rem;
 }
 
-.category-chips::-webkit-scrollbar,
-.hero-chips::-webkit-scrollbar,
-.category-chips-container::-webkit-scrollbar {
-  display: none;
+.categorias-header-row h3 {
+    font-size: 0.82rem;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    font-weight: 700;
 }
 
-.chip {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.55rem 1.15rem;
-  border-radius: 50px;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-  scroll-snap-align: start;
+.ver-todas-link {
+    font-size: 0.8rem;
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 600;
 }
 
-.chip:hover {
-  background-color: var(--card-bg-light);
-  color: var(--text-main);
-  border-color: var(--primary);
-  transform: translateY(-1px);
+.categorias-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
 }
 
-.chip.active {
-  background-color: var(--primary);
-  color: var(--text-dark);
-  border-color: var(--primary);
-  font-weight: 700;
-  box-shadow: 0 3px 12px rgba(243, 156, 18, 0.35);
+.btn-categoria {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    width: 100%;
+}
+
+.btn-categoria .cat-icon {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    transition: color 0.2s ease;
+}
+
+.btn-categoria span:not(.cat-icon) {
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-categoria:hover, 
+.btn-categoria.active {
+    background: rgba(243, 156, 18, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-categoria:hover .cat-icon, 
+.btn-categoria.active .cat-icon {
+    color: var(--primary);
+}
+
+@media (min-width: 769px) {
+    .categorias-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 /* ==========================================================================
@@ -1289,10 +1304,6 @@ body.role-empresa .btn-postularme {
 
   .btn-search {
     width: 100%;
-  }
-
-  .category-chips-container {
-    justify-content: flex-start;
   }
 
   .job-offer-card {
