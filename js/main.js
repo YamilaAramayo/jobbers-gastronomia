@@ -1,3 +1,4 @@
+
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
  * Lógica principal optimizada, reactiva y blindada.
@@ -310,8 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- LISTENERS DEL MODAL DE PERFIL DE USUARIO ---
-    
-    // Abrir modal unificado desde botones de la barra superior o inferior (.btn-trigger-modal-perfil / .btn-cambiar-rol)
     document.querySelectorAll('.btn-trigger-modal-perfil, .btn-cambiar-rol').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -320,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Delegación / Captura segura de Clicks en las Tarjetas de Selección (.btn-rol)
     document.addEventListener('click', (e) => {
         const btnRol = e.target.closest('.btn-rol');
         if (btnRol) {
@@ -331,7 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Botón Volver (Paso 2 -> Paso 1)
     document.getElementById('btn-volver-rol')?.addEventListener('click', () => {
         const stepSelect = document.getElementById('rol-step-select');
         const stepConfirm = document.getElementById('rol-step-confirm');
@@ -340,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.rolSeleccionadoTemp = null;
     });
 
-    // Botón Confirmar Ingreso
     document.getElementById('btn-confirmar-rol')?.addEventListener('click', () => {
         if (window.rolSeleccionadoTemp) {
             aplicarRol(window.rolSeleccionadoTemp);
@@ -349,7 +345,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cerrar Modal Perfil con Cruz o Backdrop
     document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
         if (!localStorage.getItem('jobbers_role')) aplicarRol('postulante');
         window.cerrarModalPerfil();
@@ -366,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FILTRADO DE BUSQUEDA ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
-    const categoryChips = document.querySelectorAll('.category-chips .chip, .chip');
+    const categoryChips = document.querySelectorAll('.category-chips .chip, .chip, .btn-categoria');
 
     function normalizarTexto(str) {
         if (!str) return '';
