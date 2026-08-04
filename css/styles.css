@@ -92,7 +92,7 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
-  padding-bottom: 0; /* En desktop no requiere margen inferior extra */
+  padding-bottom: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -109,11 +109,23 @@ img {
   display: block;
 }
 
-[onclick] {
-  cursor: pointer;
+/* Forzar cursor interactivo universal */
+button,
+[onclick],
+.btn-postularme,
+.btn-search,
+.btn-whatsapp,
+.btn-contactar-empleador,
+.chip,
+.bottom-nav-item,
+.dropdown-item {
+  cursor: pointer !important;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Foco Accesible Global (Teclado) */
+/* Foco Accesible Global */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -122,7 +134,7 @@ select:focus-visible {
   outline-offset: 2px;
 }
 
-/* Helper para accesibilidad Lector de Pantalla */
+/* Helper Accesibilidad */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -138,8 +150,6 @@ select:focus-visible {
 /* ==========================================================================
    2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES
    ========================================================================== */
-
-/* Ocultar elementos exclusivos de empresas cuando está en MODO POSTULANTE o por defecto */
 body:not(.role-empresa) .empresa-only,
 body:not(.role-empresa) .modo-empresa-only,
 body:not(.role-empresa) .seccion-empresa,
@@ -151,7 +161,6 @@ body.role-postulante .job-company {
   display: none !important;
 }
 
-/* Ocultar elementos exclusivos de postulantes cuando está en MODO EMPRESA */
 body.role-empresa .postulante-only,
 body.role-empresa .modo-postulante-only,
 body.role-empresa .seccion-postulante,
@@ -222,7 +231,6 @@ body.role-empresa .btn-postularme {
   font-weight: 600;
   padding: 0.5rem 0.85rem;
   border-radius: var(--radius-sm);
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -260,7 +268,7 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   4. DESPLEGABLE DE RECURSOS (DROPDOWN MENU)
+   4. DESPLEGABLE DE RECURSOS (DROPDOWN MENU - CORREGIDO)
    ========================================================================== */
 .dropdown-container {
   position: relative;
@@ -278,11 +286,10 @@ body.role-empresa .btn-postularme {
   border-radius: var(--radius-md);
   padding: 0.5rem 0;
   box-shadow: var(--shadow-lg);
-  display: flex;
+  display: none; /* Desactivado por defecto para evitar bloqueos de click */
   flex-direction: column;
   z-index: var(--z-dropdown);
   opacity: 0;
-  visibility: hidden;
   transform: translateY(-8px);
   transition: var(--transition);
   pointer-events: none;
@@ -290,8 +297,8 @@ body.role-empresa .btn-postularme {
 
 .dropdown-container:hover .dropdown-menu,
 .dropdown-menu.show {
+  display: flex !important;
   opacity: 1;
-  visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
 }
@@ -454,7 +461,6 @@ body.role-empresa .btn-postularme {
   padding: 0 1.85rem;
   height: 52px;
   border-radius: var(--radius-sm);
-  cursor: pointer;
   font-weight: 800;
   display: inline-flex;
   align-items: center;
@@ -471,86 +477,74 @@ body.role-empresa .btn-postularme {
 /* ==========================================================================
    6. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS
    ========================================================================== */
-/* ==========================================================================
-   6. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS (CORREGIDO)
-   ========================================================================== */
 .category-chips-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 1.5rem auto 0 auto;
-    padding: 0;
-    display: flex;
-    justify-content: center; /* En desktop grande se centra */
-    overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  margin: 1.5rem auto 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .category-chips,
 .hero-chips {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* GARANTIZA que el primer chip empiece en el borde izquierdo */
-    gap: 10px;
-    
-    /* Scroll Horizontal Limpio */
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    
-    /* Aire a los lados: clave para que NO se coman ni se corten los bordes */
-    padding: 10px 20px;
-    margin: 0 auto;
-    max-width: 100%;
-    
-    /* Ocultar scrollbar fea */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  margin: 0 auto;
+  max-width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Ocultar barra de scroll en navegadores Webkit */
 .category-chips::-webkit-scrollbar,
 .hero-chips::-webkit-scrollbar,
 .category-chips-container::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
-/* Estilos de las etiquetas / chips individuales */
 .chip {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.55rem 1.15rem;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    white-space: nowrap;
-    user-select: none;
-    -webkit-user-select: none;
-    flex-shrink: 0; /* Impide que los primeros chips se achiquen o aplasten */
-    scroll-snap-align: start;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.55rem 1.15rem;
+  border-radius: 50px;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 .chip:hover {
-    background-color: var(--card-bg-light);
-    color: var(--text-main);
-    border-color: var(--primary);
-    transform: translateY(-1px);
+  background-color: var(--card-bg-light);
+  color: var(--text-main);
+  border-color: var(--primary);
+  transform: translateY(-1px);
 }
 
 .chip.active {
-    background-color: var(--primary);
-    color: var(--text-dark);
-    border-color: var(--primary);
-    font-weight: 700;
-    box-shadow: 0 3px 12px rgba(243, 156, 18, 0.35);
+  background-color: var(--primary);
+  color: var(--text-dark);
+  border-color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 3px 12px rgba(243, 156, 18, 0.35);
 }
+
 /* ==========================================================================
    7. FORMULARIO EXPRESS & TARJETAS DEL HERO
    ========================================================================== */
@@ -574,6 +568,7 @@ body.role-empresa .btn-postularme {
   max-width: 540px;
   background: rgba(22, 24, 26, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 2rem;
@@ -685,7 +680,6 @@ body.role-empresa .btn-postularme {
   font-weight: 800;
   font-size: 0.9rem;
   text-transform: uppercase;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -812,7 +806,6 @@ body.role-empresa .btn-postularme {
   padding: 0.7rem 1.35rem;
   border-radius: var(--radius-sm);
   border: none;
-  cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transition: var(--transition);
@@ -865,7 +858,6 @@ body.role-empresa .btn-postularme {
   border-radius: var(--radius-sm);
   font-weight: 700;
   font-size: 0.85rem;
-  cursor: pointer;
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
@@ -944,7 +936,7 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   10. MODALES GENERALES, MODAL POSTULAR, PASO A PASO & TOASTS
+   10. MODALES GENERALES & TOASTS (CORREGIDO)
    ========================================================================== */
 .rol-modal-overlay {
   position: fixed;
@@ -959,6 +951,14 @@ body.role-empresa .btn-postularme {
   align-items: center;
   z-index: var(--z-modal);
   padding: 1.5rem;
+  pointer-events: none; /* Previene bloqueos cuando está oculto */
+}
+
+/* Clase para abrir los modales activamente */
+.rol-modal-overlay.active,
+.rol-modal-overlay.show {
+  display: flex !important;
+  pointer-events: auto !important;
 }
 
 .rol-modal-card, .modal-postular-card {
@@ -1004,7 +1004,6 @@ body.role-empresa .btn-postularme {
   border: 1px solid var(--border-color);
   background: var(--card-bg-light);
   color: var(--text-main);
-  cursor: pointer;
   transition: var(--transition);
 }
 
@@ -1066,7 +1065,6 @@ body.role-empresa .btn-postularme {
   height: 48px;
   font-weight: 800;
   border-radius: var(--radius-sm);
-  cursor: pointer;
 }
 
 .confirm-actions .btn-primary {
@@ -1150,7 +1148,6 @@ body.role-empresa .btn-postularme {
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1173,7 +1170,6 @@ body.role-empresa .btn-postularme {
   border: none;
   color: var(--text-muted);
   font-size: 1.4rem;
-  cursor: pointer;
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
@@ -1186,7 +1182,7 @@ body.role-empresa .btn-postularme {
 
 #toast-container {
   position: fixed;
-  bottom: 25px; /* Ajuste limpio para Escritorio */
+  bottom: 25px;
   right: 20px;
   z-index: var(--z-toast);
   display: flex;
@@ -1209,22 +1205,22 @@ body.role-empresa .btn-postularme {
   animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Keyframes */
+/* Keyframes de animación optimizados */
 @keyframes modalFadeIn {
   from { opacity: 0; transform: translateY(-12px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes toastIn {
-  from { opacity: 0; transform: translateX(50px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ==========================================================================
    11. BOTTOM NAV (EXCLUSIVO MÓVIL)
    ========================================================================== */
 .bottom-nav {
-  display: none !important; /* Oculta la barra por defecto en computadoras */
+  display: none !important;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -1260,7 +1256,6 @@ body.role-empresa .btn-postularme {
   transition: var(--transition);
   background: none;
   border: none;
-  cursor: pointer;
   padding: 0.25rem;
   text-decoration: none;
 }
@@ -1277,12 +1272,10 @@ body.role-empresa .btn-postularme {
    12. RESPONSIVE DESIGN (MEDIA QUERIES)
    ========================================================================== */
 @media (max-width: 768px) {
-  /* Muestra la barra inferior solo en dispositivos móviles */
   .bottom-nav {
     display: flex !important;
   }
 
-  /* Aplica el espacio al final del body solo en móviles */
   body {
     padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
   }
@@ -1331,7 +1324,6 @@ body.role-empresa .btn-postularme {
     display: none;
   }
 
-  /* Eleva las notificaciones toast para que no queden tapadas por la bottom nav en móvil */
   #toast-container {
     bottom: calc(80px + env(safe-area-inset-bottom, 0px));
     right: 15px;
