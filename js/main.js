@@ -79,7 +79,6 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
-        container.style.cssText = 'position:fixed; bottom:20px; right:20px; z-index:99999; display:flex; flex-direction:column; gap:10px;';
         document.body.appendChild(container);
     }
 
@@ -143,8 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!vacantes || vacantes.length === 0) {
             contenedor.innerHTML = `
-                <div style="text-align: center; padding: 3rem 1rem; color: #888;">
-                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: #00e676;"></i>
+                <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted, #888);">
+                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary, #F39C12);"></i>
                     <p>No encontramos búsquedas que coincidan con tu criterio.</p>
                 </div>`;
             return;
@@ -190,16 +189,16 @@ document.addEventListener('DOMContentLoaded', () => {
         contenedor.innerHTML = talento.map(t => `
             <div class="job-offer-card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                    <h4 style="color: var(--primary, #00e676); font-size: 1.1rem;">${escapeHTML(t.nombre)}</h4>
-                    <span style="font-size: 0.75rem; background: rgba(46, 204, 113, 0.15); color: #2ecc71; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700;">Disponible</span>
+                    <h4 style="color: var(--primary, #F39C12); font-size: 1.1rem;">${escapeHTML(t.nombre)}</h4>
+                    <span style="font-size: 0.75rem; background: rgba(46, 204, 113, 0.15); color: var(--salary-green, #2ecc71); padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700;">Disponible</span>
                 </div>
                 <div>
                     <strong style="display: block; font-size: 0.95rem;">${escapeHTML(t.puesto)}</strong>
-                    <span style="font-size: 0.85rem; color: #aaa;">${escapeHTML(t.experiencia)}</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted, #aaa);">${escapeHTML(t.experiencia)}</span>
                 </div>
-                <div style="font-size: 0.82rem; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.5rem; width: 100%;">
-                    <div><i class="fas fa-map-marker-alt" style="color: var(--primary, #00e676);"></i> ${escapeHTML(t.zona)}</div>
-                    <div style="margin-top: 0.2rem;"><i class="fas fa-user-clock" style="color: var(--primary, #00e676);"></i> ${escapeHTML(t.disponibilidad)}</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted, #aaa); border-top: 1px solid var(--border-color, rgba(255,255,255,0.1)); padding-top: 0.5rem; width: 100%;">
+                    <div><i class="fas fa-map-marker-alt" style="color: var(--primary, #F39C12);"></i> ${escapeHTML(t.zona)}</div>
+                    <div style="margin-top: 0.2rem;"><i class="fas fa-user-clock" style="color: var(--primary, #F39C12);"></i> ${escapeHTML(t.disponibilidad)}</div>
                 </div>
                 <button type="button" class="btn-whatsapp" style="width: 100%; margin-top: 0.5rem; height: 38px; font-size: 0.78rem;" onclick="window.contactarTalento('${escapeHTML(t.nombre)}', '${escapeHTML(t.puesto)}')">
                     <i class="fab fa-whatsapp"></i> Contactar Perfil
@@ -287,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Eventos Modal Perfil
-    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil').forEach(btn => {
+    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil, .btn-bottom-perfil').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             abrirModalPerfil();
@@ -443,6 +442,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalPostularme = document.getElementById('postular-modal');
     modalPostularme?.addEventListener('click', (e) => {
         if (e.target === modalPostularme) window.cerrarModalPostulacion();
+    });
+
+    // Cierre de modales con tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            window.cerrarModalPostulacion();
+            cerrarModalPerfil();
+        }
     });
 
     // --- DROPDOWN RECURSOS CON ACCESIBILIDAD ---
