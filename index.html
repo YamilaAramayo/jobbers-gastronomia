@@ -10,7 +10,8 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jobbers.com.ar">
     <meta name="theme-color" content="#0a0c0e">
-     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>"> 
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>"> 
+    
     <!-- Open Graph / Redes Sociales & WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Jobbers Argentina">
@@ -31,26 +32,6 @@
     
     <!-- JS diferido -->
     <script src="js/main.js" defer></script>
-<!-- NAV INFERIOR MÓVIL (Fija abajo en celulares) -->
-<nav class="bottom-nav" aria-label="Navegación Móvil">
-    <a href="#vacantes" class="bottom-nav-item active modo-postulante-only">
-        <i class="fas fa-search"></i>
-        <span>Empleos</span>
-    </a>
-    <a href="#formulario-express" class="bottom-nav-item modo-empresa-only">
-        <i class="fas fa-plus-circle"></i>
-        <span>Publicar</span>
-    </a>
-    <button type="button" class="bottom-nav-item btn-cambiar-perfil">
-        <i class="fas fa-user-tag"></i>
-        <span>Perfil</span>
-    </button>
-    <a href="#nosotros" class="bottom-nav-item">
-        <i class="fas fa-info-circle"></i>
-        <span>Nosotros</span>
-    </a>
-</nav>
-    
 </head>
 <body class="role-postulante">
 
@@ -138,7 +119,7 @@
             <a href="#vacantes" class="nav-link modo-postulante-only btn-cta-postulante">Ver Empleos</a>
             <a href="#formulario-express" class="nav-link modo-empresa-only btn-cta-empresa">Publicar Búsqueda</a>
             
-            <button type="button" class="btn-cambiar-rol btn-role-badge" id="btn-cambiar-perfil">
+            <button type="button" class="btn-cambiar-rol btn-role-badge btn-trigger-modal-perfil">
                 <i class="fas fa-user-tag" aria-hidden="true"></i> 
                 <span id="label-modo-actual">Cambiar Perfil</span>
             </button>
@@ -409,6 +390,26 @@
         <h2>Sobre Jobbers</h2>
         <p>Somos la comunidad y plataforma de empleo especializada en el sector gastronómico de Córdoba. Conectamos talento real con locales, restaurantes y hoteles de forma directa, ágil y transparente.</p>
     </section>
+
+    <!-- NAV INFERIOR MÓVIL (Fija abajo en celulares) -->
+    <nav class="bottom-nav" aria-label="Navegación Móvil">
+        <a href="#vacantes" class="bottom-nav-item active modo-postulante-only">
+            <i class="fas fa-search"></i>
+            <span>Empleos</span>
+        </a>
+        <a href="#formulario-express" class="bottom-nav-item modo-empresa-only">
+            <i class="fas fa-plus-circle"></i>
+            <span>Publicar</span>
+        </a>
+        <button type="button" class="bottom-nav-item btn-trigger-modal-perfil">
+            <i class="fas fa-user-tag"></i>
+            <span>Perfil</span>
+        </button>
+        <a href="#nosotros" class="bottom-nav-item">
+            <i class="fas fa-info-circle"></i>
+            <span>Nosotros</span>
+        </a>
+    </nav>
 
     <!-- FOOTER -->
     <footer class="main-footer">
