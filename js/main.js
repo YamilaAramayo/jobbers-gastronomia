@@ -6,7 +6,7 @@
 // =========================================================================
 // 1. FUNCIONES GLOBALES & HELPERS
 // =========================================================================
-let whatsappEmpleadorActual = "5493513080197";
+let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
 
 function getVal(id) {
@@ -25,9 +25,7 @@ function escapeHTML(str) {
 }
 
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
-    whatsappEmpleadorActual = (whatsappTel && whatsappTel !== "undefined" && whatsappTel !== "") 
-        ? whatsappTel 
-        : "5493513080197";
+    whatsappEmpleadorActual = whatsappTel && whatsappTel !== "undefined" ? whatsappTel : "5493513080197";
     tituloPuestoActual = `${puesto} — ${empresa}`;
 
     const titleEl = document.getElementById('modal-job-title');
@@ -88,7 +86,7 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     toast.className = `jobbers-toast ${tipo}`;
     
     const bgColor = tipo === 'success' ? '#2ecc71' : '#e74c3c';
-    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:all 0.3s ease; margin-bottom: 8px;`;
+    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:all 0.3s ease;`;
     
     const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
     toast.innerHTML = `<i class="fas ${icono}"></i> <span>${escapeHTML(mensaje)}</span>`;
@@ -272,10 +270,11 @@ document.addEventListener('DOMContentLoaded', () => {
         rolSeleccionadoTemp = null;
     }
 
-    function initRol() {
+    async function initRol() {
         const rolGuardado = localStorage.getItem('jobbers_role');
         
-        cargarVacantes();
+        // Carga síncrona/espera para tener los datos listos
+        await cargarVacantes();
         renderizarTalento(MOCK_TALENTO);
         
         if (rolGuardado) {
@@ -287,10 +286,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Eventos Modal Perfil
-    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil, .btn-bottom-perfil').forEach(btn => {
+    // Eventos Modal Perfil (Soporta Header, Desktop y Bottom Nav Mobile)
+    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil, .btn-bottom-perfil, #btn-perfil-mobile').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             abrirModalPerfil();
         });
     });
@@ -332,32 +332,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- BUSCADOR Y FILTRADO POR CATEGORÍA ---
+    // --- BUSCADOR Y FILTRADO POR CATEGORÍA SANITIZADO ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
     const categoryChips = document.querySelectorAll('.category-chips .chip, .hero-chips .chip, .chip');
 
+    function normalizarTexto(str) {
+        if (!str) return '';
+        return str.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remueve acentos
+            .replace(/[^\w\s]/gi, '') // Remueve emojis/iconos
+            .trim();
+    }
+
     function normalizarCategoria(cat) {
-        if (!cat) return '';
-        const c = cat.toLowerCase().trim();
-        if (c.includes('todas') || c === 'all') return 'todas';
-        if (c.includes('cocina')) return 'cocina';
-        if (c.includes('salón') || c.includes('salon')) return 'salon';
-        if (c.includes('barismo') || c.includes('barra') || c.includes('bar')) return 'barra';
-        if (c.includes('delivery')) return 'delivery';
-        if (c.includes('limpieza') || c.includes('bachero')) return 'limpieza';
-        if (c.includes('rrhh') || c.includes('recursos')) return 'rrhh';
+        const c = normalizarTexto(cat);
+        if (!c || c.includes('todas') || c === 'all') return 'todas';
+        if (c.includes('cocin')) return 'cocina';
+        if (c.includes('salon') || c.includes('mozo') || c.includes('camarer')) return 'salon';
+        if (c.includes('bar') || c.includes('barist') || c.includes('coctel')) return 'barra';
+        if (c.includes('delivery') || c.includes('repart')) return 'delivery';
+        if (c.includes('limpieza') || c.includes('bach')) return 'limpieza';
+        if (c.includes('rrhh') || c.includes('recurs')) return 'rrhh';
         return c;
     }
 
     function filtrarEmpleos() {
-        const termino = inputBuscador ? inputBuscador.value.toLowerCase().trim() : '';
+        const termino = normalizarTexto(inputBuscador ? inputBuscador.value : '');
 
         const resultados = listaVacantesBD.filter(v => {
-            const titulo = (v.titulo || '').toLowerCase();
-            const empresa = (v.empresa || '').toLowerCase();
-            const zona = (v.zona || '').toLowerCase();
-            const categoria = normalizarCategoria(v.categoria || v.titulo);
+            const titulo = normalizarTexto(v.titulo);
+            const empresa = normalizarTexto(v.empresa);
+            const zona = normalizarTexto(v.zona);
+            const catVacante = normalizarCategoria(v.categoria || v.titulo);
 
             const coincideTexto = !termino || 
                 titulo.includes(termino) || 
@@ -366,8 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let coincideCategoria = true;
             if (categoriaActual !== 'todas') {
-                coincideCategoria = (categoria === categoriaActual) || 
-                                   categoria.includes(categoriaActual) || 
+                coincideCategoria = (catVacante === categoriaActual) || 
                                    titulo.includes(categoriaActual);
             }
 
@@ -471,8 +477,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Arrancar la app
-    initRol();
-});
+    // Arrancar la app de forma asíncrona
     initRol();
 });
