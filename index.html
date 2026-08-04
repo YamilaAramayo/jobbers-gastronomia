@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -166,40 +165,52 @@
                         <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
                         <button class="btn-search" type="button"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
                     </div>
-                </div>
 
-                <!-- SECCIÓN DE CATEGORÍAS CON ICONOS GRANDES -->
-                <div class="categorias-grid-container modo-postulante-only">
-                    <div class="categorias-header-row">
-                        <h3>BUSCÁ POR CATEGORÍA</h3>
-                        <span class="ver-todas-link" data-cat="todas">Ver todas <i class="fas fa-chevron-right"></i></span>
-                    </div>
+                    <!-- SECCIÓN DE CATEGORÍAS COMPLETA Y ALINEADA -->
+                    <div class="categorias-grid-container">
+                        <div class="categorias-header-row">
+                            <h3>BUSCÁ POR CATEGORÍA</h3>
+                            <span class="ver-todas-link" data-cat="todas">Ver todas <i class="fas fa-chevron-right"></i></span>
+                        </div>
 
-                    <div class="categorias-grid" aria-label="Filtrar vacantes por categoría">
-                        <button type="button" class="btn-categoria active" data-cat="cocina">
-                            <i class="fas fa-utensils cat-icon"></i>
-                            <span>Cocina</span>
-                        </button>
-                        <button type="button" class="btn-categoria" data-cat="salon">
-                            <i class="fas fa-concierge-bell cat-icon"></i>
-                            <span>Mozo</span>
-                        </button>
-                        <button type="button" class="btn-categoria" data-cat="barismo">
-                            <i class="fas fa-coffee cat-icon"></i>
-                            <span>Barista</span>
-                        </button>
-                        <button type="button" class="btn-categoria" data-cat="barra">
-                            <i class="fas fa-cocktail cat-icon"></i>
-                            <span>Bartender</span>
-                        </button>
-                        <button type="button" class="btn-categoria" data-cat="delivery">
-                            <i class="fas fa-motorcycle cat-icon"></i>
-                            <span>Delivery</span>
-                        </button>
-                        <button type="button" class="btn-categoria" data-cat="todas">
-                            <i class="fas fa-th-large cat-icon"></i>
-                            <span>Más</span>
-                        </button>
+                        <div class="categorias-grid" aria-label="Filtrar vacantes por categoría">
+                            <button type="button" class="btn-categoria active" data-cat="todas">
+                                <i class="fas fa-border-all cat-icon"></i>
+                                <span>Todas</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="cocina">
+                                <i class="fas fa-utensils cat-icon"></i>
+                                <span>Cocina</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="salon">
+                                <i class="fas fa-concierge-bell cat-icon"></i>
+                                <span>Salón / Mozo</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="barismo">
+                                <i class="fas fa-coffee cat-icon"></i>
+                                <span>Barismo</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="barra">
+                                <i class="fas fa-cocktail cat-icon"></i>
+                                <span>Bartender</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="delivery">
+                                <i class="fas fa-motorcycle cat-icon"></i>
+                                <span>Delivery</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="limpieza">
+                                <i class="fas fa-pump-soap cat-icon"></i>
+                                <span>Bacha / Limpieza</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="rrhh">
+                                <i class="fas fa-briefcase cat-icon"></i>
+                                <span>RRHH / Gestión</span>
+                            </button>
+                            <button type="button" class="btn-categoria" data-cat="administracion">
+                                <i class="fas fa-chart-pie cat-icon"></i>
+                                <span>Administración</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
