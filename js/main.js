@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LISTENERS DEL MODAL DE PERFIL DE USUARIO ---
     
-    // Abrir modal desde botones de la barra superior o inferior
+    // Abrir modal unificado desde botones de la barra superior o inferior (.btn-trigger-modal-perfil / .btn-cambiar-rol)
     document.querySelectorAll('.btn-trigger-modal-perfil, .btn-cambiar-rol').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
