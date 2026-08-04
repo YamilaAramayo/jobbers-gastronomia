@@ -92,7 +92,7 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
-  padding-bottom: 80px;
+  padding-bottom: 0; /* En desktop no requiere margen inferior extra */
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -285,7 +285,7 @@ body.role-empresa .btn-postularme {
   visibility: hidden;
   transform: translateY(-8px);
   transition: var(--transition);
-  pointer-events: none; /* CORRECCIÓN 2: Previene clics mientras permanece cerrado */
+  pointer-events: none;
 }
 
 .dropdown-container:hover .dropdown-menu,
@@ -293,7 +293,7 @@ body.role-empresa .btn-postularme {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  pointer-events: auto; /* CORRECCIÓN 2: Habilita interacción cuando está abierto */
+  pointer-events: auto;
 }
 
 .dropdown-item {
@@ -482,7 +482,7 @@ body.role-empresa .btn-postularme {
   scrollbar-width: none;
   display: flex;
   justify-content: center;
-  scroll-snap-type: x mandatory; /* CORRECCIÓN 3: Desplazamiento inercial suave */
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 }
 
@@ -515,7 +515,7 @@ body.role-empresa .btn-postularme {
   white-space: nowrap;
   user-select: none;
   flex-shrink: 0;
-  scroll-snap-align: start; /* CORRECCIÓN 3: Alineación táctil limpia */
+  scroll-snap-align: start;
 }
 
 .chip:hover {
@@ -1168,7 +1168,7 @@ body.role-empresa .btn-postularme {
 
 #toast-container {
   position: fixed;
-  bottom: 85px;
+  bottom: 25px; /* Ajuste limpio para Escritorio */
   right: 20px;
   z-index: var(--z-toast);
   display: flex;
@@ -1203,9 +1203,10 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   11. BOTTOM NAV (MOBILE)
+   11. BOTTOM NAV (EXCLUSIVO MÓVIL)
    ========================================================================== */
 .bottom-nav {
+  display: none !important; /* Oculta la barra por defecto en computadoras */
   position: fixed;
   bottom: 0;
   left: 0;
@@ -1216,7 +1217,6 @@ body.role-empresa .btn-postularme {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-color);
-  display: flex;
   justify-content: space-around;
   align-items: center;
   z-index: var(--z-bottom-nav);
@@ -1259,7 +1259,12 @@ body.role-empresa .btn-postularme {
    12. RESPONSIVE DESIGN (MEDIA QUERIES)
    ========================================================================== */
 @media (max-width: 768px) {
-  /* CORRECCIÓN 1: Ajuste dinámico de padding del body según el dispositivo */
+  /* Muestra la barra inferior solo en dispositivos móviles */
+  .bottom-nav {
+    display: flex !important;
+  }
+
+  /* Aplica el espacio al final del body solo en móviles */
   body {
     padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
   }
@@ -1277,7 +1282,7 @@ body.role-empresa .btn-postularme {
   }
 
   .category-chips-container {
-    justify-content: flex-start; /* Permite desplazamiento continuo en mobile */
+    justify-content: flex-start;
   }
 
   .job-offer-card {
@@ -1305,9 +1310,10 @@ body.role-empresa .btn-postularme {
   }
 
   .nav-links {
-    display: none; /* Reemplazados por Bottom Nav en pantallas pequeñas */
+    display: none;
   }
 
+  /* Eleva las notificaciones toast para que no queden tapadas por la bottom nav en móvil */
   #toast-container {
     bottom: calc(80px + env(safe-area-inset-bottom, 0px));
     right: 15px;
