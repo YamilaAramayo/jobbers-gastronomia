@@ -533,6 +533,40 @@ body.role-empresa .btn-postularme {
   box-shadow: 0 3px 12px rgba(243, 156, 18, 0.35);
 }
 
+.category-chips,
+.hero-chips {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    /* Habilita el scroll horizontal fluido */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    
+    /* Aire indispensable a los lados para que NO corte el primer/último chip */
+    padding: 10px 16px;
+    margin: 0 auto;
+    max-width: 100%;
+    
+    /* Oculta la barra de scroll fea en todos los navegadores */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Oculta la barra de scroll en Chrome/Safari/Edge */
+.category-chips::-webkit-scrollbar,
+.hero-chips::-webkit-scrollbar {
+    display: none;
+}
+
+/* Evita que los chips se encojan o rompan al deslizar */
+.chip {
+    flex-shrink: 0;
+    user-select: none; /* Evita selección accidental al arrastrar */
+}
+
 /* ==========================================================================
    7. FORMULARIO EXPRESS & TARJETAS DEL HERO
    ========================================================================== */
