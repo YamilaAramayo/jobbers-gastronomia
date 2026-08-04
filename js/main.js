@@ -8,6 +8,7 @@
 // =========================================================================
 let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
+let rolSeleccionadoTemp = null;
 
 function getVal(id) {
     const el = document.getElementById(id);
@@ -24,6 +25,7 @@ function escapeHTML(str) {
         .replace(/'/g, "&#039;");
 }
 
+// Modales Globales
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
     whatsappEmpleadorActual = whatsappTel && whatsappTel !== "undefined" ? whatsappTel : "5493513080197";
     tituloPuestoActual = `${puesto} — ${empresa}`;
@@ -50,6 +52,31 @@ window.cerrarModalPostulacion = function() {
     if (formEl) formEl.reset();
 };
 
+window.abrirModalPerfil = function() {
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
+    const stepSelect = document.getElementById('rol-step-select');
+    const stepConfirm = document.getElementById('rol-step-confirm');
+
+    if (!modalPerfil) return;
+    if (stepSelect) stepSelect.style.display = 'block';
+    if (stepConfirm) stepConfirm.style.display = 'none';
+    
+    modalPerfil.style.display = 'flex';
+    modalPerfil.classList.add('show');
+    modalPerfil.setAttribute('aria-hidden', 'false');
+};
+
+window.cerrarModalPerfil = function() {
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
+    if (!modalPerfil) return;
+    
+    modalPerfil.style.display = 'none';
+    modalPerfil.classList.remove('show');
+    modalPerfil.setAttribute('aria-hidden', 'true');
+    rolSeleccionadoTemp = null;
+};
+
+// Acciones de Envío por WhatsApp
 window.enviarPostulacionWhatsApp = function(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
@@ -74,6 +101,7 @@ window.contactarTalento = function(nombre, puesto) {
     window.open(url, '_blank');
 };
 
+// Toast Notifications
 window.mostrarToast = function(mensaje, tipo = 'success') {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -238,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- GESTIÓN DE ROLES ---
-    let rolSeleccionadoTemp = null;
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const stepSelect = document.getElementById('rol-step-select');
     const stepConfirm = document.getElementById('rol-step-confirm');
@@ -255,55 +282,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function abrirModalPerfil() {
-        if (!modalPerfil) return;
-        if (stepSelect) stepSelect.style.display = 'block';
-        if (stepConfirm) stepConfirm.style.display = 'none';
-        modalPerfil.style.display = 'flex';
-        modalPerfil.setAttribute('aria-hidden', 'false');
-    }
-
-    function cerrarModalPerfil() {
-        if (!modalPerfil) return;
-        modalPerfil.style.display = 'none';
-        modalPerfil.setAttribute('aria-hidden', 'true');
-        rolSeleccionadoTemp = null;
-    }
-
     async function initRol() {
         const rolGuardado = localStorage.getItem('jobbers_role');
         
-        // Carga síncrona/espera para tener los datos listos
         await cargarVacantes();
         renderizarTalento(MOCK_TALENTO);
         
         if (rolGuardado) {
             aplicarRol(rolGuardado);
-            cerrarModalPerfil();
+            window.cerrarModalPerfil();
         } else {
             aplicarRol('postulante');
-            abrirModalPerfil();
+            window.abrirModalPerfil();
         }
     }
 
-    // Eventos Modal Perfil (Soporta Header, Desktop y Bottom Nav Mobile)
-    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil, .btn-bottom-perfil, #btn-perfil-mobile').forEach(btn => {
+    // Eventos Modal Perfil (Soporta Header, Desktop, Triggers y Bottom Nav Mobile)
+    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil, .btn-bottom-perfil, #btn-perfil-mobile, .btn-trigger-modal-perfil').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            abrirModalPerfil();
+            window.abrirModalPerfil();
         });
     });
 
     document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
         if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
-        cerrarModalPerfil();
+        window.cerrarModalPerfil();
     });
 
     modalPerfil?.addEventListener('click', (e) => {
         if (e.target === modalPerfil) {
             if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
-            cerrarModalPerfil();
+            window.cerrarModalPerfil();
         }
     });
 
@@ -328,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rolSeleccionadoTemp) {
             aplicarRol(rolSeleccionadoTemp);
             window.mostrarToast(`Perfil cambiado a ${rolSeleccionadoTemp === 'empresa' ? 'Empresa' : 'Postulante'}`);
-            cerrarModalPerfil();
+            window.cerrarModalPerfil();
         }
     });
 
@@ -383,7 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderizarVacantes(resultados);
     }
 
-    // LISTENER EN VIVO EN EL INPUT DE BÚSQUEDA
     inputBuscador?.addEventListener('input', filtrarEmpleos);
     btnBuscador?.addEventListener('click', (e) => {
         e.preventDefault();
@@ -456,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             window.cerrarModalPostulacion();
-            cerrarModalPerfil();
+            window.cerrarModalPerfil();
         }
     });
 
@@ -477,6 +487,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Arrancar la app de forma asíncrona
+    // Arrancar la app
     initRol();
 });
