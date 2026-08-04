@@ -1,4 +1,3 @@
-
 /* Importación de fuente moderna y limpia */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -476,14 +475,11 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   6. GRILLA DE CATEGORÍAS MODERNA
-   ========================================================================== */
-/* ==========================================================================
-   GRILLA DE CATEGORÍAS (BLOQUES ORDENADOS)
+   6. GRILLA DE CATEGORÍAS (BLOQUES ORDENADOS)
    ========================================================================== */
 .categorias-grid-container {
     width: 100%;
-    max-width: 680px; /* Ajustado para que el bloque quede compacto y ordenado */
+    max-width: 680px;
     margin: 1.5rem auto 0 auto;
     text-align: left;
 }
@@ -510,10 +506,9 @@ body.role-empresa .btn-postularme {
     font-weight: 600;
 }
 
-/* Estructura en bloques simétricos */
 .categorias-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Bloques de 3 columnas exactas */
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
@@ -558,7 +553,6 @@ body.role-empresa .btn-postularme {
     color: var(--primary);
 }
 
-/* En celulares se mantiene en 3 columnas pequeñas o se adapta fluidamente */
 @media (max-width: 480px) {
     .categorias-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -571,6 +565,7 @@ body.role-empresa .btn-postularme {
         font-size: 0.68rem;
     }
 }
+
 /* ==========================================================================
    7. FORMULARIO EXPRESS & TARJETAS DEL HERO
    ========================================================================== */
