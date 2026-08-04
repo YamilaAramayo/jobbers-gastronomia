@@ -269,7 +269,7 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   4. DESPLEGABLE DE RECURSOS (DROPDOWN MENU - CORREGIDO)
+   4. DESPLEGABLE DE RECURSOS (DROPDOWN MENU)
    ========================================================================== */
 .dropdown-container {
   position: relative;
@@ -951,7 +951,7 @@ body.role-empresa .btn-postularme {
 }
 
 /* ==========================================================================
-   10. MODALES GENERALES & TOASTS (CORREGIDO)
+   10. MODALES GENERALES & TOASTS
    ========================================================================== */
 .rol-modal-overlay {
   position: fixed;
