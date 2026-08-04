@@ -286,7 +286,7 @@ body.role-empresa .btn-postularme {
   border-radius: var(--radius-md);
   padding: 0.5rem 0;
   box-shadow: var(--shadow-lg);
-  display: none; /* Desactivado por defecto para evitar bloqueos de click */
+  display: none;
   flex-direction: column;
   z-index: var(--z-dropdown);
   opacity: 0;
@@ -951,10 +951,9 @@ body.role-empresa .btn-postularme {
   align-items: center;
   z-index: var(--z-modal);
   padding: 1.5rem;
-  pointer-events: none; /* Previene bloqueos cuando está oculto */
+  pointer-events: none;
 }
 
-/* Clase para abrir los modales activamente */
 .rol-modal-overlay.active,
 .rol-modal-overlay.show {
   display: flex !important;
