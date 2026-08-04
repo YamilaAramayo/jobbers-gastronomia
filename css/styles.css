@@ -471,102 +471,86 @@ body.role-empresa .btn-postularme {
 /* ==========================================================================
    6. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS
    ========================================================================== */
+/* ==========================================================================
+   6. CHIPS / FILTROS DE CATEGORÍAS RÁPIDAS (CORREGIDO)
+   ========================================================================== */
 .category-chips-container {
-  width: 100%;
-  max-width: 900px;
-  margin: 1.5rem auto 0 auto;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 0.5rem 1rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  display: flex;
-  justify-content: center;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-}
-
-.category-chips-container::-webkit-scrollbar {
-  display: none;
-}
-
-.category-chips {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin: 0;
-  flex-shrink: 0;
-}
-
-.chip {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.55rem 1.15rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  white-space: nowrap;
-  user-select: none;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-}
-
-.chip:hover {
-  background-color: var(--card-bg-light);
-  color: var(--text-main);
-  border-color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.chip.active {
-  background-color: var(--primary);
-  color: var(--text-dark);
-  border-color: var(--primary);
-  font-weight: 700;
-  box-shadow: 0 3px 12px rgba(243, 156, 18, 0.35);
+    width: 100%;
+    max-width: 1000px;
+    margin: 1.5rem auto 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* En desktop grande se centra */
+    overflow: hidden;
 }
 
 .category-chips,
 .hero-chips {
     display: flex;
     align-items: center;
+    justify-content: flex-start; /* GARANTIZA que el primer chip empiece en el borde izquierdo */
     gap: 10px;
     
-    /* Habilita el scroll horizontal fluido */
+    /* Scroll Horizontal Limpio */
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
     
-    /* Aire indispensable a los lados para que NO corte el primer/último chip */
-    padding: 10px 16px;
+    /* Aire a los lados: clave para que NO se coman ni se corten los bordes */
+    padding: 10px 20px;
     margin: 0 auto;
     max-width: 100%;
     
-    /* Oculta la barra de scroll fea en todos los navegadores */
+    /* Ocultar scrollbar fea */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
 }
 
-/* Oculta la barra de scroll en Chrome/Safari/Edge */
+/* Ocultar barra de scroll en navegadores Webkit */
 .category-chips::-webkit-scrollbar,
-.hero-chips::-webkit-scrollbar {
+.hero-chips::-webkit-scrollbar,
+.category-chips-container::-webkit-scrollbar {
     display: none;
 }
 
-/* Evita que los chips se encojan o rompan al deslizar */
+/* Estilos de las etiquetas / chips individuales */
 .chip {
-    flex-shrink: 0;
-    user-select: none; /* Evita selección accidental al arrastrar */
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.55rem 1.15rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    flex-shrink: 0; /* Impide que los primeros chips se achiquen o aplasten */
+    scroll-snap-align: start;
 }
 
+.chip:hover {
+    background-color: var(--card-bg-light);
+    color: var(--text-main);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.chip.active {
+    background-color: var(--primary);
+    color: var(--text-dark);
+    border-color: var(--primary);
+    font-weight: 700;
+    box-shadow: 0 3px 12px rgba(243, 156, 18, 0.35);
+}
 /* ==========================================================================
    7. FORMULARIO EXPRESS & TARJETAS DEL HERO
    ========================================================================== */
