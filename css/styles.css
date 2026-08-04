@@ -478,9 +478,12 @@ body.role-empresa .btn-postularme {
 /* ==========================================================================
    6. GRILLA DE CATEGORÍAS MODERNA
    ========================================================================== */
+/* ==========================================================================
+   GRILLA DE CATEGORÍAS (BLOQUES ORDENADOS)
+   ========================================================================== */
 .categorias-grid-container {
     width: 100%;
-    max-width: 720px;
+    max-width: 680px; /* Ajustado para que el bloque quede compacto y ordenado */
     margin: 1.5rem auto 0 auto;
     text-align: left;
 }
@@ -507,22 +510,23 @@ body.role-empresa .btn-postularme {
     font-weight: 600;
 }
 
+/* Estructura en bloques simétricos */
 .categorias-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr); /* Bloques de 3 columnas exactas */
+    gap: 10px;
 }
 
 .btn-categoria {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
-    padding: 0.75rem 0.4rem;
+    padding: 0.85rem 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
     color: var(--text-muted);
     cursor: pointer;
     transition: var(--transition);
@@ -537,7 +541,7 @@ body.role-empresa .btn-postularme {
 }
 
 .btn-categoria span:not(.cat-icon) {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
     white-space: nowrap;
 }
@@ -554,12 +558,19 @@ body.role-empresa .btn-postularme {
     color: var(--primary);
 }
 
-@media (min-width: 769px) {
+/* En celulares se mantiene en 3 columnas pequeñas o se adapta fluidamente */
+@media (max-width: 480px) {
     .categorias-grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    .btn-categoria {
+        padding: 0.6rem 0.2rem;
+    }
+    .btn-categoria span:not(.cat-icon) {
+        font-size: 0.68rem;
     }
 }
-
 /* ==========================================================================
    7. FORMULARIO EXPRESS & TARJETAS DEL HERO
    ========================================================================== */
