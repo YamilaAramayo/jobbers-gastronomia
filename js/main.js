@@ -1,6 +1,6 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal optimizada, reactiva y blindada contra fallos de DOM.
+ * Lógica principal optimizada, reactiva y blindada.
  */
 
 // =========================================================================
@@ -8,7 +8,7 @@
 // =========================================================================
 let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
-let rolSeleccionadoTemp = null;
+window.rolSeleccionadoTemp = null;
 
 function getVal(id) {
     const el = document.getElementById(id);
@@ -25,7 +25,7 @@ function escapeHTML(str) {
         .replace(/'/g, "&#039;");
 }
 
-// Modales Globales
+// --- MODAL POSTULACIÓN ---
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
     whatsappEmpleadorActual = whatsappTel && whatsappTel !== "undefined" ? whatsappTel : "5493513080197";
     tituloPuestoActual = `${puesto} — ${empresa}`;
@@ -52,6 +52,7 @@ window.cerrarModalPostulacion = function() {
     if (formEl) formEl.reset();
 };
 
+// --- MODAL CAMBIAR PERFIL ---
 window.abrirModalPerfil = function() {
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const stepSelect = document.getElementById('rol-step-select');
@@ -73,10 +74,26 @@ window.cerrarModalPerfil = function() {
     modalPerfil.style.display = 'none';
     modalPerfil.classList.remove('show');
     modalPerfil.setAttribute('aria-hidden', 'true');
-    rolSeleccionadoTemp = null;
+    window.rolSeleccionadoTemp = null;
 };
 
-// Acciones de Envío por WhatsApp
+// --- SELECCIÓN DIRECTA DE ROL ---
+window.seleccionarRol = function(rol, nombreRol) {
+    window.rolSeleccionadoTemp = rol;
+    
+    const stepSelect = document.getElementById('rol-step-select');
+    const stepConfirm = document.getElementById('rol-step-confirm');
+    const nombreConfirmar = document.getElementById('rol-nombre-confirmar');
+
+    if (nombreConfirmar) {
+        nombreConfirmar.textContent = nombreRol || (rol === 'empresa' ? 'Busco Personal' : 'Postulante');
+    }
+    
+    if (stepSelect) stepSelect.style.display = 'none';
+    if (stepConfirm) stepConfirm.style.display = 'block';
+};
+
+// --- WHATSAPP & TALENTO ---
 window.enviarPostulacionWhatsApp = function(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
@@ -101,7 +118,7 @@ window.contactarTalento = function(nombre, puesto) {
     window.open(url, '_blank');
 };
 
-// Toast Notifications
+// --- TOAST NOTIFICATIONS ---
 window.mostrarToast = function(mensaje, tipo = 'success') {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -114,7 +131,7 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     toast.className = `jobbers-toast ${tipo}`;
     
     const bgColor = tipo === 'success' ? '#2ecc71' : '#e74c3c';
-    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:all 0.3s ease;`;
+    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); position:fixed; bottom:20px; right:20px; z-index:99999; transition:all 0.3s ease;`;
     
     const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
     toast.innerHTML = `<i class="fas ${icono}"></i> <span>${escapeHTML(mensaje)}</span>`;
@@ -235,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // --- CARGA ASÍNCRONA DESDE JSON ---
+    // --- CARGA JSON ---
     async function cargarVacantes() {
         try {
             const respuesta = await fetch('./base_de_datos.json');
@@ -265,12 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- GESTIÓN DE ROLES ---
-    const modalPerfil = document.getElementById('modal-cambiar-perfil');
-    const stepSelect = document.getElementById('rol-step-select');
-    const stepConfirm = document.getElementById('rol-step-confirm');
-    const nombreConfirmar = document.getElementById('rol-nombre-confirmar');
-
+    // --- GESTIÓN DE ROLES & LOCALSTORAGE ---
     function aplicarRol(rol) {
         document.body.classList.remove('role-postulante', 'role-empresa');
         document.body.classList.add(`role-${rol}`);
@@ -297,8 +309,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Eventos Modal Perfil (Soporta Header, Desktop, Triggers y Bottom Nav Mobile)
-    document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil, .btn-bottom-perfil, #btn-perfil-mobile, .btn-trigger-modal-perfil').forEach(btn => {
+    // --- LISTENERS DEL MODAL DE PERFIL DE USUARIO ---
+    
+    // Abrir modal desde botones de la barra superior o inferior
+    document.querySelectorAll('.btn-trigger-modal-perfil, .btn-cambiar-rol').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -306,53 +320,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Delegación / Captura segura de Clicks en las Tarjetas de Selección (.btn-rol)
+    document.addEventListener('click', (e) => {
+        const btnRol = e.target.closest('.btn-rol');
+        if (btnRol) {
+            e.preventDefault();
+            const rol = btnRol.dataset.rol || btnRol.getAttribute('data-rol');
+            const nombre = btnRol.dataset.nombre || btnRol.getAttribute('data-nombre');
+            window.seleccionarRol(rol, nombre);
+        }
+    });
+
+    // Botón Volver (Paso 2 -> Paso 1)
+    document.getElementById('btn-volver-rol')?.addEventListener('click', () => {
+        const stepSelect = document.getElementById('rol-step-select');
+        const stepConfirm = document.getElementById('rol-step-confirm');
+        if (stepConfirm) stepConfirm.style.display = 'none';
+        if (stepSelect) stepSelect.style.display = 'block';
+        window.rolSeleccionadoTemp = null;
+    });
+
+    // Botón Confirmar Ingreso
+    document.getElementById('btn-confirmar-rol')?.addEventListener('click', () => {
+        if (window.rolSeleccionadoTemp) {
+            aplicarRol(window.rolSeleccionadoTemp);
+            window.mostrarToast(`Perfil cambiado a ${window.rolSeleccionadoTemp === 'empresa' ? 'Empresa' : 'Postulante'}`);
+            window.cerrarModalPerfil();
+        }
+    });
+
+    // Cerrar Modal Perfil con Cruz o Backdrop
     document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
-        if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
+        if (!localStorage.getItem('jobbers_role')) aplicarRol('postulante');
         window.cerrarModalPerfil();
     });
 
+    const modalPerfil = document.getElementById('modal-cambiar-perfil');
     modalPerfil?.addEventListener('click', (e) => {
         if (e.target === modalPerfil) {
-            if (!localStorage.getItem('jobbers_role')) localStorage.setItem('jobbers_role', 'postulante');
+            if (!localStorage.getItem('jobbers_role')) aplicarRol('postulante');
             window.cerrarModalPerfil();
         }
     });
 
-    document.querySelectorAll('.btn-rol').forEach(btn => {
-        btn.addEventListener('click', () => {
-            rolSeleccionadoTemp = btn.dataset.rol || btn.getAttribute('data-rol');
-            const nombreRol = btn.dataset.nombre || btn.getAttribute('data-nombre') || rolSeleccionadoTemp;
-            
-            if (nombreConfirmar) nombreConfirmar.textContent = nombreRol;
-            if (stepSelect) stepSelect.style.display = 'none';
-            if (stepConfirm) stepConfirm.style.display = 'block';
-        });
-    });
-
-    document.getElementById('btn-volver-rol')?.addEventListener('click', () => {
-        if (stepConfirm) stepConfirm.style.display = 'none';
-        if (stepSelect) stepSelect.style.display = 'block';
-        rolSeleccionadoTemp = null;
-    });
-
-    document.getElementById('btn-confirmar-rol')?.addEventListener('click', () => {
-        if (rolSeleccionadoTemp) {
-            aplicarRol(rolSeleccionadoTemp);
-            window.mostrarToast(`Perfil cambiado a ${rolSeleccionadoTemp === 'empresa' ? 'Empresa' : 'Postulante'}`);
-            window.cerrarModalPerfil();
-        }
-    });
-
-    // --- BUSCADOR Y FILTRADO POR CATEGORÍA SANITIZADO ---
+    // --- FILTRADO DE BUSQUEDA ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
-    const categoryChips = document.querySelectorAll('.category-chips .chip, .hero-chips .chip, .chip');
+    const categoryChips = document.querySelectorAll('.category-chips .chip, .chip');
 
     function normalizarTexto(str) {
         if (!str) return '';
         return str.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remueve acentos
-            .replace(/[^\w\s]/gi, '') // Remueve emojis/iconos
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^\w\s]/gi, '')
             .trim();
     }
 
@@ -406,9 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chip.classList.add('active');
 
             const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
-            const rawCategory = catAttr || chip.textContent;
-            
-            categoriaActual = normalizarCategoria(rawCategory);
+            categoriaActual = normalizarCategoria(catAttr || chip.textContent);
 
             filtrarEmpleos();
         });
@@ -416,7 +434,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FORMULARIO EXPRESS EMPRESAS ---
     const formExpress = document.getElementById('form-publicar-express');
-
     formExpress?.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -453,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- ESCUCHADORES EXTRA DE MODALES Y BINDINGS ---
     document.getElementById('form-postularme')?.addEventListener('submit', window.enviarPostulacionWhatsApp);
 
-    document.querySelectorAll('.btn-cerrar-postular, .modal-close-btn').forEach(btn => {
+    document.querySelectorAll('.btn-cerrar-postular').forEach(btn => {
         btn.addEventListener('click', window.cerrarModalPostulacion);
     });
 
@@ -462,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modalPostularme) window.cerrarModalPostulacion();
     });
 
-    // Cierre de modales con tecla ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             window.cerrarModalPostulacion();
@@ -470,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- DROPDOWN RECURSOS CON ACCESIBILIDAD ---
+    // --- DROPDOWN RECURSOS ---
     const dropdownToggle = document.getElementById('dropdown-recursos');
     const dropdownMenu = document.getElementById('menu-recursos');
 
@@ -487,6 +503,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Arrancar la app
+    // Iniciar aplicación
     initRol();
 });
