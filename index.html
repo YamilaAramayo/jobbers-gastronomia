@@ -29,9 +29,6 @@
 
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- JS diferido -->
-    <script src="js/main.js" defer></script>
 </head>
 <body class="role-postulante">
 
@@ -46,13 +43,13 @@
                 <p>Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
                 
                 <div class="rol-options">
-                    <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Postulante">
+                    <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Postulante" onclick="window.seleccionarRol('postulante', 'Postulante')">
                         <span class="rol-icon" aria-hidden="true">🔍</span>
                         <span class="rol-title">Busco Empleo</span>
                         <span class="rol-desc">Quiero ver vacantes y postularme directo</span>
                     </button>
 
-                    <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Busco Personal">
+                    <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Busco Personal" onclick="window.seleccionarRol('empresa', 'Busco Personal')">
                         <span class="rol-icon" aria-hidden="true">👥</span>
                         <span class="rol-title">Busco Personal</span>
                         <span class="rol-desc">Quiero publicar una oferta o contratar</span>
@@ -119,7 +116,7 @@
             <a href="#vacantes" class="nav-link modo-postulante-only btn-cta-postulante">Ver Empleos</a>
             <a href="#formulario-express" class="nav-link modo-empresa-only btn-cta-empresa">Publicar Búsqueda</a>
             
-            <button type="button" class="btn-cambiar-rol btn-role-badge btn-trigger-modal-perfil">
+            <button type="button" class="btn-cambiar-perfil btn-role-badge btn-trigger-modal-perfil">
                 <i class="fas fa-user-tag" aria-hidden="true"></i> 
                 <span id="label-modo-actual">Cambiar Perfil</span>
             </button>
@@ -458,5 +455,8 @@
     </footer>
 
     <div id="toast-container"></div>
+
+    <!-- Script Principal -->
+    <script src="js/main.js"></script>
 </body>
 </html>
