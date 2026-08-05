@@ -105,6 +105,54 @@
         </div>
     </div>
 
+    <!-- MODAL DE CALCULADORA DE HORARIOS -->
+    <div id="modal-calculadora" class="rol-modal-overlay" role="dialog" aria-labelledby="calc-title" aria-modal="true" style="display: none;">
+        <div class="modal-postular-card" style="max-width: 500px;">
+            <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalCalculadora()" aria-label="Cerrar modal">&times;</button>
+            
+            <h2 class="modal-postular-title" id="calc-title">Calculadora de Horarios & Sueldos</h2>
+            <p class="modal-job-title">Estimador basado en escalas UTHGRA / Jornadas</p>
+
+            <div class="postular-form">
+                <div class="form-group">
+                    <label for="calc-tipo" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Tipo de Cálculo:</label>
+                    <select id="calc-tipo" onchange="window.cambiarModoCalculadora()" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                        <option value="jornada">Sueldo por Jornada (Full / Part Time / Franco)</option>
+                        <option value="horas_extra">Cálculo de Horas Extra / Nocturnas</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="grupo-base-sueldo">
+                    <label for="calc-sueldo-base" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Sueldo Básico Mensual de Referencia ($):</label>
+                    <input type="number" id="calc-sueldo-base" placeholder="Ej: 650000" value="650000" />
+                </div>
+
+                <div class="form-group" id="grupo-jornada-tipo">
+                    <label for="calc-modalidad" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Modalidad:</label>
+                    <select id="calc-modalidad" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                        <option value="full">Full Time (100% del básico)</option>
+                        <option value="part">Part Time (50% del básico)</option>
+                        <option value="franco">Franco / Refuerzo por día (Valor diario aprox.)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="grupo-horas-extra" style="display: none;">
+                    <label for="calc-cant-horas" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Cantidad de Horas Extra:</label>
+                    <input type="number" id="calc-cant-horas" placeholder="Ej: 10" value="10" />
+                </div>
+
+                <button type="button" class="btn-whatsapp" onclick="window.calcularHorariosSueldo()">
+                    <i class="fas fa-calculator" aria-hidden="true"></i> CALCULAR ESTIMATIVO
+                </button>
+
+                <div id="resultado-calculadora" style="margin-top: 1rem; padding: 1rem; background: var(--card-bg-light); border-radius: var(--radius-sm); border: 1px solid var(--border-color); text-align: center; display: none;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">Resultado Estimado:</span>
+                    <strong id="calc-output-valor" style="font-size: 1.3rem; color: var(--primary);">--</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
         <a href="#" class="logo" aria-label="Inicio Jobbers">
@@ -133,10 +181,12 @@
                     
                     <!-- Recursos Operativos para Empresas -->
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Calculadora de francos y turnos activa', 'success')"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
                     
-                    <!-- Soporte General Común -->
-                    <a href="#" class="dropdown-item" onclick="window.mostrarToast('Soporte técnico disponible vía WhatsApp', 'success')"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
+                    <!-- Calculadora Horarios Operativa -->
+                    <a href="#" class="dropdown-item" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
+                    
+                    <!-- Soporte Técnico con WhatsApp configurado (+54 9 3541 58-2448) -->
+                    <a href="https://wa.me/5493541582448?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                 </div>
             </div>
 
@@ -475,7 +525,72 @@
 
     <div id="toast-container"></div>
 
-    <!-- Script Principal -->
+    <!-- Script Principal con la Calculadora y Soporte integrados -->
+    <script>
+        // Funciones auxiliares para la Calculadora de Horarios y Soporte
+        window.abrirModalCalculadora = function(e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById('modal-calculadora');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.add('show');
+            }
+        };
+
+        window.cerrarModalCalculadora = function() {
+            const modal = document.getElementById('modal-calculadora');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.classList.remove('show');
+            }
+        };
+
+        window.cambiarModoCalculadora = function() {
+            const tipo = document.getElementById('calc-tipo').value;
+            const grupoBase = document.getElementById('grupo-base-sueldo');
+            const grupoJornada = document.getElementById('grupo-jornada-tipo');
+            const grupoHoras = document.getElementById('grupo-horas-extra');
+
+            if (tipo === 'jornada') {
+                if (grupoBase) grupoBase.style.display = 'block';
+                if (grupoJornada) grupoJornada.style.display = 'block';
+                if (grupoHoras) grupoHoras.style.display = 'none';
+            } else {
+                if (grupoBase) grupoBase.style.display = 'block';
+                if (grupoJornada) grupoJornada.style.display = 'none';
+                if (grupoHoras) grupoHoras.style.display = 'block';
+            }
+        };
+
+        window.calcularHorariosSueldo = function() {
+            const tipo = document.getElementById('calc-tipo').value;
+            const sueldoBase = parseFloat(document.getElementById('calc-sueldo-base').value) || 0;
+            const outputDiv = document.getElementById('resultado-calculadora');
+            const outputValor = document.getElementById('calc-output-valor');
+
+            let resultado = 0;
+
+            if (tipo === 'jornada') {
+                const modalidad = document.getElementById('calc-modalidad').value;
+                if (modalidad === 'full') {
+                    resultado = sueldoBase;
+                } else if (modalidad === 'part') {
+                    resultado = sueldoBase * 0.5;
+                } else if (modalidad === 'franco') {
+                    resultado = (sueldoBase / 25) / 2; // Estimativo diario de franco
+                }
+                outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+            } else {
+                const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
+                // Valor hora aproximado (sueldo base / 200 horas mensuales * 1.5 por hora extra)
+                const valorHoraExtra = (sueldoBase / 200) * 1.5;
+                resultado = valorHoraExtra * horas;
+                outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})} (Estimado X ${horas}hs)`;
+            }
+
+            if (outputDiv) outputDiv.style.display = 'block';
+        };
+    </script>
     <script src="js/main.js"></script>
 </body>
 </html>
