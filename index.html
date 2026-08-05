@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -126,12 +127,17 @@
                     Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
+                    <!-- Recursos Operativos para Postulantes -->
                     <a href="#comunidad-blog" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
-                    <a href="#" class="dropdown-item modo-postulante-only"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                    <a href="#" class="dropdown-item modo-postulante-only"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
-                    <a href="#" class="dropdown-item modo-empresa-only"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
-                    <a href="#" class="dropdown-item modo-empresa-only"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
-                    <a href="#" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
+                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
+                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
+                    
+                    <!-- Recursos Operativos para Empresas -->
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Calculadora de francos y turnos activa', 'success')"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
+                    
+                    <!-- Soporte General Común -->
+                    <a href="#" class="dropdown-item" onclick="window.mostrarToast('Soporte técnico disponible vía WhatsApp', 'success')"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                 </div>
             </div>
 
@@ -147,7 +153,7 @@
             <div class="hero-content">
                 
                 <!-- MODO POSTULANTE -->
-                <div class="modo-postulante-only">
+                <div class="modo-postulante-only w-100" style="width: 100%;">
                     <h1 class="hero-title">Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá</h1>
                     <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
 
@@ -163,7 +169,7 @@
                         <button class="btn-search" type="button"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
                     </div>
 
-                    <!-- SECCIÓN DE CATEGORÍAS COMPLETA Y ALINEADA -->
+                    <!-- SECCIÓN DE CATEGORÍAS 3x3 -->
                     <div class="categorias-grid-container">
                         <div class="categorias-header-row">
                             <h3>BUSCÁ POR CATEGORÍA</h3>
@@ -208,6 +214,21 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- BANNER PUBLICITARIO / ORIENTACIÓN PERFIL EMPRESA EN HOME PRINCIPAL -->
+                    <div style="margin-top: 2.5rem; background: rgba(243, 156, 18, 0.08); border: 1px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: left; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-size: 2rem;" aria-hidden="true">⚡</span>
+                            <div>
+                                <h4 style="font-size: 1rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.15rem;">¿Tenés un restaurante, bar o querés contratar personal hoy?</h4>
+                                <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0;">Publicá tus búsquedas de forma rápida y conectá al instante con candidatos calificados en Córdoba.</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-primary btn-trigger-modal-perfil" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.65rem 1.2rem; font-weight: 800; font-size: 0.8rem; border-radius: var(--radius-sm); white-space: nowrap;">
+                            CAMBIAR A MODO EMPRESA
+                        </button>
+                    </div>
+
                 </div>
 
                 <!-- MODO EMPRESA -->
@@ -393,15 +414,15 @@
             <div class="vacantes-list" id="lista-vacantes"></div>
             <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
             
-            <!-- TARJETA COMUNIDAD & NOTICIAS LABORALES -->
+            <!-- TARJETA COMUNIDAD & MEMBRESÍA PRO PARA TALENTO -->
             <div class="card-comunidad" id="comunidad-blog">
-                <h3 class="comunidad-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS</h3>
+                <h3 class="comunidad-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
                 <p class="comunidad-desc">
-                    Aparecé en nuestra lista de talentos destacados, leé las últimas noticias del sector gastronómico y accedé a contenido exclusivo para impulsar tu carrera.
+                    Destacá tu perfil al tope de la lista que ven los empleadores, accede a la calculadora salarial UTHGRA y obtén beneficios exclusivos para acelerar tu contratación.
                 </p>
                 <div class="comunidad-actions">
-                    <button type="button" class="btn-primary btn-destacar" onclick="window.contactarTalento('Nuevo Candidato', 'Registro Comunidad')">
-                        DESTACÁ TU PERFIL
+                    <button type="button" class="btn-primary btn-destacar" onclick="window.contactarTalento('Candidato PRO', 'Membresía Jobbers PRO')">
+                        ⚡ DESTACÁ TU PERFIL PRO
                     </button>
                     <a href="#" class="btn-secondary btn-noticias">
                         <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Noticias
@@ -449,9 +470,9 @@
     </nav>
 
     <!-- FOOTER -->
-    <footer class="main-footer">
+    <main class="main-footer">
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
-    </footer>
+    </main>
 
     <div id="toast-container"></div>
 
