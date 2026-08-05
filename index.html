@@ -484,7 +484,7 @@
         </div>
     </section>
 
-    <!-- LISTADO DE EMPLEOS Y TARJETA COMUNIDAD / MEMBRESÍA PRO -->
+    <!-- LISTADO DE EMPLEOS Y ACCESO RÁPIDO A RECURSOS -->
     <main class="main-grid-section modo-postulante-only" id="vacantes">
         <section class="vacantes-container">
             
@@ -499,8 +499,27 @@
             <div class="vacantes-list" id="lista-vacantes"></div>
             <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
             
+            <!-- SECCIÓN DE RECURSOS INTEGRADA EN EMPLEOS -->
+            <div style="margin-top: 2rem; background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem;">
+                <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-tools" style="color: var(--primary);"></i> Recursos Útiles para tu Búsqueda
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                    <div style="background: var(--bg-dark); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                        <h4 style="font-size: 0.95rem; color: var(--primary); margin-bottom: 0.3rem;"><i class="fas fa-file-invoice"></i> Creador de CV</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0 0 0.8rem 0;">Armá tu currículum adaptado al rubro gastronómico.</p>
+                        <a href="#" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')" style="font-size: 0.8rem; color: var(--primary); font-weight: 700; text-decoration: none;">Crear CV →</a>
+                    </div>
+                    <div style="background: var(--bg-dark); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                        <h4 style="font-size: 0.95rem; color: var(--primary); margin-bottom: 0.3rem;"><i class="fas fa-comments"></i> Consejos de Entrevista</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0 0 0.8rem 0;">Tips prácticos para triunfar en tu prueba de trabajo.</p>
+                        <a href="#" onclick="window.mostrarToast('Sección de Consejos activa', 'success')" style="font-size: 0.8rem; color: var(--primary); font-weight: 700; text-decoration: none;">Ver Consejos →</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- TARJETA COMUNIDAD & MEMBRESÍA PRO PARA CANDIDATOS -->
-            <div class="card-comunidad" id="comunidad-blog">
+            <div class="card-comunidad" id="comunidad-blog" style="margin-top: 1.5rem;">
                 <h3 class="comunidad-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
                 <p class="comunidad-desc">
                     Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
@@ -528,10 +547,37 @@
         </div>
     </section>
 
-    <!-- SECCIÓN NOSOTROS -->
-    <section class="info-section" id="nosotros">
-        <h2>Sobre Jobbers</h2>
-        <p>Somos la comunidad y plataforma de empleo especializada en el sector gastronómico de Córdoba. Conectamos talento real con locales, restaurantes y hoteles de forma directa, ágil y transparente.</p>
+    <!-- SECCIÓN NOSOTROS (LANDING DE VENTAS Y SERVICIOS) -->
+    <section class="info-section" id="nosotros" style="padding: 4rem 1.5rem; text-align: left; background: var(--card-bg-light); border-top: 1px solid var(--border-color);">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">SOBRE JOBBERS ARGENTINA</span>
+                <h2 style="font-size: 2rem; font-weight: 800; color: var(--text-main); margin-top: 0.5rem;">La plataforma líder en empleo gastronómico</h2>
+                <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem;">Conectamos de forma directa, rápida y sin intermediarios el talento de Córdoba con los mejores locales, bares y hoteles.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <div style="background: var(--bg-dark); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <div style="font-size: 1.8rem; margin-bottom: 0.8rem;" aria-hidden="true">👥</div>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">Para Postulantes</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin: 0;">Encontrá vacantes actualizadas por zona, postulate directamente mediante WhatsApp y potenciate con nuestra membresía **Jobbers PRO** para aparecer al tope de los empleadores.</p>
+                </div>
+
+                <div style="background: var(--bg-dark); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <div style="font-size: 1.8rem; margin-bottom: 0.8rem;" aria-hidden="true">🏢</div>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">Para Empresas y Locales</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin: 0;">Publicá tus búsquedas en segundos con nuestro formulario express, accedé a calculadoras de salarios/horarios y conectá al instante con cocineros, mozos y baristas calificados.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; background: var(--bg-dark); padding: 2rem; border-radius: var(--radius-md); border: 1px dashed var(--primary);">
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">¿Tenés alguna duda o necesitás soporte técnico?</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem;">Nuestro equipo está disponible para ayudarte a optimizar tus búsquedas o perfiles.</p>
+                <a href="https://wa.me/5493541582448?text=Hola%20Jobbers!%20Quiero%20consultar%20sobre%20los%20servicios%20de%20la%20plataforma." target="_blank" class="btn-whatsapp" style="display: inline-flex; width: auto; padding: 0.75rem 1.5rem;">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i> CONTACTAR SOPORTE VÍA WHATSAPP
+                </a>
+            </div>
+        </div>
     </section>
 
     <!-- NAV INFERIOR MÓVIL (Fija abajo en celulares) -->
@@ -555,9 +601,9 @@
     </nav>
 
     <!-- FOOTER -->
-    <main class="main-footer">
+    <footer class="main-footer">
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
-    </main>
+    </footer>
 
     <div id="toast-container"></div>
 
