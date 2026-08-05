@@ -211,11 +211,11 @@
                 </button>
                 <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
                     <!-- Recursos Operativos para Postulantes -->
-                    <a href="#comunidad-blog" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
+                    <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
                     <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
                     <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
                     
-                    <!-- Recursos Operativos para Empresas (Ampliados) -->
+                    <!-- Recursos Operativos para Empresas -->
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
@@ -227,6 +227,7 @@
             </div>
 
             <a href="#nosotros" class="nav-link">Nosotros</a>
+            <a href="#blog-noticias" class="nav-link">Blog</a>
         </nav>
     </header>
 
@@ -528,8 +529,8 @@
                     <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)">
                         ⚡ DESTACÁ TU PERFIL PRO
                     </button>
-                    <a href="#" class="btn-secondary btn-noticias">
-                        <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Noticias
+                    <a href="#blog-noticias" class="btn-secondary btn-noticias">
+                        <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
                     </a>
                 </div>
             </div>
@@ -544,6 +545,60 @@
                 <a href="#" class="link-see-all">Ver todos <i class="fas fa-chevron-right" aria-hidden="true"></i></a>
             </div>
             <div class="talento-grid" id="grid-talento-destacado"></div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN BLOG DE NOTICIAS & MONETIZACIÓN (ADSENSE + ESPACIOS PUBLICITARIOS) -->
+    <section class="info-section" id="blog-noticias" style="padding: 4rem 1.5rem; text-align: left; background: var(--bg-dark); border-top: 1px solid var(--border-color);">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            
+            <!-- HEADER DEL BLOG -->
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ACTUALIDAD Y TENDENCIAS</span>
+                <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-top: 0.5rem;">Blog & Novedades Gastronómicas</h2>
+                <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">Artículos de interés, consejos de empleo y las últimas tendencias del sector en Córdoba.</p>
+            </div>
+
+            <!-- GRILLA DE ARTÍCULOS -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                
+                <!-- Artículo 1 -->
+                <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Consejos de Empleo</span>
+                        <h3 style="font-size: 1.2rem; color: var(--text-main); margin: 0.5rem 0;">Cómo preparar tu CV gastronómico para destacar ante los chefs</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Claves fundamentales para que los encargados de locales y restaurantes valoren tu experiencia de un vistazo.</p>
+                    </div>
+                    <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Leí%20el%20artículo%20de%20CV%20y%20quiero%20más%20info." target="_blank" style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--primary); font-weight: 700; text-decoration: none;">Leer artículo completo →</a>
+                </article>
+
+                <!-- Artículo 2 -->
+                <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Tendencias de Mercado</span>
+                        <h3 style="font-size: 1.2rem; color: var(--text-main); margin: 0.5rem 0;">Polos gastronómicos en Córdoba: ¿Dónde hay más demanda de personal?</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Un repaso por Güemes, Nueva Córdoba y Cerro de las Rosas y los puestos más buscados por los locales.</p>
+                    </div>
+                    <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Me%20interesa%20saber%20sobre%20los%20polos%20gastronómicos." target="_blank" style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--primary); font-weight: 700; text-decoration: none;">Leer artículo completo →</a>
+                </article>
+
+            </div>
+
+            <!-- ESPACIO PUBLICITARIO / PATROCINIO PARA EMPRESAS (Ropa, Artefactos de Cocina, etc.) -->
+            <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, var(--card-bg-light) 100%); border: 2px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 2rem; text-align: center; margin-bottom: 2.5rem;">
+                <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ESPACIO PATROCINADO / PUBLICIDAD</span>
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 1.2rem auto;">Promocioná tu marca, ropa para gastronomía o artefactos de cocina ante miles de trabajadores y dueños de locales en Córdoba.</p>
+                <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Quiero%20consultar%20para%20anunciar%20mi%20marca%20en%20el%20portal." target="_blank" class="btn-whatsapp" style="display: inline-flex; width: auto; padding: 0.7rem 1.6rem; font-size: 0.85rem;">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i> ANUNCIAR TU MARCA ACÁ
+                </a>
+            </div>
+
+            <!-- BLOQUE DE ANUNCIO GOOGLE ADSENSE (Simulación / Contenedor listo para integrar script) -->
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+                <span>[ Espacio Publicitario Google AdSense ]</span>
+            </div>
+
         </div>
     </section>
 
