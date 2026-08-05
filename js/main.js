@@ -1,4 +1,3 @@
-
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
  * Lógica principal optimizada, reactiva y blindada.
@@ -51,6 +50,71 @@ window.cerrarModalPostulacion = function() {
         modalEl.setAttribute('aria-hidden', 'true');
     }
     if (formEl) formEl.reset();
+};
+
+// --- MODAL CALCULADORA DE HORARIOS & SUELDOS ---
+window.abrirModalCalculadora = function(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById('modal-calculadora');
+    if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+};
+
+window.cerrarModalCalculadora = function() {
+    const modal = document.getElementById('modal-calculadora');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+};
+
+window.cambiarModoCalculadora = function() {
+    const tipo = document.getElementById('calc-tipo').value;
+    const grupoBase = document.getElementById('grupo-base-sueldo');
+    const grupoJornada = document.getElementById('grupo-jornada-tipo');
+    const grupoHoras = document.getElementById('grupo-horas-extra');
+
+    if (tipo === 'jornada') {
+        if (grupoBase) grupoBase.style.display = 'block';
+        if (grupoJornada) grupoJornada.style.display = 'block';
+        if (grupoHoras) grupoHoras.style.display = 'none';
+    } else {
+        if (grupoBase) grupoBase.style.display = 'block';
+        if (grupoJornada) grupoJornada.style.display = 'none';
+        if (grupoHoras) grupoHoras.style.display = 'block';
+    }
+};
+
+window.calcularHorariosSueldo = function() {
+    const tipo = document.getElementById('calc-tipo').value;
+    const sueldoBase = parseFloat(document.getElementById('calc-sueldo-base').value) || 0;
+    const outputDiv = document.getElementById('resultado-calculadora');
+    const outputValor = document.getElementById('calc-output-valor');
+
+    let resultado = 0;
+
+    if (tipo === 'jornada') {
+        const modalidad = document.getElementById('calc-modalidad').value;
+        if (modalidad === 'full') {
+            resultado = sueldoBase;
+        } else if (modalidad === 'part') {
+            resultado = sueldoBase * 0.5;
+        } else if (modalidad === 'franco') {
+            resultado = (sueldoBase / 25) / 2; // Estimativo diario de franco
+        }
+        if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+    } else {
+        const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
+        const valorHoraExtra = (sueldoBase / 200) * 1.5;
+        resultado = valorHoraExtra * horas;
+        if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})} (Estimado X ${horas}hs)`;
+    }
+
+    if (outputDiv) outputDiv.style.display = 'block';
 };
 
 // --- MODAL CAMBIAR PERFIL ---
@@ -106,7 +170,7 @@ window.enviarPostulacionWhatsApp = function(e) {
         return;
     }
 
-    const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme a la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
+    const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme à la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
     const url = `https://wa.me/${whatsappEmpleadorActual}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(url, '_blank');
@@ -115,7 +179,7 @@ window.enviarPostulacionWhatsApp = function(e) {
 
 window.contactarTalento = function(nombre, puesto) {
     const mensaje = `Hola Jobbers! 👋 Vimos el perfil destacado de *${nombre}* (${puesto}) en la plataforma y nos gustaría contactarlo/a para una entrevista.`;
-    const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
+    const url = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
 };
 
@@ -272,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 sueldo: v.sueldo || "A convenir",
                 urgente: Boolean(v.urgente),
                 tiempo: v.tiempo || "Reciente",
-                telefono: v.contacto_wa || v.telefono || "5493513080197"
+                telefono: v.contacto_wa || v.telefono || "5493541582448"
             }));
 
             renderizarVacantes(listaVacantesBD);
@@ -453,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         `📱 *Contacto Directo:* ${telefono}\n\n` +
                         `Quedo a la espera de la publicación. ¡Gracias!`;
 
-        const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
+        const url = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
         
         window.mostrarToast('Redirigiendo a WhatsApp...', 'success');
         setTimeout(() => {
@@ -478,6 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') {
             window.cerrarModalPostulacion();
             window.cerrarModalPerfil();
+            window.cerrarModalCalculadora();
         }
     });
 
