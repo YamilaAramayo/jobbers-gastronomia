@@ -105,6 +105,42 @@
         </div>
     </div>
 
+    <!-- MODAL DE MEMBRESÍA JOBBERS PRO (Destacá tu perfil) -->
+    <div id="modal-membresia-pro" class="rol-modal-overlay" role="dialog" aria-labelledby="pro-title" aria-modal="true" style="display: none;">
+        <div class="modal-postular-card" style="max-width: 520px; text-align: left;">
+            <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalMembresia()" aria-label="Cerrar modal">&times;</button>
+            
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <span style="font-size: 2.5rem;" aria-hidden="true">⚡</span>
+                <h2 class="modal-postular-title" id="pro-title" style="margin-top: 0.5rem; color: var(--primary);">PASO A JOBBERS PRO</h2>
+                <p class="modal-job-title" style="margin-top: 0.2rem;">Acelerá tu búsqueda y destacá ante los empleadores de Córdoba</p>
+            </div>
+
+            <div style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.2rem; font-size: 0.88rem;">
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem;">
+                    <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Visibilidad VIP:</strong> Tu perfil fijo al tope de la sección de talentos.</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Sello Verificado PRO</strong> en tus postulaciones por WhatsApp.</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Creador de CVs</strong> optimizado para gastronomía.</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Acceso a beneficios</strong> y descuentos en carnets / capacitaciones.</li>
+                </ul>
+            </div>
+
+            <form id="form-membresia-pro" onsubmit="window.enviarMembresiaWhatsApp(event)" class="postular-form">
+                <div class="form-group">
+                    <label for="pro-nombre" class="sr-only">Nombre y Apellido</label>
+                    <input type="text" id="pro-nombre" placeholder="Nombre y Apellido" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;" />
+                </div>
+                <div class="form-group">
+                    <label for="pro-puesto" class="sr-only">Puesto al que aspirás</label>
+                    <input type="text" id="pro-puesto" placeholder="Tu puesto principal (ej. Cocinero, Mozo...)" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;" />
+                </div>
+                <button type="submit" class="btn-whatsapp" style="width: 100%; margin-top: 0.5rem;">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i> SOLICITAR PASE JOBBERS PRO
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- MODAL DE CALCULADORA DE HORARIOS -->
     <div id="modal-calculadora" class="rol-modal-overlay" role="dialog" aria-labelledby="calc-title" aria-modal="true" style="display: none;">
         <div class="modal-postular-card" style="max-width: 500px;">
@@ -448,7 +484,7 @@
         </div>
     </section>
 
-    <!-- LISTADO DE EMPLEOS Y TARJETA COMUNIDAD -->
+    <!-- LISTADO DE EMPLEOS Y TARJETA COMUNIDAD / MEMBRESÍA PRO -->
     <main class="main-grid-section modo-postulante-only" id="vacantes">
         <section class="vacantes-container">
             
@@ -467,10 +503,10 @@
             <div class="card-comunidad" id="comunidad-blog">
                 <h3 class="comunidad-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
                 <p class="comunidad-desc">
-                    Destacá tu perfil al tope de la lista que ven los empleadores, accedé a la calculadora salarial UTHGRA y obtené beneficios exclusivos para acelerar tu contratación.
+                    Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
                 </p>
                 <div class="comunidad-actions">
-                    <button type="button" class="btn-primary btn-destacar" onclick="window.contactarTalento('Candidato PRO', 'Membresía Jobbers PRO')">
+                    <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)">
                         ⚡ DESTACÁ TU PERFIL PRO
                     </button>
                     <a href="#" class="btn-secondary btn-noticias">
@@ -519,13 +555,13 @@
     </nav>
 
     <!-- FOOTER -->
-    <footer class="main-footer">
+    <main class="main-footer">
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
-    </footer>
+    </main>
 
     <div id="toast-container"></div>
 
-    <!-- Script Principal con la Calculadora y Soporte integrados -->
+    <!-- Script Principal con la Calculadora, Membresía PRO y Soporte integrados -->
     <script>
         // Funciones auxiliares para la Calculadora de Horarios y Soporte
         window.abrirModalCalculadora = function(e) {
@@ -543,6 +579,40 @@
                 modal.style.display = 'none';
                 modal.classList.remove('show');
             }
+        };
+
+        // Funciones para el Modal de Membresía PRO (Destacá tu perfil)
+        window.abrirModalMembresia = function(e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById('modal-membresia-pro');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.add('show');
+            }
+        };
+
+        window.cerrarModalMembresia = function() {
+            const modal = document.getElementById('modal-membresia-pro');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.classList.remove('show');
+            }
+        };
+
+        window.enviarMembresiaWhatsApp = function(e) {
+            if (e) e.preventDefault();
+            const nombre = document.getElementById('pro-nombre').value.trim();
+            const puesto = document.getElementById('pro-puesto').value.trim();
+
+            if (!nombre || !puesto) {
+                return;
+            }
+
+            const mensaje = `Hola Jobbers! 👋 Me interesa adquirir la Membresía Jobbers PRO para destacar mi perfil.\n\n👤 *Nombre:* ${nombre}\n💼 *Puesto:* ${puesto}\n\nQuisiera coordinar el pago y la activación. ¡Gracias!`;
+            const url = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
+            
+            window.open(url, '_blank');
+            window.cerrarModalMembresia();
         };
 
         window.cambiarModoCalculadora = function() {
