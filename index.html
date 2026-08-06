@@ -226,8 +226,8 @@
                 </div>
             </div>
 
-            <a href="#nosotros" class="nav-link">Nosotros</a>
             <a href="blog.html" class="nav-link">Blog</a>
+            <a href="#nosotros" class="nav-link">Nosotros</a>
         </nav>
     </header>
 
@@ -519,7 +519,7 @@
                 </div>
             </div>
 
-            <!-- TARJETA COMUNIDAD & MEMBRESÍA PRO PARA CANDIDATOS -->
+            <!-- TARJETA COMUNIDAD & MEMBRESÍA PRO PARA CANDIDATOS CON EL BOTÓN DESTACADO DEL BLOG -->
             <div class="card-comunidad" id="comunidad-blog" style="margin-top: 1.5rem;">
                 <h3 class="comunidad-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
                 <p class="comunidad-desc">
@@ -548,78 +548,53 @@
         </div>
     </section>
 
-    <!-- SECCIÓN NOSOTROS (LANDING DE VENTAS, COSTOS Y SERVICIOS) -->
+    <!-- SECCIÓN NOSOTROS (TRANSFORMADA EN BLOG, NOTICIAS Y PUBLICIDADES COMERCIALES) -->
     <section class="info-section" id="nosotros" style="padding: 4rem 1.5rem; text-align: left; background: var(--card-bg-light); border-top: 1px solid var(--border-color);">
         <div style="max-width: 1000px; margin: 0 auto;">
             
-            <!-- HEADER DE LA LANDING -->
+            <!-- HEADER -->
             <div style="text-align: center; margin-bottom: 3rem;">
-                <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">SOBRE JOBBERS ARGENTINA</span>
-                <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-top: 0.5rem;">La plataforma que acelera el empleo gastronómico en Córdoba</h2>
-                <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">Conectamos directamente a quienes buscan trabajar con los mejores locales, restaurantes, bares y hoteles sin intermediarios y al instante.</p>
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ACTUALIDAD Y ESPACIOS COMERCIALES</span>
+                <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-top: 0.5rem;">Blog, Novedades & Publicidad Gastronómica</h2>
+                <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">Tendencias del sector en Córdoba y espacios exclusivos para marcas de indumentaria y equipamiento de cocina.</p>
             </div>
 
-            <!-- BLOQUES DE SERVICIOS Y PLANES -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
-                
-                <!-- Columna Postulantes -->
-                <div style="background: var(--bg-dark); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <div style="font-size: 2rem; margin-bottom: 0.8rem;" aria-hidden="true">👥</div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">Para Postulantes & Candidatos</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem;">Postulate gratis a todas las ofertas o subí de nivel con nuestra membresía paga.</p>
-                        
-                        <div style="background: rgba(243, 156, 18, 0.08); border-left: 3px solid var(--primary); padding: 0.8rem; margin-bottom: 1.2rem; font-size: 0.85rem;">
-                            <strong>Membresía Jobbers PRO:</strong><br>
-                            • Tu perfil fijo al tope de la lista de talentos.<br>
-                            • Sello verificado en WhatsApp.<br>
-                            • Acceso a herramientas y beneficios exclusivos.
-                        </div>
-                    </div>
-                    <button type="button" class="btn-primary" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; width: 100%; font-weight: 800; font-size: 0.85rem; padding: 0.75rem; border-radius: var(--radius-sm);">
-                        ⚡ OBTENER PASE PRO
-                    </button>
-                </div>
-
-                <!-- Columna Empresas -->
-                <div style="background: var(--bg-dark); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <div style="font-size: 2rem; margin-bottom: 0.8rem;" aria-hidden="true">🏢</div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">Para Locales & Empleadores</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem;">Publicá búsquedas urgentes en segundos y encontrá mozos, cocineros y baristas calificados.</p>
-                        
-                        <div style="background: rgba(46, 204, 113, 0.08); border-left: 3px solid #2ecc71; padding: 0.8rem; margin-bottom: 1.2rem; font-size: 0.85rem;">
-                            <strong>Publicación Express & Destacados:</strong><br>
-                            • Búsquedas visibles al instante.<br>
-                            • Acceso a calculadora de horarios y sueldos UTHGRA.<br>
-                            • Contacto directo con candidatos.
-                        </div>
-                    </div>
-                    <a href="#formulario-express" class="btn-whatsapp" style="width: 100%; text-align: center; text-decoration: none; display: block; font-weight: 800; font-size: 0.85rem; padding: 0.75rem;">
-                        <i class="fab fa-whatsapp"></i> PUBLICAR BÚSQUEDA
-                    </a>
-                </div>
-
-            </div>
-
-            <!-- SECCIÓN DE COSTOS Y MEDIOS DE PAGO -->
-            <div style="background: var(--bg-dark); padding: 2.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center; margin-bottom: 2rem;">
-                <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem;">💰 Costos y Medios de Pago</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 1.5rem auto; line-height: 1.6;">Trabajamos con tarifas accesibles para potenciar el sector gastronómico cordobés. Los pagos y activaciones de membresías o destacados se coordinan de forma rápida y segura a través de nuestros canales oficiales.</p>
-                
-                <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-main); margin-bottom: 1.5rem;">
-                    <span><i class="fas fa-check" style="color: #2ecc71;"></i> Transferencia Bancaria</span>
-                    <span><i class="fas fa-check" style="color: #2ecc71;"></i> Mercado Pago</span>
-                    <span><i class="fas fa-check" style="color: #2ecc71;"></i> Atención Personalizada</span>
-                </div>
-
-                <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Quiero%20consultar%20sobre%20los%20costos%20y%20medios%20de%20pago%20de%20la%20plataforma." target="_blank" class="btn-whatsapp" style="display: inline-flex; width: auto; padding: 0.75rem 1.8rem;">
-                    <i class="fab fa-whatsapp" aria-hidden="true"></i> CONSULTAR PRECIOS Y PAGOS POR WHATSAPP
+            <!-- ESPACIO PUBLICITARIO / PATROCINIO PARA EMPRESAS (Ropa, Artefactos, etc.) -->
+            <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, var(--card-bg-light) 100%); border: 2px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 2rem; text-align: center; margin-bottom: 2.5rem;">
+                <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ESPACIO PATROCINADO / PUBLICIDAD</span>
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;">¿Tenés una marca de indumentaria o artefactos de cocina?</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 1.2rem auto;">Promocioná tu marca, ropa para gastronomía o equipamiento ante miles de trabajadores y dueños de locales en Córdoba.</p>
+                <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Quiero%20consultar%20para%20anunciar%20mi%20marca%20en%20el%20portal." target="_blank" class="btn-whatsapp" style="display: inline-flex; width: auto; padding: 0.7rem 1.6rem; font-size: 0.85rem;">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i> ANUNCIAR TU MARCA ACÁ
                 </a>
+            </div>
 
-                <div style="margin-top: 1.5rem;">
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">¿Tenés dudas técnicas o comerciales? Escribinos a nuestro soporte oficial al <strong>+54 9 3513 08-0197</strong>.</p>
-                </div>
+            <!-- GRILLA DE ARTÍCULOS DE NOTICIAS -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+                
+                <article style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Consejos de Empleo</span>
+                        <h3 style="font-size: 1.2rem; color: var(--text-main); margin: 0.5rem 0;">Cómo preparar tu CV gastronómico para destacar ante los chefs</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Claves fundamentales para que los encargados de locales y restaurantes valoren tu experiencia.</p>
+                    </div>
+                    <a href="blog.html" style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--primary); font-weight: 700; text-decoration: none;">Leer artículo completo →</a>
+                </article>
+
+                <article style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Tendencias de Mercado</span>
+                        <h3 style="font-size: 1.2rem; color: var(--text-main); margin: 0.5rem 0;">Polos gastronómicos en Córdoba: ¿Dónde hay más demanda de personal?</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Un repaso por Güemes, Nueva Córdoba y Cerro de las Rosas y los puestos más buscados.</p>
+                    </div>
+                    <a href="blog.html" style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--primary); font-weight: 700; text-decoration: none;">Leer artículo completo →</a>
+                </article>
+
+            </div>
+
+            <!-- BLOQUE DE ANUNCIO GOOGLE ADSENSE -->
+            <div style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+                <span>[ Espacio Publicitario Google AdSense ]</span>
             </div>
 
         </div>
@@ -654,7 +629,6 @@
 
     <!-- Script Principal con la Calculadora, Membresía PRO y Soporte integrados -->
     <script>
-        // Funciones auxiliares para la Calculadora de Horarios y Soporte
         window.abrirModalCalculadora = function(e) {
             if (e) e.preventDefault();
             const modal = document.getElementById('modal-calculadora');
@@ -672,7 +646,6 @@
             }
         };
 
-        // Funciones para el Modal de Membresía PRO (Destacá tu perfil)
         window.abrirModalMembresia = function(e) {
             if (e) e.preventDefault();
             const modal = document.getElementById('modal-membresia-pro');
@@ -695,9 +668,7 @@
             const nombre = document.getElementById('pro-nombre').value.trim();
             const puesto = document.getElementById('pro-puesto').value.trim();
 
-            if (!nombre || !puesto) {
-                return;
-            }
+            if (!nombre || !puesto) return;
 
             const mensaje = `Hola Jobbers! 👋 Me interesa adquirir la Membresía Jobbers PRO para destacar mi perfil.\n\n👤 *Nombre:* ${nombre}\n💼 *Puesto:* ${puesto}\n\nQuisiera coordinar el pago y la activación. ¡Gracias!`;
             const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
@@ -738,12 +709,11 @@
                 } else if (modalidad === 'part') {
                     resultado = sueldoBase * 0.5;
                 } else if (modalidad === 'franco') {
-                    resultado = (sueldoBase / 25) / 2; // Estimativo diario de franco
+                    resultado = (sueldoBase / 25) / 2;
                 }
                 outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
             } else {
                 const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
-                // Valor hora aproximado (sueldo base / 200 horas mensuales * 1.5 por hora extra)
                 const valorHoraExtra = (sueldoBase / 200) * 1.5;
                 resultado = valorHoraExtra * horas;
                 outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})} (Estimado X ${horas}hs)`;
