@@ -333,7 +333,7 @@
                         </div>
                     </div>
 
-                    <!-- Formulario Express -->
+                    <!-- Formulario Express con campo de Requisitos Breves -->
                     <div class="hero-card-express" id="formulario-express">
                         <div class="card-header">
                             <span class="text-warning" aria-hidden="true">⚡</span>
@@ -473,6 +473,12 @@
                                 </div>
                             </div>
 
+                            <!-- Nuevo campo de requisitos breves -->
+                            <div class="form-group">
+                                <label for="requisitos-puesto" class="sr-only">Requisitos breves</label>
+                                <input type="text" id="requisitos-puesto" placeholder="Requisitos (ej: Libreta sanitaria al día, exp. comprobable)...">
+                            </div>
+
                             <button type="submit" class="btn-whatsapp">
                                 <i class="fab fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
                             </button>
@@ -489,11 +495,14 @@
     <main class="main-grid-section modo-postulante-only" id="vacantes">
         <section class="vacantes-container">
             
-            <!-- TÍTULO DE OFERTAS DESTACADAS -->
-            <div style="margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+            <!-- TÍTULO DE OFERTAS DESTACADAS CON CONTADOR DINÁMICO -->
+            <div style="margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
                 <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
                     <i class="fas fa-bolt" style="color: var(--primary);"></i> Ofertas destacadas
                 </h3>
+                <span id="contador-vacantes" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; background: var(--card-bg-light); padding: 0.3rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                    Mostrando 0 vacantes disponibles
+                </span>
             </div>
 
             <!-- Renderizado dinámico de vacantes por JS -->
@@ -593,7 +602,7 @@
             </div>
 
             <!-- BLOQUE DE ANUNCIO GOOGLE ADSENSE -->
-            <div style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            <div style="background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 2.5rem;">
                 <span>[ Espacio Publicitario Google AdSense ]</span>
             </div>
 
@@ -627,7 +636,7 @@
 
     <div id="toast-container"></div>
 
-    <!-- Script Principal con la Calculadora, Membresía PRO y Soporte integrados -->
+    <!-- Script Principal con la Calculadora, Membresía PRO, Contador Dinámico y Soporte -->
     <script>
         window.abrirModalCalculadora = function(e) {
             if (e) e.preventDefault();
@@ -721,6 +730,48 @@
 
             if (outputDiv) outputDiv.style.display = 'block';
         };
+
+        // --- SCRIPT FORMULARIO EXPRESS EMPRESAS (Actualizado con Requisitos) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const formExpress = document.getElementById('form-publicar-express');
+            formExpress?.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const empresa = document.getElementById('nombre-empresa').value.trim();
+                const telefono = document.getElementById('telefono-contacto').value.trim();
+                const puesto = document.getElementById('puesto-requerido').value;
+                const zona = document.getElementById('zona-local').value;
+                const turno = document.getElementById('turno-puesto').value;
+                const jornada = document.getElementById('jornada-puesto').value;
+                const requisitos = document.getElementById('requisitos-puesto').value.trim();
+
+                if (!empresa || !telefono || !puesto || !zona || !turno || !jornada) {
+                    window.mostrarToast('Por favor, completá todos los campos obligatorios.', 'error');
+                    return;
+                }
+
+                let mensaje = `Hola Jobbers! 👋 Queremos publicar la siguiente búsqueda urgente:\n\n` +
+                              `🏢 *Local/Empresa:* ${empresa}\n` +
+                              `💼 *Puesto:* ${puesto}\n` +
+                              `📍 *Zona:* ${zona}\n` +
+                              `⏰ *Turno:* ${turno}\n` +
+                              `⏳ *Jornada:* ${jornada}\n`;
+                
+                if (requisitos) {
+                    mensaje += `📝 *Requisitos:* ${requisitos}\n`;
+                }
+
+                mensaje += `📱 *Contacto Directo:* ${telefono}\n\nQuedo a la espera de la publicación. ¡Gracias!`;
+
+                const url = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
+                
+                window.mostrarToast('Redirigiendo a WhatsApp...', 'success');
+                setTimeout(() => {
+                    window.open(url, '_blank');
+                    formExpress.reset();
+                }, 1000);
+            });
+        });
     </script>
     <script src="js/main.js"></script>
 </body>
