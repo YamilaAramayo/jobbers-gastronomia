@@ -104,7 +104,7 @@ window.calcularHorariosSueldo = function() {
         } else if (modalidad === 'part') {
             resultado = sueldoBase * 0.5;
         } else if (modalidad === 'franco') {
-            resultado = (sueldoBase / 25) / 2; // Estimativo diario de franco
+            resultado = (sueldoBase / 25) / 2;
         }
         if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
     } else {
