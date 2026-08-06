@@ -1,6 +1,6 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal optimizada, reactiva y blindada.
+ * Lógica principal optimizada, reactiva y blindada con contador y requisitos.
  */
 
 // =========================================================================
@@ -245,10 +245,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // --- RENDERIZADO DE VACANTES Y TALENTO ---
+    // --- RENDERIZADO DE VACANTES, TALENTO Y CONTADOR REACTIVO ---
+    function actualizarContador(cantidad) {
+        const contadorEl = document.getElementById('contador-vacantes');
+        if (contadorEl) {
+            contadorEl.textContent = `Mostrando ${cantidad} ${cantidad === 1 ? 'vacante disponible' : 'vacantes disponibles'}`;
+        }
+    }
+
     function renderizarVacantes(vacantes) {
         const contenedor = document.getElementById('lista-vacantes');
         if (!contenedor) return;
+
+        actualizarContador(vacantes.length);
 
         if (!vacantes || vacantes.length === 0) {
             contenedor.innerHTML = `
@@ -491,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- FORMULARIO EXPRESS EMPRESAS ---
+    // --- FORMULARIO EXPRESS EMPRESAS (Actualizado con Requisitos) ---
     const formExpress = document.getElementById('form-publicar-express');
     formExpress?.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -502,20 +511,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const zona = getVal('zona-local');
         const turno = getVal('turno-puesto');
         const jornada = getVal('jornada-puesto');
+        const requisitos = getVal('requisitos-puesto');
 
         if (!empresa || !telefono || !puesto || !zona || !turno || !jornada) {
-            window.mostrarToast('Por favor, completá todos los campos.', 'error');
+            window.mostrarToast('Por favor, completá todos los campos obligatorios.', 'error');
             return;
         }
 
-        const mensaje = `Hola Jobbers! 👋 Queremos publicar la siguiente búsqueda urgente:\n\n` +
-                        `🏢 *Local/Empresa:* ${empresa}\n` +
-                        `💼 *Puesto:* ${puesto}\n` +
-                        `📍 *Zona:* ${zona}\n` +
-                        `⏰ *Turno:* ${turno}\n` +
-                        `⏳ *Jornada:* ${jornada}\n` +
-                        `📱 *Contacto Directo:* ${telefono}\n\n` +
-                        `Quedo a la espera de la publicación. ¡Gracias!`;
+        let mensaje = `Hola Jobbers! 👋 Queremos publicar la siguiente búsqueda urgente:\n\n` +
+                      `🏢 *Local/Empresa:* ${empresa}\n` +
+                      `💼 *Puesto:* ${puesto}\n` +
+                      `📍 *Zona:* ${zona}\n` +
+                      `⏰ *Turno:* ${turno}\n` +
+                      `⏳ *Jornada:* ${jornada}\n`;
+        
+        if (requisitos) {
+            mensaje += `📝 *Requisitos:* ${requisitos}\n`;
+        }
+
+        mensaje += `📱 *Contacto Directo:* ${telefono}\n\nQuedo a la espera de la publicación. ¡Gracias!`;
 
         const url = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
         
