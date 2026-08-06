@@ -170,7 +170,7 @@ window.enviarPostulacionWhatsApp = function(e) {
         return;
     }
 
-    const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme à la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
+    const mensaje = `Hola! Mi nombre es *${nombre}* (${telefono}). Me contacto a través de Jobbers para postularme a la búsqueda de *${tituloPuestoActual}*. Quedo a disposición y adjunto mi CV.`;
     const url = `https://wa.me/${whatsappEmpleadorActual}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(url, '_blank');
