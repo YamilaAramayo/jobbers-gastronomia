@@ -1,3 +1,4 @@
+
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
  * Lógica principal optimizada, reactiva y blindada con contador y requisitos.
@@ -434,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FILTRADO DE BUSQUEDA ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
-    const categoryChips = document.querySelectorAll('.category-chips .chip, .chip, .btn-categoria');
+    const categoryChips = document.querySelectorAll('.btn-categoria');
 
     function normalizarTexto(str) {
         if (!str) return '';
@@ -472,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let coincideCategoria = true;
             if (categoriaActual !== 'todas') {
-                coincideCategoria = (catVacante === categoriaActual) || 
+                coincideCategoria = (catVacante === categoryActualSafe()) || 
                                    titulo.includes(categoriaActual);
             }
 
@@ -480,6 +481,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         renderizarVacantes(resultados);
+    }
+
+    function categoryActualSafe() {
+        return categoriaActual;
     }
 
     inputBuscador?.addEventListener('input', filtrarEmpleos);
