@@ -476,7 +476,7 @@
         </div>
     </section>
 
-    <!-- LISTADO DE VACANTES & TALENTO DESTACADO (Modo Postulante) -->
+    <!-- LISTADO DE VACANTES (Modo Postulante) -->
     <main class="modo-postulante-only" style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="vacantes">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
             <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Búsquedas Activas</h2>
@@ -486,44 +486,42 @@
         <div id="lista-vacantes" style="display: flex; flex-direction: column; gap: 1rem;">
             <!-- Contenido inyectado por JS -->
         </div>
+    </main>
 
-        <!-- TALENTO DESTACADO -->
-        <div style="margin-top: 3.5rem;">
-            <div style="margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <div>
-                    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Talentos Destacados en Córdoba</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Profesionales de la gastronomía disponibles para entrevistas.</p>
-                </div>
-                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                    <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)">
-                        ⚡ DESTACÁ TU PERFIL PRO
-                    </button>
-                    <a href="#blog-noticias" class="btn-secondary btn-noticias">
-                        <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
-                    </a>
-                </div>
+    <!-- TALENTO DESTACADO (Exclusivo Modo Empresa) -->
+    <main class="modo-empresa-only" style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="talentos-empresa">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Talentos Destacados en Córdoba</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Profesionales de la gastronomía disponibles para entrevistas y contratación directa.</p>
             </div>
-            <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-                <!-- Contenido inyectado por JS -->
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)">
+                    ⚡ DESTACÁ TU PERFIL PRO
+                </button>
+                <a href="#blog-noticias" class="btn-secondary btn-noticias">
+                    <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
+                </a>
             </div>
+        </div>
+
+        <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+            <!-- Contenido inyectado por JS -->
         </div>
     </main>
 
-    <!-- SECCIÓN BLOG DE NOTICIAS & MONETIZACIÓN (ADSENSE + ESPACIOS PUBLICITARIOS) -->
+    <!-- SECCIÓN BLOG DE NOTICIAS & MONETIZACIÓN -->
     <section class="info-section" id="blog-noticias" style="padding: 4rem 1.5rem; text-align: left; background: var(--bg-dark); border-top: 1px solid var(--border-color);">
         <div style="max-width: 1000px; margin: 0 auto;">
             
-            <!-- HEADER DEL BLOG -->
             <div style="text-align: center; margin-bottom: 3rem;">
                 <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ACTUALIDAD Y TENDENCIAS</span>
                 <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-top: 0.5rem;">Blog & Novedades Gastronómicas</h2>
                 <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">Artículos de interés, consejos de empleo y las últimas tendencias del sector en Córdoba.</p>
             </div>
 
-            <!-- GRILLA DE ARTÍCULOS -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
                 
-                <!-- Artículo 1 -->
                 <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Consejos de Empleo</span>
@@ -533,7 +531,6 @@
                     <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Leí%20el%20artículo%20de%20CV%20y%20quiero%20más%20info." target="_blank" style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--primary); font-weight: 700; text-decoration: none;">Leer artículo completo →</a>
                 </article>
 
-                <!-- Artículo 2 -->
                 <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Tendencias de Mercado</span>
@@ -545,7 +542,7 @@
 
             </div>
 
-            <!-- ESPACIO PUBLICITARIO / PATROCINIO PARA EMPRESAS (Ropa, Artefactos de Cocina, etc.) -->
+            <!-- ESPACIO PUBLICITARIO / PATROCINIO PARA EMPRESAS -->
             <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, var(--card-bg-light) 100%); border: 2px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 2rem; text-align: center; margin-bottom: 2.5rem;">
                 <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ESPACIO PATROCINADO / PUBLICIDAD</span>
                 <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
@@ -555,7 +552,6 @@
                 </a>
             </div>
 
-            <!-- BLOQUE DE ANUNCIO GOOGLE ADSENSE -->
             <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
                 <span>[ Espacio Publicitario Google AdSense ]</span>
             </div>
@@ -563,21 +559,18 @@
         </div>
     </section>
 
-    <!-- SECCIÓN NOSOTROS (LANDING DE VENTAS, COSTOS Y SERVICIOS) -->
+    <!-- SECCIÓN NOSOTROS -->
     <section class="info-section" id="nosotros" style="padding: 4rem 1.5rem; text-align: left; background: var(--card-bg-light); border-top: 1px solid var(--border-color);">
         <div style="max-width: 1000px; margin: 0 auto;">
 
-            <!-- HEADER DE LA LANDING -->
             <div style="text-align: center; margin-bottom: 3rem;">
                 <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">SOBRE JOBBERS ARGENTINA</span>
                 <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-top: 0.5rem;">La plataforma que acelera el empleo gastronómico en Córdoba</h2>
                 <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">Conectamos directamente a quienes buscan trabajar con los mejores locales, restaurantes, bares y hoteles sin intermediarios y al instante.</p>
             </div>
 
-            <!-- BLOQUES DE SERVICIOS Y PLANES -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
 
-                <!-- Columna Postulantes -->
                 <div style="background: var(--bg-dark); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <div style="font-size: 2rem; margin-bottom: 0.8rem;" aria-hidden="true">👥</div>
@@ -596,7 +589,6 @@
                     </button>
                 </div>
 
-                <!-- Columna Empresas -->
                 <div style="background: var(--bg-dark); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <div style="font-size: 2rem; margin-bottom: 0.8rem;" aria-hidden="true">🏢</div>
@@ -617,7 +609,6 @@
 
             </div>
 
-            <!-- SECCIÓN DE COSTOS Y MEDIOS DE PAGO -->
             <div style="background: var(--bg-dark); padding: 2.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center; margin-bottom: 2rem;">
                 <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem;">💰 Costos y Medios de Pago</h3>
                 <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 1.5rem auto; line-height: 1.6;">Trabajamos con tarifas accesibles para potenciar el sector gastronómico cordobés. Los pagos y activaciones de membresías o destacados se coordinan de forma rápida y segura a través de nuestros canales oficiales.</p>
@@ -640,7 +631,7 @@
         </div>
     </section>
 
-    <!-- NAV INFERIOR MÓVIL (Fija abajo en celulares) -->
+    <!-- NAV INFERIOR MÓVIL -->
     <nav class="bottom-nav" aria-label="Navegación Móvil">
         <a href="#vacantes" class="bottom-nav-item active modo-postulante-only">
             <i class="fas fa-search"></i>
@@ -667,9 +658,8 @@
 
     <div id="toast-container"></div>
 
-    <!-- Script Principal con la Calculadora, Membresía PRO y Soporte integrados -->
+    <!-- Script Principal -->
     <script>
-        // Funciones auxiliares para la Calculadora de Horarios y Soporte
         window.abrirModalCalculadora = function(e) {
             if (e) e.preventDefault();
             const modal = document.getElementById('modal-calculadora');
@@ -687,7 +677,6 @@
             }
         };
 
-        // Funciones para el Modal de Membresía PRO (Destacá tu perfil)
         window.abrirModalMembresia = function(e) {
             if (e) e.preventDefault();
             const modal = document.getElementById('modal-membresia-pro');
