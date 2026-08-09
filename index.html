@@ -476,7 +476,7 @@
         </div>
     </section>
 
-    <!-- LISTADO DE VACANTES (Modo Postulante) -->
+    <!-- LISTADO DE VACANTES & TALENTO DESTACADO (EXCLUSIVO MODO POSTULANTE) -->
     <main class="modo-postulante-only" style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="vacantes">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
             <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Búsquedas Activas</h2>
@@ -486,27 +486,26 @@
         <div id="lista-vacantes" style="display: flex; flex-direction: column; gap: 1rem;">
             <!-- Contenido inyectado por JS -->
         </div>
-    </main>
 
-    <!-- TALENTO DESTACADO (Exclusivo Modo Empresa) -->
-    <main class="modo-empresa-only" style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="talentos-empresa">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-            <div>
-                <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Talentos Destacados en Córdoba</h2>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Profesionales de la gastronomía disponibles para entrevistas y contratación directa.</p>
+        <!-- TALENTO DESTACADO & BOTONES PRO UNIDOS EN MODO POSTULANTE -->
+        <div style="margin-top: 3.5rem;">
+            <div style="margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Talentos Destacados en Córdoba</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Profesionales de la gastronomía disponibles para entrevistas.</p>
+                </div>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)">
+                        ⚡ DESTACÁ TU PERFIL PRO
+                    </button>
+                    <a href="#blog-noticias" class="btn-secondary btn-noticias">
+                        <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
+                    </a>
+                </div>
             </div>
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)">
-                    ⚡ DESTACÁ TU PERFIL PRO
-                </button>
-                <a href="#blog-noticias" class="btn-secondary btn-noticias">
-                    <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
-                </a>
+            <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <!-- Contenido inyectado por JS -->
             </div>
-        </div>
-
-        <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-            <!-- Contenido inyectado por JS -->
         </div>
     </main>
 
