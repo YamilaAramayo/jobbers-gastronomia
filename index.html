@@ -487,14 +487,19 @@
             <!-- Contenido inyectado por JS -->
         </div>
 
-        <!-- Botones de Postulante (Destacar Perfil PRO y Blog) -->
-        <div style="margin-top: 2.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)">
-                ⚡ DESTACÁ TU PERFIL PRO
-            </button>
-            <a href="#blog-noticias" class="btn-secondary btn-noticias">
-                <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
-            </a>
+        <!-- TARJETA COMUNIDAD JOBBERS PRO + BOTÓN BLOG (EXCLUSIVO MODO POSTULANTE) -->
+        <div style="margin-top: 3rem; background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+            <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem;">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.5;">Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.75rem 1.5rem; font-weight: 800; border-radius: var(--radius-sm);">
+                    ⚡ DESTACÁ TU PERFIL PRO
+                </button>
+                <a href="#blog-noticias" class="btn-secondary btn-noticias" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-main); border-radius: var(--radius-sm); text-decoration: none; font-weight: 600;">
+                    <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
+                </a>
+            </div>
         </div>
     </main>
 
