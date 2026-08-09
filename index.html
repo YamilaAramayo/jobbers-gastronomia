@@ -449,6 +449,25 @@
                                     <option value="Otras zonas (Córdoba Capital)">Otras zonas (Córdoba Capital)</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="turno-puesto" class="sr-only">Turno</label>
+                                <input type="text" id="turno-puesto" placeholder="Turno (ej. Full Time, Turno Tarde...)" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="jornada-puesto" class="sr-only">Jornada</label>
+                                <input type="text" id="jornada-puesto" placeholder="Jornada (ej. Lunes a Sábados)" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="requisitos-puesto" class="sr-only">Requisitos</label>
+                                <input type="text" id="requisitos-puesto" placeholder="Requisitos breves (ej. Experiencia previa)">
+                            </div>
+
+                            <button type="submit" class="btn-whatsapp" style="width: 100%;">
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i> PUBLICAR BÚSQUEDA EXPRESS
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -456,5 +475,36 @@
             </div>
         </div>
     </section>
+
+    <!-- LISTADO DE VACANTES & TALENTO DESTACADO (Modo Postulante) -->
+    <main class="modo-postulante-only" style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="vacantes">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Búsquedas Activas</h2>
+            <span id="contador-vacantes" style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">Cargando vacantes...</span>
+        </div>
+
+        <div id="lista-vacantes" style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Contenido inyectado por JS -->
+        </div>
+
+        <!-- TALENTO DESTACADO -->
+        <div style="margin-top: 3.5rem;">
+            <div style="margin-bottom: 1.2rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Talentos Destacados en Córdoba</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Profesionales de la gastronomía disponibles para entrevistas.</p>
+            </div>
+            <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <!-- Contenido inyectado por JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border-color); margin-top: 4rem;">
+        <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Script principal -->
+    <script src="js/main.js"></script>
 </body>
 </html>
