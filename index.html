@@ -105,7 +105,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE MEMBRESÍA JOBBERS PRO -->
+    <!-- MODAL DE MEMBRESÍA JOBBERS PRO (Destacá tu perfil) -->
     <div id="modal-membresia-pro" class="rol-modal-overlay" role="dialog" aria-labelledby="pro-title" aria-modal="true" style="display: none;">
         <div class="modal-postular-card" style="max-width: 520px; text-align: left;">
             <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalMembresia()" aria-label="Cerrar modal">&times;</button>
@@ -210,15 +210,18 @@
                     Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
+                    <!-- Recursos Operativos para Postulantes -->
                     <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
                     <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
                     <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
 
+                    <!-- Recursos Operativos para Empresas -->
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
 
+                    <!-- Soporte Técnico con WhatsApp configurado -->
                     <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                 </div>
             </div>
@@ -298,7 +301,7 @@
                         </div>
                     </div>
 
-                    <!-- BANNER PERFIL EMPRESA EN HOME -->
+                    <!-- BANNER PUBLICITARIO / ORIENTACIÓN PERFIL EMPRESA EN HOME PRINCIPAL -->
                     <div style="margin-top: 2.5rem; background: rgba(243, 156, 18, 0.08); border: 1px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: left; flex-wrap: wrap;">
                         <div style="display: flex; align-items: center; gap: 1rem;">
                             <span style="font-size: 2rem;" aria-hidden="true">⚡</span>
@@ -311,6 +314,7 @@
                             CAMBIAR A MODO EMPRESA
                         </button>
                     </div>
+
                 </div>
 
                 <!-- MODO EMPRESA -->
@@ -339,7 +343,7 @@
                         </a>
                     </div>
 
-                    <!-- FORMULARIO EXPRESS -->
+                    <!-- Formulario Express -->
                     <div class="hero-card-express" id="formulario-express">
                         <div class="card-header">
                             <span class="text-warning" aria-hidden="true">⚡</span>
@@ -492,10 +496,10 @@
         </div>
 
         <div id="lista-vacantes" style="display: flex; flex-direction: column; gap: 1rem;">
-            <!-- Contenido inyectado por JS -->
+            <!-- Contenido dinamico inyectado mediante app.js -->
         </div>
 
-        <!-- TARJETA COMUNIDAD JOBBERS PRO -->
+        <!-- TARJETA COMUNIDAD JOBBERS PRO + BOTÓN BLOG (EXCLUSIVO MODO POSTULANTE) -->
         <div style="margin-top: 3rem; background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
             <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem;">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.5;">Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.</p>
@@ -511,7 +515,7 @@
         </div>
     </main>
 
-    <!-- TALENTO DESTACADO (Exclusivo Modo Empresa) -->
+    <!-- TALENTO DESTACADO (EXCLUSIVO MODO EMPRESA) -->
     <main class="modo-empresa-only" style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="talentos-empresa">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
             <div>
@@ -521,9 +525,102 @@
         </div>
 
         <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-            <!-- Contenido inyectado por JS -->
+            <!-- Contenido dinamico inyectado mediante app.js -->
         </div>
     </main>
 
+    <!-- SECCIÓN NOSOTROS -->
+    <section id="nosotros" style="max-width: 1100px; margin: 4rem auto; padding: 0 1.5rem;">
+        <div style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2.5rem 2rem;">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 1rem;">Sobre Jobbers Argentina</h2>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">
+                    Somos el punto de encuentro especializado para el sector gastronómico en Córdoba. Nuestra misión es conectar talentos con establecimientos gastronómicos, simplificando los procesos de contratación e impulsando la inserción laboral directa a través de herramientas accesibles como WhatsApp.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <strong style="font-size: 1.5rem; color: var(--primary); display: block;">+100%</strong>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Especializado en Gastronomía</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong style="font-size: 1.5rem; color: var(--primary); display: block;">Directo</strong>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Contacto vía WhatsApp</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong style="font-size: 1.5rem; color: var(--primary); display: block;">Córdoba</strong>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Cobertura Provincial</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN BLOG & NOTICIAS -->
+    <section id="blog-noticias" style="max-width: 1100px; margin: 4rem auto; padding: 0 1.5rem;">
+        <div style="margin-bottom: 2rem; text-align: center;">
+            <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-main);">Blog & Noticias Gastronómicas</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Novedades, consejos de carrera e información relevante del sector laboral en Córdoba.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem;">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 800; text-transform: uppercase;">Consejos de Entrevista</span>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0.5rem 0;">Cómo preparar un CV Gastronómico de alto impacto</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">Descubrí qué aspectos valoran más los encargados de selección al momento de evaluar a un cocinero, mozo o barista.</p>
+            </article>
+
+            <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem;">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 800; text-transform: uppercase;">Novedades UTHGRA</span>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0.5rem 0;">Actualización de Escalas Salariales y Jornadas</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">Mantenete informado sobre los acuerdos vigentes, suplementos por nocturnidad y cálculo de adicionales por franquero.</p>
+            </article>
+
+            <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem;">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 800; text-transform: uppercase;">Sector Gastronómico</span>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0.5rem 0;">Los polos gastronómicos de mayor demanda en Córdoba</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">Un recorrido por Güemes, Nueva Córdoba, Barrio Jardín y Cerro de las Rosas, analizando la demanda de perfiles.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background: #060809; border-top: 1px solid var(--border-color); padding: 3rem 1.5rem 2rem 1.5rem; margin-top: 5rem;">
+        <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;">
+            <div style="max-width: 350px;">
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    <span style="font-size: 1.2rem; font-weight: 900; color: var(--primary); display: block;">JOBBERS</span>
+                    <span style="font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; display: block;">EMPLEO GASTRONÓMICO</span>
+                </a>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                    El portal de vacantes y búsquedas laborales para el rubro gastronómico en Córdoba Capital y alrededores.
+                </p>
+            </div>
+
+            <div>
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem;">Enlaces Rápidos</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="#vacantes" style="color: var(--text-muted); text-decoration: none;">Ver Búsquedas</a></li>
+                    <li><a href="#formulario-express" style="color: var(--text-muted); text-decoration: none;">Publicar Oferta</a></li>
+                    <li><a href="#nosotros" style="color: var(--text-muted); text-decoration: none;">Nosotros</a></li>
+                    <li><a href="#blog-noticias" style="color: var(--text-muted); text-decoration: none;">Blog</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem;">Soporte & Contacto</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="https://wa.me/5493513080197" target="_blank" style="color: var(--text-muted); text-decoration: none;"><i class="fab fa-whatsapp"></i> WhatsApp Soporte</a></li>
+                    <li><span style="color: var(--text-muted);"><i class="fas fa-location-dot"></i> Córdoba, Argentina</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="max-width: 1100px; margin: 2rem auto 0 auto; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; font-size: 0.75rem; color: var(--text-muted);">
+            © 2026 Jobbers Argentina. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="js/app.js"></script>
 </body>
 </html>
