@@ -333,17 +333,7 @@
                         </div>
                     </div>
 
-                    <!-- BANNER PATROCINADO / ESPACIO PUBLICITARIO (Modo Empresa) -->
-                    <div style="margin-bottom: 2rem; background: rgba(243, 156, 18, 0.04); border: 2px dashed rgba(243, 156, 18, 0.35); border-radius: var(--radius-md); padding: 1.75rem 1.5rem; text-align: center;">
-                        <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px;">Espacio Patrocinado / Publicidad</span>
-                        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 auto 1.2rem auto; max-width: 550px;">Promocioná tu marca, ropa para gastronomía o artefactos de cocina ante miles de trabajadores y dueños de locales en Córdoba.</p>
-                        <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Me%20interesa%20anunciar%20mi%20marca%20en%20el%20portal." target="_blank" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: var(--text-dark); padding: 0.65rem 1.4rem; font-weight: 800; font-size: 0.82rem; border-radius: var(--radius-sm); text-decoration: none;">
-                            <i class="fab fa-whatsapp" aria-hidden="true" style="font-size: 1.1rem;"></i> ANUNCIAR TU MARCA ACÁ
-                        </a>
-                    </div>
-
-                    <!-- Formulario Express -->
+                    <!-- 1. FORMULARIO EXPRESS PRIMERO -->
                     <div class="hero-card-express" id="formulario-express">
                         <div class="card-header">
                             <span class="text-warning" aria-hidden="true">⚡</span>
@@ -454,11 +444,37 @@
                                 </select>
                             </div>
 
+                            <div class="form-group">
+                                <label for="turno-puesto" class="sr-only">Turno</label>
+                                <input type="text" id="turno-puesto" class="form-control" placeholder="Turno (ej. Full Time, Turno Tarde...)" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="jornada-puesto" class="sr-only">Jornada</label>
+                                <input type="text" id="jornada-puesto" class="form-control" placeholder="Jornada (ej. Lunes a Sábados)" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="requisitos-puesto" class="sr-only">Requisitos</label>
+                                <input type="text" id="requisitos-puesto" class="form-control" placeholder="Requisitos breves (ej. Experiencia previa)" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                            </div>
+
                             <button type="submit" class="btn-whatsapp" style="width: 100%; height: 50px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer;">
                                 <i class="fab fa-whatsapp" aria-hidden="true" style="font-size: 1.2rem;"></i> PUBLICAR BÚSQUEDA EXPRESS
                             </button>
                         </form>
                     </div>
+
+                    <!-- 2. ESPACIO PATROCINADO ABAJO DEL FORMULARIO -->
+                    <div style="margin-top: 2rem; background: rgba(243, 156, 18, 0.04); border: 2px dashed rgba(243, 156, 18, 0.35); border-radius: var(--radius-md); padding: 1.75rem 1.5rem; text-align: center;">
+                        <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px;">Espacio Patrocinado / Publicidad</span>
+                        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 auto 1.2rem auto; max-width: 550px;">Promocioná tu marca, ropa para gastronomía o artefactos de cocina ante miles de trabajadores y dueños de locales en Córdoba.</p>
+                        <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Me%20interesa%20anunciar%20mi%20marca%20en%20el%20portal." target="_blank" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: var(--text-dark); padding: 0.65rem 1.4rem; font-weight: 800; font-size: 0.82rem; border-radius: var(--radius-sm); text-decoration: none;">
+                            <i class="fab fa-whatsapp" aria-hidden="true" style="font-size: 1.1rem;"></i> ANUNCIAR TU MARCA ACÁ
+                        </a>
+                    </div>
+
                 </div>
 
             </div>
@@ -665,102 +681,6 @@
     <div id="toast-container"></div>
 
     <!-- Script Principal -->
-    <script>
-        window.abrirModalCalculadora = function(e) {
-            if (e) e.preventDefault();
-            const modal = document.getElementById('modal-calculadora');
-            if (modal) {
-                modal.style.display = 'flex';
-                modal.classList.add('show');
-            }
-        };
-
-        window.cerrarModalCalculadora = function() {
-            const modal = document.getElementById('modal-calculadora');
-            if (modal) {
-                modal.style.display = 'none';
-                modal.classList.remove('show');
-            }
-        };
-
-        window.abrirModalMembresia = function(e) {
-            if (e) e.preventDefault();
-            const modal = document.getElementById('modal-membresia-pro');
-            if (modal) {
-                modal.style.display = 'flex';
-                modal.classList.add('show');
-            }
-        };
-
-        window.cerrarModalMembresia = function() {
-            const modal = document.getElementById('modal-membresia-pro');
-            if (modal) {
-                modal.style.display = 'none';
-                modal.classList.remove('show');
-            }
-        };
-
-        window.enviarMembresiaWhatsApp = function(e) {
-            if (e) e.preventDefault();
-            const nombre = document.getElementById('pro-nombre').value.trim();
-            const puesto = document.getElementById('pro-puesto').value.trim();
-
-            if (!nombre || !puesto) {
-                return;
-            }
-
-            const mensaje = `Hola Jobbers! 👋 Me interesa adquirir la Membresía Jobbers PRO para destacar mi perfil.\n\n👤 *Nombre:* ${nombre}\n💼 *Puesto:* ${puesto}\n\nQuisiera coordinar el pago y la activación. ¡Gracias!`;
-            const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
-
-            window.open(url, '_blank');
-            window.cerrarModalMembresia();
-        };
-
-        window.cambiarModoCalculadora = function() {
-            const tipo = document.getElementById('calc-tipo').value;
-            const grupoBase = document.getElementById('grupo-base-sueldo');
-            const grupoJornada = document.getElementById('grupo-jornada-tipo');
-            const grupoHoras = document.getElementById('grupo-horas-extra');
-
-            if (tipo === 'jornada') {
-                if (grupoBase) grupoBase.style.display = 'block';
-                if (grupoJornada) grupoJornada.style.display = 'block';
-                if (grupoHoras) grupoHoras.style.display = 'none';
-            } else {
-                if (grupoBase) grupoBase.style.display = 'block';
-                if (grupoJornada) grupoJornada.style.display = 'none';
-                if (grupoHoras) grupoHoras.style.display = 'block';
-            }
-        };
-
-        window.calcularHorariosSueldo = function() {
-            const tipo = document.getElementById('calc-tipo').value;
-            const sueldoBase = parseFloat(document.getElementById('calc-sueldo-base').value) || 0;
-            const outputDiv = document.getElementById('resultado-calculadora');
-            const outputValor = document.getElementById('calc-output-valor');
-
-            let resultado = 0;
-
-            if (tipo === 'jornada') {
-                const modalidad = document.getElementById('calc-modalidad').value;
-                if (modalidad === 'full') {
-                    resultado = sueldoBase;
-                } else if (modalidad === 'part') {
-                    resultado = sueldoBase * 0.5;
-                } else if (modalidad === 'franco') {
-                    resultado = (sueldoBase / 25) / 2;
-                }
-                if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
-            } else {
-                const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
-                const valorHoraExtra = (sueldoBase / 200) * 1.5;
-                resultado = valorHoraExtra * horas;
-                if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})} (Estimado X ${horas}hs)`;
-            }
-
-            if (outputDiv) outputDiv.style.display = 'block';
-        };
-    </script>
     <script src="js/main.js"></script>
 </body>
 </html>
