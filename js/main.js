@@ -1,6 +1,6 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal optimizada, reactiva y blindada con contador y requisitos.
+ * Lógica principal optimizada, reactiva y blindada.
  */
 
 // =========================================================================
@@ -179,7 +179,7 @@ window.enviarPostulacionWhatsApp = function(e) {
 
 window.contactarTalento = function(nombre, puesto) {
     const mensaje = `Hola Jobbers! 👋 Vimos el perfil destacado de *${nombre}* (${puesto}) en la plataforma y nos gustaría contactarlo/a para una entrevista.`;
-    const url = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
+    const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
 };
 
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 sueldo: v.sueldo || "A convenir",
                 urgente: Boolean(v.urgente),
                 tiempo: v.tiempo || "Reciente",
-                telefono: v.contacto_wa || v.telefono || "5493541582448"
+                telefono: v.contacto_wa || v.telefono || "5493513080197"
             }));
 
             renderizarVacantes(listaVacantesBD);
@@ -431,10 +431,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- FILTRADO DE BUSQUEDA ---
+    // --- FILTRADO DE BÚSQUEDA ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
-    const categoryChips = document.querySelectorAll('.category-chips .chip, .chip, .btn-categoria');
     const categoryChips = document.querySelectorAll('.btn-categoria');
 
     function normalizarTexto(str) {
@@ -473,19 +472,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let coincideCategoria = true;
             if (categoriaActual !== 'todas') {
-                coincideCategoria = (catVacante === categoriaActual) || 
-                coincideCategoria = (catVacante === categoryActualSafe()) || 
-                                   titulo.includes(categoriaActual);
+                coincideCategoria = (catVacante === categoriaActual) || titulo.includes(categoriaActual);
             }
 
             return coincideTexto && coincideCategoria;
         });
 
         renderizarVacantes(resultados);
-    }
-
-    function categoryActualSafe() {
-        return categoriaActual;
     }
 
     inputBuscador?.addEventListener('input', filtrarEmpleos);
@@ -506,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- FORMULARIO EXPRESS EMPRESAS (Actualizado con Requisitos) ---
+    // --- FORMULARIO EXPRESS EMPRESAS ---
     const formExpress = document.getElementById('form-publicar-express');
     formExpress?.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -537,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         mensaje += `📱 *Contacto Directo:* ${telefono}\n\nQuedo a la espera de la publicación. ¡Gracias!`;
 
-        const url = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
+        const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
 
         window.mostrarToast('Redirigiendo a WhatsApp...', 'success');
         setTimeout(() => {
