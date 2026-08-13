@@ -352,7 +352,7 @@
                             <!-- PUESTO REQUERIDO -->
                             <div class="form-group">
                                 <label for="puesto-requerido" class="sr-only">Puesto requerido</label>
-                                <select id="puesto-requerido" class="form-control" aria-label="Puesto requerido" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                <select id="puesto-requerido" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
                                     <option value="" disabled selected>Puesto que necesitás...</option>
                                     <optgroup label="🍳 Cocina & Producción">
                                         <option value="Chef / Chef Ejecutivo">Chef / Chef Ejecutivo</option>
@@ -396,7 +396,7 @@
                             <!-- ZONA / BARRIO (CÓRDOBA CAPITAL COMPLETO) -->
                             <div class="form-group">
                                 <label for="zona-local" class="sr-only">Zona o Barrio</label>
-                                <select id="zona-local" class="form-control" aria-label="Zona o Barrio" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                <select id="zona-local" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
                                     <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
                                     
                                     <optgroup label="🔥 Polos Gastronómicos / Centro">
@@ -412,7 +412,7 @@
                                         <option value="Villa Belgrano">Villa Belgrano</option>
                                         <option value="Recta Martinoli">Recta Martinoli</option>
                                         <option value="Cofico">Cofico</option>
-                                        <option value="Observatorio">Observatorio</option>
+                                        <option value="Observatorio / La Calera (Límite)">Observatorio</option>
                                     </optgroup>
 
                                     <optgroup label="📍 Zona Norte">
@@ -448,7 +448,9 @@
                                         <option value="San Vicente">San Vicente</option>
                                         <option value="Bajo Palermo">Bajo Palermo</option>
                                         <option value="Talleres">Talleres (Este / Oeste)</option>
+
                                         <option value="Patricios">Patricios</option>
+
                                         <option value="Crisol">Crisol (Norte / Sur)</option>
                                         <option value="Palmar">Palmar</option>
                                     </optgroup>
@@ -477,33 +479,47 @@
                                 </select>
                             </div>
 
-                            <!-- TURNO PUESTO (SIMPLIFICADO) -->
+                            <!-- TURNO PUESTO (DESPLEGABLE COMPLETO) -->
                             <div class="form-group">
                                 <label for="turno-puesto" class="sr-only">Turno</label>
-                                <select id="turno-puesto" class="form-control" aria-label="Turno" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
-                                    <option value="" disabled selected>Turno...</option>
-                                    <option value="Mañana">Turno Mañana</option>
-                                    <option value="Tarde">Turno Tarde</option>
-                                    <option value="Noche / Cierre">Turno Noche / Cierre</option>
-                                    <option value="Cortado">Turno Cortado</option>
-                                    <option value="Rotativo">Turnos Rotativos</option>
-                                    <option value="Eventual / Fines de semana">Fin de semana / Eventual</option>
-                                    <option value="A convenir">A convenir</option>
+                                <select id="turno-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                    <option value="" disabled selected>Turno de Trabajo...</option>
+                                    <optgroup label="⏰ Turnos Fijos">
+                                        <option value="Turno Mañana (ej. 07:00 a 15:00 hs)">Turno Mañana (ej. 07:00 a 15:00 hs)</option>
+                                        <option value="Turno Tarde (ej. 15:00 a 23:00 hs)">Turno Tarde (ej. 15:00 a 23:00 hs)</option>
+                                        <option value="Turno Noche / Cierre (ej. 19:00 a 03:00 hs)">Turno Noche / Cierre (ej. 19:00 a 03:00 hs)</option>
+                                        <option value="Turno Trasnoche / Cierre Tardío">Turno Trasnoche / Cierre Tardío</option>
+                                    </optgroup>
+                                    <optgroup label="🔄 Turnos Rotativos y Cortados">
+                                        <option value="Turno Cortado (Almuerzo y Cesta / Cena)">Turno Cortado (Almuerzo y Cesta / Cena)</option>
+                                        <option value="Turnos Rotativos (Mañana / Tarde / Noche)">Turnos Rotativos (Mañana / Tarde / Noche)</option>
+                                        <option value="Horario Flexible / A convenir">Horario Flexible / A convenir</option>
+                                    </optgroup>
+                                    <optgroup label="⚡ Refuerzos & Eventos">
+                                        <option value="Turno Fin de Semana (Viernes a Domingo)">Turno Fin de Semana (Viernes a Domingo)</option>
+                                        <option value="Refuerzo de Eventos / Eventual">Refuerzo de Eventos / Eventual</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
-                            <!-- JORNADA PUESTO (SIMPLIFICADA) -->
+                            <!-- JORNADA PUESTO (DESPLEGABLE COMPLETO) -->
                             <div class="form-group">
                                 <label for="jornada-puesto" class="sr-only">Jornada</label>
-                                <select id="jornada-puesto" class="form-control" aria-label="Jornada" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
-                                    <option value="" disabled selected>Jornada / Esquema...</option>
-                                    <option value="Full Time (8 hs)">Full Time (8 hs)</option>
-                                    <option value="Part Time (4 a 6 hs)">Part Time (4 a 6 hs)</option>
-                                    <option value="Franquero / Cubre francos">Franquero / Cubre francos</option>
-                                    <option value="Esquema 6x1">Esquema 6x1 (1 franco)</option>
-                                    <option value="Esquema 5x2">Esquema 5x2 (2 francos)</option>
-                                    <option value="Lunes a Viernes">Lunes a Viernes</option>
-                                    <option value="Por hora / Eventual">Por hora / Eventual</option>
+                                <select id="jornada-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                    <option value="" disabled selected>Tipo de Jornada / Días...</option>
+                                    <optgroup label="📅 Carga Horaria">
+                                        <option value="Full Time (8hs diarias - 48hs semanales)">Full Time (8hs diarias - 48hs semanales)</option>
+                                        <option value="Part Time (4hs a 6hs diarias)">Part Time (4hs a 6hs diarias)</option>
+                                        <option value="Franquero / Cubre Francos">Franquero / Cubre Francos</option>
+                                        <option value="Jornada Reducida">Jornada Reducida</option>
+                                    </optgroup>
+                                    <optgroup label="🗓️ Esquema de Días">
+                                        <option value="6x1 (6 días trabajados, 1 franco semanal)">6x1 (6 días trabajados, 1 franco semanal)</option>
+                                        <option value="5x2 (5 días trabajados, 2 francos semanales)">5x2 (5 días trabajados, 2 francos semanales)</option>
+                                        <option value="Lunes a Viernes">Lunes a Viernes</option>
+                                        <option value="Fines de semana y Feriados unicamente">Fines de semana y Feriados unicamente</option>
+                                        <option value="Eventual / Por hora / Por servicio">Eventual / Por hora / Por servicio</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
@@ -683,7 +699,7 @@
                         </div>
                     </div>
                     <a href="#formulario-express" class="btn-whatsapp" style="width: 100%; text-align: center; text-decoration: none; display: block; font-weight: 800; font-size: 0.85rem; padding: 0.75rem;">
-                        <i class="fab fa-whatsapp" aria-hidden="true"></i> PUBLICAR BÚSQUEDA
+                        <i class="fab fa-whatsapp"></i> PUBLICAR BÚSQUEDA
                     </a>
                 </div>
 
@@ -694,9 +710,9 @@
                 <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 1.5rem auto; line-height: 1.6;">Trabajamos con tarifas accesibles para potenciar el sector gastronómico cordobés. Los pagos y activaciones de membresías o destacados se coordinan de forma rápida y segura a través de nuestros canales oficiales.</p>
 
                 <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-main); margin-bottom: 1.5rem;">
-                    <span><i class="fas fa-check" style="color: #2ecc71;" aria-hidden="true"></i> Transferencia Bancaria</span>
-                    <span><i class="fas fa-check" style="color: #2ecc71;" aria-hidden="true"></i> Mercado Pago</span>
-                    <span><i class="fas fa-check" style="color: #2ecc71;" aria-hidden="true"></i> Atención Personalizada</span>
+                    <span><i class="fas fa-check" style="color: #2ecc71;"></i> Transferencia Bancaria</span>
+                    <span><i class="fas fa-check" style="color: #2ecc71;"></i> Mercado Pago</span>
+                    <span><i class="fas fa-check" style="color: #2ecc71;"></i> Atención Personalizada</span>
                 </div>
 
                 <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Quiero%20consultar%20sobre%20los%20costos%20y%20medios%20de%20pago%20de%20la%20plataforma." target="_blank" class="btn-whatsapp" style="display: inline-flex; width: auto; padding: 0.75rem 1.8rem;">
@@ -714,19 +730,19 @@
     <!-- NAV INFERIOR MÓVIL -->
     <nav class="bottom-nav" aria-label="Navegación Móvil">
         <a href="#vacantes" class="bottom-nav-item active modo-postulante-only">
-            <i class="fas fa-search" aria-hidden="true"></i>
+            <i class="fas fa-search"></i>
             <span>Empleos</span>
         </a>
         <a href="#formulario-express" class="bottom-nav-item modo-empresa-only">
-            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+            <i class="fas fa-plus-circle"></i>
             <span>Publicar</span>
         </a>
         <button type="button" class="bottom-nav-item btn-trigger-modal-perfil">
-            <i class="fas fa-user-tag" aria-hidden="true"></i>
+            <i class="fas fa-user-tag"></i>
             <span>Perfil</span>
         </button>
         <a href="#nosotros" class="bottom-nav-item">
-            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            <i class="fas fa-info-circle"></i>
             <span>Nosotros</span>
         </a>
     </nav>
