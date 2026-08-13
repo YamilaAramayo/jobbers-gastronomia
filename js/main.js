@@ -1,20 +1,26 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal limpia, sin duplicaciones ni errores sintácticos.
+ * Lógica principal optimizada, modular y segura.
  */
 
 // =========================================================================
-// 1. FUNCIONES GLOBALES & HELPERS
+// 1. ESTADO GLOBAL & HELPERS
 // =========================================================================
 let whatsappEmpleadorActual = "";
 let tituloPuestoActual = "";
 window.rolSeleccionadoTemp = null;
 
+/**
+ * Obtiene el valor limpio de un input por ID
+ */
 function getVal(id) {
     const el = document.getElementById(id);
     return el ? el.value.trim() : "";
 }
 
+/**
+ * Sanitiza cadenas de texto para prevenir vulnerabilidades XSS
+ */
 function escapeHTML(str) {
     if (!str) return "";
     return String(str)
@@ -25,7 +31,20 @@ function escapeHTML(str) {
         .replace(/'/g, "&#039;");
 }
 
-// --- MODALES GENERALES ---
+/**
+ * Helper Debounce para reducir ejecuciones repetitivas en inputs de búsqueda
+ */
+function debounce(func, delay = 250) {
+    let timeoutId;
+    return (...args) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(null, args), delay);
+    };
+}
+
+// =========================================================================
+// 2. CONTROL DE MODALES & INTERACCIONES
+// =========================================================================
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
     whatsappEmpleadorActual = whatsappTel && whatsappTel !== "undefined" ? whatsappTel : "5493513080197";
     tituloPuestoActual = `${puesto} — ${empresa}`;
@@ -85,32 +104,27 @@ window.cerrarModalMembresia = function() {
 };
 
 window.cambiarModoCalculadora = function() {
-    const tipo = document.getElementById('calc-tipo').value;
+    const tipo = getVal('calc-tipo');
     const grupoBase = document.getElementById('grupo-base-sueldo');
     const grupoJornada = document.getElementById('grupo-jornada-tipo');
     const grupoHoras = document.getElementById('grupo-horas-extra');
 
-    if (tipo === 'jornada') {
-        if (grupoBase) grupoBase.style.display = 'block';
-        if (grupoJornada) grupoJornada.style.display = 'block';
-        if (grupoHoras) grupoHoras.style.display = 'none';
-    } else {
-        if (grupoBase) grupoBase.style.display = 'block';
-        if (grupoJornada) grupoJornada.style.display = 'none';
-        if (grupoHoras) grupoHoras.style.display = 'block';
-    }
+    const esJornada = (tipo === 'jornada');
+    if (grupoBase) grupoBase.style.display = 'block';
+    if (grupoJornada) grupoJornada.style.display = esJornada ? 'block' : 'none';
+    if (grupoHoras) grupoHoras.style.display = esJornada ? 'none' : 'block';
 };
 
 window.calcularHorariosSueldo = function() {
-    const tipo = document.getElementById('calc-tipo').value;
-    const sueldoBase = parseFloat(document.getElementById('calc-sueldo-base').value) || 0;
+    const tipo = getVal('calc-tipo');
+    const sueldoBase = parseFloat(getVal('calc-sueldo-base')) || 0;
     const outputDiv = document.getElementById('resultado-calculadora');
     const outputValor = document.getElementById('calc-output-valor');
 
     let resultado = 0;
 
     if (tipo === 'jornada') {
-        const modalidad = document.getElementById('calc-modalidad').value;
+        const modalidad = getVal('calc-modalidad');
         if (modalidad === 'full') {
             resultado = sueldoBase;
         } else if (modalidad === 'part') {
@@ -118,12 +132,12 @@ window.calcularHorariosSueldo = function() {
         } else if (modalidad === 'franco') {
             resultado = (sueldoBase / 25) / 2;
         }
-        if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+        if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', { maximumFractionDigits: 0 })}`;
     } else {
-        const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
+        const horas = parseFloat(getVal('calc-cant-horas')) || 0;
         const valorHoraExtra = (sueldoBase / 200) * 1.5;
         resultado = valorHoraExtra * horas;
-        if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})} (Estimado X ${horas}hs)`;
+        if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', { maximumFractionDigits: 0 })} (Estimado X ${horas}hs)`;
     }
 
     if (outputDiv) outputDiv.style.display = 'block';
@@ -166,6 +180,9 @@ window.seleccionarRol = function(rol, nombreRol) {
     if (stepConfirm) stepConfirm.style.display = 'block';
 };
 
+// =========================================================================
+// 3. INTEGRACIÓN CON WHATSAPP & NOTIFICACIONES
+// =========================================================================
 window.enviarPostulacionWhatsApp = function(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
@@ -218,8 +235,8 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
     const toast = document.createElement('div');
     toast.className = `jobbers-toast ${tipo}`;
 
-    const bgColor = tipo === 'success' ? '#2ecc71' : '#e74c3c';
-    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); position:fixed; bottom:20px; right:20px; z-index:99999; transition:all 0.3s ease;`;
+    const bgColor = tipo === 'success' ? 'var(--salary-green, #2ecc71)' : 'var(--danger-badge, #e74c3c)';
+    toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 20px; border-radius:8px; font-weight:600; display:flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); position:fixed; bottom:20px; right:20px; z-index:var(--z-toast, 99999); transition:all 0.3s ease;`;
 
     const icono = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
     toast.innerHTML = `<i class="fas ${icono}"></i> <span>${escapeHTML(mensaje)}</span>`;
@@ -234,9 +251,9 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
 };
 
 // =========================================================================
-// 2. INICIALIZACIÓN
+// 4. INICIALIZACIÓN DE LA APLICACIÓN
 // =========================================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
     let listaVacantesBD = [];
     let categoriaActual = 'todas';
@@ -351,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderizarVacantes(listaVacantesBD);
 
         } catch (error) {
-            console.warn("Base de datos no disponible localmente, mostrando ofertas vacías.");
+            console.warn("Base de datos no disponible localmente o error de lectura. Renderizando lista vacía.", error);
             renderizarVacantes([]);
         }
     }
@@ -382,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Eventos
+    // --- EVENTOS DE INTERFAZ Y MODALES ---
     document.querySelectorAll('.btn-trigger-modal-perfil').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -411,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.cerrarModalPerfil();
     });
 
-    // Filtro de Búsquedas
+    // --- FILTRADO DE BÚSQUEDAS ---
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
     const categoryChips = document.querySelectorAll('.btn-categoria');
@@ -446,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const catVacante = normalizarCategoria(v.categoria || v.titulo);
 
             const coincideTexto = !termino || titulo.includes(termino) || empresa.includes(termino) || zona.includes(termino);
-            let coincideCategoria = (categoriaActual === 'todas') || (catVacante === categoriaActual) || titulo.includes(categoriaActual);
+            const coincideCategoria = (categoriaActual === 'todas') || (catVacante === categoriaActual) || titulo.includes(categoriaActual);
 
             return coincideTexto && coincideCategoria;
         });
@@ -454,7 +471,9 @@ document.addEventListener('DOMContentLoaded', () => {
         renderizarVacantes(resultados);
     }
 
-    inputBuscador?.addEventListener('input', filtrarEmpleos);
+    // Input optimizado mediante Debounce
+    inputBuscador?.addEventListener('input', debounce(filtrarEmpleos, 200));
+
     btnBuscador?.addEventListener('click', (e) => {
         e.preventDefault();
         filtrarEmpleos();
@@ -472,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Formulario Express
+    // --- FORMULARIO EXPRESS ---
     const formExpress = document.getElementById('form-publicar-express');
     formExpress?.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -506,14 +525,26 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             window.open(url, '_blank');
             formExpress.reset();
-        }, 1000);
+        }, 800);
     });
 
-    // Bindings de Modales y Dropdown
+    // --- EVENTOS GLOBAL DE MODALES (Escape & Clic fuera) ---
     document.getElementById('form-postularme')?.addEventListener('submit', window.enviarPostulacionWhatsApp);
 
     document.querySelectorAll('.btn-cerrar-postular').forEach(btn => {
         btn.addEventListener('click', window.cerrarModalPostulacion);
+    });
+
+    // Cierre de modales al hacer clic en el overlay exterior
+    document.querySelectorAll('.rol-modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                window.cerrarModalPostulacion();
+                window.cerrarModalPerfil();
+                window.cerrarModalCalculadora();
+                window.cerrarModalMembresia();
+            }
+        });
     });
 
     document.addEventListener('keydown', (e) => {
@@ -525,6 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- DROPDOWN RECURSOS ---
     const dropdownToggle = document.getElementById('dropdown-recursos');
     const dropdownMenu = document.getElementById('menu-recursos');
 
@@ -539,5 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    initRol();
+    // Ejecución inicial
+    await initRol();
 });
