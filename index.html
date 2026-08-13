@@ -35,7 +35,7 @@
     <!-- MODAL DE SELECCIÓN DE PERFIL -->
     <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
         <div class="rol-modal-card">
-            <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" onclick="window.cerrarModalPerfil()" aria-label="Cerrar modal">&times;</button>
 
             <!-- PASO 1: Selección -->
             <div id="rol-step-select">
@@ -77,7 +77,7 @@
     <!-- MODAL DE POSTULACIÓN POR WHATSAPP -->
     <div id="postular-modal" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-job-title" aria-modal="true" style="display: none;">
         <div class="modal-postular-card">
-            <button type="button" class="jobbers-close-btn btn-cerrar-postular" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="jobbers-close-btn btn-cerrar-postular" onclick="window.cerrarModalPostular()" aria-label="Cerrar modal">&times;</button>
 
             <h2 class="modal-postular-title">POSTULARME</h2>
             <p id="modal-job-title" class="modal-job-title">Título del Puesto — Nombre Empresa</p>
@@ -200,7 +200,7 @@
             <a href="#vacantes" class="nav-link modo-postulante-only btn-cta-postulante">Ver Empleos</a>
             <a href="#formulario-express" class="nav-link modo-empresa-only btn-cta-empresa">Publicar Búsqueda</a>
 
-            <button type="button" class="btn-cambiar-perfil btn-role-badge btn-trigger-modal-perfil">
+            <button type="button" class="btn-cambiar-perfil btn-role-badge btn-trigger-modal-perfil" onclick="if(window.abrirModalPerfil) window.abrirModalPerfil();">
                 <i class="fas fa-user-tag" aria-hidden="true"></i> 
                 <span id="label-modo-actual">Cambiar Perfil</span>
             </button>
@@ -210,15 +210,18 @@
                     Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
+                    <!-- Opciones Postulante -->
                     <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
+                    <a href="#" class="dropdown-item modo-postulante-only" onclick="event.preventDefault(); window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
+                    <a href="#" class="dropdown-item modo-postulante-only" onclick="event.preventDefault(); window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
 
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
+                    <!-- Opciones Empresa -->
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
 
+                    <!-- Soporte Universal -->
                     <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                 </div>
             </div>
@@ -307,7 +310,7 @@
                                 <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0;">Publicá tus búsquedas de forma rápida y conectá al instante con candidatos calificados en Córdoba.</p>
                             </div>
                         </div>
-                        <button type="button" class="btn-primary btn-trigger-modal-perfil" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.65rem 1.2rem; font-weight: 800; font-size: 0.80rem; border-radius: var(--radius-sm); white-space: nowrap;">
+                        <button type="button" class="btn-primary btn-trigger-modal-perfil" onclick="if(window.seleccionarRol) window.seleccionarRol('empresa', 'Busco Personal');" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.65rem 1.2rem; font-weight: 800; font-size: 0.80rem; border-radius: var(--radius-sm); white-space: nowrap; cursor: pointer;">
                             CAMBIAR A MODO EMPRESA
                         </button>
                     </div>
@@ -393,7 +396,7 @@
                                 </select>
                             </div>
 
-                            <!-- ZONA / BARRIO (CÓRDOBA CAPITAL COMPLETO) -->
+                            <!-- ZONA / BARRIO -->
                             <div class="form-group">
                                 <label for="zona-local" class="sr-only">Zona o Barrio</label>
                                 <select id="zona-local" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
@@ -412,7 +415,7 @@
                                         <option value="Villa Belgrano">Villa Belgrano</option>
                                         <option value="Recta Martinoli">Recta Martinoli</option>
                                         <option value="Cofico">Cofico</option>
-                                        <option value="Observatorio / La Calera (Límite)">Observatorio</option>
+                                        <option value="Observatorio">Observatorio</option>
                                     </optgroup>
 
                                     <optgroup label="📍 Zona Norte">
@@ -448,9 +451,7 @@
                                         <option value="San Vicente">San Vicente</option>
                                         <option value="Bajo Palermo">Bajo Palermo</option>
                                         <option value="Talleres">Talleres (Este / Oeste)</option>
-
                                         <option value="Patricios">Patricios</option>
-
                                         <option value="Crisol">Crisol (Norte / Sur)</option>
                                         <option value="Palmar">Palmar</option>
                                     </optgroup>
@@ -479,7 +480,7 @@
                                 </select>
                             </div>
 
-                            <!-- TURNO PUESTO (DESPLEGABLE COMPLETO) -->
+                            <!-- TURNO PUESTO -->
                             <div class="form-group">
                                 <label for="turno-puesto" class="sr-only">Turno</label>
                                 <select id="turno-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
@@ -502,7 +503,7 @@
                                 </select>
                             </div>
 
-                            <!-- JORNADA PUESTO (DESPLEGABLE COMPLETO) -->
+                            <!-- JORNADA PUESTO -->
                             <div class="form-group">
                                 <label for="jornada-puesto" class="sr-only">Jornada</label>
                                 <select id="jornada-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
@@ -561,13 +562,13 @@
             <!-- Contenido inyectado por JS -->
         </div>
 
-        <!-- TARJETA COMUNIDAD JOBBERS PRO + BOTÓN BLOG (EXCLUSIVO MODO POSTULANTE) -->
+        <!-- TARJETA COMUNIDAD JOBBERS PRO -->
         <div style="margin-top: 3rem; background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
             <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.8rem;">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.5;">Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.</p>
 
             <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.75rem 1.5rem; font-weight: 800; border-radius: var(--radius-sm);">
+                <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.75rem 1.5rem; font-weight: 800; border-radius: var(--radius-sm); cursor: pointer;">
                     ⚡ DESTACÁ TU PERFIL PRO
                 </button>
                 <a href="#blog-noticias" class="btn-secondary btn-noticias" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-main); border-radius: var(--radius-sm); text-decoration: none; font-weight: 600;">
@@ -577,7 +578,7 @@
         </div>
     </main>
 
-    <!-- TALENTO DESTACADO (EXCLUSIVO MODO EMPRESA) -->
+    <!-- TALENTO DESTACADO (Exclusivo Modo Empresa) -->
     <main class="modo-empresa-only" style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="talentos-empresa">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
             <div>
@@ -590,7 +591,7 @@
             <!-- Contenido inyectado por JS -->
         </div>
 
-        <!-- ESPACIO PATROCINADO / PUBLICIDAD (EXCLUSIVO MODO EMPRESA) -->
+        <!-- ESPACIO PATROCINADO -->
         <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, var(--card-bg-light) 100%); border: 2px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 2rem; text-align: center; margin-top: 3rem; margin-bottom: 1.5rem;">
             <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ESPACIO PATROCINADO / PUBLICIDAD</span>
             <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
@@ -600,13 +601,13 @@
             </a>
         </div>
 
-        <!-- ESPACIO PUBLICITARIO GOOGLE ADSENSE (MODO EMPRESA) -->
+        <!-- ESPACIO ADSENSE -->
         <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 2rem;">
             <span>[ Espacio Publicitario Google AdSense ]</span>
         </div>
     </main>
 
-    <!-- SECCIÓN BLOG DE NOTICIAS & MONETIZACIÓN (EXCLUSIVO MODO POSTULANTE) -->
+    <!-- SECCIÓN BLOG -->
     <section class="info-section modo-postulante-only" id="blog-noticias" style="padding: 4rem 1.5rem; text-align: left; background: var(--bg-dark); border-top: 1px solid var(--border-color);">
         <div style="max-width: 1000px; margin: 0 auto;">
 
@@ -638,7 +639,7 @@
 
             </div>
 
-            <!-- ESPACIO PUBLICITARIO / PATROCINIO PARA EMPRESAS -->
+            <!-- PATROCINIO -->
             <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, var(--card-bg-light) 100%); border: 2px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 2rem; text-align: center; margin-bottom: 2.5rem;">
                 <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ESPACIO PATROCINADO / PUBLICIDAD</span>
                 <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
@@ -680,7 +681,7 @@
                             • Acceso a herramientas y beneficios exclusivos.
                         </div>
                     </div>
-                    <button type="button" class="btn-primary" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; width: 100%; font-weight: 800; font-size: 0.85rem; padding: 0.75rem; border-radius: var(--radius-sm);">
+                    <button type="button" class="btn-primary" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; width: 100%; font-weight: 800; font-size: 0.85rem; padding: 0.75rem; border-radius: var(--radius-sm); cursor: pointer;">
                         ⚡ OBTENER PASE PRO
                     </button>
                 </div>
@@ -737,7 +738,7 @@
             <i class="fas fa-plus-circle"></i>
             <span>Publicar</span>
         </a>
-        <button type="button" class="bottom-nav-item btn-trigger-modal-perfil">
+        <button type="button" class="bottom-nav-item btn-trigger-modal-perfil" onclick="if(window.abrirModalPerfil) window.abrirModalPerfil();">
             <i class="fas fa-user-tag"></i>
             <span>Perfil</span>
         </button>
