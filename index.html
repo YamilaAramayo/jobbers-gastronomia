@@ -105,7 +105,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE MEMBRESÍA JOBBERS PRO (Destacá tu perfil) -->
+    <!-- MODAL DE MEMBRESÍA JOBBERS PRO -->
     <div id="modal-membresia-pro" class="rol-modal-overlay" role="dialog" aria-labelledby="pro-title" aria-modal="true" style="display: none;">
         <div class="modal-postular-card" style="max-width: 520px; text-align: left;">
             <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalMembresia()" aria-label="Cerrar modal">&times;</button>
@@ -210,18 +210,15 @@
                     Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
-                    <!-- Recursos Operativos para Postulantes -->
                     <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
                     <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
                     <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
 
-                    <!-- Recursos Operativos para Empresas -->
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
                     <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
 
-                    <!-- Soporte Técnico con WhatsApp configurado -->
                     <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                 </div>
             </div>
@@ -301,7 +298,7 @@
                         </div>
                     </div>
 
-                    <!-- BANNER PUBLICITARIO / ORIENTACIÓN PERFIL EMPRESA EN HOME PRINCIPAL -->
+                    <!-- BANNER PUBLICITARIO EN HOME PRINCIPAL -->
                     <div style="margin-top: 2.5rem; background: rgba(243, 156, 18, 0.08); border: 1px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: left; flex-wrap: wrap;">
                         <div style="display: flex; align-items: center; gap: 1rem;">
                             <span style="font-size: 2rem;" aria-hidden="true">⚡</span>
@@ -333,7 +330,7 @@
                         </div>
                     </div>
 
-                    <!-- 1. FORMULARIO EXPRESS PRIMERO -->
+                    <!-- FORMULARIO EXPRESS -->
                     <div class="hero-card-express" id="formulario-express">
                         <div class="card-header">
                             <span class="text-warning" aria-hidden="true">⚡</span>
@@ -352,6 +349,7 @@
                                 <input type="tel" id="telefono-contacto" class="form-control" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
                             </div>
 
+                            <!-- PUESTO REQUERIDO -->
                             <div class="form-group">
                                 <label for="puesto-requerido" class="sr-only">Puesto requerido</label>
                                 <select id="puesto-requerido" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
@@ -395,63 +393,134 @@
                                 </select>
                             </div>
 
+                            <!-- ZONA / BARRIO (CÓRDOBA CAPITAL COMPLETO) -->
                             <div class="form-group">
                                 <label for="zona-local" class="sr-only">Zona o Barrio</label>
                                 <select id="zona-local" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
                                     <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
-                                    <optgroup label="Polos Gastronómicos">
+                                    
+                                    <optgroup label="🔥 Polos Gastronómicos / Centro">
                                         <option value="Güemes">Güemes</option>
                                         <option value="Nueva Córdoba">Nueva Córdoba</option>
                                         <option value="General Paz">General Paz</option>
                                         <option value="Cerro de las Rosas">Cerro de las Rosas</option>
-                                        <option value="Centro">Centro</option>
+                                        <option value="Centro / Zona Peatonal">Centro / Zona Peatonal</option>
                                         <option value="Alta Córdoba">Alta Córdoba</option>
-                                        <option value="Jardín / Barrio Jardín">Barrio Jardín</option>
+                                        <option value="Barrio Jardín">Barrio Jardín</option>
                                         <option value="Urca / Av. Gauss">Urca / Av. Gauss</option>
                                         <option value="Manantiales">Manantiales</option>
                                         <option value="Villa Belgrano">Villa Belgrano</option>
                                         <option value="Recta Martinoli">Recta Martinoli</option>
+                                        <option value="Cofico">Cofico</option>
+                                        <option value="Observatorio / La Calera (Límite)">Observatorio</option>
                                     </optgroup>
-                                    <optgroup label="Zona Norte / Noroeste">
+
+                                    <optgroup label="📍 Zona Norte">
                                         <option value="Argüello">Argüello</option>
                                         <option value="Poeta Lugones">Poeta Lugones</option>
                                         <option value="Marqués de Sobremonte">Marqués de Sobremonte</option>
                                         <option value="Los Boulevares">Los Boulevares</option>
                                         <option value="La Carolina">La Carolina</option>
                                         <option value="Granja de Funes">Granja de Funes</option>
+                                        <option value="Villa Rivera Indarte">Villa Rivera Indarte</option>
+                                        <option value="Paso de los Andes">Paso de los Andes</option>
+                                        <option value="Residencial América">Residencial América</option>
+                                        <option value="Las Magnolias">Las Magnolias</option>
+                                        <option value="Chateau Carreras">Chateau Carreras</option>
                                     </optgroup>
-                                    <optgroup label="Zona Sur / Suroeste">
+
+                                    <optgroup label="📍 Zona Sur">
                                         <option value="Inaudi">Inaudi</option>
                                         <option value="San Fernando">San Fernando</option>
-                                        <option value="Santa Isabel">Santa Isabel</option>
+                                        <option value="Santa Isabel">Santa Isabel (1a, 2a, 3a Sección)</option>
                                         <option value="Villa El Libertador">Villa El Libertador</option>
                                         <option value="Avenida O'Higgins">Avenida O'Higgins</option>
+                                        <option value="Parque Capital">Parque Capital</option>
+                                        <option value="Residencial Sur">Residencial Sur</option>
+                                        <option value="Cabo Farina">Cabo Farina</option>
+                                        <option value="Comercial">Comercial</option>
+                                        <option value="Emilio Olmos">Emilio Olmos</option>
                                     </optgroup>
-                                    <optgroup label="Zona Este / Noreste">
+
+                                    <optgroup label="📍 Zona Este">
                                         <option value="Pueyrredón">Pueyrredón</option>
-                                        <option value="Yofre">Yofre</option>
+                                        <option value="Yofre">Yofre (Norte / Sur / I, II, III)</option>
                                         <option value="San Vicente">San Vicente</option>
                                         <option value="Bajo Palermo">Bajo Palermo</option>
-                                        <option value="Talleres">Talleres (E y O)</option>
+                                        <option value="Talleres">Talleres (Este / Oeste)</option>
+
+                                        <option value="Patricios">Patricios</option>
+
+                                        <option value="Crisol">Crisol (Norte / Sur)</option>
+                                        <option value="Palmar">Palmar</option>
                                     </optgroup>
-                                    <optgroup label="Zona Oeste">
+
+                                    <optgroup label="📍 Zona Oeste">
                                         <option value="Alberdi">Alberdi</option>
                                         <option value="Alto Alberdi">Alto Alberdi</option>
                                         <option value="Duarte Quirós">Duarte Quirós</option>
                                         <option value="Villa Cabrera">Villa Cabrera</option>
+                                        <option value="Los Plátanos">Los Plátanos</option>
+                                        <option value="San Salvador">San Salvador</option>
+                                        <option value="Consorcio Esperanza">Consorcio Esperanza</option>
+                                        <option value="Las Palmas">Las Palmas</option>
                                     </optgroup>
+
+                                    <optgroup label="🌳 Gran Córdoba / Alrededores">
+                                        <option value="Villa Carlos Paz">Villa Carlos Paz</option>
+                                        <option value="La Calera">La Calera</option>
+                                        <option value="Mendiolaza / Unquillo">Mendiolaza / Unquillo</option>
+                                        <option value="Villa Allende">Villa Allende</option>
+                                        <option value="Saldán">Saldán</option>
+                                        <option value="Malvinas Argentinas">Malvinas Argentinas</option>
+                                    </optgroup>
+
                                     <option value="Otras zonas (Córdoba Capital)">Otras zonas (Córdoba Capital)</option>
                                 </select>
                             </div>
 
+                            <!-- TURNO PUESTO (DESPLEGABLE COMPLETO) -->
                             <div class="form-group">
                                 <label for="turno-puesto" class="sr-only">Turno</label>
-                                <input type="text" id="turno-puesto" class="form-control" placeholder="Turno (ej. Full Time, Turno Tarde...)" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                <select id="turno-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                    <option value="" disabled selected>Turno de Trabajo...</option>
+                                    <optgroup label="⏰ Turnos Fijos">
+                                        <option value="Turno Mañana (ej. 07:00 a 15:00 hs)">Turno Mañana (ej. 07:00 a 15:00 hs)</option>
+                                        <option value="Turno Tarde (ej. 15:00 a 23:00 hs)">Turno Tarde (ej. 15:00 a 23:00 hs)</option>
+                                        <option value="Turno Noche / Cierre (ej. 19:00 a 03:00 hs)">Turno Noche / Cierre (ej. 19:00 a 03:00 hs)</option>
+                                        <option value="Turno Trasnoche / Cierre Tardío">Turno Trasnoche / Cierre Tardío</option>
+                                    </optgroup>
+                                    <optgroup label="🔄 Turnos Rotativos y Cortados">
+                                        <option value="Turno Cortado (Almuerzo y Cesta / Cena)">Turno Cortado (Almuerzo y Cesta / Cena)</option>
+                                        <option value="Turnos Rotativos (Mañana / Tarde / Noche)">Turnos Rotativos (Mañana / Tarde / Noche)</option>
+                                        <option value="Horario Flexible / A convenir">Horario Flexible / A convenir</option>
+                                    </optgroup>
+                                    <optgroup label="⚡ Refuerzos & Eventos">
+                                        <option value="Turno Fin de Semana (Viernes a Domingo)">Turno Fin de Semana (Viernes a Domingo)</option>
+                                        <option value="Refuerzo de Eventos / Eventual">Refuerzo de Eventos / Eventual</option>
+                                    </optgroup>
+                                </select>
                             </div>
 
+                            <!-- JORNADA PUESTO (DESPLEGABLE COMPLETO) -->
                             <div class="form-group">
                                 <label for="jornada-puesto" class="sr-only">Jornada</label>
-                                <input type="text" id="jornada-puesto" class="form-control" placeholder="Jornada (ej. Lunes a Sábados)" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                <select id="jornada-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                                    <option value="" disabled selected>Tipo de Jornada / Días...</option>
+                                    <optgroup label="📅 Carga Horaria">
+                                        <option value="Full Time (8hs diarias - 48hs semanales)">Full Time (8hs diarias - 48hs semanales)</option>
+                                        <option value="Part Time (4hs a 6hs diarias)">Part Time (4hs a 6hs diarias)</option>
+                                        <option value="Franquero / Cubre Francos">Franquero / Cubre Francos</option>
+                                        <option value="Jornada Reducida">Jornada Reducida</option>
+                                    </optgroup>
+                                    <optgroup label="🗓️ Esquema de Días">
+                                        <option value="6x1 (6 días trabajados, 1 franco semanal)">6x1 (6 días trabajados, 1 franco semanal)</option>
+                                        <option value="5x2 (5 días trabajados, 2 francos semanales)">5x2 (5 días trabajados, 2 francos semanales)</option>
+                                        <option value="Lunes a Viernes">Lunes a Viernes</option>
+                                        <option value="Fines de semana y Feriados unicamente">Fines de semana y Feriados unicamente</option>
+                                        <option value="Eventual / Por hora / Por servicio">Eventual / Por hora / Por servicio</option>
+                                    </optgroup>
+                                </select>
                             </div>
 
                             <div class="form-group">
@@ -465,7 +534,7 @@
                         </form>
                     </div>
 
-                    <!-- 2. ESPACIO PATROCINADO ABAJO DEL FORMULARIO -->
+                    <!-- ESPACIO PATROCINADO ABAJO DEL FORMULARIO -->
                     <div style="margin-top: 2rem; background: rgba(243, 156, 18, 0.04); border: 2px dashed rgba(243, 156, 18, 0.35); border-radius: var(--radius-md); padding: 1.75rem 1.5rem; text-align: center;">
                         <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px;">Espacio Patrocinado / Publicidad</span>
                         <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
