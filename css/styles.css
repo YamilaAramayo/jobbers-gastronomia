@@ -1,12 +1,12 @@
 /* ==========================================================================
-   AJUSTES DE ALINEACIÓN & HERO SECTION (MEJORADO CON EFECTOS)
+   AJUSTES DE ALINEACIÓN & HERO SECTION (COMPLETO CON EFECTOS)
    ========================================================================== */
 
-/* Animación sutil de entrada para el Hero */
+/* Keyframes para animaciones de entrada y destellos */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -14,7 +14,7 @@
   }
 }
 
-/* Contenedor Centrado de Hero */
+/* Contenedor Centrado del Hero */
 .hero-container-centered {
   width: 100%;
   max-width: 960px;
@@ -34,7 +34,7 @@
   width: 100%;
 }
 
-/* Tipografía de Título: Fluida, legible y sin desbordes */
+/* Tipografía de Título Principal */
 .hero-title {
   font-size: clamp(1.8rem, 4.5vw, 2.75rem);
   font-weight: 800;
@@ -55,7 +55,7 @@
   line-height: 1.55;
 }
 
-/* Pastillas de Beneficios (Feature Pills) + Efecto Hover */
+/* Pastillas de Beneficios (Feature Pills) + Interacción */
 .hero-features {
   display: flex;
   flex-wrap: wrap;
@@ -98,17 +98,22 @@
 }
 
 .hero-feature-item:hover i {
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
-/* Buscador en Hero */
+/* Buscador en Hero con efecto Focus */
 .hero-search-bar {
   width: 100%;
   max-width: 680px;
   margin: 0 auto 2rem auto;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Encabezado de la Grilla de Categorías */
+.hero-search-bar:focus-within {
+  transform: translateY(-2px);
+}
+
+/* Encabezado de Categorías */
 .categorias-header-row {
   text-align: center;
   margin-bottom: 0.85rem;
@@ -122,25 +127,26 @@
   text-transform: uppercase;
 }
 
-/* Botones de Categorías + Efecto Interactivo */
+/* Botones de Categorías */
 .btn-categoria {
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
 }
 
 .btn-categoria:hover {
   transform: translateY(-3px);
   border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .btn-categoria .cat-icon {
   font-size: 1.25rem;
   color: var(--primary);
-  transition: transform 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .btn-categoria:hover .cat-icon {
-  transform: scale(1.2);
+  transform: scale(1.22);
 }
 
 .btn-categoria span {
@@ -148,7 +154,15 @@
   font-weight: 600;
 }
 
-/* Banner Patrocinado en Home + Efecto Brillo / Elevar */
+.btn-categoria.active {
+  border-color: var(--primary);
+}
+
+.btn-categoria.active .cat-icon {
+  transform: scale(1.1);
+}
+
+/* Banner Patrocinado en Home */
 .banner-patrocinado-home {
   background: var(--card-bg);
   border: 1px dashed var(--primary);
@@ -162,7 +176,7 @@
   text-align: left;
   width: 100%;
   max-width: 680px;
-  transition: border-style 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition: border-style 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .banner-patrocinado-home:hover {
@@ -184,7 +198,7 @@
 }
 
 .banner-patrocinado-home:hover .banner-icon {
-  transform: rotate(-8deg) scale(1.1);
+  transform: rotate(-10deg) scale(1.15);
 }
 
 .banner-patrocinado-home h4 {
@@ -198,6 +212,15 @@
   font-size: 0.82rem;
   color: var(--text-muted);
   line-height: 1.35;
+}
+
+/* Tarjeta Express (Modo Empresa) */
+.hero-card-express {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-card-express:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* ==========================================================================
@@ -236,7 +259,7 @@
   }
 }
 
-/* Ajuste especial para celulares muy angostos */
+/* Pantallas de celulares muy pequeños */
 @media (max-width: 420px) {
   .categorias-grid {
     grid-template-columns: repeat(2, 1fr);
