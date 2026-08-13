@@ -130,7 +130,6 @@
     outline-offset: 2px;
   }
 
-  /* Corrección visual para opciones desplegables en navegadores móviles/iOS */
   select option {
     background-color: var(--select-option-bg);
     color: var(--text-main);
@@ -563,7 +562,9 @@
     line-height: 1;
   }
 
-  /* Modales */
+  /* ==========================================================================
+     MODALES Y ESTRUCTURA DE ROLES (CORREGIDO)
+     ========================================================================== */
   .rol-modal-overlay {
     position: fixed;
     inset: 0;
@@ -589,11 +590,112 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 2.2rem;
-    max-width: 450px;
+    max-width: 480px;
     width: 100%;
     box-shadow: var(--shadow-lg);
     position: relative;
     animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Botón Cerrar (X) */
+  .jobbers-close-btn,
+  .btn-close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    left: auto;
+    width: 32px;
+    height: 32px;
+    background: var(--card-bg-light);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    font-size: 1.1rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .jobbers-close-btn:hover,
+  .btn-close-modal:hover {
+    background: var(--border-color);
+    color: var(--text-main);
+  }
+
+  /* Titulares del Modal */
+  .rol-modal-card h2,
+  .rol-modal-card h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.4rem;
+    padding-right: 1.5rem;
+  }
+
+  .rol-modal-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Opciones de Selección (Contenedor) */
+  .rol-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+
+  /* Botones de Selección de Rol */
+  .btn-rol {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    text-align: left;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+
+  .btn-rol:hover {
+    border-color: var(--primary);
+    background: rgba(243, 156, 18, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Ícono interno de la opción */
+  .btn-rol i,
+  .btn-rol .rol-icon {
+    font-size: 1.4rem;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  /* Textos dentro del botón de rol */
+  .btn-rol .rol-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-rol .rol-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .btn-rol .rol-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
   }
 
   /* Bottom Nav (Móvil) */
