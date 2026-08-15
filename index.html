@@ -1,465 +1,319 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobbers Argentina - Portal de Empleo Gastronómico</title>
-    
-    <!-- Fuentes y Fuentes de Iconos -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Hojas de Estilo -->
-   <link rel="stylesheet" href="css/styles.css">
-
-    <style>
-        /* Estilos Integrados para la Calculadora UTHGRA */
-        .modal-calc-card {
-            max-width: 520px;
-            text-align: left;
-        }
-
-        .modal-calc-header {
-            text-align: center;
-            margin-bottom: 1.2rem;
-        }
-
-        .calc-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 0.35rem;
-            display: block;
-            color: var(--text-main, #ffffff);
-        }
-
-        .calc-select,
-        .modal-calc-card .form-control {
-            width: 100%;
-            height: 48px;
-            padding: 0 1.1rem;
-            border: 1px solid var(--border-color, #2a2d3d);
-            border-radius: var(--radius-sm, 8px);
-            background-color: var(--bg-dark, #0d0f17);
-            color: var(--text-main, #ffffff);
-            font-family: inherit;
-            font-size: 0.9rem;
-            box-sizing: border-box;
-        }
-
-        .calc-btn-submit {
-            width: 100%;
-            margin-top: 0.5rem;
-            height: 50px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-
-        .calc-resultado-box {
-            margin-top: 1.2rem;
-            padding: 1.2rem;
-            background: var(--card-bg-light, #1a1d2b);
-            border-radius: var(--radius-sm, 8px);
-            border: 1px solid var(--border-color, #2a2d3d);
-            text-align: center;
-        }
-
-        .calc-resultado-label {
-            font-size: 0.8rem;
-            color: var(--text-muted, #a0a5b5);
-            display: block;
-            margin-bottom: 0.2rem;
-        }
-
-        .calc-resultado-valor {
-            font-size: 1.5rem;
-            color: var(--primary, #00e676);
-            display: block;
-        }
-
-        .calc-resultado-detalle {
-            font-size: 0.78rem;
-            color: var(--text-muted, #a0a5b5);
-            margin-top: 0.4rem;
-            line-height: 1.3;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobbers Argentina - Portal de Empleos Gastronómicos</title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos CSS Principales -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="jobbers-body">
+<body class="role-postulante">
 
-    <!-- NAVBAR PRINCIPAL -->
-    <header class="jobbers-header">
-        <nav class="jobbers-nav container">
-            <a href="index.html" class="jobbers-logo">
-                <span class="logo-highlight">Jobbers</span> Argentina
-            </a>
+  <!-- ==========================================
+       1. NAVBAR / HEADER
+       ========================================== -->
+  <header class="navbar">
+    <a href="#" class="logo">
+      <span class="logo-title">JOBBERS</span>
+      <span class="logo-subtitle">GASTRONOMÍA Y HOTELERA</span>
+    </a>
 
-            <div class="jobbers-nav-links">
-                <a href="#empleos" class="nav-link active">Buscar Empleos</a>
-                <a href="#empresas" class="nav-link">Empresas / Publicar</a>
-                <a href="javascript:void(0)" class="nav-link" onclick="window.abrirModalCalculadora()">
-                    <i class="fas fa-calculator" aria-hidden="true"></i> Calculadora UTHGRA
-                </a>
-            </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link"><i class="fas fa-search"></i> Buscar Empleos</a></li>
+        <li class="empresa-only"><a href="#" class="nav-link"><i class="fas fa-plus-circle"></i> Publicar Oferta</a></li>
+        
+        <!-- Dropdown de Recursos -->
+        <li class="dropdown-container">
+          <button type="button" class="btn-nav">
+            <i class="fas fa-th-large"></i> Recursos <i class="fas fa-chevron-down nav-icon-arrow"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item" onclick="abrirModalCalc()"><i class="fas fa-calculator"></i> Calculadora UTHGRA</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-newspaper"></i> Noticias del Sector</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-star"></i> Destacar Anuncio</a>
+          </div>
+        </li>
 
-            <div class="jobbers-actions">
-                <button type="button" class="btn-secondary" onclick="window.abrirModalRol()">Crear Perfil / Login</button>
-            </div>
-        </nav>
-    </header>
+        <li>
+          <button type="button" id="btn-cambiar-perfil" class="btn-role-badge" onclick="abrirModalRol()">
+            <i class="fas fa-user-cog"></i> Modo Postulante
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- HERO SECTION / BUSCADOR -->
-    <section class="jobbers-hero">
-        <div class="container hero-content">
-            <h1 class="hero-title">Encontrá tu próximo trabajo en Gastronomía y Hotelería</h1>
-            <p class="hero-subtitle">Conectamos al mejor talento gastronómico con los principales establecimientos de Argentina.</p>
+  <!-- ==========================================
+       2. HERO SECTION & BUSCADOR
+       ========================================== -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-container-centered">
+      <div class="hero-content">
+        <h1 class="hero-title">Encontrá tu próximo trabajo en <span class="highlight">Gastronomía y Hotelería</span></h1>
+        <p class="hero-subtitle">Conectamos al mejor talento gastronómico con los principales establecimientos de Argentina.</p>
+        
+        <!-- Buscador principal -->
+        <form class="hero-search-bar" onsubmit="event.preventDefault();">
+          <input type="text" placeholder="Puesto, área o habilidad (ej: Mozo, Cocinero)..." required>
+          <input type="text" placeholder="Ubicación (ej: CABA, Córdoba)...">
+          <button type="submit" class="btn-search"><i class="fas fa-search"></i> Buscar</button>
+        </form>
 
-            <form class="hero-search-box" onsubmit="event.preventDefault();">
-                <div class="search-input-group">
-                    <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                    <input type="text" id="input-puesto" placeholder="Puesto, área o habilidad (ej: Mozo, Chef, Bartender)" class="search-input">
-                </div>
-                <div class="search-input-group">
-                    <i class="fas fa-map-marker-alt search-icon" aria-hidden="true"></i>
-                    <input type="text" id="input-ubicacion" placeholder="Ubicación (ej: CABA, Córdoba, Rosario)" class="search-input">
-                </div>
-                <button type="submit" class="btn-primary search-btn">Buscar Ofertas</button>
-            </form>
+        <!-- Filtros Rápidos (Chips) -->
+        <div class="category-chips-container">
+          <div class="hero-chips">
+            <button class="chip active"><i class="fas fa-border-all"></i> Todos</button>
+            <button class="chip"><i class="fas fa-utensils"></i> Cocina</button>
+            <button class="chip"><i class="fas fa-concierge-bell"></i> Salón</button>
+            <button class="chip"><i class="fas fa-glass-martini-alt"></i> Barra</button>
+            <button class="chip"><i class="fas fa-bread-slice"></i> Panadería</button>
+            <button class="chip"><i class="fas fa-hotel"></i> Hotelería</button>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- LISTADO DE EMPLEOS -->
-    <section id="empleos" class="jobbers-jobs-section container">
-        <div class="section-header">
-            <h2>Últimas Oportunidades Laborales</h2>
-            <p>Explorá búsquedas activas en la industria gastronómica.</p>
-        </div>
-
-        <div class="jobs-grid" id="jobs-container">
-            <!-- Tarjeta Ejemplo 1 -->
-            <article class="job-card">
-                <div class="job-card-header">
-                    <div>
-                        <h3 class="job-title">Mozo / Garzón de Salón</h3>
-                        <span class="job-company">Restaurante Puerto Madero</span>
-                    </div>
-                    <span class="job-tag tag-fulltime">Full-time</span>
-                </div>
-                <p class="job-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Puerto Madero, CABA</p>
-                <p class="job-description">Buscamos mozo con experiencia mínima de 2 años en atención al cliente y servicio de mesa de alto nivel. CCT UTHGRA.</p>
-                <div class="job-card-footer">
-                    <span class="job-salary">$650.000 / mes</span>
-                    <button type="button" class="btn-whatsapp" onclick="window.abrirModalPostular('Mozo / Garzón de Salón')">
-                        <i class="fab fa-whatsapp" aria-hidden="true"></i> Postularse por WA
-                    </button>
-                </div>
-            </article>
-
-            <!-- Tarjeta Ejemplo 2 -->
-            <article class="job-card">
-                <div class="job-card-header">
-                    <div>
-                        <h3 class="job-title">Jefe de Partida / Cocinero</h3>
-                        <span class="job-company">Bistró Palermo</span>
-                    </div>
-                    <span class="job-tag tag-fulltime">Full-time</span>
-                </div>
-                <p class="job-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Palermo, CABA</p>
-                <p class="job-description">Encargado de despacho de cocina caliente, despacho de platos y despacho rápido. Turnos rotativos.</p>
-                <div class="job-card-footer">
-                    <span class="job-salary">$820.000 / mes</span>
-                    <button type="button" class="btn-whatsapp" onclick="window.abrirModalPostular('Jefe de Partida / Cocinero')">
-                        <i class="fab fa-whatsapp" aria-hidden="true"></i> Postularse por WA
-                    </button>
-                </div>
-            </article>
-
-            <!-- Tarjeta Ejemplo 3 -->
-            <article class="job-card">
-                <div class="job-card-header">
-                    <div>
-                        <h3 class="job-title">Bartender Principal</h3>
-                        <span class="job-company">Bar de Coctelería</span>
-                    </div>
-                    <span class="job-tag tag-parttime">Part-time</span>
-                </div>
-                <p class="job-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> San Telmo, CABA</p>
-                <p class="job-description">Elaboración de cócteles de autor y clásicos. Turno noche de Jueves a Sábados.</p>
-                <div class="job-card-footer">
-                    <span class="job-salary">$450.000 / mes</span>
-                    <button type="button" class="btn-whatsapp" onclick="window.abrirModalPostular('Bartender Principal')">
-                        <i class="fab fa-whatsapp" aria-hidden="true"></i> Postularse por WA
-                    </button>
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="jobbers-footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 Jobbers Argentina - Especialistas en Recrutamiento Gastronómico.</p>
-        </div>
-    </footer>
-
-    <!-- MODAL DE SELECCIÓN DE ROL / LOGIN -->
-    <div id="modal-rol" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-rol-title" aria-modal="true" style="display: none;">
-        <div class="modal-postular-card text-center">
-            <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalRol()" aria-label="Cerrar modal">&times;</button>
-            <h2 class="modal-postular-title" id="modal-rol-title">¿Cómo querés ingresar?</h2>
-            <p class="modal-job-title">Seleccioná tu tipo de cuenta para continuar</p>
-            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
-                <button type="button" class="btn-primary" style="flex: 1;" onclick="alert('Módulo de Candidatos en desarrollo')">Soy Buscador de Empleo</button>
-                <button type="button" class="btn-secondary" style="flex: 1;" onclick="alert('Módulo de Empresas en desarrollo')">Soy Empresa / Empleador</button>
-            </div>
-        </div>
+  <!-- ==========================================
+       3. LISTADO DE OPORTUNIDADES LABORALES
+       ========================================== -->
+  <main class="main-grid-section">
+    <div class="categorias-header-row">
+      <h2>Últimas Oportunidades Laborales</h2>
+      <span class="ver-todas-link">Actualizado hoy</span>
     </div>
 
-    <!-- MODAL DE POSTULACIÓN POR WHATSAPP -->
-    <div id="modal-postular" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-postular-title" aria-modal="true" style="display: none;">
-        <div class="modal-postular-card">
-            <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalPostular()" aria-label="Cerrar modal">&times;</button>
-            <h2 class="modal-postular-title" id="modal-postular-title">Postularse al Puesto</h2>
-            <p class="modal-job-title" id="modal-postular-puesto-nombre">Puesto Seleccionado</p>
+    <div class="vacantes-container">
 
-            <form id="form-postular" class="postular-form" onsubmit="event.preventDefault(); window.enviarPostulacionWhatsApp();">
-                <div class="form-group">
-                    <label for="post-nombre" class="calc-label">Nombre y Apellido:</label>
-                    <input type="text" id="post-nombre" class="form-control" placeholder="Ej: Juan Pérez" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="post-telefono" class="calc-label">Teléfono de Contacto:</label>
-                    <input type="tel" id="post-telefono" class="form-control" placeholder="Ej: 1112345678" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="post-experiencia" class="calc-label">Resumen de Experiencia / CV:</label>
-                    <textarea id="post-experiencia" class="form-control" style="height: 90px; padding: 0.8rem;" placeholder="Contanos brevemente tu experiencia previa..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn-whatsapp calc-btn-submit">
-                    <i class="fab fa-whatsapp" aria-hidden="true"></i> Enviar por WhatsApp
-                </button>
-            </form>
+      <!-- Vacante 1 -->
+      <article class="job-offer-card">
+        <div class="job-info-main">
+          <div class="job-header-row">
+            <h4>Mozo / Garzón de Salón</h4>
+            <span class="badge-urgente"><i class="fas fa-fire"></i> Urgente</span>
+          </div>
+          <p class="job-company"><i class="fas fa-building"></i> Restaurante Puerto Madero</p>
+          <div class="job-details-row">
+            <span><i class="fas fa-clock"></i> Full-time</span>
+            <span><i class="fas fa-map-marker-alt"></i> Puerto Madero, CABA</span>
+            <span class="job-salary">$650.000 / mes</span>
+          </div>
+          <p>Buscamos mozo con experiencia mínima de 2 años en atención al cliente y servicio de mesa de alto nivel. CCT UTHGRA.</p>
         </div>
-    </div>
-
-    <!-- MODAL DE CALCULADORA DE HORARIOS Y SUELDOS UTHGRA -->
-    <div id="modal-calculadora" class="rol-modal-overlay" role="dialog" aria-labelledby="calc-title" aria-modal="true" style="display: none;">
-        <div class="modal-postular-card modal-calc-card">
-            <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalCalculadora()" aria-label="Cerrar modal">&times;</button>
-
-            <header class="modal-calc-header">
-                <h2 class="modal-postular-title" id="calc-title">Calculadora UTHGRA / Horarios</h2>
-                <p class="modal-job-title">Estimador salarial según CCT 389/04 Gastronómicos</p>
-            </header>
-
-            <form id="form-calculadora" class="postular-form" onsubmit="event.preventDefault(); window.calcularHorariosSueldo();">
-                <div class="form-group">
-                    <label for="calc-tipo" class="calc-label">Tipo de Cálculo:</label>
-                    <select id="calc-tipo" class="form-control calc-select" onchange="window.cambiarModoCalculadora()">
-                        <option value="jornada">Sueldo por Tipo de Jornada (Full / Part / Franco)</option>
-                        <option value="horas_extra">Horas Extra (50% / 100%) y Nocturnidad</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="grupo-base-sueldo">
-                    <label for="calc-sueldo-base" class="calc-label">Sueldo Básico Mensual UTHGRA ($):</label>
-                    <input type="number" id="calc-sueldo-base" class="form-control" placeholder="Ej: 650000" value="650000" required />
-                </div>
-
-                <!-- MODO JORNADA -->
-                <div id="grupo-jornada-container">
-                    <div class="form-group">
-                        <label for="calc-modalidad" class="calc-label">Modalidad de Jornada:</label>
-                        <select id="calc-modalidad" class="form-control calc-select">
-                            <option value="full">Full Time (8hs diarias / 48hs semanales - 100%)</option>
-                            <option value="part_4h">Part Time 4hs diarias (24hs semanales - 50%)</option>
-                            <option value="part_6h">Part Time 6hs diarias (36hs semanales - 75%)</option>
-                            <option value="franco">Valor Día de Francos / Eventual (Básico ÷ 25)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- MODO HORAS EXTRA / NOCTURNAS -->
-                <div id="grupo-horas-container" style="display: none;">
-                    <div class="form-group">
-                        <label for="calc-tipo-extra" class="calc-label">Tipo de Hora Especial:</label>
-                        <select id="calc-tipo-extra" class="form-control calc-select">
-                            <option value="extra_50">Hora Extra 50% (Lunes a Sábado hasta 13hs)</option>
-                            <option value="extra_100">Hora Extra 100% (Sábado post 13hs, Domingos, Feriados)</option>
-                            <option value="nocturna">Hora Nocturna (Recargo 13.33% / 21hs a 06hs)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="calc-cant-horas" class="calc-label">Cantidad de Horas a Liquidar:</label>
-                        <input type="number" id="calc-cant-horas" class="form-control" placeholder="Ej: 10" value="10" min="1" step="0.5" />
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-whatsapp calc-btn-submit">
-                    <i class="fas fa-calculator" aria-hidden="true"></i> CALCULAR ESTIMATIVO
-                </button>
-
-                <!-- CONTENEDOR DE RESULTADOS EN VIVO -->
-                <div id="resultado-calculadora" class="calc-resultado-box" aria-live="polite" style="display: none;">
-                    <span class="calc-resultado-label">Resultado Estimado / Bruto:</span>
-                    <strong id="calc-output-valor" class="calc-resultado-valor">--</strong>
-                    <p id="calc-output-detalle" class="calc-resultado-detalle"></p>
-                </div>
-            </form>
+        <div class="job-action-col">
+          <span class="job-time">Hace 2 horas</span>
+          <button class="btn-postularme btn-whatsapp" onclick="abrirModalPostulacion('Mozo / Garzón de Salón', 'Restaurante Puerto Madero')">
+            <i class="fab fa-whatsapp"></i> Postularse por WA
+          </button>
         </div>
+      </article>
+
+      <!-- Vacante 2 -->
+      <article class="job-offer-card">
+        <div class="job-info-main">
+          <div class="job-header-row">
+            <h4>Jefe de Partida / Cocinero</h4>
+          </div>
+          <p class="job-company"><i class="fas fa-building"></i> Baró Palermo</p>
+          <div class="job-details-row">
+            <span><i class="fas fa-clock"></i> Full-time</span>
+            <span><i class="fas fa-map-marker-alt"></i> Palermo, CABA</span>
+            <span class="job-salary">$820.000 / mes</span>
+          </div>
+          <p>Encargado de despacho de cocina caliente, despacho de platos y despacho rápido. Turnos rotativos.</p>
+        </div>
+        <div class="job-action-col">
+          <span class="job-time">Hace 5 horas</span>
+          <button class="btn-postularme btn-whatsapp" onclick="abrirModalPostulacion('Jefe de Partida / Cocinero', 'Baró Palermo')">
+            <i class="fab fa-whatsapp"></i> Postularse por WA
+          </button>
+        </div>
+      </article>
+
+      <!-- Vacante 3 -->
+      <article class="job-offer-card">
+        <div class="job-info-main">
+          <div class="job-header-row">
+            <h4>Bartender Principal</h4>
+          </div>
+          <p class="job-company"><i class="fas fa-building"></i> Club de Coctelería</p>
+          <div class="job-details-row">
+            <span><i class="fas fa-clock"></i> Part-time</span>
+            <span><i class="fas fa-map-marker-alt"></i> San Telmo, CABA</span>
+            <span class="job-salary">$450.000 / mes</span>
+          </div>
+          <p>Elaboración de cócteles de autor y clásicos. Turno noche de Jueves a Sábados.</p>
+        </div>
+        <div class="job-action-col">
+          <span class="job-time">Ayer</span>
+          <button class="btn-postularme btn-whatsapp" onclick="abrirModalPostulacion('Bartender Principal', 'Club de Coctelería')">
+            <i class="fab fa-whatsapp"></i> Postularse por WA
+          </button>
+        </div>
+      </article>
+
     </div>
+  </main>
 
-    <!-- JAVASCRIPT DE LÓGICA GENERAL Y CALCULADORA -->
-    <script>
-        // Funciones de Modales Generales
-        window.abrirModalRol = function() {
-            document.getElementById('modal-rol').style.display = 'flex';
-        };
-        window.cerrarModalRol = function() {
-            document.getElementById('modal-rol').style.display = 'none';
-        };
+  <!-- ==========================================
+       4. SECCIÓN NOSOTROS / INFORMACIÓN
+       ========================================== -->
+  <section class="info-section">
+    <h2>Especialistas en Selección Gastronómica</h2>
+    <p>Impulsamos el crecimiento del sector conectando perfiles calificados con bares, restaurantes y hoteles de todo el país. Simplificá tus postulaciones de forma directa.</p>
+  </section>
 
-        window.abrirModalPostular = function(puesto) {
-            document.getElementById('modal-postular-puesto-nombre').innerText = puesto;
-            document.getElementById('modal-postular').style.display = 'flex';
-        };
-        window.cerrarModalPostular = function() {
-            document.getElementById('modal-postular').style.display = 'none';
-        };
+  <!-- ==========================================
+       5. FOOTER & BOTTOM NAV (MÓVIL)
+       ========================================== -->
+  <footer class="main-footer">
+    <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
+  </footer>
 
-        window.enviarPostulacionWhatsApp = function() {
-            const puesto = document.getElementById('modal-postular-puesto-nombre').innerText;
-            const nombre = document.getElementById('post-nombre').value;
-            const telefono = document.getElementById('post-telefono').value;
-            const exp = document.getElementById('post-experiencia').value;
+  <nav class="bottom-nav">
+    <a href="#" class="bottom-nav-item active"><i class="fas fa-home"></i><span>Inicio</span></a>
+    <a href="#" class="bottom-nav-item"><i class="fas fa-search"></i><span>Buscar</span></a>
+    <a href="#" class="bottom-nav-item highlight-item" onclick="abrirModalCalc()"><i class="fas fa-calculator"></i><span>Sueldos</span></a>
+    <a href="#" class="bottom-nav-item" onclick="abrirModalRol()"><i class="fas fa-user"></i><span>Perfil</span></a>
+  </nav>
 
-            const mensaje = `Hola, me quiero postular al puesto de *${puesto}* a través de Jobbers Argentina.\n\n*Nombre:* ${nombre}\n*Teléfono:* ${telefono}\n*Experiencia:* ${exp}`;
-            const url = `https://wa.me/5491100000000?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
-            window.cerrarModalPostular();
-        };
+  <!-- ==========================================
+       6. MODAL POSTULACIÓN A EMPLEO
+       ========================================== -->
+  <div id="modal-postular" class="rol-modal-overlay">
+    <div class="modal-postular-card">
+      <button type="button" class="jobbers-close-btn" onclick="cerrarModalPostulacion()">&times;</button>
+      <h3 class="modal-postular-title">Postularse a la oferta</h3>
+      <p id="modal-job-title-target" class="modal-job-title">Puesto seleccionado</p>
+      
+      <div class="postular-alert-box">
+        <i class="fas fa-info-circle alert-icon"></i>
+        <p>Serás redirigido directamente a WhatsApp para enviar tus datos y CV al encargado del establecimiento.</p>
+      </div>
 
-        // Funciones de la Calculadora UTHGRA
-        window.abrirModalCalculadora = function() {
-            document.getElementById('modal-calculadora').style.display = 'flex';
-        };
-        window.cerrarModalCalculadora = function() {
-            document.getElementById('modal-calculadora').style.display = 'none';
-        };
+      <form class="postular-form" onsubmit="enviarPostulacionWA(event)">
+        <input type="text" id="post-nombre" placeholder="Tu Nombre Completo" required>
+        <input type="tel" id="post-telefono" placeholder="Número de WhatsApp (ej: 1123456789)" required>
+        <button type="submit" class="btn-contactar-empleador">
+          <i class="fab fa-whatsapp"></i> Iniciar Chat por WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
 
-        window.cambiarModoCalculadora = function() {
-            const tipo = document.getElementById('calc-tipo').value;
-            const grupoJornada = document.getElementById('grupo-jornada-container');
-            const grupoHoras = document.getElementById('grupo-horas-container');
-            const outputDiv = document.getElementById('resultado-calculadora');
+  <!-- ==========================================
+       7. MODAL CALCULADORA UTHGRA
+       ========================================== -->
+  <div id="modal-calc" class="rol-modal-overlay">
+    <div class="modal-postular-card modal-calc-card">
+      <button type="button" class="jobbers-close-btn" onclick="cerrarModalCalc()">&times;</button>
+      <div class="modal-calc-header">
+        <h3 class="modal-postular-title"><i class="fas fa-calculator"></i> Calculadora UTHGRA</h3>
+        <p>Estimá tu básico de acuerdo a la categoría del CCT 389/04</p>
+      </div>
 
-            if (tipo === 'jornada') {
-                if (grupoJornada) grupoJornada.style.display = 'block';
-                if (grupoHoras) grupoHoras.style.display = 'none';
-            } else {
-                if (grupoJornada) grupoJornada.style.display = 'none';
-                if (grupoHoras) grupoHoras.style.display = 'block';
-            }
+      <form onsubmit="calcularSueldo(event)">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="calc-label">Categoría de Establecimiento</label>
+          <select id="calc-categoria" class="calc-select" required>
+            <option value="1">Especial / 5 Estrellas</option>
+            <option value="2">Categoría A / 4 Estrellas</option>
+            <option value="3" selected>Categoría B / 3 Estrellas</option>
+            <option value="4">Categoría C / Tradicional</option>
+          </select>
+        </div>
 
-            if (outputDiv) outputDiv.style.display = 'none';
-        };
+        <div class="form-group" style="margin-bottom: 1.2rem;">
+          <label class="calc-label">Puesto Laboral</label>
+          <select id="calc-puesto" class="calc-select" required>
+            <option value="mozo">Mozo / Garzón</option>
+            <option value="cocinero">Cocinero / Jefe de Partida</option>
+            <option value="bartender">Bartender / Barman</option>
+            <option value="ayudante">Ayudante de Cocina / Bacha</option>
+          </select>
+        </div>
 
-        window.calcularHorariosSueldo = function() {
-            const tipo = document.getElementById('calc-tipo').value;
-            const sueldoBase = parseFloat(document.getElementById('calc-sueldo-base').value) || 0;
-            const outputDiv = document.getElementById('resultado-calculadora');
-            const outputValor = document.getElementById('calc-output-valor');
-            const outputDetalle = document.getElementById('calc-output-detalle');
+        <button type="submit" class="btn-postularme calc-btn-submit">
+          <i class="fas fa-coins"></i> Calcular Sueldo Estimado
+        </button>
+      </form>
 
-            if (sueldoBase <= 0) {
-                if (outputValor) outputValor.innerText = "$ 0";
-                if (outputDetalle) outputDetalle.innerText = "Ingrese un básico mensual válido.";
-                if (outputDiv) outputDiv.style.display = 'block';
-                return;
-            }
+      <div id="calc-resultado" class="calc-resultado-box" style="display:none;">
+        <span class="calc-resultado-label">Sueldo Básico Estimado:</span>
+        <span id="calc-monto" class="calc-resultado-valor">$0</span>
+        <p class="calc-resultado-detalle">*Monto aproximado según escalas paritarias vigentes UTHGRA. No incluye adicionales por antigüedad o presentismo.</p>
+      </div>
+    </div>
+  </div>
 
-            let resultado = 0;
-            let detalleText = "";
+  <!-- Contenedor para notificaciones Toast -->
+  <div id="toast-container"></div>
 
-            // Divisor Estándar Horario Mensual (48hs semanales = 200hs mensuales)
-            const VALOR_HORA_SIMPLE = sueldoBase / 200;
+  <!-- LÓGICA JAVASCRIPT DE LOS MODALES -->
+  <script>
+    let puestoActual = '';
+    let empresaActual = '';
 
-            if (tipo === 'jornada') {
-                const modalidad = document.getElementById('calc-modalidad').value;
+    function abrirModalPostulacion(puesto, empresa) {
+      puestoActual = puesto;
+      empresaActual = empresa;
+      document.getElementById('modal-job-title-target').innerText = puesto + ' en ' + empresa;
+      document.getElementById('modal-postular').classList.add('active');
+    }
 
-                switch (modalidad) {
-                    case 'full':
-                        resultado = sueldoBase;
-                        detalleText = "Corresponde al 100% del básico jornada completa (48 hs semanales).";
-                        break;
-                    case 'part_4h':
-                        resultado = sueldoBase * 0.5;
-                        detalleText = "Jornada del 50% (4 hs diarias / 24 hs semanales).";
-                        break;
-                    case 'part_6h':
-                        resultado = sueldoBase * 0.75;
-                        detalleText = "Jornada del 75% (6 hs diarias / 36 hs semanales).";
-                        break;
-                    case 'franco':
-                        resultado = sueldoBase / 25;
-                        detalleText = "Valor diario por reemplazo/franco (Básico ÷ 25 días según LCT).";
-                        break;
-                }
-            } else {
-                const tipoExtra = document.getElementById('calc-tipo-extra').value;
-                const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
+    function cerrarModalPostulacion() {
+      document.getElementById('modal-postular').classList.remove('active');
+    }
 
-                if (horas <= 0) {
-                    if (outputValor) outputValor.innerText = "$ 0";
-                    if (outputDetalle) outputDetalle.innerText = "Ingrese una cantidad válida de horas.";
-                    if (outputDiv) outputDiv.style.display = 'block';
-                    return;
-                }
+    function enviarPostulacionWA(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('post-nombre').value;
+      const mensaje = `Hola! Mi nombre es ${nombre}. Me quiero postular para la vacante de ${puestoActual} en ${empresaActual} que vi en Jobbers Argentina.`;
+      const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+      cerrarModalPostulacion();
+    }
 
-                if (tipoExtra === 'extra_50') {
-                    const valorHora50 = VALOR_HORA_SIMPLE * 1.5;
-                    resultado = valorHora50 * horas;
-                    detalleText = `Cálculo para ${horas}hs extras al 50% (Valor hora: $${valorHora50.toLocaleString('es-AR', {maximumFractionDigits: 2})}).`;
-                } else if (tipoExtra === 'extra_100') {
-                    const valorHora100 = VALOR_HORA_SIMPLE * 2.0;
-                    resultado = valorHora100 * horas;
-                    detalleText = `Cálculo para ${horas}hs extras al 100% (Valor hora: $${valorHora100.toLocaleString('es-AR', {maximumFractionDigits: 2})}).`;
-                } else if (tipoExtra === 'nocturna') {
-                    const recargoNocturno = VALOR_HORA_SIMPLE * 0.1333;
-                    resultado = recargoNocturno * horas;
-                    detalleText = `Plus de nocturnidad para ${horas}hs (Recargo del 13.33% sobre hora simple).`;
-                }
-            }
+    function abrirModalCalc() {
+      document.getElementById('modal-calc').classList.add('active');
+    }
 
-            if (outputValor) {
-                outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {minimumFractionDigits: 0, maximumFractionDigits: 2})}`;
-            }
-            if (outputDetalle) {
-                outputDetalle.innerText = detalleText;
-            }
+    function cerrarModalCalc() {
+      document.getElementById('modal-calc').classList.remove('active');
+    }
 
-            if (outputDiv) outputDiv.style.display = 'block';
-        };
+    function calcularSueldo(e) {
+      e.preventDefault();
+      const cat = document.getElementById('calc-categoria').value;
+      const puesto = document.getElementById('calc-puesto').value;
+      
+      let base = 500000;
+      if (puesto === 'cocinero') base = 750000;
+      if (puesto === 'mozo') base = 600000;
+      if (puesto === 'bartender') base = 620000;
+      if (puesto === 'ayudante') base = 480000;
 
-        // Cerrar modales al hacer clic fuera del contenido
-        window.onclick = function(event) {
-            const modalRol = document.getElementById('modal-rol');
-            const modalPostular = document.getElementById('modal-postular');
-            const modalCalc = document.getElementById('modal-calculadora');
+      let multiplicador = 1;
+      if (cat === '1') multiplicador = 1.25;
+      if (cat === '2') multiplicador = 1.15;
+      if (cat === '3') multiplicador = 1.05;
 
-            if (event.target === modalRol) window.cerrarModalRol();
-            if (event.target === modalPostular) window.cerrarModalPostular();
-            if (event.target === modalCalc) window.cerrarModalCalculadora();
-        };
-    </script>
+      const total = Math.round(base * multiplicador);
+      document.getElementById('calc-monto').innerText = '$' + total.toLocaleString('es-AR');
+      document.getElementById('calc-resultado').style.display = 'block';
+    }
+
+    function abrirModalRol() {
+      alert("Cambiando modo de vista...");
+      document.body.classList.toggle('role-empresa');
+      document.body.classList.toggle('role-postulante');
+    }
+  </script>
 </body>
 </html>
