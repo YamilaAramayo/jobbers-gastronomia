@@ -3,238 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobbers - Empleo Gastronómico en Córdoba</title>
-    
-    <!-- Font Awesome Icons -->
+    <title>Jobbers Argentina — Portal de Empleo Gastronómico</title>
+    <!-- FontAwesome para Íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Estilos CSS Externos -->
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Estilos Principales -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="role-postulante">
+<body data-theme="dark" class="role-postulante">
 
-    <!-- NAVBAR -->
+    <!-- HEADER / NAVBAR -->
     <header class="navbar">
-        <a href="#" class="logo">
-            <span class="logo-title">JOBBERS</span>
-            <span class="logo-subtitle">GASTRONOMÍA CÓRDOBA</span>
-        </a>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-title">JOBBERS</span>
+                <span class="logo-sub">GASTRONOMÍA CÓRDOBA</span>
+            </a>
 
-        <ul class="nav-links">
-            <li><a href="#vacantes" class="nav-link">Vacantes</a></li>
-            <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
-            <li>
-                <button id="btn-cambiar-perfil" class="btn-role-badge" onclick="toggleModalPerfil()">
-                    <i class="fas fa-user-cog"></i> Cambiar Rol
+            <nav class="nav-links">
+                <a href="#vacantes">Vacantes</a>
+                <a href="#nosotros">Nosotros</a>
+                
+                <!-- Dropdown Recursos -->
+                <div class="dropdown">
+                    <button class="dropdown-toggle" id="dropdown-recursos">
+                        Recursos <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="menu-recursos">
+                        <a href="#" onclick="window.abrirModalCalculadora(event)">
+                            <i class="fas fa-calculator"></i> Calculadora Sueldos/Horas
+                        </a>
+                        <a href="#" onclick="window.abrirModalMembresia(event)">
+                            <i class="fas fa-star"></i> Membresía Jobbers PRO
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Botón Cambiar Rol -->
+                <button type="button" class="btn-rol btn-trigger-modal-perfil">
+                    <i class="fas fa-user-cog"></i> <span id="label-modo-actual">Cambiar Rol</span>
                 </button>
-            </li>
-            <li>
-                <button class="btn-nav" onclick="toggleTheme()" aria-label="Cambiar Tema">
+
+                <!-- Botón Toggle Tema (Sol/Luna) -->
+                <button type="button" class="btn-theme" id="btn-theme-toggle" aria-label="Cambiar tema">
                     <i class="fas fa-moon" id="theme-icon"></i>
                 </button>
-            </li>
-        </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- HÉROE PRINCIPAL -->
+    <!-- HERO SECTION -->
     <section class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-title">El portal de empleo gastronómico de <span class="highlight">Córdoba</span></h1>
-            <p class="hero-subtitle">Conectamos de forma directa a personal de cocina, salón y barra con los mejores comercios gastronómicos.</p>
-
-            <!-- Buscador para Postulantes -->
-            <div class="hero-search-bar postulante-only">
-                <input type="text" placeholder="Buscar puestos (ej. Mozo, Cocinero, Barista)...">
-                <button class="btn-search"><i class="fas fa-search"></i> Buscar</button>
-            </div>
-
-            <!-- Formulario Express para Empresas -->
-            <div class="hero-card-express empresa-only">
-                <h3 style="margin-bottom: 1rem; color: var(--text-main);">Publicar Búsqueda Rápida</h3>
-                <form class="express-form" onsubmit="event.preventDefault();">
-                    <input type="text" placeholder="Título del Puesto (ej. Ayudante de Cocina)" required>
-                    <select required>
-                        <option value="" disabled selected>Seleccionar Zona / Barrio</option>
-                        <option value="guemes">Güemes</option>
-                        <option value="nueva-cordoba">Nueva Córdoba</option>
-                        <option value="cerro">Cerro de las Rosas</option>
-                        <option value="centro">Centro</option>
-                    </select>
-                    <button type="submit" class="btn-anunciar"><i class="fas fa-paper-plane"></i> Publicar Oferta</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN DE CATEGORÍAS -->
-    <section class="categories-section postulante-only">
-        <div class="categorias-grid-container">
-            <div class="categorias-grid">
-                <button class="btn-categoria active">
-                    <i class="fas fa-utensils"></i>
-                    <span>Cocina</span>
-                </button>
-                <button class="btn-categoria">
-                    <i class="fas fa-concierge-bell"></i>
-                    <span>Salón</span>
-                </button>
-                <button class="btn-categoria">
-                    <i class="fas fa-glass-martini-alt"></i>
-                    <span>Barra</span>
+            <h1>EL PORTAL DE EMPLEO GASTRONÓMICO DE <span>CÓRDOBA</span></h1>
+            <p>Conectamos de forma directa a personal de cocina, salón y barra con los mejores comercios gastronómicos.</p>
+            
+            <!-- Buscador Principal -->
+            <div class="search-box">
+                <input type="text" id="job-search-input" placeholder="Buscar puestos (ej. Mozo, Cocinero, Barista)...">
+                <button type="button" class="btn-search">
+                    <i class="fas fa-search"></i> Buscar
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- LISTA DE VACANTES (POSTULANTES) -->
-    <main class="main-grid-section postulante-only" id="vacantes">
+    <!-- CHIPS DE CATEGORÍAS -->
+    <section class="categories-section container">
+        <div class="category-chips">
+            <button class="btn-categoria active" data-cat="todas">
+                <i class="fas fa-border-all"></i> Todas
+            </button>
+            <button class="btn-categoria" data-cat="cocina">
+                <i class="fas fa-utensils"></i> Cocina
+            </button>
+            <button class="btn-categoria" data-cat="salon">
+                <i class="fas fa-concierge-bell"></i> Salón
+            </button>
+            <button class="btn-categoria" data-cat="barra">
+                <i class="fas fa-cocktail"></i> Barra
+            </button>
+            <button class="btn-categoria" data-cat="delivery">
+                <i class="fas fa-motorcycle"></i> Delivery
+            </button>
+            <button class="btn-categoria" data-cat="limpieza">
+                <i class="fas fa-soap"></i> Bacha / Limpieza
+            </button>
+        </div>
+    </section>
+
+    <!-- LISTADO DE VACANTES & CONTADOR -->
+    <main class="main-content container" id="vacantes">
         <div class="section-header">
-            <h2>Ofertas Destacadas</h2>
+            <h3>Ofertas Destacadas</h3>
+            <span id="contador-vacantes" class="contador-badge">Cargando vacantes...</span>
         </div>
 
-        <div class="job-list">
-            <!-- Vacante 1 -->
-            <article class="job-offer-card">
-                <div class="job-info-col">
-                    <h3>Cocinero con Experiencia</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-map-marker-alt"></i> Güemes</span>
-                        <span><i class="fas fa-clock"></i> Turno Noche</span>
-                    </div>
-                </div>
-                <div class="job-action-col">
-                    <a href="https://wa.me/5493510000000" target="_blank" class="btn-whatsapp">
-                        <i class="fab fa-whatsapp"></i> Postularme
-                    </a>
-                </div>
-            </article>
-
-            <!-- Vacante 2 -->
-            <article class="job-offer-card">
-                <div class="job-info-col">
-                    <h3>Mozo / Camarera</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-map-marker-alt"></i> Nueva Córdoba</span>
-                        <span><i class="fas fa-clock"></i> Turno Tarde</span>
-                    </div>
-                </div>
-                <div class="job-action-col">
-                    <a href="https://wa.me/5493510000000" target="_blank" class="btn-whatsapp">
-                        <i class="fab fa-whatsapp"></i> Postularme
-                    </a>
-                </div>
-            </article>
-
-            <!-- Vacante 3 -->
-            <article class="job-offer-card">
-                <div class="job-info-col">
-                    <h3>Barista / Encargado de Barra</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-map-marker-alt"></i> Cerro de las Rosas</span>
-                        <span><i class="fas fa-clock"></i> Full Time</span>
-                    </div>
-                </div>
-                <div class="job-action-col">
-                    <a href="https://wa.me/5493510000000" target="_blank" class="btn-whatsapp">
-                        <i class="fab fa-whatsapp"></i> Postularme
-                    </a>
-                </div>
-            </article>
+        <div id="lista-vacantes" class="vacantes-grid">
+            <!-- Renderizado dinámico desde JS -->
         </div>
     </main>
 
-    <!-- SECCIÓN NOSOTROS -->
-    <section class="nosotros-section" id="nosotros">
-        <div class="nosotros-container">
-            <div class="nosotros-header">
-                <span>Sobre Nosotros</span>
-                <h2>Especialistas en Gastronomía</h2>
-            </div>
-            <div class="nosotros-grid">
-                <div class="nosotros-card">
-                    <i class="fas fa-bolt"></i>
-                    <h3 style="margin-bottom: 0.5rem; color: var(--text-main);">Contacto Directo</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Sin intermediarios ni procesos largos. Conectamos candidatos y locales a través de WhatsApp en un clic.</p>
-                </div>
-                <div class="nosotros-card">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <h3 style="margin-bottom: 0.5rem; color: var(--text-main);">100% Cordobés</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Enfocados exclusivamente en los principales corredores y gastronómicos de la provincia.</p>
-                </div>
-                <div class="nosotros-card">
-                    <i class="fas fa-users"></i>
-                    <h3 style="margin-bottom: 0.5rem; color: var(--text-main);">Comunidad Ágil</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Optimizamos la búsqueda laboral cubriendo urgencias y vacantes fijas con perfiles idóneos.</p>
-                </div>
+    <!-- SECCIÓN SOLO VISIBLE EN MODO EMPRESA (FORMULARIO EXPRESS & TALENTO) -->
+    <section class="section-empresa-only container">
+        <!-- Publicación Express -->
+        <div class="card-express">
+            <h3><i class="fas fa-paper-plane"></i> Publicación Express de Búsqueda</h3>
+            <p>Completá los datos básicos y publicamos tu búsqueda en WhatsApp al instante.</p>
+            <form id="form-publicar-express" class="grid-form">
+                <input type="text" id="nombre-empresa" placeholder="Nombre del Local/Empresa *" required>
+                <input type="text" id="telefono-contacto" placeholder="Teléfono de Contacto (WhatsApp) *" required>
+                <input type="text" id="puesto-requerido" placeholder="Puesto Solicitado (ej. Cocinero) *" required>
+                <input type="text" id="zona-local" placeholder="Zona/Barrio (ej. Güemes) *" required>
+                <input type="text" id="turno-puesto" placeholder="Turno (ej. Noche, Tarde-Noche) *" required>
+                <input type="text" id="jornada-puesto" placeholder="Jornada (ej. Completa, Part-time) *" required>
+                <textarea id="requisitos-puesto" placeholder="Requisitos / Observaciones adicionales" rows="2"></textarea>
+                <button type="submit" class="btn-primary">
+                    <i class="fab fa-whatsapp"></i> Publicar Oferta
+                </button>
+            </form>
+        </div>
+
+        <!-- Perfiles Destacados / Banco de Talento -->
+        <div class="section-talento">
+            <h3><i class="fas fa-user-check"></i> Talento Gastronómico Destacado</h3>
+            <div id="grid-talento-destacado" class="talento-grid">
+                <!-- Renderizado dinámico desde JS -->
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-grid">
-            <div>
-                <a href="#" class="logo" style="margin-bottom: 0.8rem;">
-                    <span class="logo-title">JOBBERS</span>
-                    <span class="logo-subtitle">GASTRONOMÍA CÓRDOBA</span>
-                </a>
-                <p style="max-width: 320px; line-height: 1.5;">La plataforma pensada para potenciar el empleo gastronómico en Córdoba, Argentina.</p>
-            </div>
-            <div>
-                <h4 style="color: var(--text-main); margin-bottom: 0.8rem;">Contacto & Soporte</h4>
-                <p><i class="fab fa-whatsapp" style="color: var(--whatsapp-green);"></i> +54 9 351 000-0000</p>
-                <p><i class="fas fa-envelope"></i> contacto@jobbers.com.ar</p>
-            </div>
+    <!-- MODAL POSTULARME -->
+    <div class="rol-modal-overlay" id="postular-modal" style="display:none;">
+        <div class="modal-box">
+            <button class="btn-cerrar-modal btn-cerrar-postular">&times;</button>
+            <h3 id="modal-job-title">Postulación a Puesto</h3>
+            <p>Completá tu nombre y teléfono para enviar tu postulación directa vía WhatsApp.</p>
+            <form id="form-postularme">
+                <div class="form-group">
+                    <label for="postular-nombre">Nombre y Apellido *</label>
+                    <input type="text" id="postular-nombre" required placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="postular-phone">Tu WhatsApp *</label>
+                    <input type="tel" id="postular-phone" required placeholder="Ej: 3511234567">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    <i class="fab fa-whatsapp"></i> Enviar a WhatsApp
+                </button>
+            </form>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+    </div>
 
-    <!-- BOTTOM NAV (MÓVIL) -->
+    <!-- MODAL CALCULADORA DE SUELDOS -->
+    <div class="rol-modal-overlay" id="modal-calculadora" style="display:none;">
+        <div class="modal-box">
+            <button class="btn-cerrar-modal" onclick="window.cerrarModalCalculadora()">&times;</button>
+            <h3><i class="fas fa-calculator"></i> Calculadora Gastronómica</h3>
+            <div class="form-group">
+                <label for="calc-tipo">Tipo de Cálculo</label>
+                <select id="calc-tipo" onchange="window.cambiarModoCalculadora()">
+                    <option value="jornada">Proporcional de Jornada</option>
+                    <option value="horas">Horas Extra / Especiales</option>
+                </select>
+            </div>
+            <div class="form-group" id="grupo-base-sueldo">
+                <label for="calc-sueldo-base">Sueldo Base Escala ($)</label>
+                <input type="number" id="calc-sueldo-base" placeholder="Ej: 600000">
+            </div>
+            <div class="form-group" id="grupo-jornada-tipo">
+                <label for="calc-modalidad">Modalidad</label>
+                <select id="calc-modalidad">
+                    <option value="full">Jornada Completa (100%)</option>
+                    <option value="part">Media Jornada (50%)</option>
+                    <option value="franco">Franco Trabajado / Extra</option>
+                </select>
+            </div>
+            <div class="form-group" id="grupo-horas-extra" style="display:none;">
+                <label for="calc-cant-horas">Cantidad de Horas Extra</label>
+                <input type="number" id="calc-cant-horas" placeholder="Ej: 8">
+            </div>
+            <button type="button" class="btn-primary" onclick="window.calcularHorariosSueldo()" style="width:100%;">
+                Calcular
+            </button>
+            <div id="resultado-calculadora" class="resultado-box" style="display:none;">
+                <span>Estimado:</span>
+                <strong id="calc-output-valor">$ 0</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL MEMBRESÍA PRO -->
+    <div class="rol-modal-overlay" id="modal-membresia-pro" style="display:none;">
+        <div class="modal-box">
+            <button class="btn-cerrar-modal" onclick="window.cerrarModalMembresia()">&times;</button>
+            <h3><i class="fas fa-star" style="color: #F39C12;"></i> Jobbers PRO</h3>
+            <p>Aparecé en las primeras posiciones y sé visto directamente por los gastronómicos de Córdoba.</p>
+            <form onsubmit="window.enviarMembresiaWhatsApp(event)">
+                <div class="form-group">
+                    <label for="pro-nombre">Tu Nombre</label>
+                    <input type="text" id="pro-nombre" required placeholder="Ej: Ana María">
+                </div>
+                <div class="form-group">
+                    <label for="pro-puesto">Puesto de Interés</label>
+                    <input type="text" id="pro-puesto" required placeholder="Ej: Barista / Jefa de Bar">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    <i class="fab fa-whatsapp"></i> Solicitar Activación
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL CAMBIO DE ROL -->
+    <div class="rol-modal-overlay" id="modal-cambiar-perfil" style="display:none;">
+        <div class="modal-box text-center">
+            <button class="btn-cerrar-modal" id="btn-cerrar-modal">&times;</button>
+            
+            <div id="rol-step-select">
+                <h3>¿Cómo vas a usar Jobbers hoy?</h3>
+                <p>Seleccioná tu perfil para adaptar las herramientas de la plataforma.</p>
+                <div class="roles-grid">
+                    <button class="card-rol" onclick="window.seleccionarRol('postulante', 'Busco Trabajo')">
+                        <i class="fas fa-user-ninja"></i>
+                        <h4>Busco Trabajo</h4>
+                        <p>Quiero postularme a vacantes gastronómicas.</p>
+                    </button>
+                    <button class="card-rol" onclick="window.seleccionarRol('empresa', 'Busco Personal')">
+                        <i class="fas fa-store"></i>
+                        <h4>Busco Personal</h4>
+                        <p>Quiero publicar búsquedas y contratar talento.</p>
+                    </button>
+                </div>
+            </div>
+
+            <div id="rol-step-confirm" style="display:none;">
+                <h3>Confirmar Selección</h3>
+                <p>Vas a ingresar en modo: <strong id="rol-nombre-confirmar">--</strong></p>
+                <div style="display:flex; gap:10px; justify-content:center; margin-top:1.5rem;">
+                    <button class="btn-secondary" id="btn-volver-rol">Volver</button>
+                    <button class="btn-primary" id="btn-confirmar-rol">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVEGACIÓN INFERIOR MÓVIL (BOTTOM NAV) -->
     <nav class="bottom-nav">
-        <button class="bottom-nav-item active" onclick="location.href='#vacantes'">
-            <i class="fas fa-briefcase"></i>
+        <a href="#vacantes" class="bottom-item active">
+            <i class="fas fa-list"></i>
             <span>Empleos</span>
-        </button>
-        <button class="bottom-nav-item" onclick="toggleModalPerfil()">
+        </a>
+        <button class="bottom-item btn-trigger-modal-perfil">
             <i class="fas fa-user"></i>
             <span>Perfil</span>
         </button>
-        <button class="bottom-nav-item" onclick="toggleTheme()">
+        <button class="bottom-item" onclick="window.toggleTheme()">
             <i class="fas fa-adjust"></i>
             <span>Tema</span>
         </button>
     </nav>
 
-    <!-- MODAL DE SELECCIÓN DE ROL -->
-    <div class="rol-modal-overlay" id="modal-perfil">
-        <div class="rol-modal-card">
-            <button class="jobbers-close-btn" onclick="toggleModalPerfil()">&times;</button>
-            <h2>Seleccionar Perfil</h2>
-            <p>Elegí tu perfil para adaptar la plataforma a tus necesidades:</p>
-
-            <div class="rol-options">
-                <button class="btn-rol" onclick="setRole('postulante')">
-                    <i class="fas fa-user-graduate rol-icon"></i>
-                    <div class="rol-info">
-                        <span class="rol-title">Soy Postulante</span>
-                        <span class="rol-desc">Busco empleo en cocina, salón o barra.</span>
-                    </div>
-                </button>
-
-                <button class="btn-rol" onclick="setRole('empresa')">
-                    <i class="fas fa-store rol-icon"></i>
-                    <div class="rol-info">
-                        <span class="rol-title">Soy Empresa / Local</span>
-                        <span class="rol-desc">Quiero publicar vacantes y contratar personal.</span>
-                    </div>
-                </button>
+    <!-- FOOTER -->
+    <footer id="nosotros" class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-info">
+                <h4>JOBBERS ARGENTINA</h4>
+                <p>La red de reclutamiento especializado en el sector gastronómico de la provincia de Córdoba.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://wa.me/5493513080197" target="_blank"><i class="fab fa-whatsapp"></i> Soporte WhatsApp</a>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <!-- Script JS Principal -->
-    <script src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
