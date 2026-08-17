@@ -413,7 +413,7 @@
   .categorias-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 0.85rem !important;
   }
 
   .btn-categoria {
@@ -440,23 +440,55 @@
   /* --- Formulario Express --- */
   .hero-card-express {
     width: 100%;
-    max-width: 540px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 2rem;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
+    max-width: 580px;
     margin: 0 auto;
+    padding: 2rem 1.75rem;
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     text-align: left;
   }
 
-  .express-form, .form-group {
+  .hero-card-express .card-header {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
-  .express-form :is(input, select),
+  .hero-card-express .card-header h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-main);
+    letter-spacing: 0.5px;
+  }
+
+  .hero-card-express > p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.75rem;
+  }
+
+  .express-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .express-form .form-group {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .express-form .form-control,
   .form-group :is(input, select) {
     width: 100%;
     height: 48px;
@@ -464,9 +496,18 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
     background-color: var(--bg-dark);
-    font-size: 0.9rem;
     color: var(--text-main);
-    transition: var(--transition);
+    font-family: inherit;
+    font-size: 0.92rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .express-form .form-control:focus,
+  .form-group :is(input, select):focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
   }
 
   .express-form select,
@@ -479,11 +520,35 @@
     background-size: 12px auto;
   }
 
-  /* --- Sección Principal de Vacantes --- */
+  .express-form select.form-control optgroup {
+    background-color: var(--card-bg-light);
+    color: var(--primary);
+    font-weight: 700;
+    padding: 0.4rem 0;
+  }
+
+  .express-form select.form-control option {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    padding: 0.4rem 0.8rem;
+  }
+
+  /* --- Sección Principal de Vacantes y Talentos --- */
   .main-grid-section {
     max-width: 1100px;
     margin: 0 auto;
     padding: 2rem 1.5rem 4rem 1.5rem;
+  }
+
+  main.modo-postulante-only,
+  main.modo-empresa-only,
+  .info-section > div {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  #grid-talento-destacado {
+    gap: 1.25rem !important;
   }
 
   .section-header {
@@ -632,7 +697,8 @@
   }
 
   /* --- Botón Oficial WhatsApp --- */
-  .btn-whatsapp {
+  .btn-whatsapp,
+  .express-form .btn-whatsapp {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -640,17 +706,20 @@
     background-color: var(--whatsapp-green);
     color: #FFFFFF !important;
     font-weight: 800;
-    font-size: 0.88rem;
+    font-size: 0.95rem;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     padding: 0.85rem 1.8rem;
+    height: 52px;
+    margin-top: 0.5rem;
     border-radius: var(--radius-sm);
     border: none;
     transition: var(--transition);
-    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
   }
 
-  .btn-whatsapp:hover {
+  .btn-whatsapp:hover,
+  .express-form .btn-whatsapp:hover {
     background-color: var(--whatsapp-hover);
     color: #FFFFFF !important;
     transform: translateY(-2px);
@@ -823,7 +892,6 @@
     color: var(--primary);
   }
 
-  /* Acciones y alineación de botones del modal */
   .modal-actions {
     display: flex;
     align-items: center;
@@ -955,6 +1023,20 @@
 
   .modal-actions :is(.btn-primary, .btn-secondary) {
     width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-card-express {
+    padding: 1.5rem 1rem;
+  }
+
+  .express-form {
+    gap: 0.9rem;
+  }
+
+  .hero-card-express .card-header h2 {
+    font-size: 1.15rem;
   }
 }
 
