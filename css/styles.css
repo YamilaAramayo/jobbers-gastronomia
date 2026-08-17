@@ -321,12 +321,16 @@
     color: var(--text-main);
     display: flex;
     justify-content: center;
+    align-items: center;
     text-align: center;
   }
 
   .hero-content {
     max-width: 800px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-title {
@@ -353,6 +357,7 @@
     display: flex;
     gap: 0.75rem;
     margin: 0 auto;
+    align-items: center;
   }
 
   .hero-search-bar input {
@@ -393,7 +398,7 @@
     transform: translateY(-1px);
   }
 
-  /* --- Categorías Grid --- */
+  /* --- Categorías Grid (3x3) --- */
   .categories-section {
     padding: 2.5rem 1.5rem;
     max-width: 1100px;
@@ -408,22 +413,28 @@
 
   .categorias-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.85rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
   }
 
   .btn-categoria {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
-    padding: 0.85rem 0.5rem;
+    padding: 1.2rem 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
     color: var(--text-muted);
     transition: var(--transition);
+    text-align: center;
+    aspect-ratio: 1 / 1;
+  }
+
+  .btn-categoria i {
+    font-size: 1.5rem;
   }
 
   .btn-categoria:hover, 
@@ -550,6 +561,7 @@
 
   .section-header {
     margin-bottom: 2rem;
+    text-align: left;
   }
 
   .section-header h2 {
@@ -590,6 +602,7 @@
 
   .job-meta {
     display: flex;
+    align-items: center;
     gap: 1rem;
     color: var(--text-muted);
     font-size: 0.88rem;
@@ -599,6 +612,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
   }
 
   .btn-postularme {
@@ -712,6 +726,7 @@
     border: none;
     transition: var(--transition);
     box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+    width: 100%;
   }
 
   .btn-whatsapp:hover {
@@ -769,6 +784,9 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .nosotros-card i {
@@ -837,6 +855,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -874,6 +893,7 @@
     color: var(--text-main);
     margin-bottom: 0.5rem;
     padding-right: 2rem;
+    text-align: left;
   }
 
   .rol-modal-card p {
@@ -881,6 +901,7 @@
     color: var(--text-muted);
     line-height: 1.5;
     margin-bottom: 0.75rem;
+    text-align: left;
   }
 
   .rol-modal-card strong {
@@ -1019,6 +1040,10 @@
   .modal-actions :is(.btn-primary, .btn-secondary) {
     width: 100%;
   }
+
+  .categorias-grid {
+    gap: 0.75rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1032,6 +1057,19 @@
 
   .hero-card-express .card-header h2 {
     font-size: 1.15rem;
+  }
+
+  .categorias-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .btn-categoria {
+    padding: 0.75rem 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .btn-categoria i {
+    font-size: 1.25rem;
   }
 }
 
