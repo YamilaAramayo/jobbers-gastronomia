@@ -32,6 +32,18 @@ function escapeHTML(str) {
 }
 
 /**
+ * Normaliza cadenas removiendo tildes y diacríticos mediante Unicode
+ */
+function normalizarTexto(str) {
+    if (!str) return "";
+    return str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .trim();
+}
+
+/**
  * Helper Debounce para reducir ejecuciones repetitivas en inputs de búsqueda
  */
 function debounce(func, delay = 250) {
@@ -311,7 +323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 <div class="job-action-col">
                     <span class="job-time">${escapeHTML(v.tiempo)}</span>
-                    <button type="button" class="btn-postularme" onclick="window.abrirModalPostulacion('${tituloEsc}', '${empresaEsc}', '${telEsc}')">
+                    <button type="button" class="btn-postularme" data-puesto="${tituloEsc}" data-empresa="${empresaEsc}" data-tel="${telEsc}">
                         <i class="fab fa-whatsapp" style="margin-right: 0.4rem; font-size: 1rem;"></i> Postularme
                     </button>
                 </div>
@@ -399,6 +411,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // --- DELEGACIÓN DE EVENTOS EN VACANTES ---
+    document.getElementById('lista-vacantes')?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-postularme');
+        if (!btn) return;
+
+        const { puesto, empresa, tel } = btn.dataset;
+        window.abrirModalPostulacion(puesto, empresa, tel);
+    });
+
     // --- EVENTOS DE INTERFAZ Y MODALES ---
     document.querySelectorAll('.btn-trigger-modal-perfil').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -432,14 +453,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
     const categoryChips = document.querySelectorAll('.btn-categoria');
-
-    function normalizarTexto(str) {
-        if (!str) return '';
-        return str.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^\w\s]/gi, '')
-            .trim();
-    }
 
     function normalizarCategoria(cat) {
         const c = normalizarTexto(cat);
@@ -528,14 +541,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 800);
     });
 
-    // --- EVENTOS GLOBAL DE MODALES (Escape & Clic fuera) ---
+    // --- EVENTOS GLOBALES DE MODALES (Escape & Clic fuera) ---
     document.getElementById('form-postularme')?.addEventListener('submit', window.enviarPostulacionWhatsApp);
 
     document.querySelectorAll('.btn-cerrar-postular').forEach(btn => {
         btn.addEventListener('click', window.cerrarModalPostulacion);
     });
 
-    // Cierre de modales al hacer clic en el overlay exterior
     document.querySelectorAll('.rol-modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
