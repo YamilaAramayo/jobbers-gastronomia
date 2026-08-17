@@ -60,7 +60,7 @@
   color-scheme: light;
   --primary: #D67E00;
   --primary-hover: #B56900;
-  --text-on-primary: #0F172A; /* Optimizado para cumplir contraste WCAG AA */
+  --text-on-primary: #0F172A;
 
   --bg-dark: #F8FAFC;
   --secondary: #FFFFFF;
@@ -117,8 +117,7 @@
     display: block;
   }
 
-  /* Optimizado: Limitado a controles interactivos directos */
-  :is(button, .btn-postularme, .btn-search, .btn-whatsapp, .btn-contactar-empleador, .chip, .bottom-nav-item, .dropdown-item, .btn-categoria, .btn-anunciar, .btn-rol, .jobbers-close-btn) {
+  :is(button, .btn-primary, .btn-secondary, .btn-postularme, .btn-search, .btn-whatsapp, .btn-contactar-empleador, .chip, .bottom-nav-item, .dropdown-item, .btn-categoria, .btn-anunciar, .btn-rol, .jobbers-close-btn) {
     cursor: pointer;
     touch-action: manipulation;
     user-select: none;
@@ -166,6 +165,7 @@
    5. COMPONENTES
    ========================================================================== */
 @layer components {
+  /* --- Navbar --- */
   .navbar {
     width: 100%;
     height: 70px;
@@ -250,7 +250,7 @@
     transform: translateY(-1px);
   }
 
-  /* Dropdown Menu */
+  /* --- Dropdown Menu --- */
   .dropdown-container {
     position: relative;
     display: inline-block;
@@ -306,7 +306,7 @@
     color: var(--primary);
   }
 
-  /* Hero Section */
+  /* --- Hero Section --- */
   .hero-section {
     position: relative;
     background-image: 
@@ -397,7 +397,7 @@
     transform: translateY(-1px);
   }
 
-  /* Categorías Grid */
+  /* --- Categorías Grid --- */
   .categories-section {
     padding: 2.5rem 1.5rem;
     max-width: 1100px;
@@ -437,7 +437,7 @@
     color: var(--primary);
   }
 
-  /* Formulario Express */
+  /* --- Formulario Express --- */
   .hero-card-express {
     width: 100%;
     max-width: 540px;
@@ -479,7 +479,7 @@
     background-size: 12px auto;
   }
 
-  /* Sección Principal de Vacantes */
+  /* --- Sección Principal de Vacantes --- */
   .main-grid-section {
     max-width: 1100px;
     margin: 0 auto;
@@ -501,7 +501,7 @@
     gap: 1.25rem;
   }
 
-  /* Tarjetas de Vacantes */
+  /* --- Tarjetas de Vacantes --- */
   .job-offer-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -557,7 +557,48 @@
     box-shadow: var(--shadow-sm);
   }
 
-  /* Botones Promocionales y Publicidad */
+  /* --- Botones Genéricos, Promocionales y Publicidad --- */
+  .btn-primary {
+    background: var(--primary);
+    color: var(--text-on-primary);
+    border: none;
+    padding: 0.65rem 1.35rem;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.65rem 1.35rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+  }
+
+  .btn-secondary:hover {
+    background: var(--card-bg-light);
+    border-color: var(--text-muted);
+  }
+
   .btn-anunciar,
   .btn-patrocinar {
     display: inline-flex;
@@ -590,7 +631,7 @@
     font-size: 1.1rem;
   }
 
-  /* Botón Oficial WhatsApp */
+  /* --- Botón Oficial WhatsApp --- */
   .btn-whatsapp {
     display: inline-flex;
     align-items: center;
@@ -621,7 +662,7 @@
     line-height: 1;
   }
 
-  /* Sección Sobre Nosotros */
+  /* --- Sección Sobre Nosotros --- */
   .nosotros-section {
     background: var(--secondary);
     border-top: 1px solid var(--border-color);
@@ -672,7 +713,7 @@
     margin-bottom: 0.8rem;
   }
 
-  /* Footer */
+  /* --- Footer --- */
   footer {
     background: var(--secondary);
     border-top: 1px solid var(--border-color);
@@ -700,7 +741,7 @@
     font-size: 0.8rem;
   }
 
-  /* Modales y Estructura de Roles */
+  /* --- Modales y Estructura de Confirmación --- */
   .rol-modal-overlay {
     position: fixed;
     inset: 0;
@@ -730,6 +771,8 @@
     width: 100%;
     box-shadow: var(--shadow-lg);
     position: relative;
+    display: flex;
+    flex-direction: column;
     animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -762,24 +805,39 @@
 
   .rol-modal-card h2,
   .rol-modal-card h3 {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
     font-weight: 800;
     color: var(--text-main);
-    margin-bottom: 0.4rem;
-    padding-right: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-right: 2rem;
   }
 
   .rol-modal-card p {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
-    line-height: 1.4;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .rol-modal-card strong {
+    color: var(--primary);
+  }
+
+  /* Acciones y alineación de botones del modal */
+  .modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    width: 100%;
   }
 
   .rol-options {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     width: 100%;
   }
 
@@ -828,7 +886,7 @@
     font-weight: 400;
   }
 
-  /* Bottom Nav (Móvil) - Optimizado con safe-area-inset */
+  /* --- Bottom Nav (Móvil) --- */
   .bottom-nav {
     display: none;
     position: fixed;
@@ -890,6 +948,14 @@
   }
 
   .nav-links { display: none; }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions :is(.btn-primary, .btn-secondary) {
+    width: 100%;
+  }
 }
 
 /* Animaciones */
