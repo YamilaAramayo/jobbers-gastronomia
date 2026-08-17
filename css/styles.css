@@ -15,7 +15,7 @@
   --primary: #F39C12;
   --primary-hover: #D68910;
   --text-on-primary: #0F172A;
-  
+
   --bg-dark: #0A0B0C;
   --secondary: #0D0D0D;
   --card-bg: #16181A;
@@ -60,7 +60,6 @@
   color-scheme: light;
   --primary: #D67E00;
   --primary-hover: #B56900;
-  --text-on-primary: #0F172A;
 
   --bg-dark: #F8FAFC;
   --secondary: #FFFFFF;
@@ -68,8 +67,6 @@
   --card-bg-light: #F1F5F9;
   --border-color: #E2E8F0;
 
-  --whatsapp-green: #25D366;
-  --whatsapp-hover: #1EB857;
   --danger-badge: #DC2626;
   --salary-green: #16A34A;
 
@@ -139,13 +136,19 @@
    4. CONTROL DE VISIBILIDAD POR ROLES
    ========================================================================== */
 @layer base {
-  body:not(.role-empresa) :is(.empresa-only, .modo-empresa-only, .seccion-empresa, .job-company),
-  body.role-postulante :is(.empresa-only, .modo-empresa-only, .seccion-empresa, .job-company) {
-    display: none !important;
+  .empresa-only,
+  .modo-empresa-only,
+  .seccion-empresa,
+  .job-company {
+    display: none;
+  }
+
+  body.role-empresa :is(.empresa-only, .modo-empresa-only, .seccion-empresa, .job-company) {
+    display: block;
   }
 
   body.role-empresa :is(.postulante-only, .modo-postulante-only, .seccion-postulante, .main-grid-section, .categories-section, .btn-postularme) {
-    display: none !important;
+    display: none;
   }
 
   .sr-only {
@@ -310,7 +313,7 @@
   .hero-section {
     position: relative;
     background-image: 
-      linear-gradient(rgba(10, 11, 12, 0.82), rgba(10, 11, 12, 0.90)), 
+      var(--hero-overlay-bg), 
       url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
     background-position: center;
@@ -319,13 +322,6 @@
     display: flex;
     justify-content: center;
     text-align: center;
-  }
-
-  [data-theme="light"] .hero-section,
-  .light-theme .hero-section {
-    background-image: 
-      linear-gradient(rgba(248, 250, 252, 0.88), rgba(241, 245, 249, 0.94)), 
-      url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');
   }
 
   .hero-content {
@@ -412,8 +408,8 @@
 
   .categorias-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.85rem !important;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.85rem;
   }
 
   .btn-categoria {
@@ -500,7 +496,6 @@
     font-family: inherit;
     font-size: 0.92rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    box-sizing: border-box;
   }
 
   .express-form .form-control:focus,
@@ -548,7 +543,9 @@
   }
 
   #grid-talento-destacado {
-    gap: 1.25rem !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
   }
 
   .section-header {
@@ -671,7 +668,7 @@
     justify-content: center;
     gap: 0.6rem;
     background-color: var(--primary);
-    color: var(--text-on-primary) !important;
+    color: var(--text-on-primary);
     font-weight: 800;
     font-size: 0.88rem;
     letter-spacing: 0.5px;
@@ -697,14 +694,13 @@
   }
 
   /* --- Botón Oficial WhatsApp --- */
-  .btn-whatsapp,
-  .express-form .btn-whatsapp {
+  .btn-whatsapp {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.65rem;
     background-color: var(--whatsapp-green);
-    color: #FFFFFF !important;
+    color: #FFFFFF;
     font-weight: 800;
     font-size: 0.95rem;
     letter-spacing: 0.5px;
@@ -718,10 +714,9 @@
     box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
   }
 
-  .btn-whatsapp:hover,
-  .express-form .btn-whatsapp:hover {
+  .btn-whatsapp:hover {
     background-color: var(--whatsapp-hover);
-    color: #FFFFFF !important;
+    color: #FFFFFF;
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
   }
