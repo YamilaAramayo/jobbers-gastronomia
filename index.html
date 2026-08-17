@@ -35,7 +35,7 @@
     <!-- MODAL DE SELECCIÓN DE PERFIL -->
     <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
         <div class="rol-modal-card">
-            <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" onclick="window.cerrarModalPerfil()" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" onclick="if(window.cerrarModalPerfil) window.cerrarModalPerfil();" aria-label="Cerrar modal">&times;</button>
 
             <!-- PASO 1: Selección -->
             <div id="rol-step-select">
@@ -43,13 +43,13 @@
                 <p>Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
 
                 <div class="rol-options">
-                    <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Postulante" onclick="window.seleccionarRol('postulante', 'Postulante')">
+                    <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Postulante" onclick="if(window.seleccionarRol) window.seleccionarRol('postulante', 'Postulante');">
                         <span class="rol-icon" aria-hidden="true">🔍</span>
                         <span class="rol-title">Busco Empleo</span>
                         <span class="rol-desc">Quiero ver vacantes y postularme directo</span>
                     </button>
 
-                    <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Busco Personal" onclick="window.seleccionarRol('empresa', 'Busco Personal')">
+                    <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Busco Personal" onclick="if(window.seleccionarRol) window.seleccionarRol('empresa', 'Busco Personal');">
                         <span class="rol-icon" aria-hidden="true">👥</span>
                         <span class="rol-title">Busco Personal</span>
                         <span class="rol-desc">Quiero publicar una oferta o contratar</span>
@@ -77,7 +77,7 @@
     <!-- MODAL DE POSTULACIÓN POR WHATSAPP -->
     <div id="postular-modal" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-job-title" aria-modal="true" style="display: none;">
         <div class="modal-postular-card">
-            <button type="button" class="jobbers-close-btn btn-cerrar-postular" onclick="window.cerrarModalPostular()" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="jobbers-close-btn btn-cerrar-postular" onclick="if(window.cerrarModalPostular) window.cerrarModalPostular();" aria-label="Cerrar modal">&times;</button>
 
             <h2 class="modal-postular-title">POSTULARME</h2>
             <p id="modal-job-title" class="modal-job-title">Título del Puesto — Nombre Empresa</p>
@@ -108,7 +108,7 @@
     <!-- MODAL DE MEMBRESÍA JOBBERS PRO -->
     <div id="modal-membresia-pro" class="rol-modal-overlay" role="dialog" aria-labelledby="pro-title" aria-modal="true" style="display: none;">
         <div class="modal-postular-card" style="max-width: 520px; text-align: left;">
-            <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalMembresia()" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="jobbers-close-btn" onclick="if(window.cerrarModalMembresia) window.cerrarModalMembresia();" aria-label="Cerrar modal">&times;</button>
 
             <div style="text-align: center; margin-bottom: 1rem;">
                 <span style="font-size: 2.5rem;" aria-hidden="true">⚡</span>
@@ -125,7 +125,7 @@
                 </ul>
             </div>
 
-            <form id="form-membresia-pro" onsubmit="window.enviarMembresiaWhatsApp(event)" class="postular-form">
+            <form id="form-membresia-pro" onsubmit="if(window.enviarMembresiaWhatsApp) window.enviarMembresiaWhatsApp(event);" class="postular-form">
                 <div class="form-group">
                     <label for="pro-nombre" class="sr-only">Nombre y Apellido</label>
                     <input type="text" id="pro-nombre" class="form-control" placeholder="Nombre y Apellido" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;" />
@@ -144,27 +144,27 @@
     <!-- MODAL DE CALCULADORA DE HORARIOS -->
     <div id="modal-calculadora" class="rol-modal-overlay" role="dialog" aria-labelledby="calc-title" aria-modal="true" style="display: none;">
         <div class="modal-postular-card" style="max-width: 500px;">
-            <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalCalculadora()" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="jobbers-close-btn" onclick="if(window.cerrarModalCalculadora) window.cerrarModalCalculadora();" aria-label="Cerrar modal">&times;</button>
 
             <h2 class="modal-postular-title" id="calc-title">Calculadora de Horarios & Sueldos</h2>
             <p class="modal-job-title">Estimador basado en escalas UTHGRA / Jornadas</p>
 
             <div class="postular-form">
                 <div class="form-group">
-                    <label for="calc-tipo" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Tipo de Cálculo:</label>
-                    <select id="calc-tipo" class="form-control" onchange="window.cambiarModoCalculadora()" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                    <label for="calc-tipo" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; display: block;">Tipo de Cálculo:</label>
+                    <select id="calc-tipo" class="form-control" onchange="if(window.cambiarModoCalculadora) window.cambiarModoCalculadora();" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
                         <option value="jornada">Sueldo por Jornada (Full / Part Time / Franco)</option>
                         <option value="horas_extra">Cálculo de Horas Extra / Nocturnas</option>
                     </select>
                 </div>
 
                 <div class="form-group" id="grupo-base-sueldo">
-                    <label for="calc-sueldo-base" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Sueldo Básico Mensual de Referencia ($):</label>
+                    <label for="calc-sueldo-base" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; display: block;">Sueldo Básico Mensual de Referencia ($):</label>
                     <input type="number" id="calc-sueldo-base" class="form-control" placeholder="Ej: 650000" value="650000" />
                 </div>
 
                 <div class="form-group" id="grupo-jornada-tipo">
-                    <label for="calc-modalidad" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Modalidad:</label>
+                    <label for="calc-modalidad" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; display: block;">Modalidad:</label>
                     <select id="calc-modalidad" class="form-control" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
                         <option value="full">Full Time (100% del básico)</option>
                         <option value="part">Part Time (50% del básico)</option>
@@ -173,11 +173,11 @@
                 </div>
 
                 <div class="form-group" id="grupo-horas-extra" style="display: none;">
-                    <label for="calc-cant-horas" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Cantidad de Horas Extra:</label>
+                    <label for="calc-cant-horas" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; display: block;">Cantidad de Horas Extra:</label>
                     <input type="number" id="calc-cant-horas" class="form-control" placeholder="Ej: 10" value="10" />
                 </div>
 
-                <button type="button" class="btn-whatsapp" onclick="window.calcularHorariosSueldo()">
+                <button type="button" class="btn-whatsapp" onclick="if(window.calcularHorariosSueldo) window.calcularHorariosSueldo();">
                     <i class="fas fa-calculator" aria-hidden="true"></i> CALCULAR ESTIMATIVO
                 </button>
 
@@ -212,14 +212,14 @@
                 <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
                     <!-- Opciones Postulante -->
                     <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="event.preventDefault(); window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="event.preventDefault(); window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
+                    <a href="#" class="dropdown-item modo-postulante-only" onclick="event.preventDefault(); if(window.mostrarToast) window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success');"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
+                    <a href="#" class="dropdown-item modo-postulante-only" onclick="event.preventDefault(); if(window.mostrarToast) window.mostrarToast('Sección de Consejos activa', 'success');"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
 
                     <!-- Opciones Empresa -->
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); if(window.mostrarToast) window.mostrarToast('Modelos de contrato descargables', 'success');"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); if(window.abrirModalCalculadora) window.abrirModalCalculadora(event);"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); if(window.mostrarToast) window.mostrarToast('Guía de control de stock e insumos', 'success');"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
+                    <a href="#" class="dropdown-item modo-empresa-only" onclick="event.preventDefault(); if(window.mostrarToast) window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success');"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
 
                     <!-- Soporte Universal -->
                     <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
@@ -501,7 +501,7 @@
                                 </select>
                             </div>
 
-                            <!-- JORNADA PUESTO (SIMPLIFICADA) -->
+                            <!-- JORNADA PUESTO -->
                             <div class="form-group">
                                 <label for="jornada-puesto" class="sr-only">Jornada</label>
                                 <select id="jornada-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
@@ -566,7 +566,7 @@
             <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.5;">Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.</p>
 
             <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                <button type="button" class="btn-primary btn-destacar" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.75rem 1.5rem; font-weight: 800; border-radius: var(--radius-sm); cursor: pointer;">
+                <button type="button" class="btn-primary btn-destacar" onclick="if(window.abrirModalMembresia) window.abrirModalMembresia(event);" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.75rem 1.5rem; font-weight: 800; border-radius: var(--radius-sm); cursor: pointer;">
                     ⚡ DESTACÁ TU PERFIL PRO
                 </button>
                 <a href="#blog-noticias" class="btn-secondary btn-noticias" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-main); border-radius: var(--radius-sm); text-decoration: none; font-weight: 600;">
@@ -679,7 +679,7 @@
                             • Acceso a herramientas y beneficios exclusivos.
                         </div>
                     </div>
-                    <button type="button" class="btn-primary" onclick="window.abrirModalMembresia(event)" style="background: var(--primary); color: var(--text-dark); border: none; width: 100%; font-weight: 800; font-size: 0.85rem; padding: 0.75rem; border-radius: var(--radius-sm); cursor: pointer;">
+                    <button type="button" class="btn-primary" onclick="if(window.abrirModalMembresia) window.abrirModalMembresia(event);" style="background: var(--primary); color: var(--text-dark); border: none; width: 100%; font-weight: 800; font-size: 0.85rem; padding: 0.75rem; border-radius: var(--radius-sm); cursor: pointer;">
                         ⚡ OBTENER PASE PRO
                     </button>
                 </div>
