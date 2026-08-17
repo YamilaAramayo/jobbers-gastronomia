@@ -60,7 +60,7 @@
   color-scheme: light;
   --primary: #D67E00;
   --primary-hover: #B56900;
-  --text-on-primary: #FFFFFF;
+  --text-on-primary: #0F172A; /* Optimizado para cumplir contraste WCAG AA */
 
   --bg-dark: #F8FAFC;
   --secondary: #FFFFFF;
@@ -117,7 +117,8 @@
     display: block;
   }
 
-  :is(button, [onclick], .btn-postularme, .btn-search, .btn-whatsapp, .btn-contactar-empleador, .chip, .bottom-nav-item, .dropdown-item, .btn-categoria, .btn-anunciar) {
+  /* Optimizado: Limitado a controles interactivos directos */
+  :is(button, .btn-postularme, .btn-search, .btn-whatsapp, .btn-contactar-empleador, .chip, .bottom-nav-item, .dropdown-item, .btn-categoria, .btn-anunciar, .btn-rol, .jobbers-close-btn) {
     cursor: pointer;
     touch-action: manipulation;
     user-select: none;
@@ -827,14 +828,14 @@
     font-weight: 400;
   }
 
-  /* Bottom Nav (Móvil) */
+  /* Bottom Nav (Móvil) - Optimizado con safe-area-inset */
   .bottom-nav {
     display: none;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 65px;
+    height: calc(65px + env(safe-area-inset-bottom, 0px));
     padding-bottom: env(safe-area-inset-bottom, 0px);
     background: var(--secondary);
     border-top: 1px solid var(--border-color);
@@ -903,5 +904,14 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   7. UTILITIES
+   ========================================================================== */
+@layer utilities {
+  .u-no-scroll {
+    overflow: hidden !important;
   }
 }
