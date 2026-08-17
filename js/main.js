@@ -125,6 +125,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         toggleModal('modal-cambiar-perfil', true);
     }
 
+    // Exposición explícita a window para llamadas inline onclick="..." desde HTML
+    window.toggleModal = toggleModal;
+    window.cerrarTodosModales = cerrarTodosModales;
+    window.abrirModalPerfil = abrirModalPerfil;
+    window.abrirModalPostulacion = abrirModalPostulacion;
+
     // =========================================================================
     // 4. LÓGICA DE NEGOCIO & RENDERIZADO
     // =========================================================================
@@ -293,10 +299,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =========================================================================
-    // 5. DELEGACIÓN GLOBAL DE EVENTOS (ACCIONES DE USUARIO)
+    // 5. DELEGACIÓN GLOBAL DE EVENTOS (ACCIONES DE USUARIO & CATEGORÍAS)
     // =========================================================================
     document.addEventListener('click', (e) => {
-        // A. Abrir Modales
+        // A. Filtrado por Botones de Categoría (Delegado)
+        const chip = e.target.closest('.btn-categoria');
+        if (chip) {
+            document.querySelectorAll('.btn-categoria').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
+            categoriaActual = normalizarCategoria(catAttr || chip.textContent);
+
+            filtrarEmpleos();
+            return;
+        }
+
+        // B. Abrir Modales
         const openBtn = e.target.closest('[data-modal-target]');
         if (openBtn) {
             e.preventDefault();
@@ -304,7 +323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // B. Cerrar Modales
+        // C. Cerrar Modales
         const closeBtn = e.target.closest('[data-modal-close]');
         if (closeBtn) {
             e.preventDefault();
@@ -312,7 +331,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // C. Acciones específicas por atributo [data-action]
+        // D. Acciones específicas por atributo [data-action]
         const actionBtn = e.target.closest('[data-action]');
         if (actionBtn) {
             const action = actionBtn.dataset.action;
@@ -340,9 +359,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (stepSelect) stepSelect.style.display = 'none';
                 if (stepConfirm) stepConfirm.style.display = 'block';
             }
+            return;
         }
 
-        // D. Clic fuera del contenido del modal para cerrar (Overlay)
+        // E. Clic fuera del contenido del modal para cerrar (Overlay)
         if (e.target.classList.contains('rol-modal-overlay')) {
             cerrarTodosModales();
         }
@@ -457,7 +477,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // =========================================================================
     const inputBuscador = document.getElementById('job-search-input');
     const btnBuscador = document.querySelector('.btn-search');
-    const categoryChips = document.querySelectorAll('.btn-categoria');
 
     function normalizarCategoria(cat) {
         const c = normalizarTexto(cat);
@@ -472,7 +491,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function filtrarEmpleos() {
-        const termino = normalizarTexto(inputBuscador ? inputBuscador.value : '');
+        const input = document.getElementById('job-search-input');
+        const termino = normalizarTexto(input ? input.value : '');
 
         const resultados = listaVacantesBD.filter(v => {
             const titulo = normalizarTexto(v.titulo);
@@ -494,18 +514,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnBuscador?.addEventListener('click', (e) => {
         e.preventDefault();
         filtrarEmpleos();
-    });
-
-    categoryChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            categoryChips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-
-            const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
-            categoriaActual = normalizarCategoria(catAttr || chip.textContent);
-
-            filtrarEmpleos();
-        });
     });
 
     // Dropdown del Menú Recursos
