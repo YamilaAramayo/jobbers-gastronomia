@@ -309,7 +309,7 @@
     color: var(--primary);
   }
 
-  /* --- Hero Section --- */
+  /* --- Hero Section & Búsqueda Principal --- */
   .hero-section {
     position: relative;
     background-image: 
@@ -353,7 +353,7 @@
 
   .hero-search-bar {
     width: 100%;
-    max-width: 620px;
+    max-width: 680px;
     display: flex;
     gap: 0.75rem;
     margin: 0 auto;
@@ -398,165 +398,158 @@
     transform: translateY(-1px);
   }
 
-  /* --- Categorías Grid (3x3) --- */
+  /* --- Categorías Grid (3 Columnas Rectangulares) --- */
   .categories-section {
-    padding: 2.5rem 1.5rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .categorias-grid-container {
     width: 100%;
     max-width: 680px;
     margin: 0 auto;
+    padding: 2rem 0 1rem 0;
+  }
+
+  .categories-section .section-title,
+  .categories-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 1rem;
+    text-align: left;
   }
 
   .categorias-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 0.85rem;
+    width: 100%;
   }
 
   .btn-categoria {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
-    padding: 1.2rem 0.5rem;
+    padding: 1rem 0.75rem;
+    min-height: 85px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
     transition: var(--transition);
-    text-align: center;
-    aspect-ratio: 1 / 1;
+    cursor: pointer;
   }
 
-  .btn-categoria i {
-    font-size: 1.5rem;
+  .btn-categoria i,
+  .btn-categoria svg {
+    font-size: 1.35rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
   }
 
-  .btn-categoria:hover, 
-  .btn-categoria.active {
-    background: rgba(243, 156, 18, 0.1);
-    border-color: var(--primary);
+  .btn-categoria:hover {
+    background: #1C1F22;
+    border-color: #40454E;
+    color: var(--text-main);
+  }
+
+  .btn-categoria.active,
+  .btn-categoria[data-active="true"] {
+    background: var(--card-bg);
+    border: 1.5px solid var(--primary);
     color: var(--primary);
   }
 
-  /* --- Formulario Express --- */
+  .btn-categoria.active i,
+  .btn-categoria.active svg,
+  .btn-categoria[data-active="true"] i {
+    color: var(--primary);
+  }
+
+  /* --- Banner Promocional Modo Empresa --- */
+  .banner-modo-empresa,
   .hero-card-express {
     width: 100%;
-    max-width: 580px;
-    margin: 0 auto;
-    padding: 2rem 1.75rem;
-    background: var(--card-bg-light);
-    border: 1px solid var(--border-color);
+    max-width: 680px;
+    margin: 1.75rem auto 0 auto;
+    padding: 1.75rem 2rem;
+    background: var(--card-bg);
+    border: 1px dashed rgba(243, 156, 18, 0.4);
     border-radius: var(--radius-md);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-md);
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.5rem 1.25rem;
+    align-items: start;
+  }
+
+  .banner-modo-empresa .banner-icon,
+  .hero-card-express .card-header i {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    font-size: 2rem;
+    color: var(--primary);
+    margin-top: 0.2rem;
+  }
+
+  .banner-modo-empresa h2,
+  .banner-modo-empresa h3,
+  .hero-card-express .card-header h2 {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .banner-modo-empresa p,
+  .hero-card-express > p {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0 0 1.25rem 0;
+    line-height: 1.5;
     text-align: left;
   }
 
-  .hero-card-express .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .hero-card-express .card-header h2 {
-    font-size: 1.35rem;
+  .banner-modo-empresa .btn-primary,
+  .banner-modo-empresa .btn-anunciar,
+  .hero-card-express .btn-primary {
+    grid-column: 2;
+    justify-self: start;
+    background: var(--primary);
+    color: var(--text-on-primary);
     font-weight: 800;
-    margin: 0;
-    color: var(--text-main);
+    font-size: 0.82rem;
     letter-spacing: 0.5px;
-  }
-
-  .hero-card-express > p {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 1.75rem;
-  }
-
-  .express-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.15rem;
-  }
-
-  .express-form .form-group {
-    margin: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .express-form .form-control,
-  .form-group :is(input, select) {
-    width: 100%;
-    height: 48px;
-    padding: 0 1.1rem;
-    border: 1px solid var(--border-color);
+    text-transform: uppercase;
+    padding: 0.75rem 1.5rem;
     border-radius: var(--radius-sm);
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    font-family: inherit;
-    font-size: 0.92rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    transition: var(--transition);
+    margin: 0;
   }
 
-  .express-form .form-control:focus,
-  .form-group :is(input, select):focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
+  .banner-modo-empresa .btn-primary:hover,
+  .banner-modo-empresa .btn-anunciar:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
   }
 
-  .express-form select,
-  .form-group select {
-    padding-right: 2.5rem;
-    appearance: none;
-    background-image: var(--select-arrow);
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 12px auto;
-  }
-
-  .express-form select.form-control optgroup {
-    background-color: var(--card-bg-light);
-    color: var(--primary);
-    font-weight: 700;
-    padding: 0.4rem 0;
-  }
-
-  .express-form select.form-control option {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    padding: 0.4rem 0.8rem;
-  }
-
-  /* --- Sección Principal de Vacantes y Talentos --- */
+  /* --- Sección Principal de Vacantes --- */
   .main-grid-section {
     max-width: 1100px;
     margin: 0 auto;
     padding: 2rem 1.5rem 4rem 1.5rem;
-  }
-
-  main.modo-postulante-only,
-  main.modo-empresa-only,
-  .info-section > div {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-
-  #grid-talento-destacado {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
   }
 
   .section-header {
@@ -575,7 +568,7 @@
     gap: 1.25rem;
   }
 
-  /* --- Tarjetas de Vacantes --- */
+  /* Tarjetas de Vacantes */
   .job-offer-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -633,81 +626,7 @@
     box-shadow: var(--shadow-sm);
   }
 
-  /* --- Botones Genéricos, Promocionales y Publicidad --- */
-  .btn-primary {
-    background: var(--primary);
-    color: var(--text-on-primary);
-    border: none;
-    padding: 0.65rem 1.35rem;
-    border-radius: var(--radius-sm);
-    font-weight: 700;
-    font-size: 0.88rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: var(--transition);
-  }
-
-  .btn-primary:hover {
-    background: var(--primary-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    padding: 0.65rem 1.35rem;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    font-size: 0.88rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: var(--transition);
-  }
-
-  .btn-secondary:hover {
-    background: var(--card-bg-light);
-    border-color: var(--text-muted);
-  }
-
-  .btn-anunciar,
-  .btn-patrocinar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    background-color: var(--primary);
-    color: var(--text-on-primary);
-    font-weight: 800;
-    font-size: 0.88rem;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 0.8rem 1.75rem;
-    border-radius: var(--radius-sm);
-    border: none;
-    margin-top: 1.25rem;
-    transition: var(--transition);
-    box-shadow: 0 4px 14px rgba(243, 156, 18, 0.25);
-  }
-
-  .btn-anunciar:hover,
-  .btn-patrocinar:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(243, 156, 18, 0.4);
-  }
-
-  .btn-anunciar i,
-  .btn-patrocinar i {
-    font-size: 1.1rem;
-  }
-
-  /* --- Botón Oficial WhatsApp --- */
+  /* --- Botón WhatsApp --- */
   .btn-whatsapp {
     display: inline-flex;
     align-items: center;
@@ -736,65 +655,6 @@
     box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
   }
 
-  .btn-whatsapp i {
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  /* --- Sección Sobre Nosotros --- */
-  .nosotros-section {
-    background: var(--secondary);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    padding: 4rem 1.5rem;
-  }
-
-  .nosotros-container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .nosotros-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .nosotros-header span {
-    color: var(--primary);
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .nosotros-header h2 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin-top: 0.5rem;
-  }
-
-  .nosotros-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .nosotros-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nosotros-card i {
-    font-size: 2rem;
-    color: var(--primary);
-    margin-bottom: 0.8rem;
-  }
-
   /* --- Footer --- */
   footer {
     background: var(--secondary);
@@ -802,16 +662,6 @@
     padding: 3rem 1.5rem 1.5rem 1.5rem;
     color: var(--text-muted);
     font-size: 0.88rem;
-  }
-
-  .footer-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-bottom: 2.5rem;
   }
 
   .footer-bottom {
@@ -823,7 +673,7 @@
     font-size: 0.8rem;
   }
 
-  /* --- Modales y Estructura de Confirmación --- */
+  /* --- Modales --- */
   .rol-modal-overlay {
     position: fixed;
     inset: 0;
@@ -843,8 +693,7 @@
     display: flex;
   }
 
-  .rol-modal-card, 
-  .modal-postular-card {
+  .rol-modal-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -856,118 +705,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .jobbers-close-btn,
-  .btn-close-modal {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    left: auto;
-    width: 32px;
-    height: 32px;
-    background: var(--card-bg-light);
-    color: var(--text-muted);
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    font-size: 1.1rem;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-
-  .jobbers-close-btn:hover,
-  .btn-close-modal:hover {
-    background: var(--border-color);
-    color: var(--text-main);
-  }
-
-  .rol-modal-card h2,
-  .rol-modal-card h3 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-    padding-right: 2rem;
-    text-align: left;
-  }
-
-  .rol-modal-card p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-    margin-bottom: 0.75rem;
-    text-align: left;
-  }
-
-  .rol-modal-card strong {
-    color: var(--primary);
-  }
-
-  .modal-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.75rem;
-    margin-top: 1.75rem;
-    width: 100%;
-  }
-
-  .rol-options {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    margin-top: 1.25rem;
-    width: 100%;
-  }
-
-  .btn-rol {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    padding: 1rem 1.25rem;
-    background: var(--card-bg-light);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    color: var(--text-main);
-    text-align: left;
-    transition: var(--transition);
-    cursor: pointer;
-  }
-
-  .btn-rol:hover {
-    border-color: var(--primary);
-    background: rgba(243, 156, 18, 0.08);
-    transform: translateY(-2px);
-  }
-
-  .btn-rol i,
-  .btn-rol .rol-icon {
-    font-size: 1.4rem;
-    color: var(--primary);
-    flex-shrink: 0;
-  }
-
-  .btn-rol .rol-info {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .btn-rol .rol-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-main);
-  }
-
-  .btn-rol .rol-desc {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    font-weight: 400;
   }
 
   /* --- Bottom Nav (Móvil) --- */
@@ -1001,7 +738,7 @@
 }
 
 /* ==========================================================================
-   6. RESPONSIVE DESIGN & ACCESIBILIDAD
+   6. RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 768px) {
   .bottom-nav {
@@ -1032,59 +769,37 @@
   }
 
   .nav-links { display: none; }
-
-  .modal-actions {
-    flex-direction: column-reverse;
-  }
-
-  .modal-actions :is(.btn-primary, .btn-secondary) {
-    width: 100%;
-  }
-
-  .categorias-grid {
-    gap: 0.75rem;
-  }
 }
 
 @media (max-width: 576px) {
-  .hero-card-express {
-    padding: 1.5rem 1rem;
-  }
-
-  .express-form {
-    gap: 0.9rem;
-  }
-
-  .hero-card-express .card-header h2 {
-    font-size: 1.15rem;
-  }
-
   .categorias-grid {
-    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
   }
 
   .btn-categoria {
     padding: 0.75rem 0.25rem;
+    min-height: 75px;
     font-size: 0.75rem;
   }
 
   .btn-categoria i {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
-}
 
-/* Animaciones */
-@keyframes modalFadeIn {
-  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
+  .banner-modo-empresa,
+  .hero-card-express {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1rem;
+    gap: 0.75rem;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .banner-modo-empresa .btn-primary,
+  .banner-modo-empresa .btn-anunciar,
+  .hero-card-express .btn-primary {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 }
 
