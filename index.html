@@ -485,41 +485,39 @@
                                 <label for="turno-puesto" class="sr-only">Turno</label>
                                 <select id="turno-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
                                     <option value="" disabled selected>Turno de Trabajo...</option>
-                                    <optgroup label="⏰ Turnos Fijos">
-                                        <option value="Turno Mañana">Turno Mañana</option>
-                                        <option value="Turno Tarde">Turno Tarde</option>
-                                        <option value="Turno Noche / Cierre">Turno Noche / Cierre</option>
-                                        <option value="Turno Trasnoche / Cierre Tardío">Turno Trasnoche / Cierre Tardío</option>
+                                    <optgroup label="⏰ Horarios Fijos">
+                                        <option value="Turno Mañana">Mañana</option>
+                                        <option value="Turno Tarde">Tarde</option>
+                                        <option value="Turno Noche">Noche / Cierre</option>
                                     </optgroup>
-                                    <optgroup label="🔄 Turnos Rotativos y Cortados">
+                                    <optgroup label="🔄 Esquemas Especiales">
                                         <option value="Turno Cortado">Turno Cortado</option>
-                                        <option value="Turnos Rotativos">Turnos Rotativos</option>
-                                        <option value="Horario Flexible / A convenir">Horario Flexible / A convenir</option>
+                                        <option value="Turnos Rotativos">Rotativo</option>
                                     </optgroup>
-                                    <optgroup label="⚡ Refuerzos & Eventos">
-                                        <option value="Turno Fin de Semana">Turno Fin de Semana</option>
-                                        <option value="Refuerzo de Eventos / Eventual">Refuerzo de Eventos / Eventual</option>
+                                    <optgroup label="⚡ Coberturas & Refuerzos">
+                                        <option value="Fin de Semana">Fin de Semana</option>
+                                        <option value="Eventual / Franco">Refuerzo / Eventual</option>
                                     </optgroup>
                                 </select>
                             </div>
 
-                            <!-- JORNADA PUESTO -->
+                            <!-- JORNADA PUESTO (SIMPLIFICADA) -->
                             <div class="form-group">
                                 <label for="jornada-puesto" class="sr-only">Jornada</label>
                                 <select id="jornada-puesto" class="form-control" required style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
-                                    <option value="" disabled selected>Tipo de Jornada / Días...</option>
-                                    <optgroup label="📅 Carga Horaria">
+                                    <option value="" disabled selected>Tipo de Jornada...</option>
+                                    <optgroup label="⏱️ Carga Horaria">
                                         <option value="Full Time">Full Time</option>
                                         <option value="Part Time">Part Time</option>
-                                        <option value="Franquero / Cubre Francos">Franquero / Cubre Francos</option>
-                                        <option value="Jornada Reducida">Jornada Reducida</option>
+                                        <option value="Franquero">Franquero / Cubre Francos</option>
                                     </optgroup>
-                                    <optgroup label="🗓️ Esquema de Días">
-                                        <option value="6x1">6x1</option>
-                                        <option value="5x2">5x2</option>
+                                    <optgroup label="🗓️ Días Laborales">
+                                        <option value="6x1 / 5x2">Esquema 6x1 / 5x2</option>
                                         <option value="Lunes a Viernes">Lunes a Viernes</option>
-                                        <option value="Fines de semana y Feriados unicamente">Fines de semana y Feriados unicamente</option>
-                                        <option value="Eventual / Por hora / Por servicio">Eventual / Por hora / Por servicio</option>
+                                        <option value="Fines de Semana">Fines de Semana y Feriados</option>
+                                    </optgroup>
+                                    <optgroup label="💼 Modalidad">
+                                        <option value="Eventual / Por hora">Eventual / Por hora</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -540,7 +538,7 @@
                         <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px;">Espacio Patrocinado / Publicidad</span>
                         <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">¿Tenés una marca de indumentaria o equipamiento de cocina?</h3>
                         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 auto 1.2rem auto; max-width: 550px;">Promocioná tu marca, ropa para gastronomía o artefactos de cocina ante miles de trabajadores y dueños de locales en Córdoba.</p>
-                        <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Me%20interesa%20anunciar%20mi%20marca%20en%20el%20portal." target="_blank" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: var(--text-dark); padding: 0.65rem 1.4rem; font-weight: 800; font-size: 0.82rem; border-radius: var(--radius-sm); text-decoration: none;">
+                        <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Me%20interesa%20anunciar%20mi%20marca%20en%20el%20portal." target="_blank" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: var(--text-dark); padding: 0.65rem 1.4rem; font-weight: 800; font-size: 0.80rem; border-radius: var(--radius-sm); text-decoration: none;">
                             <i class="fab fa-whatsapp" aria-hidden="true" style="font-size: 1.1rem;"></i> ANUNCIAR TU MARCA ACÁ
                         </a>
                     </div>
