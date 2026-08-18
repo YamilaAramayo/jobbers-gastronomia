@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
 /* ==========================================================================
-   1. RESET GLOBAL & BASE
+   1. RESET GLOBAL & BASE (UX & RENDIMIENTO)
    ========================================================================== */
 *, *::before, *::after {
   margin: 0;
@@ -9,14 +7,20 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
-  padding-bottom: 80px; /* Offset para el Bottom Nav mobile */
+  padding-bottom: 80px; /* Offset para Bottom Nav mobile */
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -28,6 +32,12 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+  object-fit: cover;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
 }
 
 [onclick] {
@@ -35,17 +45,16 @@ img {
 }
 
 /* ==========================================================================
-   2. VARIABLES DE DISEÑO
+   2. VARIABLES DE DISEÑO (DARK MODE DEFAULT / LIGHT MODE)
    ========================================================================== */
 :root {
-  /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;              /* Ámbar / Naranja brillante */
+  /* Paleta de colores - MODO OSCURO */
+  --primary: #F39C12;              /* Ámbar / Naranja principal */
   --primary-hover: #D68910;
   --secondary: #0D0D0D;            
-  --card-bg: #141416;              /* Fondo tarjetas oscuro */
-  --card-bg-light: #1c1d21;        /* Hover de tarjetas */
-  --whatsapp-orange: #F39C12;      
-  --whatsapp-hover: #E67E22;
+  --card-bg: #121316;              /* Fondo tarjetas oscuro uniforme */
+  --card-bg-light: #1A1B20;        /* Hover de tarjetas */
+  --card-active-bg: #1C1813;       /* Estado seleccionado */
   --danger-badge: #E74C3C;         
   --salary-green: #2ECC71;         
 
@@ -53,7 +62,8 @@ img {
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
   --text-dark: #111827;            
-  --border-color: #28282B;          /* Borde sutil oscuro */
+  --border-color: #232429;          /* Borde sutil */
+  --border-hover: #353740;
 
   /* Bordes y Sombras */
   --radius-sm: 8px;
@@ -74,15 +84,12 @@ img {
 
   /* Assets SVG & Gradient Overlay */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(10,11,12,0.75) 0%, rgba(10,11,12,0.60) 100%);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(10,11,12,0.85) 0%, rgba(10,11,12,0.65) 100%);
   --banner-bg: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, rgba(22, 24, 26, 0.7) 100%);
   --modal-overlay-bg: rgba(0, 0, 0, 0.85);
   --select-option-bg: #1a1d24;
 }
 
-/* ==========================================================================
-   PALETA MODO CLARO (LIGHT MODE)
-   ========================================================================== */
 [data-theme="light"],
 .light-theme {
   --primary: #F39C12;              
@@ -90,8 +97,7 @@ img {
   --secondary: #F8FAFC;            
   --card-bg: #FFFFFF;              
   --card-bg-light: #F1F5F9;        
-  --whatsapp-orange: #F39C12;
-  --whatsapp-hover: #E67E22;
+  --card-active-bg: #FFF8EE;
   --danger-badge: #DC2626;         
   --salary-green: #16A34A;         
 
@@ -100,20 +106,20 @@ img {
   --text-muted: #64748B;           
   --text-dark: #111827;            
   --border-color: #E2E8F0;
+  --border-hover: #CBD5E1;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
 
-  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F39C12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.85) 0%, rgba(241, 245, 249, 0.70) 100%);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.88) 0%, rgba(241, 245, 249, 0.75) 100%);
   --banner-bg: linear-gradient(135deg, rgba(243, 156, 18, 0.12) 0%, rgba(255, 255, 255, 0.9) 100%);
   --modal-overlay-bg: rgba(15, 23, 42, 0.4);
   --select-option-bg: #F1F5F9;     
 }
 
 /* ==========================================================================
-   3. NAVBAR / HEADER
+   3. NAVBAR / HEADER (UX MEJORADA)
    ========================================================================== */
 .navbar {
   position: sticky;
@@ -121,8 +127,8 @@ img {
   z-index: var(--z-navbar);
   width: 100%;
   background-color: rgba(13, 13, 13, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   padding: 0.8rem 1.5rem;
@@ -146,7 +152,6 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-decoration: none;
 }
 
 .logo h2 {
@@ -155,7 +160,6 @@ img {
   letter-spacing: 1.8px;
   color: var(--text-main);
   line-height: 1;
-  margin: 0;
 }
 
 .logo-subtitle {
@@ -170,13 +174,13 @@ img {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.6rem;
   margin-left: auto;
 }
 
 .nav-link {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
   transition: var(--transition);
   background: none;
@@ -185,9 +189,10 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.5rem 0.85rem;
+  padding: 0.55rem 0.85rem;
   border-radius: var(--radius-sm);
   white-space: nowrap;
+  min-height: 44px; /* Target táctil mobile recomendado */
 }
 
 .nav-link:hover, 
@@ -196,11 +201,20 @@ img {
   background-color: rgba(243, 156, 18, 0.1);
 }
 
-[data-theme="light"] .nav-link:hover,
-[data-theme="light"] .nav-link.active,
-.light-theme .nav-link:hover,
-.light-theme .nav-link.active {
-  background-color: rgba(243, 156, 18, 0.1);
+/* Botón Destacado de Modo en Navbar */
+.nav-link.mode-toggle-btn {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-main);
+  font-weight: 700;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+}
+
+.nav-link.mode-toggle-btn:hover {
+  background-color: var(--primary);
+  color: var(--text-dark);
+  border-color: var(--primary);
 }
 
 /* Dropdown */
@@ -237,6 +251,7 @@ img {
   color: var(--text-main);
   transition: var(--transition);
   font-weight: 500;
+  min-height: 44px;
 }
 
 .dropdown-menu a:hover {
@@ -245,15 +260,15 @@ img {
 }
 
 /* ==========================================================================
-   4. HERO SECTION & FORMULARIO EXPRESS
+   4. HERO SECTION & ESCALADO DE IMAGEN
    ========================================================================== */
 .hero-section {
   position: relative;
   background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
-  padding: 3.5rem 1.5rem;
+  padding: 4rem 1.5rem;
   color: var(--text-main);
 }
 
@@ -275,11 +290,11 @@ img {
 }
 
 .hero-title {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 900;
-  line-height: 1.2;
+  line-height: 1.25;
   margin-bottom: 1rem;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.5px;
 }
 
 .hero-title .highlight {
@@ -324,6 +339,7 @@ img {
   letter-spacing: 0.6px;
   text-align: center;
   width: 100%;
+  min-height: 48px;
 }
 
 .btn-primary {
@@ -349,31 +365,11 @@ img {
   background-color: rgba(243, 156, 18, 0.05);
 }
 
-[data-theme="light"] .btn-secondary:hover,
-.light-theme .btn-secondary:hover {
-  background-color: rgba(243, 156, 18, 0.08);
-}
-
-.btn-accent {
-  background-color: #E67E22;
-  color: var(--text-dark);
-}
-
-.btn-accent:hover {
-  background-color: #D35400;
-  transform: translateY(-2px);
-}
-
 .btn-subtext {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-top: 0.2rem;
   display: block;
-}
-
-.highlight-express {
-  color: var(--primary);
-  font-weight: 700;
 }
 
 .hero-features {
@@ -397,9 +393,6 @@ img {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   display: none;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .hero-card-express.is-visible {
@@ -408,14 +401,8 @@ img {
 }
 
 @keyframes slideDownExpress {
-  from {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .card-header {
@@ -429,18 +416,6 @@ img {
   font-size: 1.2rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.text-warning {
-  color: var(--primary);
-}
-
-.hero-card-express p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
 }
 
 .express-form {
@@ -449,18 +424,8 @@ img {
   gap: 1rem;
 }
 
-.form-group {
-  width: 100%;
-}
-
-.form-row-2col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.express-form input,
-.form-group input {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 0.85rem 1rem;
   border: 1px solid var(--border-color);
@@ -470,56 +435,24 @@ img {
   outline: none;
   transition: var(--transition);
   color: var(--text-main);
+  min-height: 44px;
 }
 
-.express-form input::placeholder,
-.form-group input::placeholder {
-  color: var(--text-muted);
-  opacity: 0.8;
-}
-
-.express-form select,
 .form-group select {
-  width: 100%;
-  background-color: var(--bg-dark) !important;
-  color: var(--text-main) !important;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem 2.5rem 0.85rem 1rem !important;
-  font-size: 0.9rem;
-  cursor: pointer;
-  outline: none;
-  transition: var(--transition);
-
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
-  background-image: var(--select-arrow) !important;
-  background-repeat: no-repeat !important;
-  background-position: right 1rem center !important;
-  background-size: 0.7rem auto !important;
+  background-image: var(--select-arrow);
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.7rem auto;
 }
 
-.express-form select option,
-.form-group select option {
-  background-color: var(--select-option-bg);
-  color: var(--text-main);
-}
-
-.express-form optgroup,
-.form-group optgroup {
-  background-color: var(--card-bg);
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.express-form input:focus,
-.express-form select:focus,
-.form-group select:focus,
-.form-group input:focus {
+.form-group input:focus-visible,
+.form-group select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
 }
 
 .btn-whatsapp {
@@ -538,6 +471,7 @@ img {
   justify-content: center;
   gap: 0.6rem;
   transition: var(--transition);
+  min-height: 48px;
 }
 
 .btn-whatsapp:hover {
@@ -546,33 +480,22 @@ img {
   box-shadow: var(--shadow-md);
 }
 
-.response-tag {
-  display: block;
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 0.8rem;
-}
-
 /* ==========================================================================
-   5. CATEGORÍAS & GRIDS (DISEÑO 3X3)
+   5. CATEGORÍAS (DISEÑO EXACTO A LA REFERENCIA VISUAL)
    ========================================================================== */
-.categories-section, .main-grid-section, .stats-section, .info-section {
-  max-width: 1200px;
+.categories-section {
+  max-width: 1000px;
   margin: 3.5rem auto;
   padding: 0 1.5rem;
   width: 100%;
 }
 
 .categories-section .section-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   margin-bottom: 1.5rem;
 }
 
 .categories-section .section-header h2 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -580,19 +503,17 @@ img {
 }
 
 .categories-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
   width: 100%;
-  max-width: 980px;
-  margin: 0 auto;
 }
 
 .category-card {
-  background: #141416;
-  padding: 1.6rem 1rem;
-  border-radius: 10px;
-  border: 1px solid #28282B;
+  background-color: var(--card-bg);
+  padding: 1.8rem 1.2rem;
+  border-radius: var(--radius-lg); /* Curva suave de 16px */
+  border: 1px solid var(--border-color);
   text-align: center;
   cursor: pointer;
   transition: var(--transition);
@@ -600,40 +521,45 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
+  user-select: none;
 }
 
 .category-card:hover {
-  background-color: #1c1d21;
-  border-color: #404045;
+  background-color: var(--card-bg-light);
+  border-color: var(--border-hover);
   transform: translateY(-2px);
 }
 
-/* Estado Activo / Seleccionado */
 .category-card.active {
-  background: #1e1912;
+  background-color: var(--card-active-bg);
   border: 1.5px solid var(--primary);
-  box-shadow: 0 0 12px rgba(243, 156, 18, 0.15);
+  box-shadow: 0 0 16px rgba(243, 156, 18, 0.12);
 }
 
-.category-card i {
-  font-size: 1.8rem;
+.category-card i, 
+.category-card svg {
+  font-size: 2rem;
   color: #FFFFFF;
+  transition: var(--transition);
 }
 
-.category-card.active i {
+.category-card.active i,
+.category-card.active svg {
   color: var(--primary);
 }
 
 .category-card h3 {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #FFFFFF;
   margin: 0;
+  line-height: 1.3;
 }
 
 .category-card.active h3 {
   color: var(--primary);
+  font-weight: 700;
 }
 
 .category-card .count {
@@ -657,7 +583,7 @@ img {
   justify-content: space-between;
   gap: 1.5rem;
   box-shadow: var(--shadow-md);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition: var(--transition);
 }
 
 .banner-empresa-card:hover {
@@ -669,7 +595,6 @@ img {
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  text-align: left;
 }
 
 .banner-empresa-icon-wrapper {
@@ -690,19 +615,12 @@ img {
   font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-main);
-  margin: 0 0 0.25rem 0;
-  line-height: 1.3;
+  margin-bottom: 0.25rem;
 }
 
 .banner-empresa-text p {
   font-size: 0.88rem;
   color: var(--text-muted);
-  margin: 0;
-  line-height: 1.4;
-}
-
-.banner-empresa-action {
-  flex-shrink: 0;
 }
 
 .btn-banner-empresa {
@@ -718,7 +636,8 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: var(--transition);
+  min-height: 44px;
 }
 
 .btn-banner-empresa:hover {
@@ -727,14 +646,13 @@ img {
   box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
 }
 
-.btn-banner-empresa:active {
-  transform: translateY(0);
-}
-
 /* ==========================================================================
    7. TARJETAS DE OFERTAS DE EMPLEO
    ========================================================================== */
 .main-grid-section {
+  max-width: 1200px;
+  margin: 3.5rem auto;
+  padding: 0 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
@@ -756,11 +674,12 @@ img {
   outline: none;
   font-size: 0.9rem;
   transition: var(--transition);
+  min-height: 44px;
 }
 
-.search-bar input:focus {
+.search-bar input:focus-visible {
+  outline: 2px solid var(--primary);
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
 }
 
 .btn-search {
@@ -772,6 +691,7 @@ img {
   cursor: pointer;
   font-weight: 800;
   transition: var(--transition);
+  min-height: 44px;
 }
 
 .btn-search:hover {
@@ -820,7 +740,6 @@ img {
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--text-main);
-  line-height: 1.3;
 }
 
 .badge-urgente {
@@ -831,9 +750,6 @@ img {
   padding: 0.25rem 0.6rem;
   border-radius: 4px;
   text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
   letter-spacing: 0.5px;
 }
 
@@ -853,11 +769,6 @@ img {
   margin-top: 0.4rem;
 }
 
-.job-details-row i {
-  color: var(--primary);
-  margin-right: 0.3rem;
-}
-
 .job-salary {
   color: var(--salary-green);
   font-weight: 800;
@@ -873,25 +784,19 @@ img {
   gap: 1rem;
 }
 
-.job-time {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  line-height: 1.3;
-}
-
 .btn-postularme {
   background-color: var(--primary);
   color: var(--text-dark);
   font-weight: 800;
   font-size: 0.82rem;
-  padding: 0.7rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   transition: var(--transition);
   white-space: nowrap;
+  min-height: 44px;
 }
 
 .btn-postularme:hover {
@@ -900,184 +805,8 @@ img {
   box-shadow: var(--shadow-sm);
 }
 
-.link-more-full {
-  display: block;
-  text-align: center;
-  margin-top: 1.5rem;
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.9rem;
-  transition: var(--transition);
-}
-
-.link-more-full:hover {
-  text-decoration: underline;
-}
-
 /* ==========================================================================
-   8. SECCIÓN TALENTO & BLOG
-   ========================================================================== */
-.talent-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.talent-card {
-  background: var(--card-bg);
-  padding: 1.25rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  text-align: center;
-  transition: var(--transition);
-}
-
-.talent-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-
-.avatar-status {
-  position: relative;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 0.75rem;
-}
-
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--card-bg-light);
-  color: var(--text-main);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.95rem;
-  border: 1px solid var(--border-color);
-}
-
-.status-badge.active {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 12px;
-  height: 12px;
-  background: var(--salary-green);
-  border: 2px solid var(--card-bg);
-  border-radius: 50%;
-}
-
-.talent-card h3 { 
-  font-size: 0.9rem; 
-  font-weight: 700; 
-  margin-bottom: 0.2rem;
-}
-
-.talent-card .role { 
-  font-size: 0.8rem; 
-  color: var(--primary); 
-  font-weight: 600; 
-  margin-bottom: 0.2rem;
-}
-
-.talent-card .rating { 
-  font-size: 0.78rem; 
-  color: var(--primary); 
-  margin: 0.3rem 0; 
-}
-
-.talent-card .detail { 
-  font-size: 0.75rem; 
-  color: var(--text-muted); 
-  margin-bottom: 0.5rem; 
-}
-
-.talent-card .location { 
-  font-size: 0.75rem; 
-  color: var(--text-muted); 
-  display: block;
-}
-
-.blog-banner {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 2rem;
-  border-radius: var(--radius-md);
-  line-height: 1.6;
-}
-
-.blog-banner h2 {
-  font-size: 1.15rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-}
-
-.blog-banner p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 1.2rem;
-}
-
-/* ==========================================================================
-   9. ESTADÍSTICAS E INFORMACIÓN
-   ========================================================================== */
-.stats-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 2rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 2rem;
-  border-radius: var(--radius-md);
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.stat-item i {
-  font-size: 2rem;
-  color: var(--primary);
-}
-
-.stat-info h4 { 
-  font-size: 1.3rem; 
-  font-weight: 900; 
-  line-height: 1; 
-  margin-bottom: 0.2rem;
-}
-
-.stat-info p { 
-  font-size: 0.78rem; 
-  color: var(--text-muted); 
-}
-
-.info-section {
-  text-align: center;
-}
-
-.info-section h2 {
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
-}
-
-.info-section p {
-  color: var(--text-muted);
-  font-size: 0.92rem;
-  max-width: 650px;
-  margin: 0 auto;
-  line-height: 1.7;
-}
-
-/* ==========================================================================
-   10. MODALES GENERALES & TOASTS
+   8. MODALES GENERALES & TOASTS
    ========================================================================== */
 .jobbers-modal {
   display: none;
@@ -1109,7 +838,6 @@ img {
   box-shadow: var(--shadow-lg);
   color: var(--text-main);
   animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
 }
 
 @keyframes modalFadeIn {
@@ -1120,23 +848,6 @@ img {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-.jobbers-close-btn {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 1.8rem;
-  cursor: pointer;
-  line-height: 1;
-  transition: var(--transition);
-}
-
-.jobbers-close-btn:hover {
-  color: var(--text-main);
 }
 
 #toast-container {
@@ -1162,7 +873,6 @@ img {
   display: flex;
   align-items: center;
   gap: 10px;
-  will-change: transform, opacity;
   animation: toastIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -1175,7 +885,7 @@ img {
 }
 
 /* ==========================================================================
-   11. BOTTOM NAV (MOBILE)
+   9. BOTTOM NAV (MOBILE ACCESIBLE)
    ========================================================================== */
 .bottom-nav {
   position: fixed;
@@ -1194,36 +904,29 @@ img {
   padding: 0 0.5rem;
 }
 
-[data-theme="light"] .bottom-nav,
-.light-theme .bottom-nav {
-  background: rgba(255, 255, 255, 0.92);
-}
-
 .bottom-nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 3px;
   font-size: 0.7rem;
   color: var(--text-muted);
   transition: var(--transition);
+  min-width: 48px;
+  min-height: 48px;
 }
 
 .bottom-nav-item i { font-size: 1.2rem; }
 .bottom-nav-item.active { color: var(--primary); }
 
-.bottom-nav-item.highlight-item {
-  color: var(--primary);
-  font-weight: 700;
-}
-
 /* ==========================================================================
-   12. MEDIA QUERIES (DESKTOP / TABLET / MOBILE)
+   10. MEDIA QUERIES (DESKTOP & RESPONSIVE)
    ========================================================================== */
 @media (max-width: 768px) {
   .categories-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.8rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
   }
 
   .banner-empresa-card {
@@ -1238,10 +941,6 @@ img {
     text-align: center;
   }
 
-  .banner-empresa-action {
-    width: 100%;
-  }
-
   .btn-banner-empresa {
     width: 100%;
     justify-content: center;
@@ -1250,17 +949,7 @@ img {
 
 @media (max-width: 480px) {
   .categories-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (min-width: 600px) {
-  .form-row-2col {
-    flex-direction: row;
-  }
-
-  .form-row-2col .form-group {
-    flex: 1;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1269,7 +958,7 @@ img {
   .bottom-nav { display: none; }
 
   .hero-section {
-    padding: 5rem 2rem;
+    padding: 5.5rem 2rem;
   }
 
   .hero-container {
@@ -1292,10 +981,6 @@ img {
     flex: 1;
   }
 
-  .btn-primary, .btn-secondary, .btn-accent {
-    width: 100%;
-  }
-
   .main-grid-section {
     grid-template-columns: 1.8fr 1.2fr;
   }
@@ -1313,7 +998,6 @@ img {
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    text-align: right;
   }
 
   #toast-container {
@@ -1321,194 +1005,12 @@ img {
   }
 }
 
-/* ==========================================================================
-   13. COMPONENTES ADICIONALES
-   ========================================================================== */
-.talento-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.25rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition: var(--transition);
-  position: relative;
-}
-
-.talento-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-
-.talento-avatar-container {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 0.75rem;
-}
-
-.talento-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--primary);
-  background-color: var(--card-bg-light);
-}
-
-.talento-badge-online {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
-  background-color: var(--salary-green);
-  border: 2px solid var(--card-bg);
-  border-radius: 50%;
-}
-
-.talento-nombre {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.2rem;
-}
-
-.talento-puesto {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.4rem;
-}
-
-.talento-info-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-bottom: 0.8rem;
-}
-
-.talento-exp {
-  font-weight: 600;
-}
-
-.talento-badge-dispo {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--salary-green);
-  background: rgba(46, 204, 113, 0.1);
-  padding: 0.25rem 0.6rem;
-  border-radius: 20px;
-  margin-bottom: 0.8rem;
-}
-
-.btn-contacto-talento {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 800;
-  border-radius: var(--radius-sm);
-  background-color: transparent;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  cursor: pointer;
-  transition: var(--transition);
-  text-transform: uppercase;
-}
-
-.btn-contacto-talento:hover {
-  background-color: var(--primary);
-  color: var(--text-dark);
-}
-
-.comunidad-banner-card {
-  background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-light) 100%);
-  border: 1px solid var(--border-color);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: var(--shadow-sm);
-}
-
-@media (min-width: 600px) {
-  .comunidad-banner-card {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+/* Movimiento reducido para usuarios con sensibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-}
-
-.comunidad-banner-content h3 {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.3rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.comunidad-banner-content p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-.btn-comunidad-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  background-color: var(--primary);
-  color: var(--text-dark);
-  font-weight: 800;
-  font-size: 0.82rem;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: var(--transition);
-}
-
-.btn-comunidad-action:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-/* ==========================================================================
-   14. CONTROL DE VISIBILIDAD SEGÚN ROL (CANDIDATO / EMPRESA)
-   ========================================================================== */
-.role-candidato-only,
-.role-empresa-only {
-  display: none !important;
-}
-
-body[data-role="candidato"] .role-candidato-only {
-  display: flex !important;
-}
-
-body[data-role="empresa"] .role-empresa-only {
-  display: flex !important;
-}
-
-body[data-role="candidato"] blockquote.role-candidato-only,
-body[data-role="candidato"] div.role-candidato-only,
-body[data-role="empresa"] div.role-empresa-only {
-  display: block !important;
-}
-
-body[data-role="empresa"] .talent-grid.role-empresa-only {
-  display: grid !important;
 }
