@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,6 +34,23 @@
             --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
             --glow-primary: rgba(243, 156, 18, 0.25);
             --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Control de visibilidad por rol en body */
+        body.role-postulante .modo-empresa-only {
+            display: none !important;
+        }
+
+        body.role-postulante .modo-postulante-only {
+            display: inline-flex !important;
+        }
+
+        body.role-empresa .modo-postulante-only {
+            display: none !important;
+        }
+
+        body.role-empresa .modo-empresa-only {
+            display: inline-flex !important;
         }
 
         /* Hero & Centrado */
@@ -78,6 +96,16 @@
             color: rgba(255, 255, 255, 0.85);
             max-width: 680px;
             margin: 0.8rem auto 1.5rem auto;
+        }
+
+        /* Categorías Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 1rem;
         }
 
         /* Tarjetas con Imagen */
@@ -162,6 +190,9 @@
             }
             .hero-title {
                 font-size: 1.8rem;
+            }
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -383,7 +414,7 @@
                                 <h3 style="letter-spacing: 1px; font-size: 0.9rem; color: var(--text-muted);">BUSCÁ POR CATEGORÍA</h3>
                             </div>
 
-                            <div class="categories-grid" aria-label="Filtrar vacantes por categoría" style="gap: 0.8rem; margin-top: 1rem;">
+                            <div class="categories-grid" aria-label="Filtrar vacantes por categoría">
                                 <button type="button" class="category-card btn-categoria active" data-cat="todas">
                                     <i class="fas fa-border-all cat-icon"></i>
                                     <h3>Todas</h3>
@@ -410,7 +441,15 @@
                                 </button>
                                 <button type="button" class="category-card btn-categoria" data-cat="limpieza">
                                     <i class="fas fa-pump-soap cat-icon"></i>
-                                    <h3>Bacha</h3>
+                                    <h3>Bacha / Limpieza</h3>
+                                </button>
+                                <button type="button" class="category-card btn-categoria" data-cat="rrhh">
+                                    <i class="fas fa-briefcase cat-icon"></i>
+                                    <h3>RRHH / Gestión</h3>
+                                </button>
+                                <button type="button" class="category-card btn-categoria" data-cat="administracion">
+                                    <i class="fas fa-chart-pie cat-icon"></i>
+                                    <h3>Administración</h3>
                                 </button>
                             </div>
                         </div>
@@ -441,7 +480,6 @@
                 <span id="contador-vacantes" style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; display: block; margin-top: 0.3rem;">Cargando vacantes en Córdoba...</span>
             </div>
 
-            <!-- EJEMPLO DE TARJETA CON IMAGEN ACOMODADA Y OPTIMIZADA -->
             <div id="lista-vacantes" style="display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem;">
                 
                 <article class="card-job-item">
@@ -615,7 +653,6 @@
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Profesionales de la gastronomía disponibles para contratación directa.</p>
             </div>
 
-            <!-- EJEMPLO TARJETA TALENTO CON FOTO -->
             <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
                 
                 <div style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.5rem; text-align: center; box-shadow: var(--card-shadow); transition: var(--transition-fast);">
