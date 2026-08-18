@@ -1,6 +1,6 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica de interacción, filtrado y flujo de modales.
+ * Archivo: js/main.js
  */
 
 // =========================================================================
