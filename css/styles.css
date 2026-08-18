@@ -39,21 +39,21 @@ img {
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;              /* Ámbar / Naranja brillante intacto */
+  --primary: #F39C12;              /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;            /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;              /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;        /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;      /* Botón de acción principal */
+  --secondary: #0D0D0D;            
+  --card-bg: #141416;              /* Fondo tarjetas oscuro de la imagen */
+  --card-bg-light: #1c1d21;        /* Hover de tarjetas */
+  --whatsapp-orange: #F39C12;      
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;         /* Badge Urgente y errores */
-  --salary-green: #2ECC71;         /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;         
+  --salary-green: #2ECC71;         
 
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
-  --text-dark: #111827;            /* Texto sobre botones amarillos/naranjas */
-  --border-color: #2D3137;
+  --text-dark: #111827;            
+  --border-color: #28282B;          /* Borde sutil oscuro */
 
   /* Bordes y Sombras */
   --radius-sm: 8px;
@@ -85,32 +85,31 @@ img {
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #F39C12;              /* Se conserva el color original */
+  --primary: #F39C12;              
   --primary-hover: #D68910;
-  --secondary: #F8FAFC;            /* Fondo ultra claro */
-  --card-bg: #FFFFFF;              /* Blanco puro para tarjetas */
-  --card-bg-light: #F1F5F9;        /* Hover y tarjetas secundarias */
+  --secondary: #F8FAFC;            
+  --card-bg: #FFFFFF;              
+  --card-bg-light: #F1F5F9;        
   --whatsapp-orange: #F39C12;
   --whatsapp-hover: #E67E22;
-  --danger-badge: #DC2626;         /* Rojo semántico contrastado */
-  --salary-green: #16A34A;         /* Verde accesible sobre blanco */
+  --danger-badge: #DC2626;         
+  --salary-green: #16A34A;         
 
   --bg-dark: #F8FAFC;              
-  --text-main: #0F172A;            /* Azul muy oscuro / Casi negro */
-  --text-muted: #64748B;           /* Texto secundario gris */
-  --text-dark: #111827;            /* Texto oscuro para contraste sobre amarillo */
+  --text-main: #0F172A;            
+  --text-muted: #64748B;           
+  --text-dark: #111827;            
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
 
-  /* Sobrescrituras de Assets para Light Mode */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F39C12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.97) 0%, rgba(241, 245, 249, 0.90) 100%);
   --banner-bg: linear-gradient(135deg, rgba(243, 156, 18, 0.12) 0%, rgba(255, 255, 255, 0.9) 100%);
   --modal-overlay-bg: rgba(15, 23, 42, 0.4);
-  --select-option-bg: #F1F5F9;     /* Fondo contrastado para opciones en modo claro */
+  --select-option-bg: #F1F5F9;     
 }
 
 /* ==========================================================================
@@ -554,72 +553,85 @@ img {
 }
 
 /* ==========================================================================
-   5. CATEGORÍAS & GRIDS
+   5. CATEGORÍAS & GRIDS (DISEÑO 3X3 DE LA IMAGEN)
    ========================================================================== */
 .categories-section, .main-grid-section, .stats-section, .info-section {
   max-width: 1200px;
   margin: 3.5rem auto;
   padding: 0 1.5rem;
+  width: 100%;
 }
 
-.section-header {
+.categories-section .section-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
 }
 
-.section-header h2 {
+.categories-section .section-header h2 {
   font-size: 1.15rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-}
-
-.link-more {
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.85rem;
-  transition: var(--transition);
-}
-
-.link-more:hover {
-  text-decoration: underline;
+  color: var(--text-main);
 }
 
 .categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1.2rem;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 1rem;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
 .category-card {
-  background: var(--card-bg);
-  padding: 1.4rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
+  background: #141416;
+  padding: 1.6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #28282B;
   text-align: center;
   cursor: pointer;
   transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  background-color: var(--card-bg-light);
-  box-shadow: var(--shadow-md);
+  background-color: #1c1d21;
+  border-color: #404045;
+  transform: translateY(-2px);
+}
+
+/* Estado Activo / Seleccionado (como "Todas" en la imagen) */
+.category-card.active {
+  background: #1e1912;
+  border: 1.5px solid var(--primary);
+  box-shadow: 0 0 12px rgba(243, 156, 18, 0.15);
 }
 
 .category-card i {
   font-size: 1.8rem;
+  color: #FFFFFF;
+}
+
+.category-card.active i {
   color: var(--primary);
-  margin-bottom: 0.6rem;
 }
 
 .category-card h3 {
-  font-size: 0.88rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.category-card.active h3 {
+  color: var(--primary);
 }
 
 .category-card .count {
@@ -1204,10 +1216,14 @@ img {
 }
 
 /* ==========================================================================
-   12. MEDIA QUERIES (DESKTOP / TABLET)
+   12. MEDIA QUERIES (DESKTOP / TABLET / MOBILE)
    ========================================================================== */
 @media (max-width: 768px) {
-  /* Banner Empresa Adaptación Mobile */
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.8rem;
+  }
+
   .banner-empresa-card {
     flex-direction: column;
     align-items: stretch;
@@ -1227,6 +1243,12 @@ img {
   .btn-banner-empresa {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
