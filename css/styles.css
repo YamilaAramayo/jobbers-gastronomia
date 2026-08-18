@@ -1,11 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================================================
-   1. VARIABLES & RESET
+   1. RESET GLOBAL & BASE
+   ========================================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.6;
+  padding-bottom: 80px; /* Offset para el Bottom Nav mobile */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+[onclick] {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   2. VARIABLES DE DISEÑO
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
-  --primary: #F39C12;             /* Ámbar / Naranja brillante */
+  --primary: #F39C12;             /* Ámbar / Naranja brillante intacto */
   --primary-hover: #D68910;
   --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
   --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
@@ -50,20 +84,20 @@
    ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;             /* Ámbar / Naranja oscuro para contraste */
-  --primary-hover: #B56900;
+  --primary: #F39C12;             /* Se conserva el color original */
+  --primary-hover: #D68910;
   --secondary: #F8FAFC;           /* Fondo ultra claro */
   --card-bg: #FFFFFF;             /* Blanco puro para tarjetas */
   --card-bg-light: #F1F5F9;       /* Hover y tarjetas secundarias */
-  --whatsapp-orange: #D67E00;
-  --whatsapp-hover: #B56900;
+  --whatsapp-orange: #F39C12;
+  --whatsapp-hover: #E67E22;
   --danger-badge: #DC2626;        /* Rojo semántico contrastado */
   --salary-green: #16A34A;        /* Verde accesible sobre blanco */
 
   --bg-dark: #F8FAFC;             
   --text-main: #0F172A;           /* Azul muy oscuro / Casi negro */
   --text-muted: #64748B;          /* Texto secundario gris */
-  --text-dark: #FFFFFF;           /* Texto sobre botones primarios */
+  --text-dark: #111827;           /* Texto oscuro para contraste sobre amarillo */
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
@@ -71,45 +105,14 @@
   --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
 
   /* Sobrescrituras de Assets para Light Mode */
-  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F39C12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.97) 0%, rgba(241, 245, 249, 0.90) 100%);
   --modal-overlay-bg: rgba(15, 23, 42, 0.4);
-  --select-option-bg: #FFFFFF;
-}
-
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  line-height: 1.6;
-  padding-bottom: 80px; /* Offset para el Bottom Nav mobile */
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-[onclick] {
-  cursor: pointer;
+  --select-option-bg: #F1F5F9;     /* Fondo contrastado para opciones en modo claro */
 }
 
 /* ==========================================================================
-   2. NAVBAR / HEADER
+   3. NAVBAR / HEADER
    ========================================================================== */
 .navbar {
   position: sticky;
@@ -196,7 +199,7 @@ img {
 [data-theme="light"] .nav-link.active,
 .light-theme .nav-link:hover,
 .light-theme .nav-link.active {
-  background-color: rgba(214, 126, 0, 0.08);
+  background-color: rgba(243, 156, 18, 0.1);
 }
 
 /* Dropdown */
@@ -241,7 +244,7 @@ img {
 }
 
 /* ==========================================================================
-   3. HERO SECTION & FORMULARIO EXPRESS
+   4. HERO SECTION & FORMULARIO EXPRESS
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -345,7 +348,7 @@ img {
 
 [data-theme="light"] .btn-secondary:hover,
 .light-theme .btn-secondary:hover {
-  background-color: rgba(214, 126, 0, 0.08);
+  background-color: rgba(243, 156, 18, 0.08);
 }
 
 .btn-accent {
@@ -549,7 +552,7 @@ img {
 }
 
 /* ==========================================================================
-   4. CATEGORÍAS & GRIDS
+   5. CATEGORÍAS & GRIDS
    ========================================================================== */
 .categories-section, .main-grid-section, .stats-section, .info-section {
   max-width: 1200px;
@@ -623,7 +626,7 @@ img {
 }
 
 /* ==========================================================================
-   5. TARJETAS DE OFERTAS DE EMPLEO
+   6. TARJETAS DE OFERTAS DE EMPLEO
    ========================================================================== */
 .main-grid-section {
   display: grid;
@@ -806,7 +809,7 @@ img {
 }
 
 /* ==========================================================================
-   6. SECCIÓN TALENTO & BLOG
+   7. SECCIÓN TALENTO & BLOG
    ========================================================================== */
 .talent-grid {
   display: grid;
@@ -915,7 +918,7 @@ img {
 }
 
 /* ==========================================================================
-   7. ESTADÍSTICAS E INFORMACIÓN
+   8. ESTADÍSTICAS E INFORMACIÓN
    ========================================================================== */
 .stats-section {
   display: grid;
@@ -968,7 +971,7 @@ img {
 }
 
 /* ==========================================================================
-   8. MODALES GENERALES & TOASTS
+   9. MODALES GENERALES & TOASTS
    ========================================================================== */
 .jobbers-modal {
   display: none;
@@ -1066,7 +1069,7 @@ img {
 }
 
 /* ==========================================================================
-   9. BOTTOM NAV (MOBILE)
+   10. BOTTOM NAV (MOBILE)
    ========================================================================== */
 .bottom-nav {
   position: fixed;
@@ -1109,7 +1112,7 @@ img {
 }
 
 /* ==========================================================================
-   10. MEDIA QUERIES (DESKTOP / TABLET)
+   11. MEDIA QUERIES (DESKTOP / TABLET)
    ========================================================================== */
 @media (min-width: 600px) {
   .form-row-2col {
@@ -1177,11 +1180,10 @@ img {
     bottom: 24px;
   }
 }
-/* ==========================================================================
-   11. COMPONENTES ADICIONALES: TALENTO DESTACADO & BANNER COMUNIDAD
-   ========================================================================== */
 
-/* Tarjetas de Talento Destacado */
+/* ==========================================================================
+   12. COMPONENTES ADICIONALES: TALENTO DESTACADO & BANNER COMUNIDAD
+   ========================================================================== */
 .talento-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -1285,7 +1287,6 @@ img {
   color: var(--text-dark);
 }
 
-/* Banner de Comunidad Jobbers */
 .comunidad-banner-card {
   background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-light) 100%);
   border: 1px solid var(--border-color);
