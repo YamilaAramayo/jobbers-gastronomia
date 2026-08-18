@@ -1,14 +1,16 @@
 /**
  * JOBBERS ARGENTINA - Portal de Empleo Gastronómico
- * Lógica principal optimizada, reactiva y blindada con contador y requisitos.
+ * Lógica de interacción, filtrado y flujo de modales.
  */
 
 // =========================================================================
-// 1. FUNCIONES GLOBALES & HELPERS
+// 1. ESTADO GLOBAL & HELPERS
 // =========================================================================
-let whatsappEmpleadorActual = "";
+let whatsappEmpleadorActual = "5493513080197";
 let tituloPuestoActual = "";
 window.rolSeleccionadoTemp = null;
+let listaVacantesBD = [];
+let categoriaActual = "todas";
 
 function getVal(id) {
     const el = document.getElementById(id);
@@ -24,6 +26,34 @@ function escapeHTML(str) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
+function normalizarTexto(str) {
+    if (!str) return "";
+    return str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s]/gi, "")
+        .trim();
+}
+
+function normalizarCategoria(cat) {
+    const c = normalizarTexto(cat);
+    if (!c || c.includes("todas") || c === "all") return "todas";
+    if (c.includes("cocin")) return "cocina";
+    if (c.includes("salon") || c.includes("mozo") || c.includes("camarer")) return "salon";
+    if (c.includes("barist")) return "barismo";
+    if (c.includes("bar") || c.includes("coctel") || c.includes("bartender")) return "barra";
+    if (c.includes("delivery") || c.includes("repart")) return "delivery";
+    if (c.includes("limpieza") || c.includes("bach")) return "limpieza";
+    if (c.includes("rrhh") || c.includes("recurs") || c.includes("gestion")) return "rrhh";
+    if (c.includes("admin")) return "administracion";
+    return c;
+}
+
+// =========================================================================
+// 2. MODALES & NOTIFICACIONES
+// =========================================================================
 
 // --- MODAL POSTULACIÓN ---
 window.abrirModalPostulacion = function(puesto, empresa, whatsappTel) {
@@ -52,7 +82,46 @@ window.cerrarModalPostulacion = function() {
     if (formEl) formEl.reset();
 };
 
-// --- MODAL CALCULADORA DE HORARIOS & SUELDOS ---
+// --- MODAL MEMBRESÍA PRO ---
+window.abrirModalMembresia = function() {
+    const modal = document.getElementById('modal-membresia-pro');
+    if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+};
+
+window.cerrarModalMembresia = function() {
+    const modal = document.getElementById('modal-membresia-pro');
+    const form = document.getElementById('form-membresia-pro');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+    if (form) form.reset();
+};
+
+window.enviarMembresiaWhatsApp = function(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
+    const nombre = getVal('pro-nombre');
+    const puesto = getVal('pro-puesto');
+
+    if (!nombre || !puesto) {
+        window.mostrarToast('Por favor completá tu nombre y puesto.', 'error');
+        return;
+    }
+
+    const mensaje = `Hola Jobbers! 👋 Mi nombre es *${nombre}* (${puesto}). Me gustaría solicitar el Pase *JOBBERS PRO* para destacar mi perfil en la plataforma.`;
+    const url = `https://wa.me/5493513080197?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, '_blank');
+    window.cerrarModalMembresia();
+};
+
+// --- MODAL CALCULADORA DE SALARIOS ---
 window.abrirModalCalculadora = function(e) {
     if (e) e.preventDefault();
     const modal = document.getElementById('modal-calculadora');
@@ -73,7 +142,7 @@ window.cerrarModalCalculadora = function() {
 };
 
 window.cambiarModoCalculadora = function() {
-    const tipo = document.getElementById('calc-tipo').value;
+    const tipo = getVal('calc-tipo');
     const grupoBase = document.getElementById('grupo-base-sueldo');
     const grupoJornada = document.getElementById('grupo-jornada-tipo');
     const grupoHoras = document.getElementById('grupo-horas-extra');
@@ -90,34 +159,32 @@ window.cambiarModoCalculadora = function() {
 };
 
 window.calcularHorariosSueldo = function() {
-    const tipo = document.getElementById('calc-tipo').value;
-    const sueldoBase = parseFloat(document.getElementById('calc-sueldo-base').value) || 0;
+    const tipo = getVal('calc-tipo');
+    const sueldoBase = parseFloat(getVal('calc-sueldo-base')) || 0;
     const outputDiv = document.getElementById('resultado-calculadora');
     const outputValor = document.getElementById('calc-output-valor');
 
     let resultado = 0;
 
     if (tipo === 'jornada') {
-        const modalidad = document.getElementById('calc-modalidad').value;
-        if (modalidad === 'full') {
-            resultado = sueldoBase;
-        } else if (modalidad === 'part') {
-            resultado = sueldoBase * 0.5;
-        } else if (modalidad === 'franco') {
-            resultado = (sueldoBase / 25) / 2;
-        }
+        const modalidad = getVal('calc-modalidad');
+        if (modalidad === 'full') resultado = sueldoBase;
+        else if (modalidad === 'part') resultado = sueldoBase * 0.5;
+        else if (modalidad === 'franco') resultado = (sueldoBase / 25) / 2;
+
         if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
     } else {
-        const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
+        const horas = parseFloat(getVal('calc-cant-horas')) || 0;
         const valorHoraExtra = (sueldoBase / 200) * 1.5;
         resultado = valorHoraExtra * horas;
+
         if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})} (Estimado X ${horas}hs)`;
     }
 
     if (outputDiv) outputDiv.style.display = 'block';
 };
 
-// --- MODAL CAMBIAR PERFIL ---
+// --- MODAL SELECCIÓN DE PERFIL ---
 window.abrirModalPerfil = function() {
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const stepSelect = document.getElementById('rol-step-select');
@@ -142,7 +209,6 @@ window.cerrarModalPerfil = function() {
     window.rolSeleccionadoTemp = null;
 };
 
-// --- SELECCIÓN DIRECTA DE ROL ---
 window.seleccionarRol = function(rol, nombreRol) {
     window.rolSeleccionadoTemp = rol;
 
@@ -158,7 +224,7 @@ window.seleccionarRol = function(rol, nombreRol) {
     if (stepConfirm) stepConfirm.style.display = 'block';
 };
 
-// --- WHATSAPP & TALENTO ---
+// --- ENVÍOS DE FORMULARIOS A WHATSAPP ---
 window.enviarPostulacionWhatsApp = function(e) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
@@ -211,12 +277,9 @@ window.mostrarToast = function(mensaje, tipo = 'success') {
 };
 
 // =========================================================================
-// 2. LÓGICA PRINCIPAL AL CARGAR EL DOM
+// 3. CARGA DE DOM & LÓGICA DE NEGOCIO
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-
-    let listaVacantesBD = [];
-    let categoriaActual = 'todas';
 
     const MOCK_TALENTO = [
         {
@@ -245,7 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // --- RENDERIZADO DE VACANTES, TALENTO Y CONTADOR REACTIVO ---
     function actualizarContador(cantidad) {
         const contadorEl = document.getElementById('contador-vacantes');
         if (contadorEl) {
@@ -326,7 +388,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // --- CARGA JSON ---
     async function cargarVacantes() {
         try {
             const respuesta = await fetch('./base_de_datos.json');
@@ -356,7 +417,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- GESTIÓN DE ROLES & LOCALSTORAGE ---
     function aplicarRol(rol) {
         document.body.classList.remove('role-postulante', 'role-empresa');
         document.body.classList.add(`role-${rol}`);
@@ -383,7 +443,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- LISTENERS DEL MODAL DE PERFIL DE USUARIO ---
+    // --- FILTRADO DE BÚSQUEDA Y CATEGORÍAS ---
+    const inputBuscador = document.getElementById('job-search-input');
+    const btnBuscador = document.querySelector('.btn-search');
+    const categoryChips = document.querySelectorAll('.btn-categoria');
+
+    function filtrarEmpleos() {
+        const termino = normalizarTexto(inputBuscador ? inputBuscador.value : '');
+
+        const resultados = listaVacantesBD.filter(v => {
+            const titulo = normalizarTexto(v.titulo);
+            const empresa = normalizarTexto(v.empresa);
+            const zona = normalizarTexto(v.zona);
+            const catVacante = normalizarCategoria(v.categoria || v.titulo);
+
+            const coincideTexto = !termino || 
+                titulo.includes(termino) || 
+                empresa.includes(termino) || 
+                zona.includes(termino);
+
+            let coincideCategoria = true;
+            if (categoriaActual !== 'todas') {
+                coincideCategoria = (catVacante === categoriaActual) || titulo.includes(categoriaActual);
+            }
+
+            return coincideTexto && coincideCategoria;
+        });
+
+        renderizarVacantes(resultados);
+    }
+
+    inputBuscador?.addEventListener('input', filtrarEmpleos);
+    btnBuscador?.addEventListener('click', (e) => {
+        e.preventDefault();
+        filtrarEmpleos();
+    });
+
+    categoryChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            categoryChips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
+            categoriaActual = normalizarCategoria(catAttr || chip.textContent);
+
+            filtrarEmpleos();
+        });
+    });
+
+    // --- EVENTOS DEL MODAL DE SELECCIÓN DE ROL ---
     document.querySelectorAll('.btn-trigger-modal-perfil, .btn-cambiar-rol').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -423,90 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.cerrarModalPerfil();
     });
 
-    const modalPerfil = document.getElementById('modal-cambiar-perfil');
-    modalPerfil?.addEventListener('click', (e) => {
-        if (e.target === modalPerfil) {
-            if (!localStorage.getItem('jobbers_role')) aplicarRol('postulante');
-            window.cerrarModalPerfil();
-        }
-    });
-
-    // --- FILTRADO DE BUSQUEDA ---
-    const inputBuscador = document.getElementById('job-search-input');
-    const btnBuscador = document.querySelector('.btn-search');
-    const categoryChips = document.querySelectorAll('.category-chips .chip, .chip, .btn-categoria');
-    const categoryChips = document.querySelectorAll('.btn-categoria');
-
-    function normalizarTexto(str) {
-        if (!str) return '';
-        return str.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^\w\s]/gi, '')
-            .trim();
-    }
-
-    function normalizarCategoria(cat) {
-        const c = normalizarTexto(cat);
-        if (!c || c.includes('todas') || c === 'all') return 'todas';
-        if (c.includes('cocin')) return 'cocina';
-        if (c.includes('salon') || c.includes('mozo') || c.includes('camarer')) return 'salon';
-        if (c.includes('bar') || c.includes('barist') || c.includes('coctel')) return 'barra';
-        if (c.includes('delivery') || c.includes('repart')) return 'delivery';
-        if (c.includes('limpieza') || c.includes('bach')) return 'limpieza';
-        if (c.includes('rrhh') || c.includes('recurs')) return 'rrhh';
-        return c;
-    }
-
-    function filtrarEmpleos() {
-        const termino = normalizarTexto(inputBuscador ? inputBuscador.value : '');
-
-        const resultados = listaVacantesBD.filter(v => {
-            const titulo = normalizarTexto(v.titulo);
-            const empresa = normalizarTexto(v.empresa);
-            const zona = normalizarTexto(v.zona);
-            const catVacante = normalizarCategoria(v.categoria || v.titulo);
-
-            const coincideTexto = !termino || 
-                titulo.includes(termino) || 
-                empresa.includes(termino) || 
-                zona.includes(termino);
-
-            let coincideCategoria = true;
-            if (categoriaActual !== 'todas') {
-                coincideCategoria = (catVacante === categoriaActual) || 
-                coincideCategoria = (catVacante === categoryActualSafe()) || 
-                                   titulo.includes(categoriaActual);
-            }
-
-            return coincideTexto && coincideCategoria;
-        });
-
-        renderizarVacantes(resultados);
-    }
-
-    function categoryActualSafe() {
-        return categoriaActual;
-    }
-
-    inputBuscador?.addEventListener('input', filtrarEmpleos);
-    btnBuscador?.addEventListener('click', (e) => {
-        e.preventDefault();
-        filtrarEmpleos();
-    });
-
-    categoryChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            categoryChips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-
-            const catAttr = chip.dataset.cat || chip.getAttribute('data-cat');
-            categoriaActual = normalizarCategoria(catAttr || chip.textContent);
-
-            filtrarEmpleos();
-        });
-    });
-
-    // --- FORMULARIO EXPRESS EMPRESAS (Actualizado con Requisitos) ---
+    // --- FORMULARIO EXPRESS PARA EMPRESAS ---
     const formExpress = document.getElementById('form-publicar-express');
     formExpress?.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -546,16 +571,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     });
 
-    // --- ESCUCHADORES EXTRA DE MODALES Y BINDINGS ---
+    // --- MANEJO DE TECLA ESC Y CIERRE DE MODALES ---
     document.getElementById('form-postularme')?.addEventListener('submit', window.enviarPostulacionWhatsApp);
 
     document.querySelectorAll('.btn-cerrar-postular').forEach(btn => {
         btn.addEventListener('click', window.cerrarModalPostulacion);
-    });
-
-    const modalPostularme = document.getElementById('postular-modal');
-    modalPostularme?.addEventListener('click', (e) => {
-        if (e.target === modalPostularme) window.cerrarModalPostulacion();
     });
 
     document.addEventListener('keydown', (e) => {
@@ -563,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.cerrarModalPostulacion();
             window.cerrarModalPerfil();
             window.cerrarModalCalculadora();
+            window.cerrarModalMembresia();
         }
     });
 
