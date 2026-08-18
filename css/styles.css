@@ -42,7 +42,7 @@ img {
   --primary: #F39C12;              /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
   --secondary: #0D0D0D;            
-  --card-bg: #141416;              /* Fondo tarjetas oscuro de la imagen */
+  --card-bg: #141416;              /* Fondo tarjetas oscuro */
   --card-bg-light: #1c1d21;        /* Hover de tarjetas */
   --whatsapp-orange: #F39C12;      
   --whatsapp-hover: #E67E22;
@@ -555,7 +555,7 @@ img {
 }
 
 /* ==========================================================================
-   5. CATEGORÍAS & GRIDS (DISEÑO 3X3 DE LA IMAGEN)
+   5. CATEGORÍAS & GRIDS (DISEÑO 3X3)
    ========================================================================== */
 .categories-section, .main-grid-section, .stats-section, .info-section {
   max-width: 1200px;
@@ -609,7 +609,7 @@ img {
   transform: translateY(-2px);
 }
 
-/* Estado Activo / Seleccionado (como "Todas" en la imagen) */
+/* Estado Activo / Seleccionado */
 .category-card.active {
   background: #1e1912;
   border: 1.5px solid var(--primary);
@@ -642,7 +642,7 @@ img {
 }
 
 /* ==========================================================================
-   6. BANNER MODO EMPRESA (REDISENADO)
+   6. BANNER MODO EMPRESA
    ========================================================================== */
 .banner-empresa-card {
   margin-top: 2.5rem;
@@ -1322,7 +1322,7 @@ img {
 }
 
 /* ==========================================================================
-   13. COMPONENTES ADICIONALES: TALENTO DESTACADO & BANNER COMUNIDAD
+   13. COMPONENTES ADICIONALES
    ========================================================================== */
 .talento-card {
   background-color: var(--card-bg);
@@ -1485,4 +1485,30 @@ img {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   14. CONTROL DE VISIBILIDAD SEGÚN ROL (CANDIDATO / EMPRESA)
+   ========================================================================== */
+.role-candidato-only,
+.role-empresa-only {
+  display: none !important;
+}
+
+body[data-role="candidato"] .role-candidato-only {
+  display: flex !important;
+}
+
+body[data-role="empresa"] .role-empresa-only {
+  display: flex !important;
+}
+
+body[data-role="candidato"] blockquote.role-candidato-only,
+body[data-role="candidato"] div.role-candidato-only,
+body[data-role="empresa"] div.role-empresa-only {
+  display: block !important;
+}
+
+body[data-role="empresa"] .talent-grid.role-empresa-only {
+  display: grid !important;
 }
