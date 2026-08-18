@@ -151,39 +151,80 @@
 
             <div class="postular-form">
                 <div class="form-group">
-                    <label for="calc-tipo" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Tipo de Cálculo:</label>
-                    <select id="calc-tipo" onchange="window.cambiarModoCalculadora()" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
-                        <option value="jornada">Sueldo por Jornada (Full / Part Time / Franco)</option>
-                        <option value="horas_extra">Cálculo de Horas Extra / Nocturnas</option>
+                    <label for="calc-categoria" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Categoría Profesional / Puesto (UTHGRA):</label>
+                    <select id="calc-categoria" onchange="window.actualizarBasicoReferencia()" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                        <option value="985000">Categoría 1: Cadete, Bachero, Aprendiz ($985.000)</option>
+                        <option value="1050000" selected>Categoría 2: Peón, Ayudante, Mozo de Mostrador ($1.050.000)</option>
+                        <option value="1150000">Categoría 3: Cocinero, Mozo de Salón, Barista ($1.150.000)</option>
+                        <option value="1280000">Categoría 4: Chef, Jefe de Barra, Encargado ($1.280.000)</option>
+                        <option value="custom">-- Introducir Básico Personalizado --</option>
                     </select>
                 </div>
 
                 <div class="form-group" id="grupo-base-sueldo">
                     <label for="calc-sueldo-base" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Sueldo Básico Mensual de Referencia ($):</label>
-                    <input type="number" id="calc-sueldo-base" placeholder="Ej: 650000" value="650000" />
+                    <input type="number" id="calc-sueldo-base" placeholder="Ej: 1050000" value="1050000" />
                 </div>
 
-                <div class="form-group" id="grupo-jornada-tipo">
-                    <label for="calc-modalidad" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Modalidad:</label>
-                    <select id="calc-modalidad" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
-                        <option value="full">Full Time (100% del básico)</option>
-                        <option value="part">Part Time (50% del básico)</option>
-                        <option value="franco">Franco / Refuerzo por día (Valor diario aprox.)</option>
+                <div class="form-group">
+                    <label for="calc-jornada" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Modalidad de Jornada:</label>
+                    <select id="calc-jornada" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
+                        <option value="full">Jornada Completa (8hs diarias / 44hs semanales - 100%)</option>
+                        <option value="part">Media Jornada / Part-Time (4hs diarias - 50%)</option>
+                        <option value="franco">Valor Eventual / Refuerzo de Franco (Por día - 8hs)</option>
                     </select>
                 </div>
 
-                <div class="form-group" id="grupo-horas-extra" style="display: none;">
-                    <label for="calc-cant-horas" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Cantidad de Horas Extra:</label>
-                    <input type="number" id="calc-cant-horas" placeholder="Ej: 10" value="10" />
+                <div class="form-group">
+                    <label for="calc-horas-50" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Horas Extra Normales (al 50%):</label>
+                    <input type="number" id="calc-horas-50" placeholder="Ej: 0" value="0" />
                 </div>
 
-                <button type="button" class="btn-whatsapp" onclick="window.calcularHorariosSueldo()">
-                    <i class="fas fa-calculator" aria-hidden="true"></i> CALCULAR ESTIMATIVO
+                <div class="form-group">
+                    <label for="calc-horas-100" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Horas Extra Festivas / Dominicales (al 100%):</label>
+                    <input type="number" id="calc-horas-100" placeholder="Ej: 0" value="0" />
+                </div>
+
+                <div class="form-group">
+                    <label for="calc-antiguedad" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Años de Antigüedad (1% por año):</label>
+                    <input type="number" id="calc-antiguedad" placeholder="Ej: 2" value="0" />
+                </div>
+
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                    <input type="checkbox" id="calc-presentismo" checked style="width: 18px; height: 18px; accent-color: var(--primary);" />
+                    <label for="calc-presentismo" style="font-size: 0.85rem; font-weight: 700; cursor: pointer;">Incluir Presentismo (10% sobre básico)</label>
+                </div>
+
+                <button type="button" class="btn-whatsapp" onclick="window.calcularHorariosSueldo()" style="margin-top: 1rem;">
+                    <i class="fas fa-calculator" aria-hidden="true"></i> CALCULAR ESTIMATIVO DETALLADO
                 </button>
 
-                <div id="resultado-calculadora" style="margin-top: 1rem; padding: 1rem; background: var(--card-bg-light); border-radius: var(--radius-sm); border: 1px solid var(--border-color); text-align: center; display: none;">
-                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">Resultado Estimado:</span>
-                    <strong id="calc-output-valor" style="font-size: 1.3rem; color: var(--primary);">--</strong>
+                <div id="resultado-calculadora" style="margin-top: 1rem; padding: 1rem; background: var(--card-bg-light); border-radius: var(--radius-sm); border: 1px solid var(--border-color); text-align: left; display: none;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block; text-align: center; margin-bottom: 0.5rem;">Desglose del Cálculo Estimado:</span>
+                    
+                    <div style="font-size: 0.85rem; color: var(--text-main); display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.8rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Sueldo Base (Jornada):</span>
+                            <strong id="out-base">$ 0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Presentismo (10%):</span>
+                            <strong id="out-presentismo">$ 0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Antigüedad:</span>
+                            <strong id="out-antiguedad">$ 0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Horas Extra (50% y 100%):</span>
+                            <strong id="out-extras">$ 0</strong>
+                        </div>
+                    </div>
+
+                    <div style="border-top: 1px dashed var(--border-color); padding-top: 0.6rem; text-align: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">ESTIMADO TOTAL BRUTO:</span>
+                        <strong id="calc-output-valor" style="font-size: 1.4rem; color: var(--primary);">--</strong>
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,27 +245,6 @@
                 <i class="fas fa-user-tag" aria-hidden="true"></i> 
                 <span id="label-modo-actual">Cambiar Perfil</span>
             </button>
-
-            <div class="dropdown-container">
-                <button type="button" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" class="dropdown-btn">
-                    Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
-                </button>
-                <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
-                    <!-- Recursos Operativos para Postulantes -->
-                    <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
-
-                    <!-- Recursos Operativos para Empresas -->
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
-
-                    <!-- Soporte Técnico con WhatsApp configurado -->
-                    <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
-                </div>
-            </div>
 
             <a href="#nosotros" class="nav-link">Nosotros</a>
             <a href="#blog-noticias" class="nav-link">Blog</a>
@@ -727,48 +747,46 @@
             window.cerrarModalMembresia();
         };
 
-        window.cambiarModoCalculadora = function() {
-            const tipo = document.getElementById('calc-tipo').value;
-            const grupoBase = document.getElementById('grupo-base-sueldo');
-            const grupoJornada = document.getElementById('grupo-jornada-tipo');
-            const grupoHoras = document.getElementById('grupo-horas-extra');
-
-            if (tipo === 'jornada') {
-                if (grupoBase) grupoBase.style.display = 'block';
-                if (grupoJornada) grupoJornada.style.display = 'block';
-                if (grupoHoras) grupoHoras.style.display = 'none';
-            } else {
-                if (grupoBase) grupoBase.style.display = 'block';
-                if (grupoJornada) grupoJornada.style.display = 'none';
-                if (grupoHoras) grupoHoras.style.display = 'block';
+        window.actualizarBasicoReferencia = function() {
+            const catSelect = document.getElementById('calc-categoria');
+            const inputBase = document.getElementById('calc-sueldo-base');
+            if (catSelect.value !== 'custom') {
+                inputBase.value = catSelect.value;
             }
         };
 
         window.calcularHorariosSueldo = function() {
-            const tipo = document.getElementById('calc-tipo').value;
             const sueldoBase = parseFloat(document.getElementById('calc-sueldo-base').value) || 0;
-            const outputDiv = document.getElementById('resultado-calculadora');
-            const outputValor = document.getElementById('calc-output-valor');
+            const modalidad = document.getElementById('calc-jornada').value;
+            const horas50 = parseFloat(document.getElementById('calc-horas-50').value) || 0;
+            const horas100 = parseFloat(document.getElementById('calc-horas-100').value) || 0;
+            const antiguedadAnios = parseFloat(document.getElementById('calc-antiguedad').value) || 0;
+            const tienePresentismo = document.getElementById('calc-presentismo').checked;
 
-            let resultado = 0;
-
-            if (tipo === 'jornada') {
-                const modalidad = document.getElementById('calc-modalidad').value;
-                if (modalidad === 'full') {
-                    resultado = sueldoBase;
-                } else if (modalidad === 'part') {
-                    resultado = sueldoBase * 0.5;
-                } else if (modalidad === 'franco') {
-                    resultado = (sueldoBase / 25) / 2;
-                }
-                if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
-            } else {
-                const horas = parseFloat(document.getElementById('calc-cant-horas').value) || 0;
-                const valorHoraExtra = (sueldoBase / 200) * 1.5;
-                resultado = valorHoraExtra * horas;
-                if (outputValor) outputValor.innerText = `$ ${resultado.toLocaleString('es-AR', {maximumFractionDigits: 0})} (Estimado X ${horas}hs)`;
+            let sueldoJornada = sueldoBase;
+            if (modalidad === 'part') {
+                sueldoJornada = sueldoBase * 0.5;
+            } else if (modalidad === 'franco') {
+                sueldoJornada = sueldoBase / 25;
             }
 
+            const valorHoraSimple = (sueldoBase / 200);
+            const totalHoras50 = horas50 * (valorHoraSimple * 1.5);
+            const totalHoras100 = horas100 * (valorHoraSimple * 2.0);
+            const totalExtras = totalHoras50 + totalHoras100;
+
+            const totalPresentismo = tienePresentismo ? (sueldoJornada * 0.10) : 0;
+            const totalAntiguedad = sueldoJornada * (antiguedadAnios * 0.01);
+
+            const totalBruto = sueldoJornada + totalPresentismo + totalAntiguedad + totalExtras;
+
+            document.getElementById('out-base').innerText = `$ ${sueldoJornada.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+            document.getElementById('out-presentismo').innerText = `$ ${totalPresentismo.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+            document.getElementById('out-antiguedad').innerText = `$ ${totalAntiguedad.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+            document.getElementById('out-extras').innerText = `$ ${totalExtras.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+            document.getElementById('calc-output-valor').innerText = `$ ${totalBruto.toLocaleString('es-AR', {maximumFractionDigits: 0})}`;
+
+            const outputDiv = document.getElementById('resultado-calculadora');
             if (outputDiv) outputDiv.style.display = 'block';
         };
     </script>
