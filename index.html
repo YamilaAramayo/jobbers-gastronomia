@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,12 +29,57 @@
 
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Reglas CSS para Alineación y Centralización -->
+    <style>
+        .hero-content, .hero-empresa-header, .section-header, .categories-section {
+            text-align: center !important;
+        }
+
+        .hero-features, .confirm-actions, .confirm-badge-container {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 1rem;
+        }
+
+        .categories-grid {
+            justify-content: center !important;
+        }
+
+        .banner-centralizado {
+            margin: 2.5rem auto 0 auto !important;
+            max-width: 900px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            justify-content: center !important;
+        }
+
+        .banner-centralizado-content {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            gap: 0.5rem !important;
+        }
+
+        .section-title-center {
+            text-align: center !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        .modal-postular-card {
+            text-align: center !important;
+        }
+    </style>
 </head>
 <body class="role-postulante">
 
     <!-- MODAL DE SELECCIÓN DE PERFIL -->
     <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
-        <div class="rol-modal-card">
+        <div class="rol-modal-card" style="text-align: center;">
             <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
 
             <!-- PASO 1: Selección -->
@@ -59,7 +103,7 @@
             </div>
 
             <!-- PASO 2: Confirmación -->
-            <div id="rol-step-confirm" class="rol-confirm-box" style="display: none;">
+            <div id="rol-step-confirm" class="rol-confirm-box" style="display: none; text-align: center;">
                 <h2>¿Estás seguro/a? 🤔</h2>
                 <p class="confirm-subtitle">Vas a ingresar a la plataforma como:</p>
 
@@ -83,7 +127,7 @@
             <h2 class="modal-postular-title">POSTULARME</h2>
             <p id="modal-job-title" class="modal-job-title">Título del Puesto — Nombre Empresa</p>
 
-            <div class="postular-alert-box">
+            <div class="postular-alert-box" style="text-align: center;">
                 <span class="alert-icon" aria-hidden="true">📎</span>
                 <p><strong>Importante:</strong> Al abrirse WhatsApp, recordá <u>adjuntar tu Currículum Vitae (PDF)</u> junto al mensaje.</p>
             </div>
@@ -108,7 +152,7 @@
 
     <!-- MODAL DE MEMBRESÍA JOBBERS PRO (Destacá tu perfil) -->
     <div id="modal-membresia-pro" class="rol-modal-overlay" role="dialog" aria-labelledby="pro-title" aria-modal="true" style="display: none;">
-        <div class="modal-postular-card" style="max-width: 520px; text-align: left;">
+        <div class="modal-postular-card" style="max-width: 520px; text-align: center;">
             <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalMembresia()" aria-label="Cerrar modal">&times;</button>
 
             <div style="text-align: center; margin-bottom: 1rem;">
@@ -117,7 +161,7 @@
                 <p class="modal-job-title" style="margin-top: 0.2rem;">Acelerá tu búsqueda y destacá ante los empleadores de Córdoba</p>
             </div>
 
-            <div style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.2rem; font-size: 0.88rem;">
+            <div style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.2rem; font-size: 0.88rem; text-align: left;">
                 <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem;">
                     <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Visibilidad VIP:</strong> Tu perfil fijo al tope de la sección de talentos.</li>
                     <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Sello Verificado PRO</strong> en tus postulaciones por WhatsApp.</li>
@@ -144,13 +188,13 @@
 
     <!-- MODAL DE CALCULADORA DE HORARIOS -->
     <div id="modal-calculadora" class="rol-modal-overlay" role="dialog" aria-labelledby="calc-title" aria-modal="true" style="display: none;">
-        <div class="modal-postular-card" style="max-width: 500px;">
+        <div class="modal-postular-card" style="max-width: 500px; text-align: center;">
             <button type="button" class="jobbers-close-btn" onclick="window.cerrarModalCalculadora()" aria-label="Cerrar modal">&times;</button>
 
             <h2 class="modal-postular-title" id="calc-title">Calculadora de Horarios & Sueldos</h2>
             <p class="modal-job-title">Estimador basado en escalas UTHGRA / Jornadas</p>
 
-            <div class="postular-form">
+            <div class="postular-form" style="text-align: left;">
                 <div class="form-group">
                     <label for="calc-tipo" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">Tipo de Cálculo:</label>
                     <select id="calc-tipo" onchange="window.cambiarModoCalculadora()" style="width: 100%; height: 48px; padding: 0 1.1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-dark); color: var(--text-main); font-family: inherit;">
@@ -178,7 +222,7 @@
                     <input type="number" id="calc-cant-horas" placeholder="Ej: 10" value="10" />
                 </div>
 
-                <button type="button" class="btn-whatsapp" onclick="window.calcularHorariosSueldo()">
+                <button type="button" class="btn-whatsapp" onclick="window.calcularHorariosSueldo()" style="width: 100%;">
                     <i class="fas fa-calculator" aria-hidden="true"></i> CALCULAR ESTIMATIVO
                 </button>
 
@@ -255,7 +299,7 @@
                             <span><i class="fas fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
                         </div>
 
-                        <div class="search-bar hero-search-bar">
+                        <div class="search-bar hero-search-bar" style="margin: 0 auto;">
                             <label for="job-search-input" class="sr-only">Buscar puesto o zona</label>
                             <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
                             <button class="btn-search" type="button"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
@@ -308,15 +352,15 @@
                         </div>
 
                         <!-- BANNER EMPRESA -->
-                        <div style="margin-top: 2.5rem; background: rgba(243, 156, 18, 0.08); border: 1px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: left; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="banner-centralizado" style="background: rgba(243, 156, 18, 0.08); border: 1px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 1.25rem 1.5rem;">
+                            <div class="banner-centralizado-content">
                                 <span style="font-size: 2rem;" aria-hidden="true">⚡</span>
                                 <div>
                                     <h4 style="font-size: 1rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.15rem;">¿Tenés un restaurante, bar o necesitás personal hoy?</h4>
                                     <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0;">Publicá tus búsquedas de forma rápida y conectá al instante con candidatos calificados en Córdoba.</p>
                                 </div>
                             </div>
-                            <button type="button" class="btn-primary btn-trigger-modal-perfil" style="background: var(--primary); color: var(--text-dark); border: none; padding: 0.65rem 1.2rem; font-weight: 800; font-size: 0.80rem; border-radius: var(--radius-sm); white-space: nowrap;">
+                            <button type="button" class="btn-primary btn-trigger-modal-perfil" style="margin-top: 0.8rem; background: var(--primary); color: var(--text-dark); border: none; padding: 0.65rem 1.2rem; font-weight: 800; font-size: 0.80rem; border-radius: var(--radius-sm); white-space: nowrap;">
                                 CAMBIAR A MODO EMPRESA
                             </button>
                         </div>
@@ -328,9 +372,9 @@
 
         <!-- LISTADO DE VACANTES -->
         <main style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="vacantes">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div class="section-title-center">
                 <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Búsquedas Activas</h2>
-                <span id="contador-vacantes" style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">Cargando vacantes...</span>
+                <span id="contador-vacantes" style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600; display: block; margin-top: 0.3rem;">Cargando vacantes...</span>
             </div>
 
             <div id="lista-vacantes" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -354,7 +398,7 @@
         </main>
 
         <!-- BLOG Y NOTICIAS -->
-        <section class="info-section" id="blog-noticias" style="padding: 4rem 1.5rem; text-align: left; background: var(--bg-dark); border-top: 1px solid var(--border-color);">
+        <section class="info-section" id="blog-noticias" style="padding: 4rem 1.5rem; text-align: center; background: var(--bg-dark); border-top: 1px solid var(--border-color);">
             <div style="max-width: 1000px; margin: 0 auto;">
 
                 <div style="text-align: center; margin-bottom: 3rem;">
@@ -363,7 +407,7 @@
                     <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">Artículos de interés, consejos de empleo y las últimas tendencias del sector en Córdoba.</p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; text-align: left;">
 
                     <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
@@ -431,12 +475,12 @@
                         </div>
 
                         <!-- Formulario Express -->
-                        <div class="hero-card-express" id="formulario-express">
-                            <div class="card-header">
+                        <div class="hero-card-express" id="formulario-express" style="margin: 0 auto;">
+                            <div class="card-header" style="justify-content: center; text-align: center;">
                                 <span class="text-warning" aria-hidden="true">⚡</span>
                                 <h2>¿NECESITÁS PERSONAL HOY?</h2>
                             </div>
-                            <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
+                            <p style="text-align: center;">Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
 
                             <form class="express-form" id="form-publicar-express">
                                 <div class="form-group">
@@ -574,11 +618,9 @@
 
         <!-- TALENTO DESTACADO -->
         <main style="max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem;" id="talentos-empresa">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-                <div>
-                    <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Talentos Destacados en Córdoba</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Profesionales de la gastronomía disponibles para entrevistas y contratación directa.</p>
-                </div>
+            <div class="section-title-center">
+                <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main);">Talentos Destacados en Córdoba</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">Profesionales de la gastronomía disponibles para entrevistas y contratación directa.</p>
             </div>
 
             <div id="grid-talento-destacado" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
@@ -602,7 +644,7 @@
     <!-- ================================================================= -->
     <!--                     SECCIÓN COMÚN: NOSOTROS                       -->
     <!-- ================================================================= -->
-    <section class="info-section" id="nosotros" style="padding: 4rem 1.5rem; text-align: left; background: var(--card-bg-light); border-top: 1px solid var(--border-color);">
+    <section class="info-section" id="nosotros" style="padding: 4rem 1.5rem; text-align: center; background: var(--card-bg-light); border-top: 1px solid var(--border-color);">
         <div style="max-width: 1000px; margin: 0 auto;">
 
             <div style="text-align: center; margin-bottom: 3rem;">
@@ -611,12 +653,12 @@
                 <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">Conectamos directamente a quienes buscan trabajar con los mejores locales, restaurantes, bares y hoteles sin intermediarios y al instante.</p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem; text-align: left;">
 
                 <div style="background: var(--bg-dark); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="font-size: 2rem; margin-bottom: 0.8rem;" aria-hidden="true">👥</div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">Para Postulantes & Candidatos</h3>
+                        <div style="font-size: 2rem; margin-bottom: 0.8rem; text-align: center;" aria-hidden="true">👥</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem; text-align: center;">Para Postulantes & Candidatos</h3>
                         <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem;">Postulate gratis a todas las ofertas o subí de nivel con nuestra membresía paga.</p>
 
                         <div style="background: rgba(243, 156, 18, 0.08); border-left: 3px solid var(--primary); padding: 0.8rem; margin-bottom: 1.2rem; font-size: 0.85rem;">
@@ -633,8 +675,8 @@
 
                 <div style="background: var(--bg-dark); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="font-size: 2rem; margin-bottom: 0.8rem;" aria-hidden="true">🏢</div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">Para Locales & Empleadores</h3>
+                        <div style="font-size: 2rem; margin-bottom: 0.8rem; text-align: center;" aria-hidden="true">🏢</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem; text-align: center;">Para Locales & Empleadores</h3>
                         <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem;">Publicá búsquedas urgentes en segundos y encontrá mozos, cocineros y baristas calificados.</p>
 
                         <div style="background: rgba(46, 204, 113, 0.08); border-left: 3px solid #2ecc71; padding: 0.8rem; margin-bottom: 1.2rem; font-size: 0.85rem;">
@@ -694,7 +736,7 @@
     </nav>
 
     <!-- FOOTER -->
-    <footer class="main-footer">
+    <footer class="main-footer" style="text-align: center;">
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
     </footer>
 
