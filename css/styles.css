@@ -121,7 +121,7 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  :is(a, button, input, select):focus-visible {
+  :is(a, button, input, select, textarea):focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
@@ -140,15 +140,15 @@
   .modo-empresa-only,
   .seccion-empresa,
   .job-company {
-    display: none;
+    display: none !important;
   }
 
   body.role-empresa :is(.empresa-only, .modo-empresa-only, .seccion-empresa, .job-company) {
-    display: block;
+    display: block !important;
   }
 
   body.role-empresa :is(.postulante-only, .modo-postulante-only, .seccion-postulante, .main-grid-section, .categories-section, .btn-postularme) {
-    display: none;
+    display: none !important;
   }
 
   .sr-only {
@@ -568,7 +568,7 @@
     gap: 1.25rem;
   }
 
-  /* Tarjetas de Vacantes */
+  /* Tarjetas de Vacantes e Información Completa */
   .job-offer-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -587,24 +587,72 @@
     transform: translateY(-2px);
   }
 
-  .job-info-col h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
+  .job-info-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
-  .job-meta {
+  .job-header-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .job-header-row h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+
+  .job-details-row {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
     color: var(--text-muted);
-    font-size: 0.88rem;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+
+  .job-details-row span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .job-details-row i {
+    color: var(--primary);
+  }
+
+  .job-salary {
+    color: var(--salary-green) !important;
+    font-weight: 700;
+  }
+
+  .badge-urgente {
+    background: rgba(231, 76, 60, 0.15);
+    color: var(--danger-badge);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .job-time {
+    font-size: 0.78rem;
+    color: var(--text-muted);
   }
 
   .job-action-col {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
     flex-shrink: 0;
   }
 
@@ -618,6 +666,9 @@
     border: none;
     text-transform: uppercase;
     transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .btn-postularme:hover {
