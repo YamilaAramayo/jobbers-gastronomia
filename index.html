@@ -30,10 +30,38 @@
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- Reglas CSS para Alineación y Centralización -->
+    <!-- Reglas CSS para Alineación y Centralización Total del Hub -->
     <style>
+        .hero-section {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
+
+        .hero-container {
+            max-width: 1100px !important;
+            margin: 0 auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+        }
+
         .hero-content, .hero-empresa-header, .section-header, .categories-section {
             text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+        }
+
+        .hero-title, .hero-subtitle {
+            text-align: center !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
         }
 
         .hero-features, .confirm-actions, .confirm-badge-container {
@@ -41,15 +69,28 @@
             justify-content: center !important;
             align-items: center !important;
             gap: 1rem;
+            width: 100% !important;
+            margin: 1rem auto !important;
+        }
+
+        .search-bar.hero-search-bar {
+            margin: 1.5rem auto !important;
+            display: flex !important;
+            justify-content: center !important;
+            max-width: 700px !important;
+            width: 100% !important;
         }
 
         .categories-grid {
             justify-content: center !important;
+            margin: 0 auto !important;
+            width: 100% !important;
         }
 
         .banner-centralizado {
             margin: 2.5rem auto 0 auto !important;
             max-width: 900px !important;
+            width: 100% !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -251,26 +292,10 @@
                     <span id="label-modo-actual">Cambiar Perfil</span>
                 </button>
 
-                <div class="dropdown-container dropdown">
-                    <button type="button" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-btn">
-                        Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
-                    </button>
-                    <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
-                        <!-- Recursos Operativos para Postulantes -->
-                        <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
-                        <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                        <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
-
-                        <!-- Recursos Operativos para Empresas -->
-                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
-                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
-                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
-                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
-
-                        <!-- Soporte Técnico con WhatsApp configurado -->
-                        <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
-                    </div>
-                </div>
+                <!-- Soporte Técnico directamente en la barra de navegación -->
+                <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="nav-link">
+                    <i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico
+                </a>
 
                 <a href="#nosotros" class="nav-link">Nosotros</a>
                 <a href="#blog-noticias" class="nav-link">Blog</a>
@@ -284,7 +309,7 @@
     <!-- ================================================================= -->
     <div id="vista-postulante" class="modo-postulante-only">
 
-        <!-- HERO POSTULANTE -->
+        <!-- HERO POSTULANTE CENTRALIZADO -->
         <section class="hero-section">
             <div class="hero-overlay"></div>
             <div class="hero-container hero-container-centered">
@@ -299,7 +324,7 @@
                             <span><i class="fas fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
                         </div>
 
-                        <div class="search-bar hero-search-bar" style="margin: 0 auto;">
+                        <div class="search-bar hero-search-bar">
                             <label for="job-search-input" class="sr-only">Buscar puesto o zona</label>
                             <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
                             <button class="btn-search" type="button"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
