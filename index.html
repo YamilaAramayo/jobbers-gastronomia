@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -191,44 +192,46 @@
 
     <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
-        <a href="#" class="logo" aria-label="Inicio Jobbers">
-            <span class="logo-title">JOBBERS</span>
-            <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
-        </a>
+        <div class="navbar-container">
+            <a href="#" class="logo" aria-label="Inicio Jobbers">
+                <h2>JOBBERS</h2>
+                <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
+            </a>
 
-        <nav class="nav-links" aria-label="Navegación principal">
-            <a href="#vacantes" class="nav-link modo-postulante-only btn-cta-postulante">Ver Empleos</a>
-            <a href="#formulario-express" class="nav-link modo-empresa-only btn-cta-empresa">Publicar Búsqueda</a>
+            <nav class="nav-links" aria-label="Navegación principal">
+                <a href="#vacantes" class="nav-link modo-postulante-only btn-cta-postulante">Ver Empleos</a>
+                <a href="#formulario-express" class="nav-link modo-empresa-only btn-cta-empresa">Publicar Búsqueda</a>
 
-            <button type="button" class="btn-cambiar-perfil btn-role-badge btn-trigger-modal-perfil">
-                <i class="fas fa-user-tag" aria-hidden="true"></i> 
-                <span id="label-modo-actual">Cambiar Perfil</span>
-            </button>
-
-            <div class="dropdown-container">
-                <button type="button" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" class="dropdown-btn">
-                    Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
+                <button type="button" class="nav-link active btn-cambiar-perfil btn-role-badge btn-trigger-modal-perfil">
+                    <i class="fas fa-user-tag" aria-hidden="true"></i> 
+                    <span id="label-modo-actual">Cambiar Perfil</span>
                 </button>
-                <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
-                    <!-- Recursos Operativos para Postulantes -->
-                    <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
-                    <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
 
-                    <!-- Recursos Operativos para Empresas -->
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
-                    <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
+                <div class="dropdown-container dropdown">
+                    <button type="button" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-btn">
+                        Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
+                        <!-- Recursos Operativos para Postulantes -->
+                        <a href="#blog-noticias" class="dropdown-item modo-postulante-only"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog & Noticias</a>
+                        <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Herramienta Crear CV operativo próximamente', 'success')"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
+                        <a href="#" class="dropdown-item modo-postulante-only" onclick="window.mostrarToast('Sección de Consejos activa', 'success')"><i class="fas fa-comments" aria-hidden="true"></i> Consejos Entrevista</a>
 
-                    <!-- Soporte Técnico con WhatsApp configurado -->
-                    <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
+                        <!-- Recursos Operativos para Empresas -->
+                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Modelos de contrato descargables', 'success')"><i class="fas fa-file-contract" aria-hidden="true"></i> Modelos Contratos</a>
+                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.abrirModalCalculadora(event)"><i class="fas fa-calculator" aria-hidden="true"></i> Calculadora Horarios</a>
+                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Guía de control de stock e insumos', 'success')"><i class="fas fa-boxes" aria-hidden="true"></i> Control de Stock</a>
+                        <a href="#" class="dropdown-item modo-empresa-only" onclick="window.mostrarToast('Escalas salariales UTHGRA actualizadas', 'success')"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Escalas Salariales</a>
+
+                        <!-- Soporte Técnico con WhatsApp configurado -->
+                        <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Necesito%20soporte%20técnico%20con%20la%20plataforma." target="_blank" class="dropdown-item"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
+                    </div>
                 </div>
-            </div>
 
-            <a href="#nosotros" class="nav-link">Nosotros</a>
-            <a href="#blog-noticias" class="nav-link">Blog</a>
-        </nav>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#blog-noticias" class="nav-link">Blog</a>
+            </nav>
+        </div>
     </header>
 
 
@@ -259,47 +262,47 @@
                         </div>
 
                         <!-- CATEGORÍAS -->
-                        <div class="categorias-grid-container">
-                            <div class="categorias-header-row">
+                        <div class="categories-section">
+                            <div class="section-header">
                                 <h3>BUSCÁ POR CATEGORÍA</h3>
                             </div>
 
-                            <div class="categorias-grid" aria-label="Filtrar vacantes por categoría">
-                                <button type="button" class="btn-categoria active" data-cat="todas">
+                            <div class="categories-grid" aria-label="Filtrar vacantes por categoría">
+                                <button type="button" class="category-card btn-categoria active" data-cat="todas">
                                     <i class="fas fa-border-all cat-icon"></i>
-                                    <span>Todas</span>
+                                    <h3>Todas</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="cocina">
+                                <button type="button" class="category-card btn-categoria" data-cat="cocina">
                                     <i class="fas fa-utensils cat-icon"></i>
-                                    <span>Cocina</span>
+                                    <h3>Cocina</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="salon">
+                                <button type="button" class="category-card btn-categoria" data-cat="salon">
                                     <i class="fas fa-concierge-bell cat-icon"></i>
-                                    <span>Salón / Mozo</span>
+                                    <h3>Salón / Mozo</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="barismo">
+                                <button type="button" class="category-card btn-categoria" data-cat="barismo">
                                     <i class="fas fa-coffee cat-icon"></i>
-                                    <span>Barismo</span>
+                                    <h3>Barismo</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="barra">
+                                <button type="button" class="category-card btn-categoria" data-cat="barra">
                                     <i class="fas fa-cocktail cat-icon"></i>
-                                    <span>Bartender</span>
+                                    <h3>Bartender</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="delivery">
+                                <button type="button" class="category-card btn-categoria" data-cat="delivery">
                                     <i class="fas fa-motorcycle cat-icon"></i>
-                                    <span>Delivery</span>
+                                    <h3>Delivery</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="limpieza">
+                                <button type="button" class="category-card btn-categoria" data-cat="limpieza">
                                     <i class="fas fa-pump-soap cat-icon"></i>
-                                    <span>Bacha / Limpieza</span>
+                                    <h3>Bacha / Limpieza</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="rrhh">
+                                <button type="button" class="category-card btn-categoria" data-cat="rrhh">
                                     <i class="fas fa-briefcase cat-icon"></i>
-                                    <span>RRHH / Gestión</span>
+                                    <h3>RRHH / Gestión</h3>
                                 </button>
-                                <button type="button" class="btn-categoria" data-cat="administracion">
+                                <button type="button" class="category-card btn-categoria" data-cat="administracion">
                                     <i class="fas fa-chart-pie cat-icon"></i>
-                                    <span>Administración</span>
+                                    <h3>Administración</h3>
                                 </button>
                             </div>
                         </div>
