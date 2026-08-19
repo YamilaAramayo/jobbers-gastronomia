@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inicializarModoPerfil();
 
     // Event Delegation para botones de postulación
-    const contenedorVacantes = document.getElementById('lista-vacantes');
+    const contenedorVacantes = document.getElementById('lista-vacantes') || document.querySelector('.vacantes-list');
     if (contenedorVacantes) {
         contenedorVacantes.addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-postularme');
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const btnSearch = document.querySelector('.btn-search');
+    const btnSearch = document.querySelector('.btn-search') || document.getElementById('btn-ejecutar-busqueda');
     if (btnSearch) {
         btnSearch.addEventListener('click', (e) => {
             e.preventDefault();
@@ -105,11 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Tecla Escape para modales y dropdowns
+    // Tecla Escape con verificación previa de visibilidad
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            cerrarModal();
-            cerrarModalPerfil();
+            const modalJobbers = document.getElementById('modal-jobbers');
+            const modalPerfil = document.getElementById('modal-cambiar-perfil');
+
+            if (modalJobbers && modalJobbers.style.display !== 'none' && modalJobbers.style.display !== '') {
+                cerrarModal();
+            }
+            if (modalPerfil && modalPerfil.style.display !== 'none' && modalPerfil.style.display !== '') {
+                cerrarModalPerfil();
+            }
             cerrarDropdown();
         }
     });
@@ -139,22 +146,20 @@ function inicializarModoPerfil() {
 
     let rolSeleccionado = { key: '', nombre: '' };
 
-    // 1. Obtener o establecer rol inicial
-    const rolGuardado = localStorage.getItem('jobbers_user_role') || localStorage.getItem('jobbers_role');
+    // Obtener o establecer rol inicial
+    const rolGuardado = localStorage.getItem('jobbers_user_role') || localStorage.getItem('jobbers_role') || localStorage.getItem('jobbers_rol');
     if (!rolGuardado) {
         abrirModalPerfil();
     } else {
         aplicarRol(rolGuardado);
     }
 
-    // 2. Resetear Modal
     function resetearModalPerfil() {
         if (stepSelect) stepSelect.style.display = 'block';
         if (stepConfirm) stepConfirm.style.display = 'none';
         rolSeleccionado = { key: '', nombre: '' };
     }
 
-    // 3. Eventos para abrir/cerrar
     btnsCambiarPerfil.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -169,7 +174,6 @@ function inicializarModoPerfil() {
         if (e.target === modalPerfil) cerrarModalPerfil();
     });
 
-    // 4. Selección y confirmación de rol
     btnsOpcionRol.forEach(btn => {
         btn.addEventListener('click', () => {
             const rolKey = btn.getAttribute('data-rol');
@@ -205,6 +209,7 @@ function confirmarYGuardarRol(key, nombre) {
     aplicarRol(key);
     localStorage.setItem('jobbers_user_role', key);
     localStorage.setItem('jobbers_role', key);
+    localStorage.setItem('jobbers_rol', key);
     cerrarModalPerfil();
     mostrarToast(`Perfil cambiado a: ${(nombre || key).toUpperCase()}`, 'success');
 }
@@ -225,10 +230,10 @@ function aplicarRol(rol) {
 
     if (rol === 'empresa') {
         document.body.classList.add('role-empresa');
-        if (labelModoActual) labelModoActual.textContent = 'Modo: Empresa';
+        if (labelModoActual) labelModoActual.textContent = 'Modo Empresa';
     } else {
         document.body.classList.add('role-postulante');
-        if (labelModoActual) labelModoActual.textContent = 'Modo: Postulante';
+        if (labelModoActual) labelModoActual.textContent = 'Modo Postulante';
     }
 }
 
@@ -249,7 +254,7 @@ async function cargarVacantesDesdeJSON() {
                 break;
             }
         } catch (e) {
-            // Continúa a la siguiente ruta
+            // Continúa a la siguiente ruta en caso de fallo de red
         }
     }
 
@@ -348,7 +353,7 @@ function crearCardVacante(item) {
     const contacto = limpiarNumeroWA(item.contacto_wa) || WHATSAPP_JOBBERS_DEFAULT;
 
     return `
-        <article class="job-card" style="background: #121824; border: 1px solid #2d3748; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; color: #fff;">
+        <article class="job-card job-offer-card" data-categoria="${escapeHTML(item.categoria || '')}" style="background: #121824; border: 1px solid #2d3748; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; color: #fff;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom: 8px;">
                 <div>
                     <h3 style="font-size:1.1rem; font-weight:700; color:#f59e0b; margin:0 0 4px 0;">${escapeHTML(empresa)}</h3>
@@ -421,18 +426,20 @@ function filtrarPorCategoria(categoria) {
 
     if (!categoria) {
         renderizarOfertas(vacantesGastronomia);
-        return;
+    } else {
+        const catBuscada = categoria.toLowerCase();
+        const resultado = vacantesGastronomia.filter(v => {
+            const puesto = (v.puesto || v.titulo || "").toLowerCase();
+            const cat = (v.categoria || "").toLowerCase();
+            return cat.includes(catBuscada) || puesto.includes(catBuscada);
+        });
+        renderizarOfertas(resultado);
     }
 
-    const catBuscada = categoria.toLowerCase();
-    const resultado = vacantesGastronomia.filter(v => {
-        const puesto = (v.puesto || v.titulo || "").toLowerCase();
-        const cat = (v.categoria || "").toLowerCase();
-        return cat.includes(catBuscada) || puesto.includes(catBuscada);
-    });
-
-    renderizarOfertas(resultado);
-    document.getElementById('vacantes')?.scrollIntoView({ behavior: 'smooth' });
+    const seccionVacantes = document.getElementById('vacantes') || document.getElementById('lista-vacantes');
+    if (seccionVacantes) {
+        seccionVacantes.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
 /* ==========================================================================
