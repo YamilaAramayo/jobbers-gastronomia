@@ -169,7 +169,9 @@ body.role-postulante .hero-btn-wrapper.role-postulante-only {
   flex-direction: column;
 }
 
-/* Mostrar elementos de empresa cuando se activa el rol empresa */
+/* Ocultar el buscador y el listado de vacantes en MODO EMPRESA */
+body.role-empresa #vacantes,
+body.role-empresa .main-grid-section,
 body.role-empresa .role-postulante-only,
 body.role-empresa .postulante-only,
 body.role-empresa .modo-postulante-only,
@@ -177,6 +179,7 @@ body.role-empresa .seccion-postulante {
   display: none !important;
 }
 
+/* Mostrar elementos de empresa cuando se activa el rol empresa */
 body.role-empresa div.role-empresa-only,
 body.role-empresa div.empresa-only,
 body.role-empresa section.role-empresa-only,
