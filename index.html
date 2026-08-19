@@ -8,7 +8,9 @@
   
   <!-- FontAwesome & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="estilos.css">
+  
+  <!-- Ruta corregida a la carpeta css y nombre styles.css -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="role-postulante">
 
@@ -223,7 +225,7 @@
       </div>
     </div>
 
-    <!-- COLUMNA DERECHA: TALENTOS DESTACADOS (Opcional) -->
+    <!-- COLUMNA DERECHA: TALENTOS DESTACADOS -->
     <aside class="right-column modo-empresa-only">
       <div class="section-header">
         <h2>Talento Destacado</h2>
@@ -356,14 +358,18 @@
   <!-- CONTENEDOR DE TOASTS -->
   <div id="toast-container"></div>
 
-  <!-- JAVASCRIPT DE INTERACCIÓN DE ROLES Y COMPONENTES -->
+  <!-- Vinculación del JavaScript local en js/main.js -->
+  <script src="js/main.js"></script>
+
+  <!-- Inline Fallback de funciones básicas de UI -->
   <script>
-    // Control de Rol (Postulante / Empresa)
     function cambiarRol(rol) {
       document.body.className = 'role-' + rol;
       document.getElementById('label-rol-actual').innerText = rol === 'empresa' ? 'Modo Empresa' : 'Postulante';
       document.getElementById('dropdown-rol-menu').classList.remove('show');
-      mostrarToast('Modo cambiado a: ' + (rol === 'empresa' ? 'Empresa / Local' : 'Postulante'), 'success');
+      if (typeof mostrarToast === 'function') {
+        mostrarToast('Modo cambiado a: ' + (rol === 'empresa' ? 'Empresa / Local' : 'Postulante'), 'success');
+      }
     }
 
     function toggleDropdownRol() {
@@ -372,31 +378,14 @@
 
     function toggleHeroFormExpress() {
       const formCard = document.getElementById('heroFormExpress');
-      formCard.classList.toggle('is-visible');
-      if (formCard.classList.contains('is-visible')) {
-        formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if(formCard) {
+        formCard.classList.toggle('is-visible');
+        if (formCard.classList.contains('is-visible')) {
+          formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
     }
 
-    function procesarPublicacionExpress(e) {
-      e.preventDefault();
-      mostrarToast('¡Búsqueda publicada con éxito!', 'success');
-      document.getElementById('heroFormExpress').classList.remove('is-visible');
-    }
-
-    function mostrarToast(mensaje, tipo = 'success') {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      toast.className = `jobbers-toast ${tipo}`;
-      toast.innerHTML = `<i class="fas ${tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${mensaje}`;
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.remove();
-      }, 3500);
-    }
-
-    // Cerrar dropdown al hacer clic afuera
     window.onclick = function(event) {
       if (!event.target.matches('#btn-dropdown-rol') && !event.target.matches('#btn-dropdown-rol *')) {
         const dropdown = document.getElementById('dropdown-rol-menu');
@@ -406,7 +395,5 @@
       }
     }
   </script>
-</body>
-</html>
 </body>
 </html>
