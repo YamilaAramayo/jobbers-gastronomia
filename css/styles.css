@@ -1,78 +1,92 @@
+/* Importación de fuente moderna y limpia */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 /* ==========================================================================
-   1. VARIABLES & DESIGN TOKENS
+   1. VARIABLES & RESET
    ========================================================================== */
 :root {
-  /* Paleta Modo Oscuro (Default) */
-  --primary: #F39C12;             /* Ámbar / Naranja brillante */
+  /* Paleta de colores - MODO OSCURO (Default) */
+  --primary: #F39C12;                   /* Ámbar / Naranja brillante */
+  --primary: #F39C12;                    /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;           /* Fondo muy oscuro */
-  --card-bg: #16181A;             /* Fondo tarjetas */
-  --card-bg-light: #212428;       /* Hover / Tarjetas secundarias */
+  --secondary: #0D0D0D;                 /* Fondo muy oscuro */
+  --card-bg: #16181A;                   /* Fondo de tarjetas */
+  --card-bg-light: #212428;             /* Hover o tarjetas secundarias */
+  --secondary: #0D0D0D;                  /* Fondo muy oscuro */
+  --card-bg: #16181A;                    /* Fondo de tarjetas */
+  --card-bg-light: #212428;              /* Hover o tarjetas secundarias */
   --whatsapp-orange: #F39C12;
   --whatsapp-hover: #E67E22;
-  --danger-badge: #EF4444;        /* Rojo semántico unificado */
-  --salary-green: #10B981;        /* Verde esmeralda con alto contraste */
+  --danger-badge: #E74C3C;              /* Badge Urgente y errores */
+  --salary-green: #2ECC71;              /* Sueldos y Disponibilidad */
+  --danger-badge: #E74C3C;               /* Badge Urgente y errores */
+  --salary-green: #2ECC71;               /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
-  --text-main: #F9FAFB;           /* Blanco roto para reducir la fatiga visual */
-  --text-muted: #9CA3AF;
-  --text-dark: #000000;           /* Máximo contraste sobre botones naranjas */
-  --border-color: #2D3137;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-dark: #0F172A;                 /* Texto sobre botones brillantes */
+  --text-dark: #0F172A;                  /* Texto sobre botones brillantes */
+  --border-color: #26292E;
 
-  /* Bordes, Sombras y Transiciones */
+  /* Bordes y Sombras estilizados */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
   --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Capas Z-Index */
+  /* Capas / Z-Index */
   --z-dropdown: 10;
   --z-bottom-nav: 90;
   --z-navbar: 100;
   --z-modal: 1000;
   --z-toast: 2000;
 
-  /* Assets SVG & Gradient Overlays */
-  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(10,11,12,0.96) 0%, rgba(10,11,12,0.85) 100%);
-  --modal-overlay-bg: rgba(0, 0, 0, 0.75);
-  --select-option-bg: #1a1d24;
+  /* Assets SVG & Overlays */
+  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F39C12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.94) 0%, rgba(10, 11, 12, 0.82) 100%);
+  --modal-overlay-bg: rgba(0, 0, 0, 0.8);
+  --select-option-bg: #16181A;
 }
 
-/* Modo Claro (Light Mode) */
+/* ==========================================================================
+   PALETA MODO CLARO (LIGHT MODE)
+   ========================================================================== */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;
+  --primary: #D67E00;                  
+  --primary: #D67E00;                     
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;
-  --card-bg: #FFFFFF;
-  --card-bg-light: #F1F5F9;
+  --secondary: #F8FAFC;                
+  --secondary: #F8FAFC;                 
+  --card-bg: #FFFFFF;                  
+  --card-bg-light: #F1F5F9;            
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;
-  --salary-green: #059669;
+  --danger-badge: #DC2626;             
+  --salary-green: #16A34A;             
 
-  --bg-dark: #F8FAFC;             
-  --text-main: #0F172A;
-  --text-muted: #64748B;
-  --text-dark: #FFFFFF;
+  --bg-dark: #F8FAFC;                  
+  --text-main: #0F172A;                
+  --text-muted: #64748B;               
+  --text-muted: #64748B;                
+  --text-dark: #FFFFFF;                
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 32px rgba(15, 23, 42, 0.12);
 
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.97) 0%, rgba(241, 245, 249, 0.90) 100%);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.88) 100%);
   --modal-overlay-bg: rgba(15, 23, 42, 0.5);
   --select-option-bg: #FFFFFF;
 }
 
-/* Reset Global & Base */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -80,14 +94,14 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
   padding-bottom: 80px;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -105,52 +119,90 @@ img {
   cursor: pointer;
 }
 
-/* Focus accesible universal */
-:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
 /* ==========================================================================
-   2. CONTROL DE VISIBILIDAD DE ROLES
+   2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES (SIN REPETICIÓN NI CRUCES)
    ========================================================================== */
 
-/* 1. MODO POSTULANTE (Default o Activo) */
+/* --- A. MODO POSTULANTE ACTIVO (Por defecto o clase body.role-postulante) --- */
+body.role-postulante .empresa-only,
 body.role-postulante .modo-empresa-only,
-body:not(.role-empresa) .modo-empresa-only {
+body.role-postulante .seccion-empresa,
+body.role-postulante .job-company,
+body:not(.role-empresa) .empresa-only,
+body:not(.role-empresa) .modo-empresa-only,
+body:not(.role-empresa) .seccion-empresa,
+body:not(.role-empresa) .job-company {
   display: none !important;
 }
 
-body.role-postulante .main-grid-section {
-  grid-template-columns: 1fr !important; /* Expande las vacantes al 100% de ancho */
+/* Visibilidad de postulante garantizada */
+body.role-postulante .postulante-only,
+body.role-postulante .modo-postulante-only,
+body.role-postulante .seccion-postulante,
+body.role-postulante .main-grid-section,
+body.role-postulante .categories-section,
+body.role-postulante .btn-postularme {
+  display: revert;
 }
 
-/* 2. MODO EMPRESA */
-body.role-empresa .modo-postulante-only {
+/* --- B. MODO EMPRESA ACTIVO (body.role-empresa) --- */
+body.role-empresa .postulante-only,
+body.role-empresa .modo-postulante-only,
+body.role-empresa .seccion-postulante,
+body.role-empresa .main-grid-section,
+body.role-empresa .categories-section,
+body.role-empresa .btn-postularme {
   display: none !important;
 }
 
-/* Revela elementos según su tipo original en lugar de forzar 'block' */
+/* Visibilidad adecuada según el tipo de elemento en Modo Empresa */
 body.role-empresa div.modo-empresa-only,
+body.role-empresa div.empresa-only,
 body.role-empresa section.modo-empresa-only,
-body.role-empresa aside.modo-empresa-only {
+body.role-empresa section.empresa-only,
+body.role-empresa .seccion-empresa {
   display: block;
 }
 
-body.role-empresa button.modo-empresa-only,
-body.role-empresa a.modo-empresa-only {
-  display: inline-flex;
+body.role-empresa .talento-section {
+  display: block !important;
 }
 
-/* Ajusta la grilla para dar espacio al lateral de Talento Destacado */
-@media (min-width: 900px) {
-  body.role-empresa .main-grid-section {
-    grid-template-columns: 1.8fr 1.2fr !important;
-  }
+body.role-empresa button.modo-empresa-only,
+body.role-empresa a.modo-empresa-only,
+body.role-empresa button.empresa-only,
+body.role-empresa a.empresa-only,
+body.role-empresa .nav-link.modo-empresa-only {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body.role-empresa .job-company {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0.25rem 0;
+}
+
+body.role-empresa .job-company::before {
+  content: "🏢";
+  font-size: 0.85rem;
 }
 
 /* ==========================================================================
    3. NAVBAR / HEADER
+   3. NAVBAR / HEADER & BADGE DE CAMBIO DE ROLES
    ========================================================================== */
 .navbar {
   position: sticky;
@@ -162,8 +214,7 @@ body.role-empresa a.modo-empresa-only {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
-  padding: 0.8rem 1.5rem;
-  transition: background-color 0.3s ease;
+  padding: 0.75rem 1.5rem;
 }
 
 [data-theme="light"] .navbar,
@@ -188,9 +239,9 @@ body.role-empresa a.modo-empresa-only {
 }
 
 .logo h2 {
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: 1.5px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 1px;
   color: var(--text-main);
   line-height: 1;
   margin: 0;
@@ -201,20 +252,20 @@ body.role-empresa a.modo-empresa-only {
   font-weight: 700;
   color: var(--primary);
   letter-spacing: 1.5px;
-  margin-top: 4px;
+  margin-top: 3px;
   text-transform: uppercase;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.5rem;
   margin-left: auto;
 }
 
 .nav-link {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
   transition: var(--transition);
   background: none;
@@ -222,7 +273,7 @@ body.role-empresa a.modo-empresa-only {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   padding: 0.5rem 0.85rem;
   border-radius: var(--radius-sm);
   white-space: nowrap;
@@ -234,14 +285,46 @@ body.role-empresa a.modo-empresa-only {
   background-color: rgba(243, 156, 18, 0.1);
 }
 
-[data-theme="light"] .nav-link:hover,
-[data-theme="light"] .nav-link.active,
-.light-theme .nav-link:hover,
-.light-theme .nav-link.active {
-  background-color: rgba(214, 126, 0, 0.08);
+/* Badge/Pill interactivo de Cambio de Perfil */
+.btn-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(243, 156, 18, 0.12);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0.45rem 0.85rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  margin-left: 0.5rem;
 }
 
-/* Dropdown Menu */
+.btn-role-badge:hover {
+  background: var(--primary);
+  color: var(--text-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.25);
+}
+
+.badge-change-indicator {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  margin-left: 0.2rem;
+}
+
+.btn-role-badge:hover .badge-change-indicator {
+  background: rgba(0, 0, 0, 0.15);
+  color: var(--text-dark);
+}
+
+/* Dropdown */
 .dropdown {
   position: relative;
 }
@@ -253,12 +336,12 @@ body.role-empresa a.modo-empresa-only {
   right: 0;
   background: var(--card-bg);
   box-shadow: var(--shadow-lg);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  min-width: 210px;
+  min-width: 220px;
   z-index: var(--z-dropdown);
   border: 1px solid var(--border-color);
-  padding: 0.4rem 0;
+  padding: 0.5rem 0;
 }
 
 .dropdown-menu.show {
@@ -269,8 +352,8 @@ body.role-empresa a.modo-empresa-only {
 .dropdown-menu a {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1.2rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
   font-size: 0.88rem;
   color: var(--text-main);
   transition: var(--transition);
@@ -283,40 +366,61 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   4. HERO SECTION & FORMULARIO EXPRESS
+   4. HERO SECTION & BUSCADOR INTEGRADO
    ========================================================================== */
 .hero-section {
   position: relative;
+  background-image: 
+    linear-gradient(rgba(10, 11, 12, 0.75), rgba(10, 11, 12, 0.88)), 
+    url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
-  padding: 3.5rem 1.5rem;
+  background-repeat: no-repeat;
+  padding: 4rem 1.5rem;
   color: var(--text-main);
+  display: flex;
+  justify-content: center;
+}
+
+[data-theme="light"] .hero-section,
+.light-theme .hero-section {
+  background-image: 
+    linear-gradient(rgba(248, 250, 252, 0.88), rgba(241, 245, 249, 0.94)), 
+    url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1920&q=80');
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
   background: var(--hero-overlay-bg);
+  pointer-events: none;
 }
 
-.hero-container {
+.hero-container-centered {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 850px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
-/* Tipografía fluida con clamp() */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .hero-title {
-  font-size: clamp(2rem, 4vw + 1rem, 3.2rem);
-  font-weight: 900;
-  line-height: 1.15;
-  margin-bottom: 1rem;
-  letter-spacing: -0.02em;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.5px;
 }
 
 .hero-title .highlight {
@@ -324,148 +428,108 @@ body.role-empresa a.modo-empresa-only {
 }
 
 .hero-subtitle {
-  font-size: clamp(0.95rem, 1.2vw + 0.5rem, 1.1rem);
+  font-size: 1.05rem;
   color: var(--text-muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   line-height: 1.6;
-}
-
-.hero-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.hero-btn-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.35rem;
-  width: 100%;
-}
-
-/* Componentes Botón */
-.btn-primary, .btn-secondary, .btn-accent {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.95rem 1.5rem;
-  font-weight: 800;
-  border-radius: var(--radius-sm);
-  transition: var(--transition);
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-size: 0.88rem;
-  letter-spacing: 0.5px;
-  text-align: center;
-  width: 100%;
-  user-select: none;
-}
-
-.btn-primary {
-  background-color: var(--primary);
-  color: var(--text-dark);
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-secondary {
-  background-color: transparent;
-  border-color: var(--border-color);
-  color: var(--text-main);
-}
-
-.btn-secondary:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-  background-color: rgba(243, 156, 18, 0.05);
-}
-
-[data-theme="light"] .btn-secondary:hover,
-.light-theme .btn-secondary:hover {
-  background-color: rgba(214, 126, 0, 0.08);
-}
-
-.btn-accent {
-  background-color: #E67E22;
-  color: var(--text-dark);
-}
-
-.btn-accent:hover {
-  background-color: #D35400;
-  transform: translateY(-2px);
-}
-
-.btn-subtext {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 0.2rem;
-  display: block;
-}
-
-.highlight-express {
-  color: var(--primary);
-  font-weight: 700;
+  max-width: 650px;
 }
 
 .hero-features {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
+  margin-bottom: 2rem;
 }
 
 .hero-features i {
   color: var(--primary);
+  margin-right: 0.35rem;
 }
 
-/* Card Formulario Express */
+/* Buscador Centrado dentro del Hero */
+.hero-search-bar {
+  width: 100%;
+  max-width: 750px;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.hero-search-bar input {
+  flex: 1;
+  height: 52px;
+  padding: 0 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--card-bg);
+  color: var(--text-main);
+  outline: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+.hero-search-bar input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.18);
+}
+
+.btn-search {
+  background: var(--primary);
+  color: var(--text-dark);
+  border: none;
+  padding: 0 1.75rem;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+.btn-search:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   5. SECCIÓN FORMULARIO EXPRESS
+   ========================================================================== */
+.express-section-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  background-color: var(--bg-dark);
+}
+
 .hero-card-express {
+  width: 100%;
+  max-width: 540px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 2rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
-  display: none;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.hero-card-express.is-visible {
-  display: block !important;
-  animation: slideDownExpress 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes slideDownExpress {
-  from {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+[data-theme="light"] .hero-card-express {
+  background: var(--card-bg);
 }
 
 .card-header {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-header h2 {
@@ -475,14 +539,12 @@ body.role-empresa a.modo-empresa-only {
   letter-spacing: 0.5px;
 }
 
-.text-warning {
-  color: var(--primary);
-}
+.text-warning { color: var(--primary); }
 
 .hero-card-express p {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   line-height: 1.5;
 }
 
@@ -494,55 +556,50 @@ body.role-empresa a.modo-empresa-only {
 
 .form-group {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-row-2col {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
-/* Inputs & Selects */
 .express-form input,
-.form-group input {
+.form-group input,
+.express-form select,
+.form-group select {
   width: 100%;
-  padding: 0.85rem 1rem;
+  height: 48px;
+  padding: 0 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background-color: var(--bg-dark);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   outline: none;
   transition: var(--transition);
   color: var(--text-main);
+  font-family: inherit;
 }
 
 .express-form input::placeholder,
 .form-group input::placeholder {
   color: var(--text-muted);
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .express-form select,
 .form-group select {
-  width: 100%;
-  background-color: var(--bg-dark) !important;
-  color: var(--text-main) !important;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem 2.5rem 0.85rem 1rem !important;
-  font-size: 0.9rem;
+  padding-right: 2.5rem;
   cursor: pointer;
-  outline: none;
-  transition: var(--transition);
-
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
-  background-image: var(--select-arrow) !important;
-  background-repeat: no-repeat !important;
-  background-position: right 1rem center !important;
-  background-size: 0.7rem auto !important;
+  background-image: var(--select-arrow);
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.7rem auto;
 }
 
 .express-form select option,
@@ -568,16 +625,17 @@ body.role-empresa a.modo-empresa-only {
 
 .btn-whatsapp {
   width: 100%;
-  padding: 0.95rem;
+  min-height: 48px;
+  padding: 0.85rem;
   background-color: var(--primary);
   color: var(--text-dark);
   border: none;
   border-radius: var(--radius-sm);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   text-transform: uppercase;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
@@ -590,147 +648,26 @@ body.role-empresa a.modo-empresa-only {
   box-shadow: var(--shadow-md);
 }
 
-.response-tag {
-  display: block;
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 0.8rem;
-}
-
 /* ==========================================================================
-   5. CATEGORÍAS & GRIDS
+   6. CATEGORÍAS & GRIDS DE VACANTES
    ========================================================================== */
-.categories-section, .main-grid-section, .stats-section, .info-section {
+.main-grid-section, .info-section {
   max-width: 1200px;
   margin: 3.5rem auto;
   padding: 0 1.5rem;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.8rem;
-}
-
-.section-header h2 {
-  font-size: 1.15rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-
-.link-more {
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.85rem;
-  transition: var(--transition);
-}
-
-.link-more:hover {
-  text-decoration: underline;
-}
-
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1.2rem;
-}
-
-.category-card {
-  background: var(--card-bg);
-  padding: 1.4rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  text-align: center;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.category-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  background-color: var(--card-bg-light);
-  box-shadow: var(--shadow-md);
-}
-
-.category-card i {
-  font-size: 1.8rem;
-  color: var(--primary);
-  margin-bottom: 0.6rem;
-}
-
-.category-card h3 {
-  font-size: 0.88rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-}
-
-.category-card .count {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-/* ==========================================================================
-   6. TARJETAS DE OFERTAS DE EMPLEO
-   ========================================================================== */
-.main-grid-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-}
-
-.search-bar {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1.8rem;
-}
-
-.search-bar input {
-  flex: 1;
-  padding: 0.85rem 1.1rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  background: var(--card-bg);
-  color: var(--text-main);
-  outline: none;
-  font-size: 0.9rem;
-  transition: var(--transition);
-}
-
-.search-bar input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.18);
-}
-
-.btn-search {
-  background: var(--primary);
-  color: var(--text-dark);
-  border: none;
-  padding: 0.85rem 1.4rem;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-weight: 800;
-  transition: var(--transition);
-}
-
-.btn-search:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-}
-
 .vacantes-container {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
 .job-offer-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 1.35rem 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.2rem;
@@ -747,18 +684,18 @@ body.role-empresa a.modo-empresa-only {
 .job-info-main {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .job-header-row {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .job-offer-card h4 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.3;
@@ -767,9 +704,9 @@ body.role-empresa a.modo-empresa-only {
 .badge-urgente {
   background: var(--danger-badge);
   color: #FFFFFF;
-  font-size: 0.68rem;
-  font-weight: 900;
-  padding: 0.25rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
   border-radius: 4px;
   text-transform: uppercase;
   display: inline-flex;
@@ -778,30 +715,29 @@ body.role-empresa a.modo-empresa-only {
   letter-spacing: 0.5px;
 }
 
-.job-company {
-  font-size: 0.9rem;
-  color: var(--primary);
-  font-weight: 700;
-}
-
 .job-details-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1rem;
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+.job-details-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .job-details-row i {
   color: var(--primary);
-  margin-right: 0.3rem;
 }
 
 .job-salary {
   color: var(--salary-green);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .job-action-col {
@@ -815,7 +751,7 @@ body.role-empresa a.modo-empresa-only {
 }
 
 .job-time {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   line-height: 1.3;
 }
@@ -824,8 +760,8 @@ body.role-empresa a.modo-empresa-only {
   background-color: var(--primary);
   color: var(--text-dark);
   font-weight: 800;
-  font-size: 0.82rem;
-  padding: 0.7rem 1.25rem;
+  font-size: 0.8rem;
+  padding: 0.65rem 1.25rem;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
@@ -833,21 +769,24 @@ body.role-empresa a.modo-empresa-only {
   letter-spacing: 0.5px;
   transition: var(--transition);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-postularme:hover {
   background-color: var(--primary-hover);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
 
 .link-more-full {
   display: block;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   color: var(--primary);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   transition: var(--transition);
 }
 
@@ -856,156 +795,30 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   7. SECCIÓN TALENTO & BLOG
+   7. SECCIÓN TALENTO DESTACADO
    ========================================================================== */
-.talent-grid {
+.talento-section {
+  max-width: 1200px;
+  margin: 3.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.talento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.talent-card {
-  background: var(--card-bg);
-  padding: 1.25rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  text-align: center;
-  transition: var(--transition);
-}
-
-.talent-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-
-.avatar-status {
-  position: relative;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 0.75rem;
-}
-
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--card-bg-light);
-  color: var(--text-main);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.95rem;
-  border: 1px solid var(--border-color);
-}
-
-.status-badge.active {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 12px;
-  height: 12px;
-  background: var(--salary-green);
-  border: 2px solid var(--card-bg);
-  border-radius: 50%;
-}
-
-.talent-card h3 { 
-  font-size: 0.9rem; 
-  font-weight: 700; 
-  margin-bottom: 0.2rem;
-}
-
-.talent-card .role { 
-  font-size: 0.8rem; 
-  color: var(--primary); 
-  font-weight: 600; 
-  margin-bottom: 0.2rem;
-}
-
-.talent-card .rating { 
-  font-size: 0.78rem; 
-  color: var(--primary); 
-  margin: 0.3rem 0; 
-}
-
-.talent-card .detail { 
-  font-size: 0.75rem; 
-  color: var(--text-muted); 
-  margin-bottom: 0.5rem; 
-}
-
-.talent-card .location { 
-  font-size: 0.75rem; 
-  color: var(--text-muted); 
-  display: block;
-}
-
-.blog-banner {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 2rem;
-  border-radius: var(--radius-md);
-  line-height: 1.6;
-}
-
-.blog-banner h2 {
-  font-size: 1.15rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-}
-
-.blog-banner p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 1.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.25rem;
 }
 
 /* ==========================================================================
-   8. ESTADÍSTICAS E INFORMACIÓN
+   8. INFORMACIÓN Y NOSOTROS
    ========================================================================== */
-.stats-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 2rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 2rem;
-  border-radius: var(--radius-md);
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.stat-item i {
-  font-size: 2rem;
-  color: var(--primary);
-}
-
-.stat-info h4 { 
-  font-size: 1.3rem; 
-  font-weight: 900; 
-  line-height: 1; 
-  margin-bottom: 0.2rem;
-}
-
-.stat-info p { 
-  font-size: 0.78rem; 
-  color: var(--text-muted); 
-}
-
 .info-section {
   text-align: center;
 }
 
 .info-section h2 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  font-weight: 800;
   margin-bottom: 0.8rem;
 }
 
@@ -1018,7 +831,7 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   9. MODALES GENERALES, MODAL ROL & TOASTS
+   9. MODALES GENERALES & TOASTS
    ========================================================================== */
 .rol-modal-overlay {
   position: fixed;
@@ -1045,32 +858,33 @@ body.role-empresa a.modo-empresa-only {
   text-align: center;
   box-shadow: var(--shadow-lg);
   color: var(--text-main);
+  position: relative;
   animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .rol-modal-card h2 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .rol-modal-card p {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   margin-bottom: 1.5rem;
 }
 
 .rol-options {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .btn-rol {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.25rem 1rem;
+  padding: 1.2rem 1rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--card-bg-light);
@@ -1086,52 +900,19 @@ body.role-empresa a.modo-empresa-only {
 }
 
 .rol-icon {
-  font-size: 2rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
 }
 
 .rol-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
 }
 
 .rol-desc {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  margin-top: 0.25rem;
-}
-
-.jobbers-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--modal-overlay-bg);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  z-index: var(--z-modal);
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.jobbers-modal.active {
-  display: flex !important;
-}
-
-.jobbers-modal-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  max-width: 480px;
-  width: 100%;
-  padding: 24px;
-  position: relative;
-  box-shadow: var(--shadow-lg);
-  color: var(--text-main);
-  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
+  margin-top: 0.2rem;
 }
 
 @keyframes modalFadeIn {
@@ -1151,17 +932,18 @@ body.role-empresa a.modo-empresa-only {
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   cursor: pointer;
-  line-height: 1;
   transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .jobbers-close-btn:hover {
   color: var(--text-main);
 }
 
-/* Toast System */
 #toast-container {
   position: fixed;
   bottom: 85px;
@@ -1185,15 +967,14 @@ body.role-empresa a.modo-empresa-only {
   display: flex;
   align-items: center;
   gap: 10px;
-  will-change: transform, opacity;
-  animation: toastIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .jobbers-toast.success { border-left: 4px solid var(--salary-green); }
 .jobbers-toast.error { border-left: 4px solid var(--danger-badge); }
 
 @keyframes toastIn {
-  from { opacity: 0; transform: translateX(60px); }
+  from { opacity: 0; transform: translateX(50px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
@@ -1205,8 +986,9 @@ body.role-empresa a.modo-empresa-only {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 65px;
-  background: rgba(13, 13, 13, 0.88);
+  height: calc(65px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: rgba(13, 13, 13, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-color);
@@ -1214,22 +996,28 @@ body.role-empresa a.modo-empresa-only {
   justify-content: space-around;
   align-items: center;
   z-index: var(--z-bottom-nav);
-  padding: 0 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 [data-theme="light"] .bottom-nav,
 .light-theme .bottom-nav {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .bottom-nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 3px;
   font-size: 0.7rem;
   color: var(--text-muted);
   transition: var(--transition);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
 }
 
 .bottom-nav-item i { font-size: 1.2rem; }
@@ -1241,246 +1029,74 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   11. COMPONENTES ADICIONALES
+   11. FOOTER
    ========================================================================== */
-.talento-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.25rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.main-footer {
   text-align: center;
-  transition: var(--transition);
-  position: relative;
-}
-
-.talento-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-
-.talento-avatar-container {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 0.75rem;
-}
-
-.talento-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--primary);
-  background-color: var(--card-bg-light);
-}
-
-.talento-badge-online {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
-  background-color: var(--salary-green);
-  border: 2px solid var(--card-bg);
-  border-radius: 50%;
-}
-
-.talento-nombre {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.2rem;
-}
-
-.talento-puesto {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.4rem;
-}
-
-.talento-info-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-bottom: 0.8rem;
-}
-
-.talento-exp {
-  font-weight: 600;
-}
-
-.talento-badge-dispo {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--salary-green);
-  background: rgba(16, 185, 129, 0.12);
-  padding: 0.25rem 0.6rem;
-  border-radius: 20px;
-  margin-bottom: 0.8rem;
-}
-
-.btn-contacto-talento {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 800;
-  border-radius: var(--radius-sm);
-  background-color: transparent;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  cursor: pointer;
-  transition: var(--transition);
-  text-transform: uppercase;
-}
-
-.btn-contacto-talento:hover {
-  background-color: var(--primary);
-  color: var(--text-dark);
-}
-
-.comunidad-banner-card {
-  background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-light) 100%);
-  border: 1px solid var(--border-color);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.comunidad-banner-content h3 {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.3rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.comunidad-banner-content p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-.btn-comunidad-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  background-color: var(--primary);
-  color: var(--text-dark);
-  font-weight: 800;
+  padding: 2.5rem 1.5rem;
+  border-top: 1px solid var(--border-color);
   font-size: 0.82rem;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: var(--transition);
-}
-
-.btn-comunidad-action:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Previene animaciones bruscas para usuarios que prefieren movimiento reducido */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  color: var(--text-muted);
+  margin-top: 4rem;
 }
 
 /* ==========================================================================
-   12. MEDIA QUERIES (TABLET & DESKTOP)
+   12. MEDIA QUERIES (DESKTOP / TABLET)
+   12. MEDIA QUERIES (DESKTOP / TABLET / RESPONSIVE OPTIMIZATIONS)
    ========================================================================== */
+@media (max-width: 899px) {
+  .nav-links {
+    gap: 0.35rem;
+  }
+  
+  .nav-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .btn-role-badge {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
+  }
+
+  .badge-change-indicator {
+    display: none; /* Oculta etiqueta secundaria en mobile para evitar desbordes */
+  }
+}
+
 @media (min-width: 600px) {
   .form-row-2col {
     flex-direction: row;
   }
-  
+
   .form-row-2col .form-group {
     flex: 1;
-  }
-
-  .comunidad-banner-card {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
   }
 }
 
 @media (min-width: 900px) {
-  body { 
-    padding-bottom: 0; 
-  }
-  
-  .bottom-nav { 
-    display: none; 
-  }
-  
+  body { padding-bottom: 0; }
+  .bottom-nav { display: none; }
+
   .hero-section {
-    padding: 5rem 2rem;
+    padding: 6rem 2rem;
   }
 
-  .hero-container {
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: 3.5rem;
-  }
-
-  .hero-buttons {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-
-  .hero-btn-wrapper {
-    width: auto;
-    flex: 1;
-  }
-
-  .btn-primary, .btn-secondary, .btn-accent {
-    width: 100%;
-  }
-
-  .main-grid-section {
-    grid-template-columns: 1.8fr 1.2fr;
+  .hero-title {
+    font-size: 3.2rem;
   }
 
   .job-offer-card {
-    grid-template-columns: 1fr 190px;
-    align-items: center;
+    grid-template-columns: 1fr auto;
   }
 
   .job-action-col {
     border-top: none;
-    border-left: 1px dashed var(--border-color);
+    border-left: 1px solid var(--border-color);
     padding-top: 0;
-    padding-left: 1.25rem;
+    padding-left: 1.5rem;
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    text-align: right;
-  }
-
-  #toast-container {
-    bottom: 24px;
   }
 }
