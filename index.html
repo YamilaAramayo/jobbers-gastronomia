@@ -73,12 +73,12 @@
                 <!-- Solo visible para empresas -->
                 <button type="button" class="nav-link btn-trigger-express modo-empresa-only">Publicar Búsqueda</button>
 
-                <!-- Botón de Cambiar Perfil -->
+                <!-- Botón Modo Actual / Cambiar Perfil -->
                 <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
-                    <i class="fas fa-user-tag" aria-hidden="true"></i> <span id="label-modo-actual">Cambiar Perfil</span>
+                    <i class="fas fa-user-tag" aria-hidden="true"></i> <span id="label-modo-actual">Modo: Postulante</span>
                 </button>
 
-                <!-- Desplegable Recursos -->
+                <!-- Desplegable Recursos (Sin Soporte Técnico) -->
                 <div class="dropdown">
                     <button type="button" class="nav-link dropdown-toggle" id="dropdown-recursos" aria-haspopup="true" aria-expanded="false">
                         Recursos <i class="fas fa-chevron-down nav-icon-arrow" aria-hidden="true"></i>
@@ -86,7 +86,6 @@
                     <div class="dropdown-menu" id="menu-recursos" aria-labelledby="dropdown-recursos">
                         <a href="#"><i class="fas fa-file-invoice" aria-hidden="true"></i> Crear CV Gastronómico</a>
                         <a href="#"><i class="fas fa-comments" aria-hidden="true"></i> Consejos de Entrevista</a>
-                        <a href="#"><i class="fas fa-headset" aria-hidden="true"></i> Soporte Técnico</a>
                     </div>
                 </div>
 
@@ -338,8 +337,23 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN: BANNER COMUNIDAD -->
-            <div id="banner-comunidad-jobbers" class="banner-block"></div>
+            <!-- SECCIÓN: BANNER COMUNIDAD JOBBERS PRO CON BOTÓN DE BLOG -->
+            <div id="banner-comunidad-jobbers" class="banner-block">
+                <div class="pro-banner-card">
+                    <h2 class="pro-banner-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h2>
+                    <p class="pro-banner-desc">
+                        Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
+                    </p>
+                    <div class="pro-banner-buttons">
+                        <a href="#destacar" class="btn-pro-primary">
+                            ⚡ DESTACÁ TU PERFIL PRO
+                        </a>
+                        <a href="#blog-seccion" class="btn-pro-secondary">
+                            <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <!-- SECCIÓN: LISTA DE VACANTES / EMPLEOS -->
             <div class="section-block">
@@ -486,6 +500,42 @@
         </section>
     </main>
 
+    <!-- SECCIÓN BLOG & ACTUALIDAD GASTRONÓMICA -->
+    <section class="blog-section" id="blog-seccion">
+        <div class="blog-container">
+            <span class="blog-tagline">ACTUALIDAD GASTRONÓMICA</span>
+            <h2 class="blog-title">Blog, Guías y Espacios Patrocinados</h2>
+            <p class="blog-subtitle">Consejos para profesionales y novedades para locales de Córdoba.</p>
+
+            <!-- ESPACIO PATROCINADO / DESTACADO -->
+            <div class="patrocinado-card">
+                <span class="patrocinado-tag">ESPACIO PATROCINADO / DESTACADO</span>
+                <h3>¡Promocioná tu marca de indumentaria o artefactos de cocina acá!</h3>
+                <p>Llegá de forma directa a cientos de restaurantes, bares y cocineros de Córdoba.</p>
+                <a href="https://wa.me/5493513080197?text=Hola,%20quiero%20consultar%20por%20espacio%20publicitario%20en%20Jobbers" target="_blank" rel="noopener noreferrer" class="btn-consultar-publicidad">
+                    <i class="fab fa-whatsapp"></i> CONSULTAR ESPACIO PUBLICITARIO
+                </a>
+            </div>
+
+            <!-- TARJETAS DEL BLOG -->
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <span class="blog-category">EQUIPAMIENTO</span>
+                    <h3>Qué tener en cuenta al elegir artefactos de cocina de alta rotación</h3>
+                    <p>Consejos para optimizar el espacio y el rendimiento energético en cocinas comerciales.</p>
+                    <a href="#" class="blog-link">Leer artículo →</a>
+                </article>
+
+                <article class="blog-card">
+                    <span class="blog-category">CONSEJOS</span>
+                    <h3>Cómo armar un CV gastronómico que llame la atención</h3>
+                    <p>Tips prácticos para destacar tus habilidades técnicas y experiencia en salón o cocina.</p>
+                    <a href="#" class="blog-link">Leer artículo →</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- SECCIÓN NOSOTROS -->
     <section class="info-section" id="nosotros">
         <h2>Sobre Jobbers</h2>
@@ -497,14 +547,14 @@
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile) -->
+    <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile Optimizado) -->
     <nav class="bottom-nav" aria-label="Navegación móvil">
         <a href="#vacantes" class="bottom-nav-item active">
             <i class="fas fa-search" aria-hidden="true"></i>
-            <span>Buscar</span>
+            <span>Empleos</span>
         </a>
 
-        <!-- Elemento dinámico según rol -->
+        <!-- Personal YA (Solo Empresa) -->
         <button type="button" class="bottom-nav-item highlight-item modo-empresa-only btn-trigger-express">
             <i class="fas fa-bolt" aria-hidden="true"></i>
             <span>Personal YA</span>
@@ -515,9 +565,10 @@
             <span>Perfil</span>
         </button>
 
-        <a href="https://wa.me/5493513080197" target="_blank" rel="noopener noreferrer" class="bottom-nav-item" aria-label="Contacto por WhatsApp">
-            <i class="fab fa-whatsapp" aria-hidden="true"></i>
-            <span>Contacto</span>
+        <!-- Botón Nosotros (Según la imagen) -->
+        <a href="#nosotros" class="bottom-nav-item">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            <span>Nosotros</span>
         </a>
     </nav>
 
