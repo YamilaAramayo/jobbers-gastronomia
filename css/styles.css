@@ -1,26 +1,25 @@
-
 /* ==========================================================================
-   1. VARIABLES & RESET
+   1. VARIABLES & DESIGN TOKENS
    ========================================================================== */
 :root {
-  /* Paleta de colores - MODO OSCURO (Default) */
+  /* Paleta Modo Oscuro (Default) */
   --primary: #F39C12;             /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
-  --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;       /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;     /* Botón de acción principal */
+  --secondary: #0D0D0D;           /* Fondo muy oscuro */
+  --card-bg: #16181A;             /* Fondo tarjetas */
+  --card-bg-light: #212428;       /* Hover / Tarjetas secundarias */
+  --whatsapp-orange: #F39C12;
   --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;        /* Badge Urgente y errores */
-  --salary-green: #2ECC71;        /* Sueldos y Disponibilidad */
+  --danger-badge: #EF4444;        /* Rojo semántico unificado */
+  --salary-green: #10B981;        /* Verde esmeralda con alto contraste */
 
   --bg-dark: #0A0B0C;
-  --text-main: #FFFFFF;
+  --text-main: #F9FAFB;           /* Blanco roto para reducir la fatiga visual */
   --text-muted: #9CA3AF;
-  --text-dark: #111827;           /* Texto sobre botones amarillos/naranjas */
+  --text-dark: #000000;           /* Máximo contraste sobre botones naranjas */
   --border-color: #2D3137;
 
-  /* Bordes y Sombras */
+  /* Bordes, Sombras y Transiciones */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -28,54 +27,52 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
-  --transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Capas / Z-Index */
+  /* Capas Z-Index */
   --z-dropdown: 10;
   --z-bottom-nav: 90;
   --z-navbar: 100;
   --z-modal: 1000;
   --z-toast: 2000;
 
-  /* Assets SVG */
+  /* Assets SVG & Gradient Overlays */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f39c12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(10,11,12,0.96) 0%, rgba(10,11,12,0.85) 100%);
-  --modal-overlay-bg: rgba(0, 0, 0, 0.85);
+  --modal-overlay-bg: rgba(0, 0, 0, 0.75);
   --select-option-bg: #1a1d24;
 }
 
-/* ==========================================================================
-   PALETA MODO CLARO (LIGHT MODE)
-   ========================================================================== */
+/* Modo Claro (Light Mode) */
 [data-theme="light"],
 .light-theme {
-  --primary: #D67E00;             /* Ámbar / Naranja oscuro para contraste */
+  --primary: #D67E00;
   --primary-hover: #B56900;
-  --secondary: #F8FAFC;           /* Fondo ultra claro */
-  --card-bg: #FFFFFF;             /* Blanco puro para tarjetas */
-  --card-bg-light: #F1F5F9;       /* Hover y tarjetas secundarias */
+  --secondary: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --card-bg-light: #F1F5F9;
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;        /* Rojo semántico contrastado */
-  --salary-green: #16A34A;        /* Verde accesible sobre blanco */
+  --danger-badge: #DC2626;
+  --salary-green: #059669;
 
   --bg-dark: #F8FAFC;             
-  --text-main: #0F172A;           /* Azul muy oscuro / Casi negro */
-  --text-muted: #64748B;          /* Texto secundario gris */
-  --text-dark: #FFFFFF;           /* Texto sobre botones primarios */
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --text-dark: #FFFFFF;
   --border-color: #E2E8F0;
 
-  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
   --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
 
-  /* Sobrescrituras de Assets para Light Mode */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.97) 0%, rgba(241, 245, 249, 0.90) 100%);
-  --modal-overlay-bg: rgba(15, 23, 42, 0.4);
+  --modal-overlay-bg: rgba(15, 23, 42, 0.5);
   --select-option-bg: #FFFFFF;
 }
 
+/* Reset Global & Base */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -83,13 +80,14 @@
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
-  padding-bottom: 80px; /* Offset para el Bottom Nav mobile */
+  padding-bottom: 80px;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -107,8 +105,14 @@ img {
   cursor: pointer;
 }
 
+/* Focus accesible universal */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 /* ==========================================================================
-   2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
+   2. CONTROL DE VISIBILIDAD DE ROLES
    ========================================================================== */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only {
@@ -132,12 +136,18 @@ body.role-empresa a.modo-empresa-only {
   top: 0;
   z-index: var(--z-navbar);
   width: 100%;
-  background-color: rgba(13, 13, 13, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(13, 13, 13, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   padding: 0.8rem 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+[data-theme="light"] .navbar,
+.light-theme .navbar {
+  background-color: rgba(255, 255, 255, 0.88);
 }
 
 .navbar-container {
@@ -147,11 +157,6 @@ body.role-empresa a.modo-empresa-only {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-}
-
-[data-theme="light"] .navbar,
-.light-theme .navbar {
-  background-color: rgba(255, 255, 255, 0.92);
 }
 
 .logo {
@@ -164,7 +169,7 @@ body.role-empresa a.modo-empresa-only {
 .logo h2 {
   font-size: 1.5rem;
   font-weight: 900;
-  letter-spacing: 1.8px;
+  letter-spacing: 1.5px;
   color: var(--text-main);
   line-height: 1;
   margin: 0;
@@ -215,7 +220,7 @@ body.role-empresa a.modo-empresa-only {
   background-color: rgba(214, 126, 0, 0.08);
 }
 
-/* Dropdown */
+/* Dropdown Menu */
 .dropdown {
   position: relative;
 }
@@ -237,7 +242,7 @@ body.role-empresa a.modo-empresa-only {
 
 .dropdown-menu.show {
   display: block;
-  animation: fadeIn 0.2s ease-in-out;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dropdown-menu a {
@@ -284,12 +289,13 @@ body.role-empresa a.modo-empresa-only {
   align-items: center;
 }
 
+/* Tipografía fluida con clamp() */
 .hero-title {
-  font-size: 2.4rem;
+  font-size: clamp(2rem, 4vw + 1rem, 3.2rem);
   font-weight: 900;
-  line-height: 1.2;
+  line-height: 1.15;
   margin-bottom: 1rem;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.02em;
 }
 
 .hero-title .highlight {
@@ -297,7 +303,7 @@ body.role-empresa a.modo-empresa-only {
 }
 
 .hero-subtitle {
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.2vw + 0.5rem, 1.1rem);
   color: var(--text-muted);
   margin-bottom: 2rem;
   line-height: 1.6;
@@ -318,6 +324,7 @@ body.role-empresa a.modo-empresa-only {
   width: 100%;
 }
 
+/* Componentes Botón */
 .btn-primary, .btn-secondary, .btn-accent {
   display: inline-flex;
   align-items: center;
@@ -327,13 +334,14 @@ body.role-empresa a.modo-empresa-only {
   font-weight: 800;
   border-radius: var(--radius-sm);
   transition: var(--transition);
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   text-transform: uppercase;
   font-size: 0.88rem;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   text-align: center;
   width: 100%;
+  user-select: none;
 }
 
 .btn-primary {
@@ -347,9 +355,13 @@ body.role-empresa a.modo-empresa-only {
   box-shadow: var(--shadow-md);
 }
 
+.btn-primary:active {
+  transform: translateY(0);
+}
+
 .btn-secondary {
   background-color: transparent;
-  border: 1px solid var(--border-color);
+  border-color: var(--border-color);
   color: var(--text-main);
 }
 
@@ -398,7 +410,7 @@ body.role-empresa a.modo-empresa-only {
   color: var(--primary);
 }
 
-/* Formulario Express */
+/* Card Formulario Express */
 .hero-card-express {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -469,6 +481,7 @@ body.role-empresa a.modo-empresa-only {
   gap: 0.75rem;
 }
 
+/* Inputs & Selects */
 .express-form input,
 .form-group input {
   width: 100%;
@@ -485,7 +498,7 @@ body.role-empresa a.modo-empresa-only {
 .express-form input::placeholder,
 .form-group input::placeholder {
   color: var(--text-muted);
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .express-form select,
@@ -529,7 +542,7 @@ body.role-empresa a.modo-empresa-only {
 .form-group select:focus,
 .form-group input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
+  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.18);
 }
 
 .btn-whatsapp {
@@ -667,7 +680,7 @@ body.role-empresa a.modo-empresa-only {
 
 .search-bar input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
+  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.18);
 }
 
 .btn-search {
@@ -732,7 +745,7 @@ body.role-empresa a.modo-empresa-only {
 
 .badge-urgente {
   background: var(--danger-badge);
-  color: white;
+  color: #FFFFFF;
   font-size: 0.68rem;
   font-weight: 900;
   padding: 0.25rem 0.6rem;
@@ -986,8 +999,6 @@ body.role-empresa a.modo-empresa-only {
 /* ==========================================================================
    9. MODALES GENERALES, MODAL ROL & TOASTS
    ========================================================================== */
-
-/* Estilos para el Modal de Selección de Rol */
 .rol-modal-overlay {
   position: fixed;
   inset: 0;
@@ -1069,7 +1080,6 @@ body.role-empresa a.modo-empresa-only {
   margin-top: 0.25rem;
 }
 
-/* Modales Genéricos */
 .jobbers-modal {
   display: none;
   position: fixed;
@@ -1104,7 +1114,7 @@ body.role-empresa a.modo-empresa-only {
 }
 
 @keyframes modalFadeIn {
-  from { opacity: 0; transform: translateY(-15px) scale(0.98); }
+  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -1130,6 +1140,7 @@ body.role-empresa a.modo-empresa-only {
   color: var(--text-main);
 }
 
+/* Toast System */
 #toast-container {
   position: fixed;
   bottom: 85px;
@@ -1174,9 +1185,9 @@ body.role-empresa a.modo-empresa-only {
   left: 0;
   right: 0;
   height: 65px;
-  background: rgba(13, 13, 13, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(13, 13, 13, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-around;
@@ -1187,7 +1198,7 @@ body.role-empresa a.modo-empresa-only {
 
 [data-theme="light"] .bottom-nav,
 .light-theme .bottom-nav {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.88);
 }
 
 .bottom-nav-item {
@@ -1209,10 +1220,8 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   11. COMPONENTES ADICIONALES: TALENTO DESTACADO & BANNER COMUNIDAD
+   11. COMPONENTES ADICIONALES
    ========================================================================== */
-
-/* Tarjetas de Talento Destacado */
 .talento-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -1291,7 +1300,7 @@ body.role-empresa a.modo-empresa-only {
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--salary-green);
-  background: rgba(46, 204, 113, 0.1);
+  background: rgba(16, 185, 129, 0.12);
   padding: 0.25rem 0.6rem;
   border-radius: 20px;
   margin-bottom: 0.8rem;
@@ -1316,7 +1325,6 @@ body.role-empresa a.modo-empresa-only {
   color: var(--text-dark);
 }
 
-/* Banner de Comunidad Jobbers */
 .comunidad-banner-card {
   background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-light) 100%);
   border: 1px solid var(--border-color);
@@ -1369,8 +1377,18 @@ body.role-empresa a.modo-empresa-only {
   box-shadow: var(--shadow-sm);
 }
 
+/* Previene animaciones bruscas para usuarios que prefieren movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ==========================================================================
-   12. MEDIA QUERIES (DESKTOP / TABLET)
+   12. MEDIA QUERIES (TABLET & DESKTOP)
    ========================================================================== */
 @media (min-width: 600px) {
   .form-row-2col {
@@ -1404,10 +1422,6 @@ body.role-empresa a.modo-empresa-only {
   .hero-container {
     grid-template-columns: 1.25fr 0.75fr;
     gap: 3.5rem;
-  }
-
-  .hero-title {
-    font-size: 3.2rem;
   }
 
   .hero-buttons {
