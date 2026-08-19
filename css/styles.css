@@ -1,4 +1,4 @@
-/* Importación de fuente moderna y limpia */
+/* Importación de fuente moderna */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================================================
@@ -9,46 +9,38 @@
   --primary: #F39C12;                   /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
   --secondary: #0D0D0D;                 /* Fondo muy oscuro */
-  --card-bg: #141619;                   /* Fondo de tarjetas refinado */
+  --card-bg: #141619;                   /* Fondo de tarjetas */
   --card-bg-light: #1D2025;             /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;
-  --whatsapp-hover: #E67E22;
-  --danger-badge: #E74C3C;              /* Badge Urgente y errores */
+  --danger-badge: #E74C3C;              /* Badge Urgente */
   --salary-green: #2ECC71;              /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
-  --text-dark: #0F172A;                 /* Texto sobre botones brillantes */
+  --text-dark: #0F172A;
   --border-color: #26292E;
 
-  /* Bordes y Sombras estilizados */
+  /* Bordes y Sombras */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
   --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Capas / Z-Index */
-  --z-dropdown: 10;
-  --z-bottom-nav: 90;
+  /* Z-Index */
   --z-navbar: 100;
+  --z-bottom-nav: 900;
   --z-modal: 1000;
   --z-toast: 2000;
 
-  /* Assets SVG & Overlays */
-  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F39C12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.94) 0%, rgba(10, 11, 12, 0.82) 100%);
-  --modal-overlay-bg: rgba(0, 0, 0, 0.82);
-  --select-option-bg: #141619;
+  --modal-overlay-bg: rgba(0, 0, 0, 0.85);
 }
 
-/* ==========================================================================
-   PALETA MODO CLARO (LIGHT MODE)
-   ========================================================================== */
+/* Modo Claro */
 [data-theme="light"],
 .light-theme {
   --primary: #D67E00;                     
@@ -56,11 +48,6 @@
   --secondary: #F8FAFC;                 
   --card-bg: #FFFFFF;                  
   --card-bg-light: #F1F5F9;            
-  --whatsapp-orange: #D67E00;
-  --whatsapp-hover: #B56900;
-  --danger-badge: #DC2626;             
-  --salary-green: #16A34A;             
-
   --bg-dark: #F8FAFC;                  
   --text-main: #0F172A;                
   --text-muted: #64748B;                
@@ -71,10 +58,8 @@
   --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 16px 32px rgba(15, 23, 42, 0.12);
 
-  --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.88) 100%);
-  --modal-overlay-bg: rgba(15, 23, 42, 0.6);
-  --select-option-bg: #FFFFFF;
+  --modal-overlay-bg: rgba(15, 23, 42, 0.65);
 }
 
 *, *::before, *::after {
@@ -105,10 +90,6 @@ img {
   display: block;
 }
 
-[onclick] {
-  cursor: pointer;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -122,113 +103,57 @@ img {
 }
 
 /* ==========================================================================
-   2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES
+   2. CONTROL DE VISIBILIDAD POR ROLES
    ========================================================================== */
 
 /* Ocultar elementos de empresa en modo postulante */
 .role-empresa-only,
 .empresa-only,
-.modo-empresa-only,
-.seccion-empresa,
-#talento-destacado,
-.talento-section,
-.hero-card-express,
-#formulario-express,
 body:not(.role-empresa) .role-empresa-only,
-body:not(.role-empresa) .empresa-only,
-body:not(.role-empresa) .modo-empresa-only,
-body:not(.role-empresa) .seccion-empresa,
-body:not(.role-empresa) #talento-destacado,
-body:not(.role-empresa) .talento-section,
-body:not(.role-empresa) .hero-card-express,
-body:not(.role-empresa) #formulario-express,
-body.role-postulante .role-empresa-only,
-body.role-postulante .empresa-only,
-body.role-postulante .modo-empresa-only,
-body.role-postulante .seccion-empresa,
-body.role-postulante #talento-destacado,
-body.role-postulante .talento-section,
-body.role-postulante .hero-card-express,
-body.role-postulante #formulario-express {
+body.role-postulante .role-empresa-only {
   display: none !important;
 }
 
-/* Elementos exclusivos de postulante */
-body.role-postulante .role-postulante-only,
-body.role-postulante .postulante-only,
-body.role-postulante .modo-postulante-only,
-body.role-postulante .seccion-postulante,
-body.role-postulante .main-grid-section,
-body.role-postulante .categories-section,
-body.role-postulante .btn-postularme {
-  display: block;
+/* Ocultar elementos de postulante en modo empresa */
+body.role-empresa #vacantes,
+body.role-empresa .main-grid-section,
+body.role-empresa .role-postulante-only {
+  display: none !important;
 }
 
-body.role-postulante .hero-btn-wrapper.role-postulante-only {
+/* Mostrar elementos según el rol */
+body.role-postulante .role-postulante-only {
   display: flex;
   flex-direction: column;
 }
 
-/* Ocultar el buscador y el listado de vacantes en MODO EMPRESA */
-body.role-empresa #vacantes,
-body.role-empresa .main-grid-section,
-body.role-empresa .role-postulante-only,
-body.role-empresa .postulante-only,
-body.role-empresa .modo-postulante-only,
-body.role-empresa .seccion-postulante {
-  display: none !important;
-}
-
-/* Mostrar elementos de empresa cuando se activa el rol empresa */
 body.role-empresa div.role-empresa-only,
-body.role-empresa div.empresa-only,
-body.role-empresa section.role-empresa-only,
-body.role-empresa section.empresa-only,
-body.role-empresa .seccion-empresa,
-body.role-empresa .hero-card-express,
-body.role-empresa #formulario-express,
-body.role-empresa #talento-destacado,
-body.role-empresa .talento-section {
+body.role-empresa section.role-empresa-only {
   display: block !important;
 }
 
 body.role-empresa button.role-empresa-only,
-body.role-empresa a.role-empresa-only,
-body.role-empresa button.empresa-only,
-body.role-empresa a.empresa-only,
-body.role-empresa .nav-link.role-empresa-only {
+body.role-empresa a.role-empresa-only {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
 }
 
-body.role-empresa .bottom-nav .bottom-nav-item.role-empresa-only,
-body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
+body.role-empresa .bottom-nav .role-empresa-only {
   display: flex !important;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
-
-body.role-empresa .job-company {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin: 0.25rem 0;
 }
 
 /* ==========================================================================
-   3. NAVBAR / HEADER & BADGES
+   3. NAVBAR / HEADER
    ========================================================================== */
 .navbar {
   position: sticky;
   top: 0;
   z-index: var(--z-navbar);
   width: 100%;
-  background-color: rgba(13, 13, 13, 0.85);
+  background-color: rgba(13, 13, 13, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
@@ -236,9 +161,8 @@ body.role-empresa .job-company {
   padding: 0.75rem 1.5rem;
 }
 
-[data-theme="light"] .navbar,
-.light-theme .navbar {
-  background-color: rgba(255, 255, 255, 0.88);
+[data-theme="light"] .navbar {
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .navbar-container {
@@ -254,7 +178,6 @@ body.role-empresa .job-company {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-decoration: none;
 }
 
 .logo h2 {
@@ -263,7 +186,6 @@ body.role-empresa .job-company {
   letter-spacing: 1px;
   color: var(--text-main);
   line-height: 1;
-  margin: 0;
 }
 
 .logo-subtitle {
@@ -295,45 +217,31 @@ body.role-empresa .job-company {
   gap: 0.5rem;
   padding: 0.5rem 0.85rem;
   border-radius: var(--radius-sm);
-  white-space: nowrap;
 }
 
-.nav-link:hover, 
-.nav-link.active {
+.nav-link:hover {
   color: var(--primary);
   background-color: rgba(243, 156, 18, 0.1);
 }
 
-.btn-role-badge,
 .btn-cambiar-rol {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
   background: rgba(243, 156, 18, 0.12);
   border: 1px solid var(--primary);
   color: var(--primary);
-  padding: 0.45rem 0.85rem;
-  border-radius: 50px;
   font-weight: 700;
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
+  border-radius: 50px;
 }
 
-.btn-role-badge:hover,
 .btn-cambiar-rol:hover {
   background: var(--primary);
   color: var(--text-dark);
-  transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(243, 156, 18, 0.25);
 }
 
 /* ==========================================================================
-   4. MODAL DE SELECCIÓN DE ROL (MEJORADO & CORREGIDO)
+   4. MODAL DE SELECCIÓN DE PERFIL (100% ADAPTADO Y CORREGIDO)
    ========================================================================== */
-.modal-overlay,
-.modal-backdrop {
+.rol-modal-overlay {
   position: fixed;
   inset: 0;
   background: var(--modal-overlay-bg);
@@ -347,32 +255,32 @@ body.role-empresa .job-company {
   animation: fadeInOverlay 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.modal-content {
+.rol-modal-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 2.5rem 2rem 2rem 2rem;
   width: 100%;
-  max-width: 620px;
+  max-width: 600px;
   box-shadow: var(--shadow-lg);
   position: relative;
   text-align: center;
   animation: scaleUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Botón de cierre (X) en la esquina superior derecha */
-.modal-close,
-.btn-close-modal {
+/* Botón de cierre (X) en la esquina superior */
+.jobbers-close-btn {
   position: absolute;
   top: 1rem;
   right: 1rem;
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  line-height: 1;
   cursor: pointer;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -380,38 +288,34 @@ body.role-empresa .job-company {
   transition: var(--transition);
 }
 
-.modal-close:hover,
-.btn-close-modal:hover {
+.jobbers-close-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--text-main);
 }
 
-.modal-title {
+.rol-modal-card h2 {
   font-size: 1.75rem;
   font-weight: 800;
   color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 
-.modal-subtitle {
+.rol-modal-card p {
   font-size: 0.95rem;
   color: var(--text-muted);
   margin-bottom: 1.75rem;
 }
 
-/* Contenedor de botones en grid */
-.modal-roles-container,
-.role-selection-options {
+/* Contenedor Grid de Tarjetas de Rol */
+.rol-options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1.25rem;
   width: 100%;
-  margin-bottom: 1.5rem;
 }
 
-/* Tarjetas/Botones de Rol */
-.btn-select-role,
-.role-option-btn {
+/* Botones / Tarjetas de selección de Rol */
+.btn-rol {
   background: var(--card-bg-light);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -431,40 +335,39 @@ body.role-empresa .job-company {
   -webkit-appearance: none;
 }
 
-.btn-select-role:hover,
-.role-option-btn:hover {
+.btn-rol:hover {
   border-color: var(--primary);
   background: rgba(243, 156, 18, 0.08);
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-.btn-select-role:focus-visible,
-.role-option-btn:focus-visible {
+.btn-rol:focus-visible {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.3);
 }
 
-.role-icon {
-  font-size: 2rem;
+.rol-icon {
+  font-size: 2.2rem;
   margin-bottom: 0.25rem;
+  display: block;
 }
 
-.role-title {
+.rol-title {
   font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-main);
   display: block;
 }
 
-.role-desc {
+.rol-desc {
   font-size: 0.82rem;
   color: var(--text-muted);
   line-height: 1.4;
   display: block;
 }
 
-/* Animaciones del Modal */
+/* Animaciones */
 @keyframes fadeInOverlay {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -476,7 +379,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   5. HERO SECTION & LAYOUT DINÁMICO
+   5. HERO SECTION & FORMULARIO
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -485,7 +388,6 @@ body.role-empresa .job-company {
     url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   padding: 4rem 1.5rem;
   color: var(--text-main);
   display: flex;
@@ -519,15 +421,12 @@ body.role-empresa .job-company {
   letter-spacing: -0.5px;
 }
 
-.hero-title .highlight {
-  color: var(--primary);
-}
+.hero-title .highlight { color: var(--primary); }
 
 .hero-subtitle {
   font-size: 1.05rem;
   color: var(--text-muted);
   margin-bottom: 1.5rem;
-  line-height: 1.6;
   max-width: 650px;
 }
 
@@ -539,8 +438,6 @@ body.role-empresa .job-company {
 }
 
 .hero-btn-wrapper {
-  display: flex;
-  flex-direction: column;
   gap: 0.35rem;
 }
 
@@ -595,19 +492,32 @@ body.role-empresa .job-company {
   transform: translateY(-2px);
 }
 
-/* ==========================================================================
-   6. FORMULARIO EXPRESS
-   ========================================================================== */
+.hero-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.hero-features span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hero-features i { color: var(--primary); }
+
+/* Formulario Express */
 .hero-card-express {
   width: 100%;
   max-width: 540px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  color: var(--text-main);
   padding: 2rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .card-header {
@@ -629,9 +539,7 @@ body.role-empresa .job-company {
   gap: 0.85rem;
 }
 
-.express-form .form-group {
-  width: 100%;
-}
+.express-form .form-group { width: 100%; }
 
 .express-form .form-row-2col {
   display: grid;
@@ -683,7 +591,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   7. OFERTAS DESTACADAS Y VACANTES
+   6. LISTADO DE VACANTES
    ========================================================================== */
 .main-grid-section, .info-section {
   max-width: 1200px;
@@ -727,12 +635,12 @@ body.role-empresa .job-company {
 .job-offer-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.25s ease;
+  transition: var(--transition);
 }
 
 .job-offer-card:hover {
@@ -743,7 +651,7 @@ body.role-empresa .job-company {
 .job-offer-card h4 {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #F8FAFC;
+  color: var(--text-main);
 }
 
 .job-header-row {
@@ -760,6 +668,13 @@ body.role-empresa .job-company {
   font-weight: 700;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
+}
+
+.job-company {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 0.2rem;
 }
 
 .job-details-row {
@@ -797,8 +712,7 @@ body.role-empresa .job-company {
 
 .job-time {
   font-size: 0.75rem;
-  color: #64748B;
-  font-weight: 500;
+  color: var(--text-muted);
 }
 
 .btn-postularme {
@@ -812,16 +726,11 @@ body.role-empresa .job-company {
   cursor: pointer;
   text-transform: uppercase;
   transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
 }
 
 .btn-postularme:hover {
   background-color: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
 }
 
 .link-more-full {
@@ -834,7 +743,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   8. TARJETAS DE TALENTOS DESTACADOS
+   7. TALENTO DESTACADO (MODO EMPRESA)
    ========================================================================== */
 .talento-section {
   max-width: 1200px;
@@ -852,7 +761,6 @@ body.role-empresa .job-company {
 .section-header h2 {
   font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: -0.5px;
 }
 
 .link-see-all {
@@ -867,115 +775,8 @@ body.role-empresa .job-company {
   gap: 1.25rem;
 }
 
-.talento-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-}
-
-.talento-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(243, 156, 18, 0.1);
-}
-
-.talento-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.85rem;
-}
-
-.talento-card h3 {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--text-main);
-  letter-spacing: -0.2px;
-}
-
-.badge-disponible {
-  background: rgba(46, 204, 113, 0.12);
-  color: var(--salary-green);
-  border: 1px solid rgba(46, 204, 113, 0.3);
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 0.25rem 0.65rem;
-  border-radius: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.badge-disponible::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background-color: var(--salary-green);
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.puesto-titulo {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.2rem;
-}
-
-.exp-text {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
-}
-
-.talento-details {
-  border-top: 1px dashed var(--border-color);
-  padding-top: 0.85rem;
-  margin-bottom: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  font-size: 0.83rem;
-  color: #CBD5E1;
-}
-
-.talento-details i {
-  color: var(--primary);
-}
-
-.btn-contactar-talento {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  background: var(--salary-green);
-  color: #0A0B0C;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-weight: 800;
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  transition: all 0.25s ease;
-}
-
-.btn-contactar-talento:hover {
-  background: #27AE60;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(46, 204, 113, 0.3);
-}
-
 /* ==========================================================================
-   9. BOTTOM NAV (MOBILE) & FOOTER
+   8. FOOTER & NAVEGACIÓN MÓVIL
    ========================================================================== */
 .bottom-nav {
   position: fixed;
@@ -1016,7 +817,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   10. MEDIA QUERIES
+   9. RESPONSIVE
    ========================================================================== */
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
@@ -1030,5 +831,14 @@ body.role-empresa .job-company {
     grid-template-columns: 1fr;
     text-align: center;
     max-width: 800px;
+  }
+  
+  body.role-postulante .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  body.role-postulante .hero-features {
+    justify-content: center;
   }
 }
