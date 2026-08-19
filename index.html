@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,7 +35,7 @@
 <body class="role-postulante">
 
     <!-- MODAL DE SELECCIÓN DE PERFIL -->
-    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
+    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true">
         <div class="rol-modal-card">
             <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
 
@@ -63,7 +62,7 @@
             </div>
 
             <!-- VISTA 2: Confirmación previa con nombre de perfil -->
-            <div id="rol-step-confirm" style="display: none; text-align: center;">
+            <div id="rol-step-confirm" class="is-hidden" style="text-align: center;">
                 <h2>¿Estás seguro/a? 🤔</h2>
                 <p style="margin-bottom: 1rem;">Vas a ingresar a la plataforma como:</p>
 
@@ -92,7 +91,7 @@
                 <a href="#vacantes" class="nav-link">Empleos</a>
 
                 <!-- Solo visible para empresas -->
-                <button type="button" class="nav-link btn-trigger-express modo-empresa-only">Publicar Búsqueda</button>
+                <button type="button" class="nav-link btn-trigger-express role-empresa-only">Publicar Búsqueda</button>
 
                 <!-- Botón de Cambiar Perfil -->
                 <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
@@ -127,14 +126,14 @@
                     <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
                     
                     <div class="hero-buttons">
-                        <div class="hero-btn-wrapper">
+                        <div class="hero-btn-wrapper role-postulante-only">
                             <a href="#vacantes" class="btn-primary">
                                 <i class="fas fa-search" aria-hidden="true"></i> BUSCO TRABAJO
                             </a>
                             <span class="btn-subtext">Postulate directo por WhatsApp</span>
                         </div>
                         
-                        <div class="hero-btn-wrapper modo-empresa-only">
+                        <div class="hero-btn-wrapper role-empresa-only">
                             <button type="button" class="btn-secondary btn-trigger-express" id="btn-necesito-personal">
                                 ⚡ NECESITO PERSONAL YA
                             </button>
@@ -151,7 +150,7 @@
             </div>
 
             <!-- Formulario Express (Solo para Empresas) -->
-            <div class="hero-card-express modo-empresa-only" id="formulario-express">
+            <div class="hero-card-express role-empresa-only" id="formulario-express">
                 <div class="card-header">
                     <span class="text-warning" aria-hidden="true">⚡</span>
                     <h2>¿NECESITÁS PERSONAL HOY?</h2>
@@ -238,7 +237,7 @@
             <div class="search-bar">
                 <label for="job-search-input" class="sr-only">Buscar vacantes</label>
                 <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
-                <button class="btn-search" type="button"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
+                <button class="btn-search" type="button" id="btn-ejecutar-busqueda"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
             </div>
 
             <div class="vacantes-list">
@@ -310,7 +309,7 @@
     </main>
 
     <!-- SECCIÓN TALENTO DESTACADO (Exclusiva Modo Empresa) -->
-    <section class="talento-section modo-empresa-only" id="talento-destacado">
+    <section class="talento-section role-empresa-only" id="talento-destacado">
         <div class="talento-container">
             <div class="section-header">
                 <h2>TALENTO DESTACADO</h2>
@@ -410,7 +409,7 @@
             <span>Buscar</span>
         </a>
 
-        <button type="button" class="bottom-nav-item highlight-item modo-empresa-only btn-trigger-express">
+        <button type="button" class="bottom-nav-item highlight-item role-empresa-only btn-trigger-express">
             <i class="fas fa-bolt" aria-hidden="true"></i>
             <span>Personal YA</span>
         </button>
