@@ -99,8 +99,7 @@
             </a>
 
             <nav class="nav-links" aria-label="Navegación principal">
-                <a href="#vacantes" class="nav-link">Empleos</a>
-
+                <a href="#vacantes" class="nav-link modo-postulante-only">Empleos</a>
                 <button type="button" class="nav-link btn-trigger-express modo-empresa-only">Publicar Búsqueda</button>
 
                 <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
@@ -117,7 +116,8 @@
         <div class="hero-overlay"></div>
         <div class="hero-container">
 
-            <div class="hero-text-col">
+            <!-- Texto Modo Postulante -->
+            <div class="hero-text-col modo-postulante-only">
                 <h1 class="hero-title">Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá</h1>
                 <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
 
@@ -128,19 +128,24 @@
                         </a>
                         <span class="btn-subtext">Postulate directo por WhatsApp</span>
                     </div>
-
-                    <div class="hero-btn-wrapper modo-empresa-only">
-                        <button type="button" class="btn-secondary btn-trigger-express" id="btn-necesito-personal">
-                            ⚡ NECESITO PERSONAL YA
-                        </button>
-                        <span class="btn-subtext"><span class="highlight-express">⚡ Sin registro</span> • Pedido rápido</span>
-                    </div>
                 </div>
 
                 <div class="hero-features">
                     <span><i class="fas fa-clock" aria-hidden="true"></i> Respuesta rápida</span>
                     <span><i class="fas fa-check-circle" aria-hidden="true"></i> Contacto directo</span>
                     <span><i class="fas fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
+                </div>
+            </div>
+
+            <!-- Texto Modo Empresa -->
+            <div class="hero-text-col modo-empresa-only">
+                <h1 class="hero-title">Encontrá el mejor <span class="highlight">talento gastronómico</span> de Córdoba</h1>
+                <p class="hero-subtitle">Publicá tu búsqueda laboral en segundos y recibí postulaciones directamente en tu WhatsApp.</p>
+
+                <div class="hero-features">
+                    <span><i class="fas fa-bolt" aria-hidden="true"></i> Sin registro previo</span>
+                    <span><i class="fas fa-check-circle" aria-hidden="true"></i> Contacto directo</span>
+                    <span><i class="fas fa-users" aria-hidden="true"></i> Perfiles calificados</span>
                 </div>
             </div>
 
@@ -241,13 +246,13 @@
     <main class="main-grid-section" id="vacantes">
         <section class="vacantes-container">
 
-            <!-- BÚSQUEDA Y CATEGORÍAS -->
-            <div class="search-bar">
+            <!-- BÚSQUEDA Y CATEGORÍAS (Solo Postulantes) -->
+            <div class="search-bar modo-postulante-only">
                 <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
                 <button class="btn-search" type="button"><i class="fas fa-search"></i> Buscar</button>
             </div>
 
-            <div class="categories-grid">
+            <div class="categories-grid modo-postulante-only">
                 <div class="category-card" role="button" tabindex="0">
                     <i class="fas fa-th-large" aria-hidden="true"></i>
                     <h3>Todas</h3>
@@ -323,8 +328,8 @@
                 </div>
             </div>
 
-            <!-- BANNER COMUNIDAD JOBBERS PRO -->
-            <div id="banner-comunidad-jobbers" class="banner-block">
+            <!-- BANNER COMUNIDAD JOBBERS PRO (Solo Postulantes) -->
+            <div id="banner-comunidad-jobbers" class="banner-block modo-postulante-only">
                 <div class="pro-banner-card">
                     <h2 class="pro-banner-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h2>
                     <p class="pro-banner-desc">
@@ -348,8 +353,8 @@
                 </div>
             </div>
 
-            <!-- LISTA DE VACANTES -->
-            <div class="section-block">
+            <!-- LISTA DE VACANTES (Solo Postulantes) -->
+            <div class="section-block modo-postulante-only">
                 <div class="section-header-row">
                     <h2 class="section-title">Búsquedas Activas</h2>
                     <span class="vacantes-counter" id="contador-vacantes">Mostrando 14 vacantes disponibles</span>
@@ -379,7 +384,7 @@
                 </div>
             </div>
 
-            <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
+            <a href="#" class="link-more-full modo-postulante-only">Ver todas las vacantes publicadas →</a>
         </section>
     </main>
 
@@ -439,7 +444,7 @@
 
     <!-- BARRA NAVEGACIÓN MOBILE -->
     <nav class="bottom-nav" aria-label="Navegación móvil">
-        <a href="#vacantes" class="bottom-nav-item active">
+        <a href="#vacantes" class="bottom-nav-item active modo-postulante-only">
             <i class="fas fa-search" aria-hidden="true"></i>
             <span>Empleos</span>
         </a>
