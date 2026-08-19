@@ -23,39 +23,21 @@
       </a>
 
       <nav class="nav-links">
-        <!-- Función exclusiva Modo Postulante -->
-        <button class="nav-link active modo-postulante-only" onclick="filtrarCategoria('todas')">
+        <button class="nav-link active" onclick="filtrarCategoria('todas')">
           <i class="fas fa-briefcase"></i> Vacantes Disponibles
         </button>
-        
-        <!-- Función exclusiva Modo Empresa -->
-        <button class="nav-link modo-empresa-only" onclick="toggleHeroFormExpress()">
-          <i class="fas fa-plus-circle"></i> Publicar Nueva Búsqueda
-        </button>
-        
-        <!-- Selector interactivo de Rol -->
-        <div class="dropdown">
-          <button class="nav-link" id="btn-dropdown-rol" onclick="toggleDropdownRol()">
-            <i class="fas fa-user-cog"></i> <span id="label-rol-actual">Postulante</span> <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
-          </button>
-          <div class="dropdown-menu" id="dropdown-rol-menu">
-            <a href="#" onclick="cambiarRol('postulante')"><i class="fas fa-user-graduate"></i> Modo Postulante</a>
-            <a href="#" onclick="cambiarRol('empresa')"><i class="fas fa-building"></i> Modo Empresa / Local</a>
-          </div>
-        </div>
       </nav>
     </div>
   </header>
 
-  <!-- HERO SECTION CON CONTENIDO SEPARADO POR ROL -->
+  <!-- HERO SECTION -->
   <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80');">
     <div class="hero-overlay"></div>
     <div class="hero-container">
       
-      <!-- HERO CONTENIDO: VISTA POSTULANTE -->
-      <div class="hero-content modo-postulante-only">
+      <div class="hero-content">
         <h1 class="hero-title">Encontrá tu próximo trabajo en <span class="highlight">gastronomía</span></h1>
-        <p class="hero-subtitle">Conectate directamente con bares, restaurantes y hoteles de Córdoba. Envia tu CV al instante sin formularios largos.</p>
+        <p class="hero-subtitle">Conectate directamente con bares, restaurantes y hoteles de Córdoba. Envía tu CV al instante sin formularios largos.</p>
         
         <div class="hero-buttons">
           <div class="hero-btn-wrapper">
@@ -73,86 +55,11 @@
         </div>
       </div>
 
-      <!-- HERO CONTENIDO: VISTA EMPRESA -->
-      <div class="hero-content modo-empresa-only">
-        <h1 class="hero-title">Contratá personal <span class="highlight">gastronómico</span> en minutos</h1>
-        <p class="hero-subtitle">Publicá tu búsqueda laboral y recibí candidatos calificados directamente en tu WhatsApp.</p>
-        
-        <div class="hero-buttons">
-          <div class="hero-btn-wrapper">
-            <button class="btn-accent" onclick="toggleHeroFormExpress()">
-              <i class="fas fa-bolt"></i> PUBLICAR BÚSQUEDA AHORA
-            </button>
-            <span class="btn-subtext">Formulario express en <span class="highlight-express">30 segundos</span></span>
-          </div>
-        </div>
-
-        <div class="hero-features">
-          <span><i class="fas fa-check-circle"></i> Base de +2.500 postulantes</span>
-          <span><i class="fas fa-check-circle"></i> Contacto directo al instante</span>
-          <span><i class="fas fa-check-circle"></i> Perfiles destacados PRO</span>
-        </div>
-      </div>
-
-      <!-- FORMULARIO EXPRESS (Solo Modo Empresa) -->
-      <div class="hero-card-express modo-empresa-only" id="heroFormExpress">
-        <div class="card-header">
-          <i class="fas fa-bolt text-warning"></i>
-          <h2>Publicación Express de Empleo</h2>
-        </div>
-        <p>Cargá los datos de tu vacante para empezar a recibir CVs:</p>
-
-        <form class="express-form" onsubmit="procesarPublicacionExpress(event)">
-          <div class="form-group">
-            <input type="text" id="exp-titulo" placeholder="Ej: Cocinero de Minutas / Mozo de Salón" required>
-          </div>
-
-          <div class="form-row-2col">
-            <div class="form-group">
-              <input type="text" id="exp-empresa" placeholder="Nombre de tu Local / Bar" required>
-            </div>
-            <div class="form-group">
-              <select id="exp-zona" required>
-                <option value="" disabled selected>Zona de Córdoba</option>
-                <option value="Nueva Córdoba">Nueva Córdoba</option>
-                <option value="Güemes">Güemes</option>
-                <option value="Centro">Centro</option>
-                <option value="General Paz">General Paz</option>
-                <option value="Cerro de las Rosas">Cerro de las Rosas</option>
-                <option value="Sierras Chicas / Punilla">Sierras Chicas / Punilla</option>
-                <option value="Otras Zonas">Otras Zonas</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row-2col">
-            <div class="form-group">
-              <select id="exp-puesto" required>
-                <option value="" disabled selected>Categoría del Puesto</option>
-                <option value="Cocina">Cocina / Chef / Ayudante</option>
-                <option value="Salón">Mozo / Camarera / Runner</option>
-                <option value="Barra">Barman / Bartender / Barista</option>
-                <option value="Bachero">Bachero / Limpieza</option>
-                <option value="Encargado">Encargado / Admin / Caja</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <input type="text" id="exp-whatsapp" placeholder="WhatsApp receptor (ej: 3511234567)" required>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-whatsapp">
-            <i class="fab fa-whatsapp"></i> PUBLICAR VÍA WHATSAPP
-          </button>
-          <span class="response-tag">⚡ Recibirás las postulaciones de forma directa</span>
-        </form>
-      </div>
-
     </div>
   </section>
 
-  <!-- PANEL DE SEGUIMIENTO (Solo Modo Postulante) -->
-  <section class="info-section modo-postulante-only" style="margin-bottom: 0;">
+  <!-- SEGUIMIENTO DE POSTULACIONES -->
+  <section class="info-section" style="margin-bottom: 0;">
     <div class="comunidad-banner-card" style="border-left-color: var(--primary); padding: 1.2rem;">
       <div class="comunidad-banner-content" style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
         <div style="font-size: 2.2rem; color: var(--primary);">
@@ -168,7 +75,7 @@
     </div>
   </section>
 
-  <!-- CATEGORÍAS RÁPIDAS (Común / Navegación) -->
+  <!-- CATEGORÍAS RÁPIDAS -->
   <section class="categories-section">
     <div class="section-header">
       <h2>Explorar por Categoría</h2>
@@ -202,12 +109,11 @@
     </div>
   </section>
 
-  <!-- LISTADO PRINCIPAL DE VACANTES Y SIDEBAR EMPRESA -->
+  <!-- LISTADO PRINCIPAL DE VACANTES -->
   <section class="main-grid-section" id="vacantes-lista">
-    <div class="left-column">
+    <div class="left-column" style="width: 100%;">
       <div class="section-header">
-        <h2 class="modo-postulante-only">Ofertas de Empleo Disponibles</h2>
-        <h2 class="modo-empresa-only">Búsquedas Activas en la Plataforma</h2>
+        <h2>Ofertas de Empleo Disponibles</h2>
       </div>
 
       <div class="search-bar">
@@ -233,10 +139,9 @@
           </div>
           <div class="job-action-col">
             <span class="job-time">Publicado hace 2h</span>
-            <a href="https://wa.me/5493510000000?text=Hola,%20me%20interesa%20la%20vacante%20de%20Cocinero/a" class="btn-postularme modo-postulante-only" target="_blank" rel="noopener" onclick="registrarPostulacion('Cocinero/a de Maza y Minutas')">
+            <a href="https://wa.me/5493510000000?text=Hola,%20me%20interesa%20la%20vacante%20de%20Cocinero/a" class="btn-postularme" target="_blank" rel="noopener" onclick="registrarPostulacion('Cocinero/a de Maza y Minutas')">
               <i class="fab fa-whatsapp"></i> Postularme
             </a>
-            <span class="modo-empresa-only" style="font-size: 0.8rem; color: var(--text-muted);"><i class="fas fa-eye"></i> Recibiendo CVs</span>
           </div>
         </article>
 
@@ -254,40 +159,14 @@
           </div>
           <div class="job-action-col">
             <span class="job-time">Publicado hoy</span>
-            <a href="https://wa.me/5493510000000?text=Hola,%20me%20interesa%20la%20vacante%20de%20Mozo" class="btn-postularme modo-postulante-only" target="_blank" rel="noopener" onclick="registrarPostulacion('Mozo / Camarera de Salón')">
+            <a href="https://wa.me/5493510000000?text=Hola,%20me%20interesa%20la%20vacante%20de%20Mozo" class="btn-postularme" target="_blank" rel="noopener" onclick="registrarPostulacion('Mozo / Camarera de Salón')">
               <i class="fab fa-whatsapp"></i> Postularme
             </a>
-            <span class="modo-empresa-only" style="font-size: 0.8rem; color: var(--text-muted);"><i class="fas fa-eye"></i> Recibiendo CVs</span>
           </div>
         </article>
 
       </div>
     </div>
-
-    <!-- COLUMNA DERECHA: TALENTOS DESTACADOS (Exclusiva Modo Empresa) -->
-    <aside class="right-column modo-empresa-only">
-      <div class="section-header">
-        <h2>Talento Destacado (PRO)</h2>
-      </div>
-      <div class="talent-grid" style="grid-template-columns: 1fr;">
-        <div class="talento-card">
-          <div class="talento-avatar-container">
-            <div class="avatar-placeholder">MG</div>
-            <span class="talento-badge-online"></span>
-          </div>
-          <h3 class="talento-nombre">Martín G.</h3>
-          <span class="talento-puesto">Jefe de Cocina / Sous Chef</span>
-          <div class="talento-info-row">
-            <span class="talento-exp"><i class="fas fa-briefcase"></i> 6 años exp.</span>
-            <span><i class="fas fa-map-marker-alt"></i> Cba Centro</span>
-          </div>
-          <span class="talento-badge-dispo">Disponible Inmediato</span>
-          <button class="btn-contacto-talento" onclick="alert('Contactando talento Jobbers PRO...')">
-            <i class="fab fa-whatsapp"></i> Contactar Candidato
-          </button>
-        </div>
-      </div>
-    </aside>
   </section>
 
   <!-- ESTADÍSTICAS DEL PORTAL -->
@@ -319,17 +198,17 @@
   <section class="info-section">
     <div class="blog-banner">
       <span class="logo-subtitle">ACTUALIDAD GASTRONÓMICA</span>
-      <h2>Blog, Guías y Espacios Patrocinados</h2>
-      <p>Consejos para profesionales y novedades para locales de Córdoba.</p>
+      <h2>Blog, Guías y Consejos</h2>
+      <p>Consejos para profesionales de Córdoba para destacar en sus entrevistas.</p>
 
       <div class="comunidad-banner-card" style="margin-top: 1.5rem;">
         <div class="comunidad-banner-content">
-          <span class="logo-subtitle" style="color: var(--primary);">ESPACIO PATROCINADO / DESTACADO</span>
+          <span class="logo-subtitle" style="color: var(--primary);">ESPACIO PATROCINADO</span>
           <h3>¡Promocioná tu marca de indumentaria o artefactos de cocina acá!</h3>
-          <p>Llegá de forma directa a cientos de restaurantes, bares y cocineros de Córdoba.</p>
+          <p>Llegá de forma directa a cientos de cocineros, mozos y trabajadores gastronómicos de Córdoba.</p>
         </div>
         <a href="https://wa.me/5493510000000?text=Hola,%20quiero%20consultar%20por%20espacio%20publicitario" class="btn-comunidad-action" target="_blank" rel="noopener">
-          <i class="fab fa-whatsapp"></i> CONSULTAR ESPACIO PUBLICITARIO
+          <i class="fab fa-whatsapp"></i> CONSULTAR ESPACIO
         </a>
       </div>
     </div>
@@ -341,33 +220,11 @@
     <h2 style="font-size: 1.8rem; margin-top: 0.4rem;">La plataforma líder en empleo gastronómico</h2>
     <p style="margin-bottom: 2.5rem;">Conectamos de forma directa, rápida y sin intermediarios el talento de Córdoba con los mejores locales, bares y hoteles.</p>
 
-    <div class="categories-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); text-align: left;">
-      
-      <!-- SECCIÓN EXPLICATIVA POSTULANTES -->
-      <div class="category-card" style="text-align: left; padding: 1.8rem;">
-        <i class="fas fa-user-graduate" style="font-size: 2.2rem;"></i>
-        <h3 style="font-size: 1.1rem; margin: 0.6rem 0 0.3rem;">Para Postulantes</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-          Encontrá vacantes actualizadas por zona, postulate directamente mediante WhatsApp y potenciate con nuestra membresía <strong>Jobbers PRO</strong> para aparecer destacado.
-        </p>
-      </div>
-
-      <!-- SECCIÓN EXPLICATIVA EMPRESAS -->
-      <div class="category-card" style="text-align: left; padding: 1.8rem;">
-        <i class="fas fa-store" style="font-size: 2.2rem;"></i>
-        <h3 style="font-size: 1.1rem; margin: 0.6rem 0 0.3rem;">Para Empresas y Locales</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-          Publicá tus búsquedas en segundos con nuestro formulario express, accedé a calculadoras de salarios/horarios y conectá al instante con cocineros, mozos y bacheros.
-        </p>
-      </div>
-
-    </div>
-
     <!-- TARJETA SOPORTE TÉCNICO -->
     <div class="comunidad-banner-card" style="margin-top: 2rem; border-left-color: var(--salary-green);">
       <div class="comunidad-banner-content">
         <h3>¿Tenés alguna duda o necesitás soporte técnico?</h3>
-        <p>Nuestro equipo está disponible para ayudarte a optimizar tus búsquedas o perfiles.</p>
+        <p>Nuestro equipo está disponible para ayudarte a optimizar tus postulaciones o resolver inconvenientes.</p>
       </div>
       <a href="https://wa.me/5493510000000?text=Hola,%20necesito%20soporte%20tecnico" class="btn-whatsapp" style="width: auto; padding: 0.8rem 1.5rem;" target="_blank" rel="noopener">
         <i class="fab fa-whatsapp"></i> CONTACTAR SOPORTE VÍA WHATSAPP
@@ -380,20 +237,11 @@
     <p>© 2026 Jobbers Argentina. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- BOTTOM NAV PARA MÓVILES (Adaptada por Rol) -->
+  <!-- BOTTOM NAV PARA MÓVILES -->
   <nav class="bottom-nav">
     <a href="#vacantes-lista" class="bottom-nav-item active">
       <i class="fas fa-search"></i>
-      <span class="modo-postulante-only">Empleos</span>
-      <span class="modo-empresa-only">Búsquedas</span>
-    </a>
-    <a href="#heroFormExpress" class="bottom-nav-item highlight-item modo-empresa-only" onclick="toggleHeroFormExpress()">
-      <i class="fas fa-plus-circle"></i>
-      <span>Publicar</span>
-    </a>
-    <a href="#" class="bottom-nav-item" onclick="toggleDropdownRol()">
-      <i class="fas fa-user"></i>
-      <span>Cambiar Rol</span>
+      <span>Empleos</span>
     </a>
   </nav>
 
@@ -403,34 +251,9 @@
   <!-- Vinculación del JS principal -->
   <script src="js/main.js"></script>
 
-  <!-- Lógica de control de Rol y UI -->
+  <!-- Lógica de Postulaciones -->
   <script>
     let postulacionesContador = 0;
-
-    function cambiarRol(rol) {
-      document.body.className = 'role-' + rol;
-      document.getElementById('label-rol-actual').innerText = rol === 'empresa' ? 'Modo Empresa' : 'Postulante';
-      document.getElementById('dropdown-rol-menu').classList.remove('show');
-      
-      const mensaje = rol === 'empresa' ? 'Modo Empresa Activado' : 'Modo Postulante Activado';
-      if (typeof mostrarToast === 'function') {
-        mostrarToast(mensaje, 'success');
-      }
-    }
-
-    function toggleDropdownRol() {
-      document.getElementById('dropdown-rol-menu').classList.toggle('show');
-    }
-
-    function toggleHeroFormExpress() {
-      const formCard = document.getElementById('heroFormExpress');
-      if (formCard) {
-        formCard.classList.toggle('is-visible');
-        if (formCard.classList.contains('is-visible')) {
-          formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
-    }
 
     function registrarPostulacion(puesto) {
       postulacionesContador++;
@@ -440,26 +263,6 @@
       }
       if (typeof mostrarToast === 'function') {
         mostrarToast('Postulación enviada para: ' + puesto, 'success');
-      }
-    }
-
-    function procesarPublicacionExpress(e) {
-      e.preventDefault();
-      if (typeof mostrarToast === 'function') {
-        mostrarToast('¡Búsqueda publicada con éxito!', 'success');
-      } else {
-        alert('¡Búsqueda publicada con éxito!');
-      }
-      toggleHeroFormExpress();
-    }
-
-    // Cierra el menú al hacer clic fuera del botón
-    window.onclick = function(event) {
-      if (!event.target.matches('#btn-dropdown-rol') && !event.target.matches('#btn-dropdown-rol *')) {
-        const dropdown = document.getElementById('dropdown-rol-menu');
-        if (dropdown && dropdown.classList.contains('show')) {
-          dropdown.classList.remove('show');
-        }
       }
     }
   </script>
