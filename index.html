@@ -34,8 +34,8 @@
 </head>
 <body class="role-postulante">
 
-    <!-- MODAL DE SELECCIÓN DE PERFIL -->
-    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
+    <!-- MODAL DE SELECCIÓN DE PERFIL (Visible de entrada) -->
+    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true">
         <div class="rol-modal-card">
             <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
 
@@ -112,7 +112,7 @@
                 <div class="hero-content">
                     <h1 class="hero-title">Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá</h1>
                     <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
-                    
+
                     <div class="hero-buttons">
                         <div class="hero-btn-wrapper role-postulante-only">
                             <a href="#vacantes" class="btn-primary">
@@ -120,7 +120,7 @@
                             </a>
                             <span class="btn-subtext">Postulate directo por WhatsApp</span>
                         </div>
-                        
+
                         <div class="hero-btn-wrapper role-empresa-only">
                             <button type="button" class="btn-secondary btn-trigger-express" id="btn-necesito-personal" aria-expanded="false">
                                 ⚡ NECESITO PERSONAL YA
@@ -222,12 +222,63 @@
     <main class="main-grid-section" id="vacantes">
         <section class="vacantes-container">
 
+            <!-- BUSCADOR POR TEXTO -->
             <div class="search-bar">
                 <label for="job-search-input" class="sr-only">Buscar vacantes</label>
                 <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
                 <button class="btn-search" type="button" id="btn-ejecutar-busqueda"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
             </div>
 
+            <!-- SECCIÓN BUSCÁ POR CATEGORÍA (Modo Postulante) -->
+            <div class="categories-section role-postulante-only">
+                <h3 class="categories-title">BUSCÁ POR CATEGORÍA</h3>
+                <div class="categories-grid">
+                    <button type="button" class="category-card active" data-categoria="">
+                        <i class="fas fa-th-large" aria-hidden="true"></i>
+                        <span>Todas</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="Cocina">
+                        <i class="fas fa-utensils" aria-hidden="true"></i>
+                        <span>Cocina</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="Salon">
+                        <i class="fas fa-concierge-bell" aria-hidden="true"></i>
+                        <span>Salón / Mozo</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="Barismo">
+                        <i class="fas fa-coffee" aria-hidden="true"></i>
+                        <span>Barismo</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="Bartender">
+                        <i class="fas fa-cocktail" aria-hidden="true"></i>
+                        <span>Bartender</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="Delivery">
+                        <i class="fas fa-motorcycle" aria-hidden="true"></i>
+                        <span>Delivery</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="Bacha">
+                        <i class="fas fa-pump-soap" aria-hidden="true"></i>
+                        <span>Bacha / Limpieza</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="RRHH">
+                        <i class="fas fa-briefcase" aria-hidden="true"></i>
+                        <span>RRHH / Gestión</span>
+                    </button>
+                    <button type="button" class="category-card" data-categoria="Administracion">
+                        <i class="fas fa-chart-pie" aria-hidden="true"></i>
+                        <span>Administración</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ENCABEZADO Y CONTADOR DE BÚSQUEDAS ACTIVAS -->
+            <div class="vacantes-header-row">
+                <h3>Búsquedas Activas</h3>
+                <span class="vacantes-count" id="vacantes-count">Mostrando 3 vacantes disponibles</span>
+            </div>
+
+            <!-- LISTADO DE TARJETAS DE VACANTES -->
             <div class="vacantes-list" id="lista-vacantes">
 
                 <article class="job-offer-card" data-categoria="Cocina" data-id="1">
@@ -251,7 +302,7 @@
                     </div>
                 </article>
 
-                <article class="job-offer-card" data-categoria="Mozo" data-id="2">
+                <article class="job-offer-card" data-categoria="Salon" data-id="2">
                     <div class="job-info-main">
                         <div class="job-header-row">
                             <h4>Mozo / Salonero de Salón</h4>
@@ -271,7 +322,7 @@
                     </div>
                 </article>
 
-                <article class="job-offer-card" data-categoria="Barista" data-id="3">
+                <article class="job-offer-card" data-categoria="Barismo" data-id="3">
                     <div class="job-info-main">
                         <div class="job-header-row">
                             <h4>Barista Especializado</h4>
@@ -305,7 +356,7 @@
             </div>
 
             <div class="talento-grid" id="grid-talento-destacado">
-                <!-- Se renderiza o complementa vía JS -->
+                <!-- Se renderiza vía JS -->
             </div>
         </div>
     </section>
