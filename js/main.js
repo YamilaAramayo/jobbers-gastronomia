@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Bind del Formulario Express (evento Submit directo)
+    // Bind del Formulario Express
     const formExpress = document.getElementById('form-publicar-express');
     if (formExpress) {
         formExpress.addEventListener('submit', enviarAWhatsApp);
@@ -129,9 +129,7 @@ function inicializarModoPerfil() {
     const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil');
     const modalPerfil = document.getElementById('modal-cambiar-perfil');
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
-    const btnsRol = document.querySelectorAll('.btn-rol');
-
-    // Flujo multi-paso del modal de perfil
+    
     const stepSelect = document.getElementById('rol-step-select');
     const stepConfirm = document.getElementById('rol-step-confirm');
     const labelConfirmar = document.getElementById('rol-nombre-confirmar');
@@ -142,24 +140,21 @@ function inicializarModoPerfil() {
     let rolSeleccionado = { key: '', nombre: '' };
 
     // 1. Obtener o establecer rol inicial
-    const rolGuardado = localStorage.getItem('jobbers_role') || 'postulante';
-    aplicarRol(rolGuardado);
-    const rolGuardado = localStorage.getItem('jobbers_user_role');
+    const rolGuardado = localStorage.getItem('jobbers_user_role') || localStorage.getItem('jobbers_role');
     if (!rolGuardado) {
         abrirModalPerfil();
     } else {
         aplicarRol(rolGuardado);
     }
 
-    // 2. Abrir Modal al hacer clic en "Cambiar Perfil"
-    // Reset de estado del modal
+    // 2. Resetear Modal
     function resetearModalPerfil() {
         if (stepSelect) stepSelect.style.display = 'block';
         if (stepConfirm) stepConfirm.style.display = 'none';
         rolSeleccionado = { key: '', nombre: '' };
     }
 
-    // Abrir modal
+    // 3. Eventos para abrir/cerrar
     btnsCambiarPerfil.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -168,31 +163,15 @@ function inicializarModoPerfil() {
         });
     });
 
-    // 3. Cerrar Modal
-    if (btnCerrarModal) {
-        btnCerrarModal.addEventListener('click', cerrarModalPerfil);
-    }
-    // Cerrar modal
     if (btnCerrarModal) btnCerrarModal.addEventListener('click', cerrarModalPerfil);
 
-    // Cerrar al hacer clic fuera del modal
     window.addEventListener('click', (e) => {
-        if (e.target === modalPerfil) {
-            cerrarModalPerfil();
-        }
         if (e.target === modalPerfil) cerrarModalPerfil();
     });
 
-    // 4. Cambiar Rol al seleccionar una opción
-    btnsRol.forEach(btn => {
-    // Selección y confirmación de rol
+    // 4. Selección y confirmación de rol
     btnsOpcionRol.forEach(btn => {
         btn.addEventListener('click', () => {
-            const nuevoRol = btn.getAttribute('data-rol');
-            aplicarRol(nuevoRol);
-            localStorage.setItem('jobbers_role', nuevoRol);
-            cerrarModalPerfil();
-            mostrarToast(`Perfil cambiado a: ${nuevoRol.toUpperCase()}`, 'success');
             const rolKey = btn.getAttribute('data-rol');
             const rolNombre = btn.getAttribute('data-nombre') || btn.querySelector('.rol-title')?.textContent || rolKey;
 
@@ -204,7 +183,6 @@ function inicializarModoPerfil() {
                 stepSelect.style.display = 'none';
                 stepConfirm.style.display = 'block';
             } else {
-                // Si no hay pasos, aplica directo
                 confirmarYGuardarRol(rolKey, rolNombre);
             }
         });
@@ -226,6 +204,7 @@ function inicializarModoPerfil() {
 function confirmarYGuardarRol(key, nombre) {
     aplicarRol(key);
     localStorage.setItem('jobbers_user_role', key);
+    localStorage.setItem('jobbers_role', key);
     cerrarModalPerfil();
     mostrarToast(`Perfil cambiado a: ${(nombre || key).toUpperCase()}`, 'success');
 }
@@ -270,12 +249,11 @@ async function cargarVacantesDesdeJSON() {
                 break;
             }
         } catch (e) {
-            // Continúa a la siguiente ruta si falla
+            // Continúa a la siguiente ruta
         }
     }
 
     if (!exito) {
-        // Fallback de respaldo
         vacantesGastronomia = [
             { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
             { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
@@ -570,7 +548,7 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
                 <input type="tel" id="post-telefono" placeholder="Tu número de WhatsApp (ej: 3511234567)" required style="width:100%; padding:10px; background:#1e293b; border:1px solid #334155; border-radius:6px; color:#fff; box-sizing:border-box;">
             </div>
             <button type="submit" style="width:100%; padding:12px; background:#f59e0b; color:#000; border:none; font-weight:bold; border-radius:6px; cursor:pointer; text-transform:uppercase; margin-top:4px;">
-                <i class="fab fa-whatsapp"></i> CONTACTAR AL EMPLEADOR
+                CONTACTAR AL EMPLEADOR
             </button>
         </form>
     `;
@@ -672,105 +650,6 @@ function mostrarToast(mensaje, tipo = "success") {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
-
-   document.addEventListener('DOMContentLoaded', () => {
-    // Referencias a elementos
-    const modalPerfil = document.getElementById('modal-cambiar-perfil');
-    const stepSelect = document.getElementById('rol-step-select');
-    const stepConfirm = document.getElementById('rol-step-confirm');
-    const labelConfirmar = document.getElementById('rol-nombre-confirmar');
-    
-    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
-    const btnVolverRol = document.getElementById('btn-volver-rol');
-    const btnConfirmarRol = document.getElementById('btn-confirmar-rol');
-    const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol');
-    const btnsOpcionRol = document.querySelectorAll('.btn-rol');
-
-    // Variable temporal para el rol seleccionado
-    let rolSeleccionado = {
-        key: '',
-        nombre: ''
-    };
-
-    // 1. Verificar si hay un rol guardado apenas carga la página
-    const rolGuardado = localStorage.getItem('jobbers_user_role');
-
-    if (!rolGuardado) {
-        abrirModalPerfil();
-    } else {
-        aplicarRol(rolGuardado);
-    }
-
-    // 2. Abrir / Cerrar Modal
-    function abrirModalPerfil() {
-        resetearModal();
-        if (modalPerfil) modalPerfil.style.display = 'flex';
-    }
-
-    function cerrarModalPerfil() {
-        if (modalPerfil) modalPerfil.style.display = 'none';
-    }
-
-    function resetearModal() {
-        if (stepSelect) stepSelect.style.display = 'block';
-        if (stepConfirm) stepConfirm.style.display = 'none';
-        rolSeleccionado = { key: '', nombre: '' };
-    }
-
-    // 3. Al hacer clic en un perfil (Preselección)
-    btnsOpcionRol.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const rolKey = btn.getAttribute('data-rol');
-            const rolNombre = btn.getAttribute('data-nombre') || btn.querySelector('.rol-title')?.textContent;
-
-            rolSeleccionado.key = rolKey;
-            rolSeleccionado.nombre = rolNombre;
-
-            if (labelConfirmar) labelConfirmar.textContent = rolNombre;
-
-            // Cambiar a pantalla de confirmación
-            stepSelect.style.display = 'none';
-            stepConfirm.style.display = 'block';
-        });
-    });
-
-    // 4. Volver a la selección de perfil
-    if (btnVolverRol) {
-        btnVolverRol.addEventListener('click', resetearModal);
-    }
-
-    // 5. Confirmar selección e ingresar
-    if (btnConfirmarRol) {
-        btnConfirmarRol.addEventListener('click', () => {
-            if (!rolSeleccionado.key) return;
-
-            // Guardar en Storage y aplicar a la app
-            localStorage.setItem('jobbers_user_role', rolSeleccionado.key);
-            aplicarRol(rolSeleccionado.key);
-
-            cerrarModalPerfil();
-        });
-    }
-
-    // 6. Aplicar cambios según el rol en el <body> y labels
-    function aplicarRol(rol) {
-        document.body.classList.remove('role-postulante', 'role-empresa');
-        
-        const labelModo = document.getElementById('label-modo-actual');
-        
-        if (rol === 'empresa') {
-            document.body.classList.add('role-empresa');
-            if (labelModo) labelModo.textContent = 'Modo: Empresa';
-        } else {
-            document.body.classList.add('role-postulante');
-            if (labelModo) labelModo.textContent = 'Modo: Postulante';
-        }
-    }
-
-    // Eventos de botones
-    btnsCambiarPerfil.forEach(btn => btn.addEventListener('click', abrirModalPerfil));
-    if (btnCerrarModal) btnCerrarModal.addEventListener('click', cerrarModalPerfil);
-});
 }
 
 /* ==========================================================================
