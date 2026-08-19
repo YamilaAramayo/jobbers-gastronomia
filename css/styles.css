@@ -114,18 +114,39 @@ img {
 /* ==========================================================================
    2. CONTROL DE VISIBILIDAD DE ROLES
    ========================================================================== */
+
+/* 1. MODO POSTULANTE (Default o Activo) */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only {
   display: none !important;
 }
 
-body.role-empresa .modo-empresa-only {
+body.role-postulante .main-grid-section {
+  grid-template-columns: 1fr !important; /* Expande las vacantes al 100% de ancho */
+}
+
+/* 2. MODO EMPRESA */
+body.role-empresa .modo-postulante-only {
+  display: none !important;
+}
+
+/* Revela elementos según su tipo original en lugar de forzar 'block' */
+body.role-empresa div.modo-empresa-only,
+body.role-empresa section.modo-empresa-only,
+body.role-empresa aside.modo-empresa-only {
   display: block;
 }
 
 body.role-empresa button.modo-empresa-only,
 body.role-empresa a.modo-empresa-only {
   display: inline-flex;
+}
+
+/* Ajusta la grilla para dar espacio al lateral de Talento Destacado */
+@media (min-width: 900px) {
+  body.role-empresa .main-grid-section {
+    grid-template-columns: 1.8fr 1.2fr !important;
+  }
 }
 
 /* ==========================================================================
