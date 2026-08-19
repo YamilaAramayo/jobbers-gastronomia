@@ -125,7 +125,7 @@ img {
    2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES
    ========================================================================== */
 
-/* --- OCULTAR ELEMENTOS DE EMPRESA POR DEFECTO / MODO POSTULANTE --- */
+/* Ocultar elementos de empresa en modo postulante */
 .role-empresa-only,
 .empresa-only,
 .modo-empresa-only,
@@ -153,7 +153,7 @@ body.role-postulante #formulario-express {
   display: none !important;
 }
 
-/* --- ELEMENTOS EXCLUSIVOS DE POSTULANTE --- */
+/* Elementos exclusivos de postulante */
 body.role-postulante .role-postulante-only,
 body.role-postulante .postulante-only,
 body.role-postulante .modo-postulante-only,
@@ -169,7 +169,7 @@ body.role-postulante .hero-btn-wrapper.role-postulante-only {
   flex-direction: column;
 }
 
-/* --- MOSTRAR ELEMENTOS DE EMPRESA CUANDO EL ROLE IS EMPRESA --- */
+/* Mostrar elementos de empresa cuando se activa el rol empresa */
 body.role-empresa .role-postulante-only,
 body.role-empresa .postulante-only,
 body.role-empresa .modo-postulante-only,
@@ -327,7 +327,84 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   4. HERO SECTION & LAYOUT DINÁMICO
+   4. MODAL DE SELECCIÓN DE ROL (BIENVENIDA)
+   ========================================================================== */
+.modal-overlay,
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--modal-overlay-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  width: 100%;
+  max-width: 560px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.modal-roles-container,
+.role-selection-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.btn-select-role,
+.role-option-btn {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1rem;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.btn-select-role:hover,
+.role-option-btn:hover {
+  border-color: var(--primary);
+  background: var(--card-bg-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.role-option-btn strong,
+.btn-select-role strong {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.role-option-btn span,
+.btn-select-role span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   5. HERO SECTION & LAYOUT DINÁMICO
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -447,7 +524,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   5. FORMULARIO EXPRESS
+   6. FORMULARIO EXPRESS
    ========================================================================== */
 .hero-card-express {
   width: 100%;
@@ -534,7 +611,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   6. OFERTAS DESTACADAS Y VACANTES
+   7. OFERTAS DESTACADAS Y VACANTES
    ========================================================================== */
 .main-grid-section, .info-section {
   max-width: 1200px;
@@ -685,7 +762,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   7. TARJETAS DE TALENTOS DESTACADOS
+   8. TARJETAS DE TALENTOS DESTACADOS
    ========================================================================== */
 .talento-section {
   max-width: 1200px;
@@ -826,7 +903,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   8. BOTTOM NAV (MOBILE) & FOOTER
+   9. BOTTOM NAV (MOBILE) & FOOTER
    ========================================================================== */
 .bottom-nav {
   position: fixed;
@@ -867,7 +944,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   9. MEDIA QUERIES
+   10. MEDIA QUERIES
    ========================================================================== */
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
