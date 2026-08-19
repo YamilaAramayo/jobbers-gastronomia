@@ -35,7 +35,7 @@
 <body class="role-postulante">
 
     <!-- MODAL DE SELECCIÓN DE PERFIL -->
-    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
         <div class="rol-modal-card">
             <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
 
@@ -62,7 +62,7 @@
             </div>
 
             <!-- VISTA 2: Confirmación previa con nombre de perfil -->
-            <div id="rol-step-confirm" class="is-hidden" style="text-align: center;">
+            <div id="rol-step-confirm" style="display: none; text-align: center;">
                 <h2>¿Estás seguro/a? 🤔</h2>
                 <p style="margin-bottom: 1rem;">Vas a ingresar a la plataforma como:</p>
 
@@ -91,7 +91,7 @@
                 <a href="#vacantes" class="nav-link">Empleos</a>
 
                 <!-- Solo visible para empresas -->
-                <button type="button" class="nav-link btn-trigger-express role-empresa-only">Publicar Búsqueda</button>
+                <button type="button" class="nav-link btn-trigger-express role-empresa-only" aria-expanded="false">Publicar Búsqueda</button>
 
                 <!-- Botón de Cambiar Perfil -->
                 <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
@@ -122,7 +122,7 @@
                         </div>
                         
                         <div class="hero-btn-wrapper role-empresa-only">
-                            <button type="button" class="btn-secondary btn-trigger-express" id="btn-necesito-personal">
+                            <button type="button" class="btn-secondary btn-trigger-express" id="btn-necesito-personal" aria-expanded="false">
                                 ⚡ NECESITO PERSONAL YA
                             </button>
                             <span class="btn-subtext"><span class="highlight-express">⚡ Sin registro</span> • Pedido rápido</span>
@@ -228,7 +228,7 @@
                 <button class="btn-search" type="button" id="btn-ejecutar-busqueda"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
             </div>
 
-            <div class="vacantes-list">
+            <div class="vacantes-list" id="lista-vacantes">
 
                 <article class="job-offer-card" data-categoria="Cocina" data-id="1">
                     <div class="job-info-main">
@@ -245,9 +245,9 @@
                     </div>
                     <div class="job-action-col">
                         <span class="job-time">Hace 1 hora</span>
-                        <a href="https://wa.me/5493541582448?text=Hola,%20me%20quiero%20postular%20al%20puesto%20de%20Cocinero%20/%20Cocinera%20de%20Despacho%20en%20La%20Caprichosa%20Resto" target="_blank" rel="noopener noreferrer" class="btn-postularme">
+                        <button type="button" class="btn-postularme" data-puesto="Cocinero / Cocinera de Despacho" data-empresa="La Caprichosa Resto" data-contacto="5493541582448">
                             Postularme
-                        </a>
+                        </button>
                     </div>
                 </article>
 
@@ -265,9 +265,9 @@
                     </div>
                     <div class="job-action-col">
                         <span class="job-time">Hace 3 horas</span>
-                        <a href="https://wa.me/5493541696766?text=Hola,%20me%20quiero%20postular%20al%20puesto%20de%20Mozo%20/%20Salonero%20de%20Sal%C3%B3n%20en%20Bar%20de%20Fuegos" target="_blank" rel="noopener noreferrer" class="btn-postularme">
+                        <button type="button" class="btn-postularme" data-puesto="Mozo / Salonero de Salón" data-empresa="Bar de Fuegos" data-contacto="5493541696766">
                             Postularme
-                        </a>
+                        </button>
                     </div>
                 </article>
 
@@ -285,14 +285,14 @@
                     </div>
                     <div class="job-action-col">
                         <span class="job-time">Hace 5 horas</span>
-                        <a href="https://wa.me/5493541582448?text=Hola,%20me%20quiero%20postular%20al%20puesto%20de%20Barista%20Especializado%20en%20Caf%C3%A9%20Suburbio" target="_blank" rel="noopener noreferrer" class="btn-postularme">
+                        <button type="button" class="btn-postularme" data-puesto="Barista Especializado" data-empresa="Café Suburbio" data-contacto="5493541582448">
                             Postularme
-                        </a>
+                        </button>
                     </div>
                 </article>
 
             </div>
-            <a href="#" class="link-more-full">Ver todas las vacantes publicadas →</a>
+            <a href="#" onclick="filtrarPorCategoria(''); return false;" class="link-more-full">Ver todas las vacantes publicadas →</a>
         </section>
     </main>
 
@@ -304,77 +304,8 @@
                 <a href="#" class="link-see-all">Ver todos <i class="fas fa-chevron-right" aria-hidden="true"></i></a>
             </div>
 
-            <div class="talento-grid">
-                <!-- Tarjeta 1: Lucas R. -->
-                <article class="talento-card">
-                    <div class="avatar-container">
-                        <div class="avatar-circle">LR</div>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h3>Lucas R.</h3>
-                    <p class="puesto-highlight">Cocinero</p>
-                    <div class="rating">
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <span>(24)</span>
-                    </div>
-                    <p class="talento-info">5 años de experiencia</p>
-                    <p class="talento-info">Disponibilidad: Inmediata</p>
-                    <p class="talento-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Nueva Córdoba</p>
-                    <button type="button" class="btn-lock-cv">
-                        <i class="fas fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
-                    </button>
-                </article>
-
-                <!-- Tarjeta 2: María F. -->
-                <article class="talento-card">
-                    <div class="avatar-container">
-                        <div class="avatar-circle">MF</div>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h3>María F.</h3>
-                    <p class="puesto-highlight">Barista</p>
-                    <div class="rating">
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <span>(18)</span>
-                    </div>
-                    <p class="talento-info">3 años de experiencia</p>
-                    <p class="talento-info">Disponibilidad: Mañana</p>
-                    <p class="talento-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Güemes</p>
-                    <button type="button" class="btn-lock-cv">
-                        <i class="fas fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
-                    </button>
-                </article>
-
-                <!-- Tarjeta 3: Santiago M. -->
-                <article class="talento-card">
-                    <div class="avatar-container">
-                        <div class="avatar-circle">SM</div>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h3>Santiago M.</h3>
-                    <p class="puesto-highlight">Mozo</p>
-                    <div class="rating">
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        <span>(31)</span>
-                    </div>
-                    <p class="talento-info">4 años de experiencia</p>
-                    <p class="talento-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Nueva Córdoba</p>
-                    <button type="button" class="btn-lock-cv">
-                        <i class="fas fa-lock" aria-hidden="true"></i> VER CONTACTO / CV
-                    </button>
-                </article>
+            <div class="talento-grid" id="grid-talento-destacado">
+                <!-- Se renderiza o complementa vía JS -->
             </div>
         </div>
     </section>
@@ -397,7 +328,7 @@
             <span>Buscar</span>
         </a>
 
-        <button type="button" class="bottom-nav-item highlight-item role-empresa-only btn-trigger-express">
+        <button type="button" class="bottom-nav-item highlight-item role-empresa-only btn-trigger-express" aria-expanded="false">
             <i class="fas fa-bolt" aria-hidden="true"></i>
             <span>Personal YA</span>
         </button>
