@@ -125,62 +125,81 @@ img {
    2. CONTROL DE VISIBILIDAD ESTRICTO POR ROLES
    ========================================================================== */
 
-/* --- MODO POSTULANTE ACTIVO --- */
-body.role-postulante .empresa-only,
-body.role-postulante .modo-empresa-only,
-body.role-postulante .seccion-empresa,
-body.role-postulante .job-company,
-body.role-postulante .hero-card-express,
-body.role-postulante #formulario-express,
+/* --- OCULTAR ELEMENTOS DE EMPRESA POR DEFECTO / MODO POSTULANTE --- */
+.role-empresa-only,
+.empresa-only,
+.modo-empresa-only,
+.seccion-empresa,
+#talento-destacado,
+.talento-section,
+.hero-card-express,
+#formulario-express,
+body:not(.role-empresa) .role-empresa-only,
 body:not(.role-empresa) .empresa-only,
 body:not(.role-empresa) .modo-empresa-only,
 body:not(.role-empresa) .seccion-empresa,
-body:not(.role-empresa) .job-company,
+body:not(.role-empresa) #talento-destacado,
+body:not(.role-empresa) .talento-section,
 body:not(.role-empresa) .hero-card-express,
-body:not(.role-empresa) #formulario-express {
+body:not(.role-empresa) #formulario-express,
+body.role-postulante .role-empresa-only,
+body.role-postulante .empresa-only,
+body.role-postulante .modo-empresa-only,
+body.role-postulante .seccion-empresa,
+body.role-postulante #talento-destacado,
+body.role-postulante .talento-section,
+body.role-postulante .hero-card-express,
+body.role-postulante #formulario-express {
   display: none !important;
 }
 
+/* --- ELEMENTOS EXCLUSIVOS DE POSTULANTE --- */
+body.role-postulante .role-postulante-only,
 body.role-postulante .postulante-only,
 body.role-postulante .modo-postulante-only,
 body.role-postulante .seccion-postulante,
 body.role-postulante .main-grid-section,
 body.role-postulante .categories-section,
 body.role-postulante .btn-postularme {
-  display: revert;
+  display: block;
 }
 
-/* --- MODO EMPRESA ACTIVO --- */
+body.role-postulante .hero-btn-wrapper.role-postulante-only {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- MOSTRAR ELEMENTOS DE EMPRESA CUANDO EL ROLE IS EMPRESA --- */
+body.role-empresa .role-postulante-only,
 body.role-empresa .postulante-only,
 body.role-empresa .modo-postulante-only,
-body.role-empresa .seccion-postulante,
-body.role-empresa .main-grid-section,
-body.role-empresa .categories-section,
-body.role-empresa .btn-postularme {
+body.role-empresa .seccion-postulante {
   display: none !important;
 }
 
-body.role-empresa div.modo-empresa-only,
+body.role-empresa div.role-empresa-only,
 body.role-empresa div.empresa-only,
-body.role-empresa section.modo-empresa-only,
+body.role-empresa section.role-empresa-only,
 body.role-empresa section.empresa-only,
 body.role-empresa .seccion-empresa,
 body.role-empresa .hero-card-express,
 body.role-empresa #formulario-express,
+body.role-empresa #talento-destacado,
 body.role-empresa .talento-section {
   display: block !important;
 }
 
-body.role-empresa button.modo-empresa-only,
-body.role-empresa a.modo-empresa-only,
+body.role-empresa button.role-empresa-only,
+body.role-empresa a.role-empresa-only,
 body.role-empresa button.empresa-only,
 body.role-empresa a.empresa-only,
-body.role-empresa .nav-link.modo-empresa-only {
+body.role-empresa .nav-link.role-empresa-only {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
 }
 
+body.role-empresa .bottom-nav .bottom-nav-item.role-empresa-only,
 body.role-empresa .bottom-nav .bottom-nav-item.modo-empresa-only {
   display: flex !important;
   flex-direction: column;
@@ -282,7 +301,8 @@ body.role-empresa .job-company {
   background-color: rgba(243, 156, 18, 0.1);
 }
 
-.btn-role-badge {
+.btn-role-badge,
+.btn-cambiar-rol {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -296,10 +316,10 @@ body.role-empresa .job-company {
   cursor: pointer;
   transition: var(--transition);
   white-space: nowrap;
-  margin-left: 0.5rem;
 }
 
-.btn-role-badge:hover {
+.btn-role-badge:hover,
+.btn-cambiar-rol:hover {
   background: var(--primary);
   color: var(--text-dark);
   transform: translateY(-1px);
@@ -362,6 +382,25 @@ body.role-empresa .job-company {
   max-width: 650px;
 }
 
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.btn-subtext {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 .btn-primary {
   background: var(--primary);
   color: var(--text-dark);
@@ -371,16 +410,40 @@ body.role-empresa .job-company {
   font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   transition: var(--transition);
   border: none;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .btn-primary:hover {
   background: var(--primary-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btn-secondary:hover {
+  background: rgba(243, 156, 18, 0.1);
+  transform: translateY(-2px);
 }
 
 /* ==========================================================================
@@ -396,6 +459,35 @@ body.role-empresa .job-company {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.express-form {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.express-form .form-group {
+  width: 100%;
+}
+
+.express-form .form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
 
 .express-form input,
@@ -418,13 +510,69 @@ body.role-empresa .job-company {
   box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.18);
 }
 
+.btn-whatsapp {
+  background: var(--salary-green);
+  color: #0A0B0C;
+  border: none;
+  border-radius: var(--radius-sm);
+  height: 48px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+  text-transform: uppercase;
+}
+
+.btn-whatsapp:hover {
+  background: #27AE60;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(46, 204, 113, 0.3);
+}
+
 /* ==========================================================================
-   6. OFERTAS DESTACADAS Y VACANTES (ESTÉTIKA MEJORADA)
+   6. OFERTAS DESTACADAS Y VACANTES
    ========================================================================== */
 .main-grid-section, .info-section {
   max-width: 1200px;
   margin: 3.5rem auto;
   padding: 0 1.5rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.search-bar input {
+  flex: 1;
+  height: 48px;
+  padding: 0 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.search-bar .btn-search {
+  padding: 0 1.5rem;
+  background: var(--primary);
+  color: var(--text-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vacantes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .job-offer-card {
@@ -447,6 +595,22 @@ body.role-empresa .job-company {
   font-size: 1.15rem;
   font-weight: 800;
   color: #F8FAFC;
+}
+
+.job-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.badge-urgente {
+  background: rgba(231, 76, 60, 0.15);
+  color: var(--danger-badge);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
 }
 
 .job-details-row {
@@ -473,6 +637,13 @@ body.role-empresa .job-company {
   border-color: rgba(46, 204, 113, 0.2);
   color: var(--salary-green);
   font-weight: 700;
+}
+
+.job-action-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
 }
 
 .job-time {
@@ -504,13 +675,41 @@ body.role-empresa .job-company {
   box-shadow: var(--shadow-sm);
 }
 
+.link-more-full {
+  display: block;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
 /* ==========================================================================
-   7. TARJETAS DE TALENTOS DESTACADOS (ESTÉTICA MEJORADA)
+   7. TARJETAS DE TALENTOS DESTACADOS
    ========================================================================== */
 .talento-section {
   max-width: 1200px;
   margin: 3.5rem auto;
   padding: 0 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.link-see-all {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
 .talento-grid {
@@ -627,75 +826,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   8. GRILLA DE CATEGORÍAS (ESTÉTICA MEJORADA)
-   ========================================================================== */
-.categories-section {
-  max-width: 1200px;
-  margin: 3.5rem auto;
-  padding: 0 1.5rem;
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
-}
-
-.category-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1.25rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  text-align: center;
-}
-
-.category-card i, 
-.category-card svg {
-  font-size: 1.6rem;
-  color: var(--text-muted);
-  transition: all 0.25s ease;
-}
-
-.category-card span {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.category-card:hover {
-  background: #1A1D22;
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.category-card:hover i,
-.category-card:hover svg {
-  color: var(--primary);
-  transform: scale(1.1);
-}
-
-.category-card.active {
-  background: rgba(243, 156, 18, 0.08);
-  border: 1.5px solid var(--primary);
-  box-shadow: 0 0 15px rgba(243, 156, 18, 0.15);
-}
-
-.category-card.active i,
-.category-card.active svg,
-.category-card.active span {
-  color: var(--primary);
-}
-
-/* ==========================================================================
-   9. BOTTOM NAV (MOBILE) & FOOTER
+   8. BOTTOM NAV (MOBILE) & FOOTER
    ========================================================================== */
 .bottom-nav {
   position: fixed;
@@ -736,7 +867,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   10. MEDIA QUERIES
+   9. MEDIA QUERIES
    ========================================================================== */
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
