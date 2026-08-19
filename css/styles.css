@@ -42,7 +42,7 @@
   /* Assets SVG & Overlays */
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F39C12%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.94) 0%, rgba(10, 11, 12, 0.82) 100%);
-  --modal-overlay-bg: rgba(0, 0, 0, 0.8);
+  --modal-overlay-bg: rgba(0, 0, 0, 0.82);
   --select-option-bg: #141619;
 }
 
@@ -73,7 +73,7 @@
 
   --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D67E00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   --hero-overlay-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.88) 100%);
-  --modal-overlay-bg: rgba(15, 23, 42, 0.5);
+  --modal-overlay-bg: rgba(15, 23, 42, 0.6);
   --select-option-bg: #FFFFFF;
 }
 
@@ -330,7 +330,7 @@ body.role-empresa .job-company {
 }
 
 /* ==========================================================================
-   4. MODAL DE SELECCIÓN DE ROL (BIENVENIDA)
+   4. MODAL DE SELECCIÓN DE ROL (MEJORADO & CORREGIDO)
    ========================================================================== */
 .modal-overlay,
 .modal-backdrop {
@@ -344,66 +344,135 @@ body.role-empresa .job-company {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  animation: fadeInOverlay 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-content {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 2rem;
+  padding: 2.5rem 2rem 2rem 2rem;
   width: 100%;
-  max-width: 560px;
+  max-width: 620px;
   box-shadow: var(--shadow-lg);
   position: relative;
+  text-align: center;
+  animation: scaleUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Botón de cierre (X) en la esquina superior derecha */
+.modal-close,
+.btn-close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.modal-close:hover,
+.btn-close-modal:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+.modal-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+}
+
+/* Contenedor de botones en grid */
 .modal-roles-container,
 .role-selection-options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
   width: 100%;
+  margin-bottom: 1.5rem;
 }
 
+/* Tarjetas/Botones de Rol */
 .btn-select-role,
 .role-option-btn {
-  background: var(--bg-dark);
+  background: var(--card-bg-light);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 1.25rem 1rem;
+  padding: 1.5rem 1.25rem;
   color: var(--text-main);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   cursor: pointer;
   transition: var(--transition);
   width: 100%;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .btn-select-role:hover,
 .role-option-btn:hover {
   border-color: var(--primary);
-  background: var(--card-bg-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: rgba(243, 156, 18, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-.role-option-btn strong,
-.btn-select-role strong {
-  font-size: 0.98rem;
+.btn-select-role:focus-visible,
+.role-option-btn:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.3);
+}
+
+.role-icon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.role-title {
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-main);
+  display: block;
 }
 
-.role-option-btn span,
-.btn-select-role span {
-  font-size: 0.8rem;
+.role-desc {
+  font-size: 0.82rem;
   color: var(--text-muted);
-  line-height: 1.35;
+  line-height: 1.4;
+  display: block;
+}
+
+/* Animaciones del Modal */
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUpModal {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* ==========================================================================
