@@ -1,32 +1,23 @@
 
-}
 /* ==========================================================================
    1. VARIABLES & RESET
    ========================================================================== */
 :root {
   /* Paleta de colores - MODO OSCURO (Default) */
   --primary: #F39C12;             /* Ámbar / Naranja brillante */
-  --primary: #F39C12;              /* Ámbar / Naranja brillante */
   --primary-hover: #D68910;
   --secondary: #0D0D0D;           /* Fondo muy oscuro / Casi negro */
   --card-bg: #16181A;             /* Fondo de tarjetas y secciones */
   --card-bg-light: #212428;       /* Hover o tarjetas secundarias */
   --whatsapp-orange: #F39C12;     /* Botón de acción principal */
-  --secondary: #0D0D0D;            /* Fondo muy oscuro / Casi negro */
-  --card-bg: #16181A;              /* Fondo de tarjetas y secciones */
-  --card-bg-light: #212428;        /* Hover o tarjetas secundarias */
-  --whatsapp-orange: #F39C12;      /* Botón de acción principal */
   --whatsapp-hover: #E67E22;
   --danger-badge: #E74C3C;        /* Badge Urgente y errores */
   --salary-green: #2ECC71;        /* Sueldos y Disponibilidad */
-  --danger-badge: #E74C3C;         /* Badge Urgente y errores */
-  --salary-green: #2ECC71;         /* Sueldos y Disponibilidad */
 
   --bg-dark: #0A0B0C;
   --text-main: #FFFFFF;
   --text-muted: #9CA3AF;
   --text-dark: #111827;           /* Texto sobre botones amarillos/naranjas */
-  --text-dark: #111827;            /* Texto sobre botones amarillos/naranjas */
   --border-color: #2D3137;
 
   /* Bordes y Sombras */
@@ -59,29 +50,19 @@
 [data-theme="light"],
 .light-theme {
   --primary: #D67E00;             /* Ámbar / Naranja oscuro para contraste */
-  --primary: #D67E00;              /* Ámbar / Naranja oscuro para contraste */
   --primary-hover: #B56900;
   --secondary: #F8FAFC;           /* Fondo ultra claro */
   --card-bg: #FFFFFF;             /* Blanco puro para tarjetas */
   --card-bg-light: #F1F5F9;       /* Hover y tarjetas secundarias */
-  --secondary: #F8FAFC;            /* Fondo ultra claro */
-  --card-bg: #FFFFFF;              /* Blanco puro para tarjetas */
-  --card-bg-light: #F1F5F9;        /* Hover y tarjetas secundarias */
   --whatsapp-orange: #D67E00;
   --whatsapp-hover: #B56900;
   --danger-badge: #DC2626;        /* Rojo semántico contrastado */
   --salary-green: #16A34A;        /* Verde accesible sobre blanco */
-  --danger-badge: #DC2626;         /* Rojo semántico contrastado */
-  --salary-green: #16A34A;         /* Verde accesible sobre blanco */
 
   --bg-dark: #F8FAFC;             
   --text-main: #0F172A;           /* Azul muy oscuro / Casi negro */
   --text-muted: #64748B;          /* Texto secundario gris */
   --text-dark: #FFFFFF;           /* Texto sobre botones primarios */
-  --bg-dark: #F8FAFC;              
-  --text-main: #0F172A;            /* Azul muy oscuro / Casi negro */
-  --text-muted: #64748B;           /* Texto secundario gris */
-  --text-dark: #FFFFFF;            /* Texto sobre botones primarios */
   --border-color: #E2E8F0;
 
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
@@ -127,17 +108,13 @@ img {
 }
 
 /* ==========================================================================
-   2. NAVBAR / HEADER
    2. CONTROL DE VISIBILIDAD DE ROLES (POSTULANTE / EMPRESA)
    ========================================================================== */
-
-/* Si es postulante (o estado por defecto), oculta los componentes exclusivos de empresa */
 body.role-postulante .modo-empresa-only,
 body:not(.role-empresa) .modo-empresa-only {
   display: none !important;
 }
 
-/* Si el rol activo es Empresa, habilita sus elementos */
 body.role-empresa .modo-empresa-only {
   display: block;
 }
@@ -280,7 +257,6 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   3. HERO SECTION & FORMULARIO EXPRESS
    4. HERO SECTION & FORMULARIO EXPRESS
    ========================================================================== */
 .hero-section {
@@ -589,7 +565,6 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   4. CATEGORÍAS & GRIDS
    5. CATEGORÍAS & GRIDS
    ========================================================================== */
 .categories-section, .main-grid-section, .stats-section, .info-section {
@@ -664,7 +639,6 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   5. TARJETAS DE OFERTAS DE EMPLEO
    6. TARJETAS DE OFERTAS DE EMPLEO
    ========================================================================== */
 .main-grid-section {
@@ -848,7 +822,6 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   6. SECCIÓN TALENTO & BLOG
    7. SECCIÓN TALENTO & BLOG
    ========================================================================== */
 .talent-grid {
@@ -958,7 +931,6 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   7. ESTADÍSTICAS E INFORMACIÓN
    8. ESTADÍSTICAS E INFORMACIÓN
    ========================================================================== */
 .stats-section {
@@ -1012,11 +984,10 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   8. MODALES GENERALES & TOASTS
    9. MODALES GENERALES, MODAL ROL & TOASTS
    ========================================================================== */
 
-/* Estilos para el Modal de Selección de Rol (Paso 0) */
+/* Estilos para el Modal de Selección de Rol */
 .rol-modal-overlay {
   position: fixed;
   inset: 0;
@@ -1025,7 +996,7 @@ body.role-empresa a.modo-empresa-only {
   background: var(--modal-overlay-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  display: none; /* Controlado mediante JS */
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: var(--z-modal);
@@ -1195,7 +1166,6 @@ body.role-empresa a.modo-empresa-only {
 }
 
 /* ==========================================================================
-   9. BOTTOM NAV (MOBILE)
    10. BOTTOM NAV (MOBILE)
    ========================================================================== */
 .bottom-nav {
@@ -1238,75 +1208,6 @@ body.role-empresa a.modo-empresa-only {
   font-weight: 700;
 }
 
-/* ==========================================================================
-   10. MEDIA QUERIES (DESKTOP / TABLET)
-   ========================================================================== */
-@media (min-width: 600px) {
-  .form-row-2col {
-    flex-direction: row;
-  }
-  
-  .form-row-2col .form-group {
-    flex: 1;
-  }
-}
-
-@media (min-width: 900px) {
-  body { padding-bottom: 0; }
-  .bottom-nav { display: none; }
-  
-  .hero-section {
-    padding: 5rem 2rem;
-  }
-
-  .hero-container {
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: 3.5rem;
-  }
-
-  .hero-title {
-    font-size: 3.2rem;
-  }
-
-  .hero-buttons {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-
-  .hero-btn-wrapper {
-    width: auto;
-    flex: 1;
-  }
-
-  .btn-primary, .btn-secondary, .btn-accent {
-    width: 100%;
-  }
-
-  .main-grid-section {
-    grid-template-columns: 1.8fr 1.2fr;
-  }
-
-  .job-offer-card {
-    grid-template-columns: 1fr 190px;
-    align-items: center;
-  }
-
-  .job-action-col {
-    border-top: none;
-    border-left: 1px dashed var(--border-color);
-    padding-top: 0;
-    padding-left: 1.25rem;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    text-align: right;
-  }
-
-  #toast-container {
-    bottom: 24px;
-  }
-}
 /* ==========================================================================
    11. COMPONENTES ADICIONALES: TALENTO DESTACADO & BANNER COMUNIDAD
    ========================================================================== */
@@ -1428,14 +1329,6 @@ body.role-empresa a.modo-empresa-only {
   box-shadow: var(--shadow-sm);
 }
 
-@media (min-width: 600px) {
-  .comunidad-banner-card {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
 .comunidad-banner-content h3 {
   font-size: 1.1rem;
   font-weight: 800;
@@ -1487,11 +1380,22 @@ body.role-empresa a.modo-empresa-only {
   .form-row-2col .form-group {
     flex: 1;
   }
+
+  .comunidad-banner-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 @media (min-width: 900px) {
-  body { padding-bottom: 0; }
-  .bottom-nav { display: none; }
+  body { 
+    padding-bottom: 0; 
+  }
+  
+  .bottom-nav { 
+    display: none; 
+  }
   
   .hero-section {
     padding: 5rem 2rem;
