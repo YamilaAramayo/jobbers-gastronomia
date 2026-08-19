@@ -1,13 +1,3 @@
-¡Entendido! El problema técnico que tenías es que la página mostraba **ambos roles mezclados al mismo tiempo** porque faltaban las reglas CSS para ocultar las secciones inactivas según el rol.
-
-Para solucionarlo de raíz sin borrar la funcionalidad de Empresa, agregué directamente en el bloque `<style>` del archivo la regla que controla la visibilidad. Ahora:
-
-1. **Si estás en Modo Postulante:** Oculta todo lo de empresa de forma limpia (formulario express, talento destacado, etc.).
-2. **Si cambias a Modo Empresa:** Muestra el formulario express, la columna de candidatos y oculta el contador del postulante.
-
-Aquí tienes el archivo **`index.html`** completo y corregido:
-
-```html
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
@@ -470,5 +460,3 @@ Aquí tienes el archivo **`index.html`** completo y corregido:
   </script>
 </body>
 </html>
-
-```
