@@ -357,7 +357,23 @@
         </section>
     </main>
 
-    <!-- SECCIÓN JOBBERS PRO (Marcada en amarillo) -->
+    <!-- SECCIÓN TALENTO DESTACADO (Exclusiva Modo Empresa) -->
+    <section class="talento-section role-empresa-only" id="talento-destacado">
+        <div class="talento-container">
+            <div class="section-header">
+                <h2>TALENTO DESTACADO</h2>
+                <button type="button" class="link-see-all" onclick="unirseAComunidad()" style="background:none; border:none; cursor:pointer; color:var(--primary, #00e676);">
+                    Sumar mi perfil <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="talento-grid" id="grid-talento-destacado">
+                <!-- Renderizado dinámico vía JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN JOBBERS PRO (Ubicada debajo de Talento Destacado) -->
     <section class="jobbers-pro-section" id="jobbers-pro" style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
         <div class="pro-card" style="background: linear-gradient(145deg, #1e1e1e, #121212); border: 1px solid #333; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
             <h2 style="color: #ffb703; font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -377,22 +393,6 @@
         </div>
     </section>
 
-    <!-- SECCIÓN TALENTO DESTACADO (Exclusiva Modo Empresa) -->
-    <section class="talento-section role-empresa-only" id="talento-destacado">
-        <div class="talento-container">
-            <div class="section-header">
-                <h2>TALENTO DESTACADO</h2>
-                <button type="button" class="link-see-all" onclick="unirseAComunidad()" style="background:none; border:none; cursor:pointer; color:var(--primary, #00e676);">
-                    Sumar mi perfil <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                </button>
-            </div>
-
-            <div class="talento-grid" id="grid-talento-destacado">
-                <!-- Renderizado dinámico vía JS -->
-            </div>
-        </div>
-    </section>
-
     <!-- SECCIÓN NOSOTROS -->
     <section class="info-section" id="nosotros">
         <h2>Sobre Jobbers</h2>
@@ -404,7 +404,7 @@
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile - Atajos marcados en rosa) -->
+    <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile - Atajos) -->
     <nav class="bottom-nav" aria-label="Navegación móvil">
         <a href="#vacantes" class="bottom-nav-item active">
             <i class="fas fa-search" aria-hidden="true"></i>
