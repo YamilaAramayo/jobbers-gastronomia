@@ -30,13 +30,15 @@
   --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
   --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Z-Index */
+  /* Z-Index Hierarchy */
+  --z-overlay: 1;
+  --z-content: 2;
   --z-navbar: 100;
   --z-bottom-nav: 900;
   --z-modal: 1000;
   --z-toast: 2000;
 
-  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.94) 0%, rgba(10, 11, 12, 0.82) 100%);
+  --hero-overlay-bg: linear-gradient(135deg, rgba(10, 11, 12, 0.92) 0%, rgba(10, 11, 12, 0.85) 100%);
   --modal-overlay-bg: rgba(0, 0, 0, 0.85);
 }
 
@@ -375,38 +377,43 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   5. HERO SECTION & FORMULARIO
+   5. HERO SECTION & FORMULARIO EXPRESS (CENTRADO)
    ========================================================================== */
 .hero-section {
   position: relative;
-  background-image: 
-    linear-gradient(rgba(10, 11, 12, 0.75), rgba(10, 11, 12, 0.88)), 
-    url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');
+  background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
   padding: 4rem 1.5rem;
   color: var(--text-main);
   display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 75vh;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
   background: var(--hero-overlay-bg);
+  z-index: var(--z-overlay);
   pointer-events: none;
 }
 
-.hero-container-clean {
+.hero-container-centered {
   position: relative;
-  z-index: 2;
+  z-index: var(--z-content);
   width: 100%;
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+}
+
+.hero-text-col {
+  width: 100%;
 }
 
 .hero-title {
@@ -415,25 +422,34 @@ body.role-empresa .bottom-nav .role-empresa-only {
   line-height: 1.25;
   margin-bottom: 0.85rem;
   letter-spacing: -0.5px;
+  color: #FFFFFF;
 }
 
-.hero-title .highlight { color: var(--primary); }
+.hero-title .highlight { 
+  color: var(--primary); 
+}
 
 .hero-subtitle {
   font-size: 1.05rem;
-  color: var(--text-muted);
+  color: #CBD5E1;
   margin-bottom: 1.5rem;
   max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-buttons {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
 .hero-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 0.35rem;
 }
 
@@ -491,10 +507,12 @@ body.role-empresa .bottom-nav .role-empresa-only {
 .hero-features {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.25rem;
   font-size: 0.85rem;
   color: var(--text-muted);
   font-weight: 600;
+  margin-bottom: 2rem;
 }
 
 .hero-features span {
@@ -505,14 +523,19 @@ body.role-empresa .bottom-nav .role-empresa-only {
 
 .hero-features i { color: var(--primary); }
 
+/* TARJETA FORMULARIO EXPRESS */
 .hero-card-express {
+  position: relative;
+  z-index: var(--z-content);
   width: 100%;
-  max-width: 540px;
+  max-width: 520px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   padding: 2rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
+  text-align: left;
+  margin-top: 1rem;
 }
 
 .card-header {
@@ -525,6 +548,12 @@ body.role-empresa .bottom-nav .role-empresa-only {
 .card-header h2 {
   font-size: 1.25rem;
   font-weight: 800;
+  color: #FFFFFF;
+}
+
+.hero-card-express p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 .express-form {
@@ -621,7 +650,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
   cursor: pointer;
 }
 
-/* --- BLOQUE CATEGORÍAS EN GRILLA 3X3 --- */
+/* BLOQUE CATEGORÍAS EN GRILLA 3X3 */
 .categories-section {
   margin: 2rem 0;
 }
@@ -817,7 +846,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   7. TALENTO DESTACADO (MODO EMPRESA)
+   7. TALENTO DESTACADO (MODO EMPRESA - ESTILO EXACTO CAPTURA)
    ========================================================================== */
 .talento-section {
   max-width: 1200px;
@@ -825,28 +854,113 @@ body.role-empresa .bottom-nav .role-empresa-only {
   padding: 0 1.5rem;
 }
 
-.section-header {
+.talento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.talento-card {
+  background-color: #141619;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.talento-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(243, 156, 18, 0.4);
+}
+
+.talento-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
 }
 
-.section-header h2 {
-  font-size: 1.5rem;
+.talento-nombre {
+  font-size: 1.25rem;
   font-weight: 800;
+  color: #F39C12;
+  margin: 0;
 }
 
-.link-see-all {
-  color: var(--primary);
+.badge-disponible {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ECC71;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  font-size: 0.75rem;
   font-weight: 700;
-  font-size: 0.85rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
 }
 
-.talento-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.25rem;
+.talento-info {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1rem;
+  margin-top: 0.75rem;
+}
+
+.talento-puesto {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 0.2rem;
+}
+
+.talento-exp {
+  font-size: 0.88rem;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+.talento-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #CBD5E1;
+}
+
+.talento-detalles span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.talento-detalles i {
+  color: #F39C12;
+  width: 14px;
+}
+
+.btn-contactar-perfil {
+  background: #2ECC71;
+  color: #0A0B0C;
+  font-weight: 800;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  width: 100%;
+}
+
+.btn-contactar-perfil:hover {
+  background: #27AE60;
+  transform: translateY(-1px);
 }
 
 /* ==========================================================================
@@ -909,28 +1023,13 @@ body.role-empresa .bottom-nav .role-empresa-only {
   .category-card span {
     font-size: 0.75rem;
   }
+
+  .express-form .form-row-2col {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
   .bottom-nav { display: none; }
-
-  body.role-empresa .hero-container-clean {
-    grid-template-columns: 1fr 480px;
-  }
-  
-  body.role-postulante .hero-container-clean {
-    grid-template-columns: 1fr;
-    text-align: center;
-    max-width: 800px;
-  }
-  
-  body.role-postulante .hero-subtitle {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  body.role-postulante .hero-features {
-    justify-content: center;
-  }
 }
