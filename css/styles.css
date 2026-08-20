@@ -239,7 +239,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   4. MODAL DE SELECCIÓN DE PERFIL (100% ADAPTADO Y CORREGIDO)
+   4. MODAL DE SELECCIÓN DE PERFIL
    ========================================================================== */
 .rol-modal-overlay {
   position: fixed;
@@ -268,7 +268,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   animation: scaleUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Botón de cierre (X) en la esquina superior */
 .jobbers-close-btn {
   position: absolute;
   top: 1rem;
@@ -306,7 +305,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   margin-bottom: 1.75rem;
 }
 
-/* Contenedor Grid de Tarjetas de Rol */
 .rol-options {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -314,7 +312,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   width: 100%;
 }
 
-/* Botones / Tarjetas de selección de Rol */
 .btn-rol {
   background: var(--card-bg-light);
   border: 1px solid var(--border-color);
@@ -367,7 +364,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   display: block;
 }
 
-/* Animaciones */
 @keyframes fadeInOverlay {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -509,7 +505,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
 
 .hero-features i { color: var(--primary); }
 
-/* Formulario Express */
 .hero-card-express {
   width: 100%;
   max-width: 540px;
@@ -591,7 +586,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   6. LISTADO DE VACANTES
+   6. LISTADO DE VACANTES & CATEGORÍAS 3x3
    ========================================================================== */
 .main-grid-section, .info-section {
   max-width: 1200px;
@@ -624,6 +619,85 @@ body.role-empresa .bottom-nav .role-empresa-only {
   border-radius: var(--radius-sm);
   font-weight: 700;
   cursor: pointer;
+}
+
+/* --- BLOQUE CATEGORÍAS EN GRILLA 3X3 --- */
+.categories-section {
+  margin: 2rem 0;
+}
+
+.categories-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0.5rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+  outline: none;
+}
+
+.category-card i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.category-card span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.category-card:hover,
+.category-card.active {
+  background-color: var(--card-bg-light);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.category-card:hover i,
+.category-card.active i {
+  color: var(--primary);
+}
+
+/* Encabezado y contador de vacantes */
+.vacantes-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0 1rem 0;
+}
+
+.vacantes-header-row h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.vacantes-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 .vacantes-list {
@@ -819,6 +893,24 @@ body.role-empresa .bottom-nav .role-empresa-only {
 /* ==========================================================================
    9. RESPONSIVE
    ========================================================================== */
+@media (max-width: 480px) {
+  .categories-grid {
+    gap: 0.5rem;
+  }
+  
+  .category-card {
+    padding: 0.85rem 0.25rem;
+  }
+  
+  .category-card i {
+    font-size: 1.2rem;
+  }
+  
+  .category-card span {
+    font-size: 0.75rem;
+  }
+}
+
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
   .bottom-nav { display: none; }
