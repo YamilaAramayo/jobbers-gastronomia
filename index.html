@@ -92,6 +92,66 @@
         </div>
     </div>
 
+    <!-- MODAL JOBBERS PRO -->
+    <div id="modal-jobbers-pro" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-pro-title" aria-modal="true" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem; overflow-y: auto;">
+        <div style="background: #121212; border: 1px solid #333; border-radius: 16px; width: 100%; max-width: 480px; padding: 2rem 1.5rem; position: relative; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+            
+            <button type="button" id="btn-cerrar-modal-pro" aria-label="Cerrar modal" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: #aaa; font-size: 1.5rem; cursor: pointer;">&times;</button>
+
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <div style="color: #ffb703; font-size: 2.2rem; margin-bottom: 0.25rem;">
+                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                </div>
+                <h2 id="modal-pro-title" style="color: #ffb703; font-size: 1.5rem; font-weight: 800; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: 0.5px;">
+                    PASO A JOBBERS PRO
+                </h2>
+                <p style="color: #ccc; font-size: 0.9rem; margin: 0; line-height: 1.4;">
+                    Acelerá tu búsqueda y destacá ante los empleadores de Córdoba
+                </p>
+            </div>
+
+            <!-- CARD DE BENEFICIOS -->
+            <div style="background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left;">
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.88rem; color: #ddd;">
+                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
+                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
+                        <span><strong>Visibilidad VIP:</strong> Tu perfil fijo al tope de la sección de talentos.</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
+                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
+                        <span><strong>Sello Verificado PRO</strong> en tus postulaciones por WhatsApp.</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
+                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
+                        <span><strong>Acceso a base de currículos</strong> y herramientas de carrera.</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
+                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
+                        <span><strong>Pagos flexibles:</strong> Transferencia, Mercado Pago o efectivo.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- FORMULARIO PRO -->
+            <form id="form-solicitar-pro" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                    <label for="pro-nombre" class="sr-only">Nombre y Apellido</label>
+                    <input type="text" id="pro-nombre" placeholder="Nombre y Apellido" required style="width: 100%; background: #1e1e1e; border: 1px solid #333; color: #fff; padding: 0.85rem 1rem; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; outline: none;">
+                </div>
+
+                <div>
+                    <label for="pro-puesto" class="sr-only">Tu puesto principal</label>
+                    <input type="text" id="pro-puesto" placeholder="Tu puesto principal (ej. Cocinero, Mozo...)" required style="width: 100%; background: #1e1e1e; border: 1px solid #333; color: #fff; padding: 0.85rem 1rem; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; outline: none;">
+                </div>
+
+                <button type="submit" style="background-color: #ffb703; color: #000; font-weight: 800; padding: 0.9rem; border-radius: 8px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; width: 100%;">
+                    <i class="fab fa-whatsapp" style="font-size: 1.1rem;" aria-hidden="true"></i> SOLICITAR PASE PRO (COORDINAR PAGO)
+                </button>
+            </form>
+
+        </div>
+    </div>
+
     <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
         <div class="navbar-container">
@@ -384,7 +444,7 @@
                 Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
             </p>
             <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-                <button type="button" class="btn-primary" style="background-color: #ffb703; color: #000; font-weight: 700; padding: 0.85rem 1.8rem; border-radius: 8px; border: none; cursor: pointer; text-transform: uppercase;">
+                <button type="button" id="btn-destacar-pro" class="btn-primary" style="background-color: #ffb703; color: #000; font-weight: 700; padding: 0.85rem 1.8rem; border-radius: 8px; border: none; cursor: pointer; text-transform: uppercase;">
                     <i class="fas fa-bolt" aria-hidden="true"></i> DESTACÁ TU PERFIL PRO
                 </button>
                 <a href="#blog" class="btn-secondary" style="background: #2a2a2a; color: #fff; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem;">
