@@ -289,7 +289,7 @@
                 <span class="vacantes-count" id="vacantes-count">Cargando vacantes...</span>
             </div>
 
-            <!-- LISTADO DE TARJETAS DE VACANTES (Inyectadas o leídas por JS) -->
+            <!-- LISTADO DE TARJETAS DE VACANTES -->
             <div class="vacantes-list" id="lista-vacantes">
                 <article class="job-offer-card" data-categoria="Cocina" data-id="1">
                     <div class="job-info-main">
@@ -357,6 +357,26 @@
         </section>
     </main>
 
+    <!-- SECCIÓN JOBBERS PRO (Marcada en amarillo) -->
+    <section class="jobbers-pro-section" id="jobbers-pro" style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+        <div class="pro-card" style="background: linear-gradient(145deg, #1e1e1e, #121212); border: 1px solid #333; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+            <h2 style="color: #ffb703; font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO
+            </h2>
+            <p style="color: #ccc; font-size: 0.95rem; line-height: 1.6; max-width: 600px; margin: 0 auto 1.5rem auto;">
+                Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
+            </p>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <button type="button" class="btn-primary" style="background-color: #ffb703; color: #000; font-weight: 700; padding: 0.85rem 1.8rem; border-radius: 8px; border: none; cursor: pointer; text-transform: uppercase;">
+                    <i class="fas fa-bolt" aria-hidden="true"></i> DESTACÁ TU PERFIL PRO
+                </button>
+                <a href="#blog" class="btn-secondary" style="background: #2a2a2a; color: #fff; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-newspaper" aria-hidden="true"></i> Leer Blog & Noticias
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- SECCIÓN TALENTO DESTACADO (Exclusiva Modo Empresa) -->
     <section class="talento-section role-empresa-only" id="talento-destacado">
         <div class="talento-container">
@@ -384,26 +404,21 @@
         <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile) -->
+    <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile - Atajos marcados en rosa) -->
     <nav class="bottom-nav" aria-label="Navegación móvil">
         <a href="#vacantes" class="bottom-nav-item active">
             <i class="fas fa-search" aria-hidden="true"></i>
-            <span>Buscar</span>
+            <span>Empleos</span>
         </a>
-
-        <button type="button" class="bottom-nav-item highlight-item role-empresa-only btn-trigger-express" aria-controls="formulario-express" aria-expanded="false">
-            <i class="fas fa-bolt" aria-hidden="true"></i>
-            <span>Personal YA</span>
-        </button>
 
         <button type="button" class="bottom-nav-item btn-cambiar-rol">
             <i class="fas fa-user-circle" aria-hidden="true"></i>
             <span>Perfil</span>
         </button>
 
-        <a href="https://wa.me/5493513080197" target="_blank" rel="noopener noreferrer" class="bottom-nav-item" aria-label="Contacto por WhatsApp">
-            <i class="fab fa-whatsapp" aria-hidden="true"></i>
-            <span>Contacto</span>
+        <a href="#nosotros" class="bottom-nav-item">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            <span>Nosotros</span>
         </a>
     </nav>
 
