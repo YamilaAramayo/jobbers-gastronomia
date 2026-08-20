@@ -360,7 +360,15 @@ function crearCardVacante(item) {
 
 function renderizarOfertas(lista) {
     const contenedor = document.getElementById('lista-vacantes') || document.querySelector('.vacantes-list');
+    const contador = document.getElementById('vacantes-count');
+
     if (!contenedor) return;
+
+    // Actualiza el texto del elemento vacantes-count
+    if (contador) {
+        const total = lista?.length || 0;
+        contador.textContent = `${total} ${total === 1 ? 'vacante encontrada' : 'vacantes encontradas'}`;
+    }
 
     if (!lista?.length) {
         contenedor.innerHTML = `
