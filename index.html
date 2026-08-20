@@ -31,11 +31,26 @@
 
     <!-- JS diferido -->
     <script src="js/main.js" defer></script>
+
+    <!-- Esquema JSON-LD para Google Search / Jobs -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Jobbers Argentina",
+      "url": "https://jobbers.com.ar",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://jobbers.com.ar/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 </head>
 <body class="role-postulante">
 
-    <!-- MODAL DE SELECCIÓN DE PERFIL (Visible de entrada) -->
-    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <!-- MODAL DE SELECCIÓN DE PERFIL -->
+    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
         <div class="rol-modal-card">
             <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
 
@@ -45,14 +60,12 @@
                 <p>Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
 
                 <div class="rol-options">
-                    <!-- Opción Postulante -->
                     <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Busco Empleo">
                         <span class="rol-icon" aria-hidden="true">🔍</span>
                         <span class="rol-title">Busco Empleo</span>
                         <span class="rol-desc">Quiero ver vacantes y postularme directo</span>
                     </button>
 
-                    <!-- Opción Empresa -->
                     <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Soy Empresa / Gastronómico">
                         <span class="rol-icon" aria-hidden="true">🏢</span>
                         <span class="rol-title">Soy Empresa</span>
@@ -91,7 +104,7 @@
                 <a href="#vacantes" class="nav-link">Empleos</a>
 
                 <!-- Solo visible para empresas -->
-                <button type="button" class="nav-link btn-trigger-express role-empresa-only" aria-expanded="false">Publicar Búsqueda</button>
+                <button type="button" class="nav-link btn-trigger-express role-empresa-only" aria-controls="formulario-express" aria-expanded="false">Publicar Búsqueda</button>
 
                 <!-- Botón de Cambiar Perfil -->
                 <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
@@ -103,7 +116,7 @@
         </div>
     </header>
 
-    <!-- HERO SECTION (Estructura centralizada) -->
+    <!-- HERO SECTION -->
     <section class="hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-container hero-container-centered" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px; margin: 0 auto;">
@@ -112,16 +125,6 @@
                 <div class="hero-content">
                     <h1 class="hero-title">Tu próximo trabajo en <span class="highlight">gastronomía</span> está acá</h1>
                     <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
-
-                    <!-- Botón exclusivo para modo Postulante -->
-                    <div class="hero-buttons role-postulante-only">
-                        <div class="hero-btn-wrapper">
-                            <a href="#vacantes" class="btn-primary">
-                                <i class="fas fa-search" aria-hidden="true"></i> BUSCO TRABAJO
-                            </a>
-                            <span class="btn-subtext">Postulate directo por WhatsApp</span>
-                        </div>
-                    </div>
 
                     <div class="hero-features" style="justify-content: center; margin-bottom: 2rem;">
                         <span><i class="fas fa-clock" aria-hidden="true"></i> Respuesta rápida</span>
@@ -132,7 +135,7 @@
             </div>
 
             <!-- Formulario Express (Centrado debajo en modo Empresa) -->
-            <div class="hero-card-express role-empresa-only" id="formulario-express" style="width: 100%; max-width: 500px; margin: 0 auto; text-align: left;">
+            <div class="hero-card-express role-empresa-only" id="formulario-express" style="width: 100%; max-width: 500px; margin: 0 auto; text-align: left; display: none;">
                 <div class="card-header">
                     <span class="text-warning" aria-hidden="true">⚡</span>
                     <h2>¿NECESITÁS PERSONAL HOY?</h2>
@@ -142,12 +145,12 @@
                 <form class="express-form" id="form-publicar-express">
                     <div class="form-group">
                         <label for="nombre-empresa" class="sr-only">Nombre del local</label>
-                        <input type="text" id="nombre-empresa" placeholder="Nombre de tu local / Gastronómico" required>
+                        <input type="text" id="nombre-empresa" placeholder="Nombre de tu local / Gastronómico" required autocomplete="organization">
                     </div>
 
                     <div class="form-group">
                         <label for="telefono-contacto" class="sr-only">Teléfono WhatsApp</label>
-                        <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required>
+                        <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required autocomplete="tel">
                     </div>
 
                     <div class="form-group">
@@ -219,11 +222,11 @@
             <!-- BUSCADOR POR TEXTO -->
             <div class="search-bar">
                 <label for="job-search-input" class="sr-only">Buscar vacantes</label>
-                <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)...">
+                <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)..." autocomplete="off">
                 <button class="btn-search" type="button" id="btn-ejecutar-busqueda"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
             </div>
 
-            <!-- SECCIÓN BUSCÁ POR CATEGORÍA (Modo Postulante) -->
+            <!-- SECCIÓN BUSCÁ POR CATEGORÍA -->
             <div class="categories-section role-postulante-only">
                 <h3 class="categories-title">BUSCÁ POR CATEGORÍA</h3>
                 <div class="categories-grid">
@@ -266,7 +269,7 @@
                 </div>
             </div>
 
-            <!-- BANNER CCTA MODO EMPRESA (Exclusivo Modo Postulante) -->
+            <!-- BANNER CTA MODO EMPRESA -->
             <div class="banner-cambiar-empresa role-postulante-only">
                 <div class="banner-empresa-content">
                     <div class="banner-empresa-header">
@@ -280,15 +283,14 @@
                 </div>
             </div>
 
-            <!-- ENCABEZADO Y CONTADOR DE BÚSQUEDAS ACTIVAS -->
+            <!-- ENCABEZADO Y CONTADOR -->
             <div class="vacantes-header-row">
                 <h3>Búsquedas Activas</h3>
-                <span class="vacantes-count" id="vacantes-count">Mostrando 3 vacantes disponibles</span>
+                <span class="vacantes-count" id="vacantes-count">Cargando vacantes...</span>
             </div>
 
-            <!-- LISTADO DE TARJETAS DE VACANTES -->
+            <!-- LISTADO DE TARJETAS DE VACANTES (Inyectadas o leídas por JS) -->
             <div class="vacantes-list" id="lista-vacantes">
-
                 <article class="job-offer-card" data-categoria="Cocina" data-id="1">
                     <div class="job-info-main">
                         <div class="job-header-row">
@@ -349,8 +351,8 @@
                         </button>
                     </div>
                 </article>
-
             </div>
+
             <a href="#" onclick="filtrarPorCategoria(''); return false;" class="link-more-full">Ver todas las vacantes publicadas →</a>
         </section>
     </main>
@@ -360,11 +362,13 @@
         <div class="talento-container">
             <div class="section-header">
                 <h2>TALENTO DESTACADO</h2>
-                <a href="#" class="link-see-all">Ver todos <i class="fas fa-chevron-right" aria-hidden="true"></i></a>
+                <button type="button" class="link-see-all" onclick="unirseAComunidad()" style="background:none; border:none; cursor:pointer; color:var(--primary, #00e676);">
+                    Sumar mi perfil <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </div>
 
             <div class="talento-grid" id="grid-talento-destacado">
-                <!-- Se renderiza vía JS -->
+                <!-- Renderizado dinámico vía JS -->
             </div>
         </div>
     </section>
@@ -387,7 +391,7 @@
             <span>Buscar</span>
         </a>
 
-        <button type="button" class="bottom-nav-item highlight-item role-empresa-only btn-trigger-express" aria-expanded="false">
+        <button type="button" class="bottom-nav-item highlight-item role-empresa-only btn-trigger-express" aria-controls="formulario-express" aria-expanded="false">
             <i class="fas fa-bolt" aria-hidden="true"></i>
             <span>Personal YA</span>
         </button>
