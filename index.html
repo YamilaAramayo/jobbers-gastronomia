@@ -209,7 +209,7 @@
             .form-grid-2 .full-width { grid-column: 1 / -1; }
         }
 
-        /* === CHIPS CATEGORÍAS (SCROLL HORIZONTAL EN MOBILE) === */
+        /* === CHIPS CATEGORÍAS === */
         .chips-scroll-container {
             display: flex;
             gap: 0.5rem;
@@ -276,7 +276,7 @@
             margin-top: 0.4rem;
         }
 
-        /* === TALENTO DESTACADO (CARRUSEL MOBILE / GRID DESKTOP) === */
+        /* === TALENTO DESTACADO === */
         .talent-grid {
             display: flex;
             gap: 1rem;
@@ -314,6 +314,76 @@
             justify-content: center;
             font-weight: 700;
             border: 1px solid var(--accent-amber);
+        }
+
+        /* === BLOG / RECURSOS === */
+        .blog-section {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+
+        .blog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .blog-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .blog-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .blog-card:hover {
+            border-color: var(--accent-amber);
+            transform: translateY(-2px);
+        }
+
+        .blog-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-amber);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .blog-card h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .blog-read-more {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-amber);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
         }
 
         /* === SIDEBAR WIDGETS === */
@@ -487,6 +557,16 @@
                         [ Anuncio AdSense ]
                     </div>
 
+                    <!-- Widget del Blog en Sidebar -->
+                    <div class="sidebar-widget">
+                        <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">Lecturas Recomendadas</h4>
+                        <ul style="list-style: none; font-size: 0.85rem; color: var(--text-secondary);">
+                            <li style="margin-bottom: 0.6rem;"><a href="#">📄 Cómo destacar tu experiencia en la cocina &rarr;</a></li>
+                            <li style="margin-bottom: 0.6rem;"><a href="#">💡 5 tips para impresionar en una prueba técnica &rarr;</a></li>
+                            <li><a href="#">💰 Guía de sueldos gastronómicos 2026 &rarr;</a></li>
+                        </ul>
+                    </div>
+
                     <div class="sidebar-widget" style="border-color: rgba(255, 183, 3, 0.3);">
                         <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">¿Sos Empresa?</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
@@ -578,6 +658,45 @@
         </div>
 
         <!-- =================================================== -->
+        <!-- SECCIÓN BLOG / NOVEDADES Y CONSEJOS                -->
+        <!-- =================================================== -->
+        <section class="blog-section">
+            <div class="blog-header">
+                <h3>Blog & Recursos Gastronómicos</h3>
+                <a href="#" style="color: var(--accent-amber); font-size: 0.9rem; font-weight: 600;">Ver todos los artículos &rarr;</a>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div>
+                        <span class="blog-tag">Consejos CV</span>
+                        <h4>Cómo armar un CV gastronómico de alto impacto</h4>
+                        <p>Destacá tus habilidades clave en cocina, barra o salón para conseguir entrevistas más rápido.</p>
+                    </div>
+                    <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                </article>
+
+                <article class="blog-card">
+                    <div>
+                        <span class="blog-tag">Para Empresas</span>
+                        <h4>Claves para reducir la rotación de personal gastronómico</h4>
+                        <p>Estrategias efectivas de fidelización y buen clima laboral en la industria de la gastronomía.</p>
+                    </div>
+                    <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                </article>
+
+                <article class="blog-card">
+                    <div>
+                        <span class="blog-tag">Novedades</span>
+                        <h4>Guía de sueldos y escalas salariales del rubro</h4>
+                        <p>Conocé los valores de referencia actualizados para cada puesto y especialidad del sector.</p>
+                    </div>
+                    <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- =================================================== -->
         <!-- PRE-FOOTER INFORMATIVO UNIFICADO                   -->
         <!-- =================================================== -->
         <section class="pre-footer">
@@ -598,8 +717,9 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Soporte & Contacto</h4>
+                <h4>Soporte & Recursos</h4>
                 <ul>
+                    <li><a href="#">Blog Gastronómico</a></li>
                     <li><a href="#">Centro de Ayuda</a></li>
                     <li><a href="#">Contacto B2B</a></li>
                     <li><a href="#">Términos y Condiciones</a></li>
