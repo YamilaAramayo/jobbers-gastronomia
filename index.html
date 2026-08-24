@@ -3,566 +3,649 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobbers - Portal de Empleo Gastronómico en Córdoba</title>
+    <title>Jobbers - Portal de Empleo Gastronómico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === VARIABLES & BASE (COLORES CONSERVADOS) === */
+        :root {
+            --bg-main: #121212;
+            --bg-card: #18181b;
+            --bg-input: #222226;
+            --border-color: #27272a;
+            --accent-amber: #ffb703;
+            --accent-green: #00e676;
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
 
-    <!-- Meta SEO Básico -->
-    <meta name="description" content="Conectamos talentos gastronómicos con los mejores restaurantes, bares y hoteles de Córdoba. Encontrá empleo o publicá tus ofertas rápido y por WhatsApp.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://jobbers.com.ar">
-    <meta name="theme-color" content="#121212">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+        }
 
-    <!-- Open Graph / Redes Sociales & WhatsApp -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Jobbers Argentina">
-    <meta property="og:locale" content="es_AR">
-    <meta property="og:title" content="Jobbers - Empleo Gastronómico en Córdoba">
-    <meta property="og:description" content="Conectamos candidatos con restaurantes, bares y hoteles en Córdoba. Postulate directo por WhatsApp.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=630">
-    <meta property="og:url" content="https://jobbers.com.ar">
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding-bottom: 70px; /* Espacio para navegación inferior en mobile */
+        }
 
-    <!-- Preload de imagen LCP -->
-    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80">
+        @media (min-width: 769px) {
+            body { padding-bottom: 0; }
+        }
 
-    <!-- FontAwesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        a { color: inherit; text-decoration: none; }
+        button { cursor: pointer; border: none; font-family: inherit; }
 
-    <!-- Estilos CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+        /* === HEADER & NAVEGACIÓN === */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    <!-- JS diferido -->
-    <script src="js/main.js" defer></script>
+        .brand-logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        .brand-logo span { color: var(--accent-amber); }
 
-    <!-- Esquema JSON-LD para Google Search / Jobs -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Jobbers Argentina",
-      "url": "https://jobbers.com.ar",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://jobbers.com.ar/?s={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
+        /* Selector de Modo Toggle */
+        .mode-switch-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 30px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn.active {
+            background-color: var(--accent-amber);
+            color: #000;
+        }
+
+        /* === CONTENEDOR PRINCIPAL === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        /* === VISTAS DESACOPLADAS (POSTULANTE / EMPRESA) === */
+        .view-section { display: none; }
+        .view-section.active-view { display: block; }
+
+        /* === LAYOUT GRID (70% CONTENIDO / 30% SIDEBAR) === */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (min-width: 992px) {
+            .main-layout {
+                grid-template-columns: 1fr 320px;
+            }
+        }
+
+        /* === HEROS === */
+        .hero-postulante {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero-postulante h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .hero-postulante p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+        .search-box-inline {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 600px) {
+            .search-box-inline {
+                flex-direction: row;
+            }
+        }
+
+        .input-dark {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            width: 100%;
+            outline: none;
+        }
+        .input-dark:focus { border-color: var(--accent-amber); }
+
+        .btn-amber {
+            background-color: var(--accent-amber);
+            color: #000;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+            transition: filter 0.2s ease;
+        }
+        .btn-amber:hover { filter: brightness(1.1); }
+
+        .btn-green {
+            background-color: var(--accent-green);
+            color: #000;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            transition: filter 0.2s ease;
+        }
+        .btn-green:hover { filter: brightness(1.1); }
+
+        /* Hero Empresa (Layout 50/50 Desktop) */
+        .hero-empresa {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-empresa { grid-template-columns: 1fr 1fr; padding: 2rem; }
+        }
+
+        .express-form-card {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+        }
+
+        .express-form-card h3 { margin-bottom: 1rem; font-size: 1.1rem; }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        @media (min-width: 480px) {
+            .form-grid-2 { grid-template-columns: 1fr 1fr; }
+            .form-grid-2 .full-width { grid-column: 1 / -1; }
+        }
+
+        /* === CHIPS CATEGORÍAS (SCROLL HORIZONTAL EN MOBILE) === */
+        .chips-scroll-container {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            margin-top: 1.25rem;
+            scrollbar-width: none;
+        }
+        .chips-scroll-container::-webkit-scrollbar { display: none; }
+
+        .chip-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .chip-item.active, .chip-item:hover {
+            border-color: var(--accent-amber);
+            color: var(--accent-amber);
+        }
+
+        /* === TARJETAS DE VACANTES === */
+        .job-list { display: flex; flex-direction: column; gap: 0.85rem; }
+
+        .job-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        @media (min-width: 550px) {
+            .job-card {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+
+        .job-title { font-size: 1.1rem; font-weight: 700; }
+        .job-meta { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+        .badge-salary {
+            display: inline-block;
+            background-color: rgba(0, 230, 118, 0.1);
+            color: var(--accent-green);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.4rem;
+        }
+
+        /* === TALENTO DESTACADO (CARRUSEL MOBILE / GRID DESKTOP) === */
+        .talent-grid {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: none;
+        }
+        .talent-grid::-webkit-scrollbar { display: none; }
+
+        @media (min-width: 768px) {
+            .talent-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                overflow-x: visible;
+            }
+        }
+
+        .talent-card {
+            min-width: 240px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .talent-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--bg-input);
+            margin: 0 auto 0.75rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 1px solid var(--accent-amber);
+        }
+
+        /* === SIDEBAR WIDGETS === */
+        .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+
+        .sidebar-widget {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .adsense-placeholder {
+            background-color: var(--bg-input);
+            border: 1px dashed var(--border-color);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-radius: var(--radius-sm);
+        }
+
+        /* === PRE-FOOTER RESUMEN (3 COLUMNAS) === */
+        .pre-footer {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .pre-footer { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .footer-col h4 { color: var(--accent-amber); margin-bottom: 0.75rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* === BOTTOM NAV (SOLO MOBILE) === */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: var(--bg-main);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        @media (min-width: 769px) {
+            .bottom-nav { display: none; }
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .bottom-nav-item.active { color: var(--accent-amber); }
+    </style>
 </head>
-<body class="role-postulante">
+<body>
 
-    <!-- MODAL DE SELECCIÓN DE PERFIL -->
-    <div id="modal-cambiar-perfil" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
-        <div class="rol-modal-card">
-            <button type="button" class="jobbers-close-btn" id="btn-cerrar-modal" aria-label="Cerrar modal">&times;</button>
-
-            <!-- VISTA 1: Selección inicial de perfil -->
-            <div id="rol-step-select">
-                <h2 id="modal-title">¿Cómo querés ingresar? 👋</h2>
-                <p>Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
-
-                <div class="rol-options">
-                    <button type="button" class="btn-rol" data-rol="postulante" data-nombre="Busco Empleo">
-                        <span class="rol-icon" aria-hidden="true">👥</span>
-                        <span class="rol-title">Busco Empleo</span>
-                        <span class="rol-desc">Quiero ver vacantes y postularme directo</span>
-                    </button>
-
-                    <button type="button" class="btn-rol" data-rol="empresa" data-nombre="Soy Empresa">
-                        <span class="rol-icon" aria-hidden="true">🏢</span>
-                        <span class="rol-title">Soy Empresa</span>
-                        <span class="rol-desc">Quiero publicar una oferta o contratar</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- VISTA 2: Confirmación previa con nombre de perfil -->
-            <div id="rol-step-confirm" style="display: none; text-align: center;">
-                <h2>¿Estás seguro/a? 🤔</h2>
-                <p style="margin-bottom: 1rem;">Vas a ingresar a la plataforma como:</p>
-
-                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--primary, #00e676); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <strong id="rol-nombre-confirmar" style="color: var(--primary, #00e676); font-size: 1.2rem; display: block;"></strong>
-                </div>
-
-                <div style="display: flex; gap: 0.75rem;">
-                    <button type="button" class="btn-secondary" id="btn-volver-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Volver</button>
-                    <button type="button" class="btn-primary" id="btn-confirmar-rol" style="flex: 1; padding: 0.75rem; border-radius: 6px; cursor: pointer;">Ingresar</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- MODAL JOBBERS PRO -->
-    <div id="modal-jobbers-pro" class="rol-modal-overlay" role="dialog" aria-labelledby="modal-pro-title" aria-modal="true" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 9999; justify-content: center; align-items: center; padding: 1rem; overflow-y: auto;">
-        <div style="background: #121212; border: 1px solid #333; border-radius: 16px; width: 100%; max-width: 480px; padding: 2rem 1.5rem; position: relative; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
-            
-            <button type="button" id="btn-cerrar-modal-pro" aria-label="Cerrar modal" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: #aaa; font-size: 1.5rem; cursor: pointer;">&times;</button>
-
-            <div style="text-align: center; margin-bottom: 1.5rem;">
-                <div style="color: #ffb703; font-size: 2.2rem; margin-bottom: 0.25rem;">
-                    <i class="fas fa-bolt" aria-hidden="true"></i>
-                </div>
-                <h2 id="modal-pro-title" style="color: #ffb703; font-size: 1.5rem; font-weight: 800; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: 0.5px;">
-                    PASO A JOBBERS PRO
-                </h2>
-                <p style="color: #ccc; font-size: 0.9rem; margin: 0; line-height: 1.4;">
-                    Acelerá tu búsqueda y destacá ante los empleadores de Córdoba
-                </p>
-            </div>
-
-            <!-- CARD DE BENEFICIOS -->
-            <div style="background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left;">
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.88rem; color: #ddd;">
-                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
-                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
-                        <span><strong>Visibilidad VIP:</strong> Tu perfil fijo al tope de la sección de talentos.</span>
-                    </li>
-                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
-                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
-                        <span><strong>Sello Verificado PRO</strong> en tus postulaciones por WhatsApp.</span>
-                    </li>
-                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
-                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
-                        <span><strong>Acceso a base de currículos</strong> y herramientas de carrera.</span>
-                    </li>
-                    <li style="display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
-                        <i class="fas fa-check-circle" style="color: #ffb703; font-size: 1rem; margin-top: 2px;" aria-hidden="true"></i>
-                        <span><strong>Pagos flexibles:</strong> Transferencia, Mercado Pago o efectivo.</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- FORMULARIO PRO -->
-            <form id="form-solicitar-pro" style="display: flex; flex-direction: column; gap: 1rem;">
-                <div>
-                    <label for="pro-nombre" class="sr-only">Nombre y Apellido</label>
-                    <input type="text" id="pro-nombre" placeholder="Nombre y Apellido" required style="width: 100%; background: #1e1e1e; border: 1px solid #333; color: #fff; padding: 0.85rem 1rem; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; outline: none;">
-                </div>
-
-                <div>
-                    <label for="pro-puesto" class="sr-only">Tu puesto principal</label>
-                    <input type="text" id="pro-puesto" placeholder="Tu puesto principal (ej. Cocinero, Mozo...)" required style="width: 100%; background: #1e1e1e; border: 1px solid #333; color: #fff; padding: 0.85rem 1rem; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; outline: none;">
-                </div>
-
-                <button type="submit" style="background-color: #ffb703; color: #000; font-weight: 800; padding: 0.9rem; border-radius: 8px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; width: 100%;">
-                    <i class="fab fa-whatsapp" style="font-size: 1.1rem;" aria-hidden="true"></i> SOLICITAR PASE PRO (COORDINAR PAGO)
-                </button>
-            </form>
-
-        </div>
-    </div>
-
-    <!-- NAVEGACIÓN PRINCIPAL -->
+    <!-- NAVBAR HEADER -->
     <header class="navbar">
-        <div class="navbar-container">
-            <a href="#" class="logo" aria-label="Inicio Jobbers">
-                <h2>JOBBERS</h2>
-                <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
-            </a>
-
-            <nav class="nav-links" aria-label="Navegación principal">
-                <!-- Se agregó la clase role-postulante-only para que desaparezca en modo empresa -->
-                <a href="#vacantes" class="nav-link role-postulante-only">Empleos</a>
-
-                <!-- Solo visible para empresas -->
-                <button type="button" class="nav-link btn-trigger-express role-empresa-only" aria-controls="formulario-express" aria-expanded="false">Publicar Búsqueda</button>
-
-                <!-- Botón de Cambiar Perfil -->
-                <button type="button" class="nav-link btn-cambiar-rol" id="btn-cambiar-perfil">
-                    <i class="fas fa-user-tag" aria-hidden="true"></i> <span id="label-modo-actual">Cambiar Perfil</span>
-                </button>
-
-                <a href="#blog" class="nav-link">Blog</a>
-                <a href="#nosotros" class="nav-link">Nosotros</a>
-            </nav>
+        <div class="brand-logo">Jobbers<span>.</span></div>
+        
+        <!-- Toggle Selector de Modo -->
+        <div class="mode-switch-container">
+            <button class="mode-btn active" id="btn-mode-postulante" onclick="setMode('postulante')">Postulantes</button>
+            <button class="mode-btn" id="btn-mode-empresa" onclick="setMode('empresa')">Empresas</button>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero-section">
-        <div class="hero-overlay"></div>
-        <div class="hero-container hero-container-centered" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px; margin: 0 auto;">
+    <main class="container">
 
-            <div class="hero-text-col" style="width: 100%;">
-                <!-- HERO POSTULANTE -->
-                <div class="hero-content role-postulante-only">
-                    <h1 class="hero-title">Encuentra tu próximo trabajo en <span class="highlight">gastronomía</span> hoy mismo</h1>
-                    <p class="hero-subtitle">Conectamos mozos, cocineros, baristas y personal de hotelería con los mejores establecimientos de Córdoba.</p>
-
-                    <div class="hero-features" style="justify-content: center; margin-bottom: 2rem;">
-                        <span><i class="fas fa-clock" aria-hidden="true"></i> Respuesta rápida</span>
-                        <span><i class="fas fa-check-circle" aria-hidden="true"></i> Contacto directo</span>
-                        <span><i class="fas fa-handshake" aria-hidden="true"></i> Oportunidades reales</span>
-                    </div>
+        <!-- =================================================== -->
+        <!-- MODO POSTULANTE                                      -->
+        <!-- =================================================== -->
+        <div id="view-postulante" class="view-section active-view">
+            
+            <!-- Hero Postulante con Buscador Integrado -->
+            <section class="hero-postulante">
+                <h1>Tu próximo empleo gastronómico está acá</h1>
+                <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
+                <div class="search-box-inline">
+                    <input type="text" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)...">
+                    <input type="text" class="input-dark" placeholder="Ubicación o Zona...">
+                    <button class="btn-amber">Buscar</button>
                 </div>
+            </section>
 
-                <!-- HERO EMPRESA -->
-                <div class="hero-content role-empresa-only">
-                    <h1 class="hero-title">Encuentra el <span class="highlight">personal ideal</span> para tu negocio gastronómico</h1>
-                    <p class="hero-subtitle">Conecta rápidamente con mozos, cocineros y baristas calificados y listos para trabajar en Córdoba.</p>
-
-                    <div class="hero-features" style="justify-content: center; margin-bottom: 2rem;">
-                        <span><i class="fas fa-bolt" aria-hidden="true"></i> Contratación express</span>
-                        <span><i class="fas fa-user-check" aria-hidden="true"></i> Perfiles calificados</span>
-                        <span><i class="fas fa-comments" aria-hidden="true"></i> Trato directo vía WhatsApp</span>
-                    </div>
-                </div>
+            <!-- Categorías con Scroll Horizontal -->
+            <div class="chips-scroll-container">
+                <span class="chip-item active">Todos</span>
+                <span class="chip-item">Cocina y Bacha</span>
+                <span class="chip-item">Salón y Mozos</span>
+                <span class="chip-item">Barra y Baristas</span>
+                <span class="chip-item">Encargados y Gerencia</span>
+                <span class="chip-item">Delivery</span>
             </div>
 
-            <!-- Formulario Express (Centrado debajo en modo Empresa) -->
-            <div class="hero-card-express role-empresa-only" id="formulario-express" style="width: 100%; max-width: 500px; margin: 0 auto; text-align: left; display: none;">
-                <div class="card-header">
-                    <span class="text-warning" aria-hidden="true">⚡</span>
-                    <h2>¿NECESITÁS PERSONAL HOY?</h2>
+            <!-- Layout Principal (Listado + Sidebar) -->
+            <div class="main-layout">
+                
+                <!-- Columna Izquierda: Vacantes -->
+                <div class="job-list">
+                    
+                    <div class="job-card">
+                        <div>
+                            <div class="job-title">Cocinero con experiencia para Bodegón</div>
+                            <div class="job-meta">Palermo, CABA • Turno Noche</div>
+                            <div class="badge-salary">$650.000 / mes</div>
+                        </div>
+                        <button class="btn-amber">Postularme</button>
+                    </div>
+
+                    <div class="job-card">
+                        <div>
+                            <div class="job-title">Barista / Ayudante de Barra</div>
+                            <div class="job-meta">Nueva Córdoba, Cba • Full Time</div>
+                            <div class="badge-salary">$520.000 / mes</div>
+                        </div>
+                        <button class="btn-amber">Postularme</button>
+                    </div>
+
+                    <div class="job-card">
+                        <div>
+                            <div class="job-title">Encargado de Local Gastronómico</div>
+                            <div class="job-meta">San Isidro, GBA Norte • Turno Tarde</div>
+                            <div class="badge-salary">$850.000 / mes</div>
+                        </div>
+                        <button class="btn-amber">Postularme</button>
+                    </div>
+
+                    <div class="job-card">
+                        <div>
+                            <div class="job-title">Mozo / Garzón de Salón</div>
+                            <div class="job-meta">Carlos Paz, Cba • Fin de Semana</div>
+                            <div class="badge-salary">Pago diario + Propinas</div>
+                        </div>
+                        <button class="btn-amber">Postularme</button>
+                    </div>
+
                 </div>
-                <p>Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
 
-                <form class="express-form" id="form-publicar-express">
-                    <div class="form-group">
-                        <label for="nombre-empresa" class="sr-only">Nombre del local</label>
-                        <input type="text" id="nombre-empresa" placeholder="Nombre de tu local / Gastronómico" required autocomplete="organization">
+                <!-- Columna Derecha: Sidebar (Anuncios y Filtros) -->
+                <aside class="sidebar">
+                    <div class="sidebar-widget">
+                        <h4 style="margin-bottom: 0.5rem; font-size: 0.95rem;">Filtro Rápido</h4>
+                        <label style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-secondary);">
+                            <input type="checkbox" checked> Solo con sueldo visible
+                        </label>
+                        <label style="display: block; font-size: 0.85rem; color: var(--text-secondary);">
+                            <input type="checkbox"> Modalidad Part-Time
+                        </label>
                     </div>
 
-                    <div class="form-group">
-                        <label for="telefono-contacto" class="sr-only">Teléfono WhatsApp</label>
-                        <input type="tel" id="telefono-contacto" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required autocomplete="tel">
+                    <!-- Espacio AdSense Estabilizado -->
+                    <div class="adsense-placeholder">
+                        [ Anuncio AdSense ]
                     </div>
 
-                    <div class="form-group">
-                        <label for="puesto-requerido" class="sr-only">Puesto requerido</label>
-                        <select id="puesto-requerido" required>
-                            <option value="" disabled selected>Puesto que necesitás</option>
-                            <optgroup label="Cocina y Producción">
-                                <option value="Cocinero / Cocinera">Cocinero / Cocinera</option>
-                                <option value="Ayudante de Cocina">Ayudante de Cocina</option>
-                                <option value="Bachero / Bachera">Bachero / Bachera</option>
-                                <option value="Chef / Jefe de Cocina">Chef / Jefe de Cocina</option>
-                            </optgroup>
-                            <optgroup label="Salón, Bar y Servicio">
-                                <option value="Mozo / Moza">Mozo / Moza</option>
-                                <option value="Barista">Barista</option>
-                                <option value="Bartender / Barman">Bartender / Barman</option>
-                            </optgroup>
-                        </select>
+                    <div class="sidebar-widget" style="border-color: rgba(255, 183, 3, 0.3);">
+                        <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">¿Sos Empresa?</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
+                        <button class="btn-amber" style="width: 100%;" onclick="setMode('empresa')">Publicar Empleo</button>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+
+        <!-- =================================================== -->
+        <!-- MODO EMPRESA                                        -->
+        <!-- =================================================== -->
+        <div id="view-empresa" class="view-section">
+            
+            <!-- Hero Empresa 50/50 -->
+            <section class="hero-empresa">
+                <div>
+                    <h1 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Contratá personal gastronómico calificado rápido</h1>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Publicá tus ofertas de empleo y accedé a la base de perfiles verificados de tu ciudad.</p>
+                    <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 1.2rem;">
+                        <li>Publicación express en 2 minutos.</li>
+                        <li>Contacto directo por WhatsApp con candidatos.</li>
+                        <li>Soporte personalizado B2B.</li>
+                    </ul>
+                </div>
+
+                <!-- Formulario Express -->
+                <div class="express-form-card">
+                    <h3>Publicación Rápida</h3>
+                    <form class="form-grid-2" onsubmit="event.preventDefault();">
+                        <input type="text" class="input-dark full-width" placeholder="Nombre de tu Local / Empresa">
+                        <input type="text" class="input-dark" placeholder="Puesto a buscar">
+                        <input type="text" class="input-dark" placeholder="Zona / Ciudad">
+                        <input type="tel" class="input-dark full-width" placeholder="Teléfono de contacto (WhatsApp)">
+                        <button class="btn-amber full-width" style="margin-top: 0.5rem;">Publicar Búsqueda</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Sección Talento Destacado -->
+            <section style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Talento Gastronómico Disponible</h3>
+                
+                <div class="talent-grid">
+                    <div class="talent-card">
+                        <div class="talent-avatar">MG</div>
+                        <h4>Mariano G.</h4>
+                        <p style="font-size: 0.8rem; color: var(--accent-amber);">Jefe de Cocina / Chef</p>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">8 años de exp. • CABA</p>
+                        <button class="btn-green" style="width: 100%; margin-top: 0.75rem; font-size: 0.8rem; padding: 0.4rem;">Ver Perfil</button>
                     </div>
 
-                    <div class="form-group">
-                        <label for="zona-local" class="sr-only">Zona / Barrio</label>
-                        <select id="zona-local" required>
-                            <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
-                            <option value="Nueva Córdoba">Nueva Córdoba</option>
-                            <option value="Güemes">Güemes</option>
-                            <option value="General Paz">General Paz</option>
-                            <option value="Centro">Centro</option>
-                            <option value="Cerro de las Rosas">Cerro de las Rosas</option>
-                        </select>
+                    <div class="talent-card">
+                        <div class="talent-avatar">SR</div>
+                        <h4>Sofia R.</h4>
+                        <p style="font-size: 0.8rem; color: var(--accent-amber);">Barista Profesional</p>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">Arte latte, Arte en café • Córdoba</p>
+                        <button class="btn-green" style="width: 100%; margin-top: 0.75rem; font-size: 0.8rem; padding: 0.4rem;">Ver Perfil</button>
                     </div>
 
-                    <div class="form-row-2col">
-                        <div class="form-group">
-                            <label for="turno-puesto" class="sr-only">Turno</label>
-                            <select id="turno-puesto" required>
-                                <option value="" disabled selected>Turno</option>
-                                <option value="Turno Mañana">Turno Mañana</option>
-                                <option value="Turno Tarde">Turno Tarde</option>
-                                <option value="Turno Noche">Turno Noche</option>
-                                <option value="Rotativo">Rotativo</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="jornada-puesto" class="sr-only">Jornada</label>
-                            <select id="jornada-puesto" required>
-                                <option value="" disabled selected>Jornada</option>
-                                <option value="Full Time">Full Time</option>
-                                <option value="Part Time">Part Time</option>
-                                <option value="Franco / Refuerzo">Franco / Refuerzo</option>
-                            </select>
-                        </div>
+                    <div class="talent-card">
+                        <div class="talent-avatar">LP</div>
+                        <h4>Lucas P.</h4>
+                        <p style="font-size: 0.8rem; color: var(--accent-amber);">Encargado / Bartender</p>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">Manejo de caja y stock • Rosario</p>
+                        <button class="btn-green" style="width: 100%; margin-top: 0.75rem; font-size: 0.8rem; padding: 0.4rem;">Ver Perfil</button>
                     </div>
+                </div>
+            </section>
 
-                    <button type="submit" class="btn-whatsapp">
-                        <i class="fab fa-whatsapp" aria-hidden="true"></i> ENVIAR POR WHATSAPP
-                    </button>
-                </form>
+            <!-- Layout Secundario Empresa -->
+            <div class="main-layout">
+                <div class="sidebar-widget">
+                    <h3>Pases y Planes Destacados</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; margin-bottom: 1rem;">Aumentá la visibilidad de tus búsquedas o destacá tu marca frente a miles de postulantes activos diariamente.</p>
+                    <button class="btn-amber">Consultar Planes PRO</button>
+                </div>
+
+                <aside class="sidebar">
+                    <div class="sidebar-widget" style="border-color: rgba(0, 230, 118, 0.3);">
+                        <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">Atención Corporativa</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
+                        <button class="btn-green" style="width: 100%;">Hablar por WhatsApp</button>
+                    </div>
+                </aside>
             </div>
 
         </div>
-    </section>
 
-    <!-- LISTADO DE EMPLEOS -->
-    <main class="main-grid-section" id="vacantes">
-        <section class="vacantes-container">
-
-            <!-- BUSCADOR POR TEXTO -->
-            <div class="search-bar">
-                <label for="job-search-input" class="sr-only">Buscar vacantes</label>
-                <input type="text" id="job-search-input" placeholder="Buscar por puesto, zona o empresa (ej. Cocinero, Güemes)..." autocomplete="off">
-                <button class="btn-search" type="button" id="btn-ejecutar-busqueda"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
+        <!-- =================================================== -->
+        <!-- PRE-FOOTER INFORMATIVO UNIFICADO                   -->
+        <!-- =================================================== -->
+        <section class="pre-footer">
+            <div class="footer-col">
+                <h4>Para Postulantes</h4>
+                <ul>
+                    <li><a href="#">Buscar Empleos</a></li>
+                    <li><a href="#">Cargar Curriculum</a></li>
+                    <li><a href="#">Consejos de Entrevista</a></li>
+                </ul>
             </div>
-
-            <!-- SECCIÓN BUSCÁ POR CATEGORÍA -->
-            <div class="categories-section role-postulante-only">
-                <h3 class="categories-title">BUSCÁ POR CATEGORÍA</h3>
-                <div class="categories-grid">
-                    <button type="button" class="category-card active" data-categoria="">
-                        <i class="fas fa-th-large" aria-hidden="true"></i>
-                        <span>Todas</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="Cocina">
-                        <i class="fas fa-utensils" aria-hidden="true"></i>
-                        <span>Cocina</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="Salon">
-                        <i class="fas fa-concierge-bell" aria-hidden="true"></i>
-                        <span>Salón / Mozo</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="Barismo">
-                        <i class="fas fa-coffee" aria-hidden="true"></i>
-                        <span>Barismo</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="Bartender">
-                        <i class="fas fa-cocktail" aria-hidden="true"></i>
-                        <span>Bartender</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="Delivery">
-                        <i class="fas fa-motorcycle" aria-hidden="true"></i>
-                        <span>Delivery</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="Bacha">
-                        <i class="fas fa-pump-soap" aria-hidden="true"></i>
-                        <span>Bacha / Limpieza</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="RRHH">
-                        <i class="fas fa-briefcase" aria-hidden="true"></i>
-                        <span>RRHH / Gestión</span>
-                    </button>
-                    <button type="button" class="category-card" data-categoria="Administracion">
-                        <i class="fas fa-chart-pie" aria-hidden="true"></i>
-                        <span>Administración</span>
-                    </button>
-                </div>
+            <div class="footer-col">
+                <h4>Para Empresas</h4>
+                <ul>
+                    <li><a href="#">Publicar Vacantes</a></li>
+                    <li><a href="#">Buscar Talentos</a></li>
+                    <li><a href="#">Planes de Reclutamiento</a></li>
+                </ul>
             </div>
-
-            <!-- BANNER CTA MODO EMPRESA -->
-            <div class="banner-cambiar-empresa role-postulante-only" style="background: linear-gradient(145deg, #181512, #0f0d0b); border: 1px dashed #ffb703; border-radius: 12px; padding: 1.75rem 2rem; margin: 2rem 0; display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
-                <div style="display: flex; align-items: flex-start; gap: 1rem;">
-                    <span style="color: #ffb703; font-size: 1.8rem; line-height: 1; flex-shrink: 0;" aria-hidden="true">⚡</span>
-                    <div>
-                        <h4 style="color: #fff; font-size: 1.25rem; font-weight: 800; margin: 0 0 0.4rem 0; letter-spacing: -0.2px;">¿Tenés un restaurante, bar o necesitás personal hoy?</h4>
-                        <p style="color: #a1a1aa; font-size: 0.95rem; margin: 0; line-height: 1.4;">Publicá tus búsquedas de forma rápida y conectá al instante con candidatos calificados en Córdoba.</p>
-                    </div>
-                </div>
-                <button type="button" class="btn-primary btn-cambiar-rol" style="background-color: #ffb703; color: #000; font-weight: 800; font-size: 0.85rem; padding: 0.8rem 1.5rem; border-radius: 8px; border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.25rem;">
-                    CAMBIAR A MODO EMPRESA
-                </button>
+            <div class="footer-col">
+                <h4>Soporte & Contacto</h4>
+                <ul>
+                    <li><a href="#">Centro de Ayuda</a></li>
+                    <li><a href="#">Contacto B2B</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                </ul>
             </div>
-
-            <!-- ENCABEZADO Y CONTADOR -->
-            <div class="vacantes-header-row">
-                <h3>Búsquedas Activas</h3>
-                <span class="vacantes-count" id="vacantes-count">Cargando vacantes...</span>
-            </div>
-
-            <!-- LISTADO DE TARJETAS DE VACANTES -->
-            <div class="vacantes-list" id="lista-vacantes">
-                <article class="job-offer-card" data-categoria="Cocina" data-id="1">
-                    <div class="job-info-main">
-                        <div class="job-header-row">
-                            <h4>Cocinero / Cocinera de Despacho</h4>
-                            <span class="badge-urgente"><i class="fas fa-bolt" aria-hidden="true"></i> Urgente</span>
-                        </div>
-                        <div class="job-company">La Caprichosa Resto</div>
-                        <div class="job-details-row">
-                            <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Nueva Córdoba</span>
-                            <span><i class="fas fa-clock" aria-hidden="true"></i> Full Time (Turno Noche)</span>
-                            <span class="job-salary"><i class="fas fa-wallet" aria-hidden="true"></i> $450.000 / mes</span>
-                        </div>
-                    </div>
-                    <div class="job-action-col">
-                        <span class="job-time">Hace 1 hora</span>
-                        <button type="button" class="btn-postularme" data-puesto="Cocinero / Cocinera de Despacho" data-empresa="La Caprichosa Resto" data-contacto="5493541582448">
-                            Postularme
-                        </button>
-                    </div>
-                </article>
-
-                <article class="job-offer-card" data-categoria="Salon" data-id="2">
-                    <div class="job-info-main">
-                        <div class="job-header-row">
-                            <h4>Mozo / Salonero de Salón</h4>
-                        </div>
-                        <div class="job-company">Bar de Fuegos</div>
-                        <div class="job-details-row">
-                            <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Güemes</span>
-                            <span><i class="fas fa-clock" aria-hidden="true"></i> Part Time (Turno Noche)</span>
-                            <span class="job-salary"><i class="fas fa-wallet" aria-hidden="true"></i> $280.000 + Propinas</span>
-                        </div>
-                    </div>
-                    <div class="job-action-col">
-                        <span class="job-time">Hace 3 horas</span>
-                        <button type="button" class="btn-postularme" data-puesto="Mozo / Salonero de Salón" data-empresa="Bar de Fuegos" data-contacto="5493541696766">
-                            Postularme
-                        </button>
-                    </div>
-                </article>
-
-                <article class="job-offer-card" data-categoria="Barismo" data-id="3">
-                    <div class="job-info-main">
-                        <div class="job-header-row">
-                            <h4>Barista Especializado</h4>
-                        </div>
-                        <div class="job-company">Café Suburbio</div>
-                        <div class="job-details-row">
-                            <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> General Paz</span>
-                            <span><i class="fas fa-clock" aria-hidden="true"></i> Full Time (Turno Mañana)</span>
-                            <span class="job-salary"><i class="fas fa-wallet" aria-hidden="true"></i> $390.000 / mes</span>
-                        </div>
-                    </div>
-                    <div class="job-action-col">
-                        <span class="job-time">Hace 5 horas</span>
-                        <button type="button" class="btn-postularme" data-puesto="Barista Especializado" data-empresa="Café Suburbio" data-contacto="5493541582448">
-                            Postularme
-                        </button>
-                    </div>
-                </article>
-            </div>
-
-            <a href="#" onclick="filtrarPorCategoria(''); return false;" class="link-more-full">Ver todas las vacantes publicadas →</a>
         </section>
+
     </main>
 
-    <!-- SECCIÓN TALENTO DESTACADO (Exclusiva Modo Empresa) -->
-    <section class="talento-section role-empresa-only" id="talento-destacado">
-        <div class="talento-container">
-            <div class="section-header">
-                <h2>TALENTO DESTACADO</h2>
-                <button type="button" class="link-see-all" onclick="unirseAComunidad()" style="background:none; border:none; cursor:pointer; color:var(--primary, #00e676);">
-                    Sumar mi perfil <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                </button>
-            </div>
-
-            <div class="talento-grid" id="grid-talento-destacado">
-                <!-- Renderizado dinámico vía JS -->
-            </div>
+    <!-- NAVEGACIÓN INFERIOR MOBILE -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-item active" onclick="setMode('postulante')">
+            <span>🔍</span>
+            <span>Buscar</span>
         </div>
-    </section>
-
-    <!-- SECCIÓN JOBBERS PRO -->
-    <section class="jobbers-pro-section" id="jobbers-pro" style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
-        <div class="pro-card" style="background: linear-gradient(145deg, #1e1e1e, #121212); border: 1px solid #333; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
-            <h2 style="color: #ffb703; font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
-                FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO
-            </h2>
-            <p style="color: #ccc; font-size: 0.95rem; line-height: 1.6; max-width: 600px; margin: 0 auto 1.5rem auto;">
-                Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
-            </p>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-                <button type="button" id="btn-destacar-pro" class="btn-primary" style="background-color: #ffb703; color: #000; font-weight: 700; padding: 0.85rem 1.8rem; border-radius: 8px; border: none; cursor: pointer; text-transform: uppercase;">
-                    <i class="fas fa-bolt" aria-hidden="true"></i> DESTACÁ TU PERFIL PRO
-                </button>
-                <a href="#blog" class="btn-secondary" style="background: #2a2a2a; color: #fff; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-newspaper" aria-hidden="true"></i> LEER BLOG & NOTICIAS
-                </a>
-            </div>
+        <div class="bottom-nav-item" onclick="setMode('empresa')">
+            <span>📢</span>
+            <span>Publicar</span>
         </div>
-    </section>
-
-    <!-- SECCIÓN BLOG Y ACTUALIDAD GASTRONÓMICA -->
-    <section class="blog-section" id="blog" style="max-width: 1000px; margin: 3rem auto; padding: 0 1rem;">
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <span style="color: #ffb703; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">ACTUALIDAD GASTRONÓMICA</span>
-            <h2 style="color: #fff; font-size: 2rem; font-weight: 800; margin: 0.5rem 0;">Blog, Guías y Espacios Patrocinados</h2>
-            <p style="color: #aaa; font-size: 1rem;">Consejos para profesionales y novedades para locales de Córdoba.</p>
+        <div class="bottom-nav-item">
+            <span>👤</span>
+            <span>Mi Cuenta</span>
         </div>
-
-        <!-- ESPACIO PATROCINADO / DESTACADO -->
-        <div style="background: linear-gradient(145deg, #1c1917, #0c0a09); border: 1px dashed #ffb703; border-radius: 12px; padding: 2rem; text-align: center; margin-bottom: 1.5rem;">
-            <span style="color: #ffb703; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.5rem;">ESPACIO PATROCINADO / DESTACADO</span>
-            <h3 style="color: #fff; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">¡Promocioná tu marca de indumentaria o artefactos de cocina acá!</h3>
-            <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 1.5rem;">Llegá de forma directa a cientos de restaurantes, bares y cocineros de Córdoba.</p>
-            <a href="https://wa.me/5493541582448?text=Hola,%20quisiera%20consultar%20por%20el%20espacio%20publicitario%20en%20Jobbers" target="_blank" class="btn-primary" style="background-color: #ffb703; color: #000; font-weight: 700; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
-                <i class="fab fa-whatsapp" aria-hidden="true"></i> CONSULTAR ESPACIO PUBLICITARIO
-            </a>
-        </div>
-
-        <!-- CONTENEDOR PUBLICIDAD ADSENSE -->
-        <div class="adsense-container" style="background: #18181b; border: 1px dashed #333; border-radius: 8px; padding: 1.5rem; text-align: center; margin-bottom: 2rem; min-height: 90px; display: flex; align-items: center; justify-content: center;">
-            <span style="color: #666; font-size: 0.85rem; font-family: monospace;">[ Espacio Publicitario Google AdSense ]</span>
-        </div>
-
-        <!-- TARJETA ARTÍCULO -->
-        <div class="blog-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-            <article style="background: #1e1e1e; border: 1px solid #333; border-radius: 12px; padding: 1.5rem;">
-                <span style="color: #ffb703; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">EQUIPAMIENTO</span>
-                <h4 style="color: #fff; font-size: 1.1rem; margin: 0.5rem 0;">Qué tener en cuenta al elegir artefactos de cocina de alta rotación</h4>
-                <p style="color: #aaa; font-size: 0.85rem; line-height: 1.5;">Consejos para optimizar el espacio y el rendimiento energético en cocinas comerciales.</p>
-            </article>
-        </div>
-    </section>
-
-    <!-- SECCIÓN SOBRE NOSOTROS -->
-    <section class="info-section" id="nosotros" style="max-width: 1000px; margin: 4rem auto; padding: 0 1rem;">
-        <div style="text-align: center; margin-bottom: 2.5rem;">
-            <span style="color: #ffb703; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">SOBRE JOBBERS ARGENTINA</span>
-            <h2 style="color: #fff; font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0 1rem 0;">La plataforma líder en empleo gastronómico</h2>
-            <p style="color: #aaa; font-size: 1.05rem; max-width: 700px; margin: 0 auto; line-height: 1.5;">Conectamos de forma directa, rápida y sin intermediarios el talento de Córdoba con los mejores locales, bares y hoteles.</p>
-        </div>
-
-        <!-- TARJETAS PARA POSTULANTES Y EMPRESAS -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
-            <!-- Para Postulantes -->
-            <div style="background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 2rem;">
-                <div style="font-size: 1.8rem; margin-bottom: 1rem;">👥</div>
-                <h3 style="color: #fff; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Para Postulantes</h3>
-                <p style="color: #a1a1aa; font-size: 0.92rem; line-height: 1.6; margin: 0;">
-                    Encontrá vacantes actualizadas por zona, postulate directamente mediante WhatsApp y potenciate con nuestra membresía <strong>Jobbers PRO</strong> para aparecer al tope de los empleadores.
-                </p>
-            </div>
-
-            <!-- Para Empresas y Locales -->
-            <div style="background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 2rem;">
-                <div style="font-size: 1.8rem; margin-bottom: 1rem;">🏢</div>
-                <h3 style="color: #fff; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Para Empresas y Locales</h3>
-                <p style="color: #a1a1aa; font-size: 0.92rem; line-height: 1.6; margin: 0;">
-                    Publicá tus búsquedas en segundos con nuestro formulario express, accedé a calculadoras de salarios/horarios y conectá al instante con cocineros, mozos y baristas calificados.
-                </p>
-            </div>
-        </div>
-
-        <!-- CAJA DE SOPORTE TÉCNICO -->
-        <div style="background: #121212; border: 1px dashed #ffb703; border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center;">
-            <h3 style="color: #fff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">¿Tenés alguna duda o necesitás soporte técnico?</h3>
-            <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 1.5rem;">Nuestro equipo está disponible para ayudarte a optimizar tus búsquedas o perfiles.</p>
-            <a href="https://wa.me/5493541582448?text=Hola,%20necesito%20soporte%20técnico%20con%20Jobbers" target="_blank" style="background-color: #ffb703; color: #000; font-weight: 800; padding: 0.85rem 1.8rem; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; text-transform: uppercase;">
-                <i class="fab fa-whatsapp" style="font-size: 1.2rem;" aria-hidden="true"></i> CONTACTAR SOPORTE VÍA WHATSAPP
-            </a>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="main-footer">
-        <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
-    </footer>
-
-    <!-- BARRA DE NAVEGACIÓN INFERIOR (Mobile - Atajos) -->
-    <nav class="bottom-nav" aria-label="Navegación móvil">
-        <a href="#vacantes" class="bottom-nav-item active">
-            <i class="fas fa-search" aria-hidden="true"></i>
-            <span>Empleos</span>
-        </a>
-
-        <button type="button" class="bottom-nav-item btn-cambiar-rol">
-            <i class="fas fa-user-circle" aria-hidden="true"></i>
-            <span>Perfil</span>
-        </button>
-
-        <a href="#nosotros" class="bottom-nav-item">
-            <i class="fas fa-info-circle" aria-hidden="true"></i>
-            <span>Nosotros</span>
-        </a>
     </nav>
 
-    <div id="toast-container"></div>
+    <!-- INTERACTIVIDAD CONMUTADORA -->
+    <script>
+        function setMode(mode) {
+            const postulanteView = document.getElementById('view-postulante');
+            const empresaView = document.getElementById('view-empresa');
+            const btnPostulante = document.getElementById('btn-mode-postulante');
+            const btnEmpresa = document.getElementById('btn-mode-empresa');
+
+            if (mode === 'postulante') {
+                postulanteView.classList.add('active-view');
+                empresaView.classList.remove('active-view');
+                btnPostulante.classList.add('active');
+                btnEmpresa.classList.remove('active');
+            } else {
+                empresaView.classList.add('active-view');
+                postulanteView.classList.remove('active-view');
+                btnEmpresa.classList.add('active');
+                btnPostulante.classList.remove('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
