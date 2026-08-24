@@ -161,7 +161,8 @@
             </a>
 
             <nav class="nav-links" aria-label="Navegación principal">
-                <a href="#vacantes" class="nav-link">Empleos</a>
+                <!-- Se agregó la clase role-postulante-only para que desaparezca en modo empresa -->
+                <a href="#vacantes" class="nav-link role-postulante-only">Empleos</a>
 
                 <!-- Solo visible para empresas -->
                 <button type="button" class="nav-link btn-trigger-express role-empresa-only" aria-controls="formulario-express" aria-expanded="false">Publicar Búsqueda</button>
