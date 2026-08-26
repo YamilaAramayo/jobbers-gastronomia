@@ -28,7 +28,7 @@ const debounce = (fn, delay = 300) => {
 };
 
 /* ==========================================================================
-   1. EXPOSICIÓN GLOBAL PREVIA (Para evitar errores de ReferenceError)
+   1. EXPOSICIÓN GLOBAL PREVIA
    ========================================================================== */
 function abrirWhatsApp(numero, mensaje) {
     const urlWA = `https://wa.me/${limpiarNumeroWA(numero)}?text=${encodeURIComponent(mensaje)}`;
@@ -98,9 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function inicializarEventListeners() {
-    // Delegación global para botones interactivos y triggers dinámicos
     document.addEventListener('click', (e) => {
-        // Botones de postularme
         const btnPostular = e.target.closest('.btn-postularme');
         if (btnPostular) {
             e.preventDefault();
@@ -109,7 +107,6 @@ function inicializarEventListeners() {
             return;
         }
 
-        // Botones para solicitar contacto de talento destacado (Manejo limpio sin inline JS)
         const btnTalento = e.target.closest('.btn-contactar-perfil');
         if (btnTalento) {
             e.preventDefault();
@@ -118,7 +115,6 @@ function inicializarEventListeners() {
             return;
         }
 
-        // Toggle para Formulario Express
         const btnExpress = e.target.closest('.btn-trigger-express');
         if (btnExpress) {
             e.preventDefault();
@@ -136,16 +132,13 @@ function inicializarEventListeners() {
             return;
         }
 
-        // Cierre de dropdowns
         if (!e.target.closest('.dropdown')) {
             cerrarDropdown();
         }
     });
 
-    // Formulario Express Submit
     document.getElementById('form-publicar-express')?.addEventListener('submit', enviarAWhatsApp);
 
-    // Búsqueda en tiempo real
     const inputBusqueda = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
     if (inputBusqueda) {
         inputBusqueda.addEventListener('input', debounce(filtrarVacantes, 300));
@@ -163,7 +156,6 @@ function inicializarEventListeners() {
         filtrarVacantes();
     });
 
-    // Cierre global con Escape
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             const modalJobbers = document.getElementById('modal-jobbers');
@@ -177,7 +169,7 @@ function inicializarEventListeners() {
 }
 
 /* ==========================================================================
-   3. SECCIÓN MODO Y CAMBIO DE PERFIL
+   3. MODO Y CAMBIO DE PERFIL
    ========================================================================== */
 function inicializarModoPerfil() {
     const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil');
@@ -276,11 +268,10 @@ async function cargarVacantesDesdeJSON() {
                 return;
             }
         } catch {
-            // Sigue a la siguiente ruta si falla
+            // Continúa a la siguiente ruta
         }
     }
 
-    // Fallback de contingencia
     vacantesGastronomia = [
         { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
         { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
@@ -290,7 +281,7 @@ async function cargarVacantesDesdeJSON() {
 }
 
 /* ==========================================================================
-   5. SECCIÓN TALENTO DESTACADO
+   5. TALENTO DESTACADO
    ========================================================================== */
 function cargarTalentoDestacado() {
     talentoDestacado = [
@@ -413,7 +404,6 @@ function filtrarPorCategoria(categoria) {
     const input = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
     if (input) input.value = categoria;
 
-    // Reutiliza el filtro global existente
     filtrarVacantes();
 
     const seccionVacantes = document.getElementById('vacantes') || document.getElementById('lista-vacantes');
@@ -421,7 +411,7 @@ function filtrarPorCategoria(categoria) {
 }
 
 /* ==========================================================================
-   7. ENVÍO DE FORMULARIO EXPRESS A WHATSAPP
+   7. FORMULARIO EXPRESS
    ========================================================================== */
 function enviarAWhatsApp(event) {
     event?.preventDefault();
@@ -443,7 +433,7 @@ function enviarAWhatsApp(event) {
 }
 
 /* ==========================================================================
-   8. MODAL DE POSTULACIÓN
+   8. MODAL DE POSTULACIÓN CON BORDES CURVOS Y PÍLDORA
    ========================================================================== */
 function asegurarEstructuraModal() {
     if (document.getElementById('modal-jobbers')) return;
@@ -457,12 +447,12 @@ function asegurarEstructuraModal() {
 
     modal.style.cssText = `
         display: none; position: fixed; inset: 0; z-index: var(--z-modal, 1000);
-        background: var(--modal-overlay-bg, rgba(0,0,0,0.8)); backdrop-filter: blur(4px);
+        background: var(--modal-overlay-bg, rgba(0,0,0,0.8)); backdrop-filter: blur(6px);
         align-items: center; justify-content: center; padding: 1rem;
     `;
     modal.innerHTML = `
-        <div class="jobbers-modal-card" tabindex="-1" style="background: var(--card-bg, #141619); border: 1px solid var(--border-color, #26292E); width: 100%; max-width: 480px; border-radius: 12px; padding: 1.5rem; position: relative; box-shadow: var(--shadow-lg); color: var(--text-main, #fff);">
-            <button type="button" onclick="cerrarModal()" class="jobbers-close-btn" aria-label="Cerrar modal" style="position:absolute; right:15px; top:15px; background:transparent; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+        <div class="jobbers-modal-card" tabindex="-1" style="background: var(--card-bg, #141619); border: 1px solid var(--border-color, #26292E); width: 100%; max-width: 480px; border-radius: 28px; padding: 1.8rem; position: relative; box-shadow: var(--shadow-lg); color: var(--text-main, #fff);">
+            <button type="button" onclick="cerrarModal()" class="jobbers-close-btn" aria-label="Cerrar modal" style="position:absolute; right:18px; top:18px; background:transparent; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
             <div id="modal-body"></div>
         </div>
     `;
@@ -500,12 +490,12 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
     const numLimpio = limpiarNumeroWA(contactoWA) || WHATSAPP_JOBBERS_DEFAULT;
 
     body.innerHTML = `
-        <div style="margin-bottom: 1rem;">
-            <h2 id="modal-title-postulacion" style="font-size:1.25rem; font-weight:800; color:var(--text-main); margin:0 0 4px 0;">POSTULARME</h2>
+        <div style="margin-bottom: 1.2rem;">
+            <h2 id="modal-title-postulacion" style="font-size:1.35rem; font-weight:800; color:var(--text-main); margin:0 0 4px 0;">POSTULARME</h2>
             <p style="color:var(--primary, #e74c3c); font-size:0.95rem; font-weight:700; margin:0;">${escapeHTML(puesto)} — ${escapeHTML(empresa)}</p>
         </div>
 
-        <div style="background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--danger-badge, #e74c3c); padding: 10px 12px; border-radius: 4px; margin-bottom: 1rem;">
+        <div style="background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--danger-badge, #e74c3c); padding: 12px 14px; border-radius: 14px; margin-bottom: 1.2rem;">
             <p style="font-size: 0.85rem; color: #fca5a5; margin: 0; line-height: 1.4;">
                 📎 <strong>Recordatorio:</strong> Al abrirse WhatsApp, <u>adjuntá tu CV (PDF)</u> en el chat.
             </p>
@@ -513,12 +503,12 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
 
         <form id="form-postulacion-modal" class="express-form">
             <div class="form-group" style="margin-bottom: 12px;">
-                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #333; background:#222; color:#fff;">
+                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:12px 16px; border-radius:14px; border:1px solid #333; background:#222; color:#fff;">
             </div>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <input type="tel" id="post-telefono" placeholder="Tu número de WhatsApp (ej: 3511234567)" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #333; background:#222; color:#fff;">
+            <div class="form-group" style="margin-bottom: 14px;">
+                <input type="tel" id="post-telefono" placeholder="Tu número de WhatsApp (ej: 3511234567)" required style="width:100%; padding:12px 16px; border-radius:14px; border:1px solid #333; background:#222; color:#fff;">
             </div>
-            <button type="submit" class="btn-primary" style="width:100%; margin-top:4px; padding:12px; background:var(--primary, #e74c3c); border:none; border-radius:6px; color:#fff; font-weight:bold; cursor:pointer;">
+            <button type="submit" class="btn-primary" style="width:100%; margin-top:6px; padding:14px; background:var(--primary, #e74c3c); border:none; border-radius:999px; color:#fff; font-weight:bold; cursor:pointer; transition: transform 0.2s ease;">
                 CONTACTAR AL EMPLEADOR
             </button>
         </form>
@@ -552,14 +542,14 @@ function procesarPostulacion(puesto, empresa, contactoWA) {
 }
 
 /* ==========================================================================
-   9. TOASTS Y NOTIFICACIONES
+   9. TOASTS EN FORMATO PÍLDORA FLOTANTE
    ========================================================================== */
 function mostrarToast(mensaje, tipo = "success") {
     let container = document.getElementById('toast-container');
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
-        container.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: var(--z-toast, 2000);";
+        container.style.cssText = "position: fixed; bottom: 25px; right: 25px; z-index: var(--z-toast, 2000);";
         document.body.appendChild(container);
     }
 
@@ -568,9 +558,9 @@ function mostrarToast(mensaje, tipo = "success") {
     toast.style.cssText = `
         background: ${esSuccess ? 'var(--salary-green, #2ecc71)' : 'var(--danger-badge, #e74c3c)'};
         color: ${esSuccess ? '#000000' : '#ffffff'};
-        padding: 12px 20px; border-radius: 8px; margin-top: 10px;
-        box-shadow: var(--shadow-md, 0 4px 12px rgba(0,0,0,0.3)); font-weight: 700; font-size: 0.9rem;
-        transition: opacity 0.3s ease; opacity: 1;
+        padding: 12px 24px; border-radius: 999px; margin-top: 10px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3); font-weight: 700; font-size: 0.9rem;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease; opacity: 1;
     `;
     toast.innerText = mensaje;
 
@@ -578,12 +568,13 @@ function mostrarToast(mensaje, tipo = "success") {
 
     setTimeout(() => {
         toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
 
 /* ==========================================================================
-   10. BINDING GLOBAL COMPLETO
+   10. BINDING GLOBAL
    ========================================================================== */
 Object.assign(window, {
     enviarAWhatsApp,
