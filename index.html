@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,448 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* === VARIABLES & BASE === */
-        :root {
-            --bg-main: #121212;
-            --bg-card: #18181b;
-            --bg-input: #222226;
-            --border-color: #27272a;
-            --accent-amber: #ffb703;
-            --accent-green: #00e676;
-            --text-primary: #f4f4f5;
-            --text-secondary: #a1a1aa;
-            --radius-md: 12px;
-            --radius-sm: 8px;
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-main);
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            line-height: 1.5;
-            padding-bottom: 70px;
-        }
-
-        @media (min-width: 769px) {
-            body { padding-bottom: 0; }
-        }
-
-        a { color: inherit; text-decoration: none; }
-        button { cursor: pointer; border: none; font-family: inherit; }
-
-        /* === HEADER & NAVEGACIÓN === */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: var(--bg-main);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0.85rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand-logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-        .brand-logo span { color: var(--accent-amber); }
-
-        .mode-switch-container {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 4px;
-            border-radius: 30px;
-            display: flex;
-            gap: 4px;
-        }
-
-        .mode-btn {
-            background: transparent;
-            color: var(--text-secondary);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .mode-btn.active {
-            background-color: var(--accent-amber);
-            color: #000;
-        }
-
-        /* === CONTENEDOR PRINCIPAL === */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem 1rem;
-        }
-
-        .view-section { display: none; }
-        .view-section.active-view { display: block; }
-
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        @media (min-width: 992px) {
-            .main-layout {
-                grid-template-columns: 1fr 320px;
-            }
-        }
-
-        /* === HEROS === */
-        .hero-postulante {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 2rem 1.5rem;
-            text-align: center;
-        }
-
-        .hero-postulante h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-        .hero-postulante p { color: var(--text-secondary); margin-bottom: 1.5rem; }
-
-        .search-box-inline {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 600px) {
-            .search-box-inline {
-                flex-direction: row;
-            }
-        }
-
-        .input-dark {
-            background-color: var(--bg-input);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius-sm);
-            width: 100%;
-            outline: none;
-        }
-        .input-dark:focus { border-color: var(--accent-amber); }
-
-        .btn-amber {
-            background-color: var(--accent-amber);
-            color: #000;
-            font-weight: 700;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-sm);
-            white-space: nowrap;
-            transition: filter 0.2s ease;
-        }
-        .btn-amber:hover { filter: brightness(1.1); }
-
-        .btn-green {
-            background-color: var(--accent-green);
-            color: #000;
-            font-weight: 700;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-sm);
-            transition: filter 0.2s ease;
-        }
-        .btn-green:hover { filter: brightness(1.1); }
-
-        .hero-empresa {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            align-items: center;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .hero-empresa { grid-template-columns: 1fr 1fr; padding: 2rem; }
-        }
-
-        .express-form-card {
-            background-color: var(--bg-main);
-            border: 1px solid var(--border-color);
-            padding: 1.25rem;
-            border-radius: var(--radius-sm);
-        }
-
-        .express-form-card h3 { margin-bottom: 1rem; font-size: 1.1rem; }
-
-        .form-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
-        }
-
-        @media (min-width: 480px) {
-            .form-grid-2 { grid-template-columns: 1fr 1fr; }
-            .form-grid-2 .full-width { grid-column: 1 / -1; }
-        }
-
-        /* === CHIPS CATEGORÍAS === */
-        .chips-scroll-container {
-            display: flex;
-            gap: 0.5rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-            margin-top: 1.25rem;
-            scrollbar-width: none;
-        }
-        .chips-scroll-container::-webkit-scrollbar { display: none; }
-
-        .chip-item {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        .chip-item.active, .chip-item:hover {
-            border-color: var(--accent-amber);
-            color: var(--accent-amber);
-        }
-
-        /* === VACANTES & TALENTO === */
-        .job-list { display: flex; flex-direction: column; gap: 0.85rem; }
-
-        .job-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            justify-content: space-between;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        @media (min-width: 550px) {
-            .job-card {
-                flex-direction: row;
-                align-items: center;
-            }
-        }
-
-        .job-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-        }
-
-        .job-title { font-size: 1.1rem; font-weight: 700; }
-        .job-meta { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
-
-        .badge-salary {
-            display: inline-block;
-            background-color: rgba(0, 230, 118, 0.1);
-            color: var(--accent-green);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-top: 0.4rem;
-        }
-
-        .talent-grid {
-            display: flex;
-            gap: 1rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-            scrollbar-width: none;
-        }
-        .talent-grid::-webkit-scrollbar { display: none; }
-
-        @media (min-width: 768px) {
-            .talent-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                overflow-x: visible;
-            }
-        }
-
-        .talent-card {
-            min-width: 240px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .talent-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: var(--bg-input);
-            margin: 0 auto 0.75rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            border: 1px solid var(--accent-amber);
-        }
-
-        /* === BLOG / RECURSOS === */
-        .blog-section {
-            margin-top: 3rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 2rem;
-        }
-
-        .blog-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.25rem;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
-        }
-
-        @media (min-width: 768px) {
-            .blog-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .blog-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .blog-card:hover {
-            border-color: var(--accent-amber);
-            transform: translateY(-2px);
-        }
-
-        .blog-tag {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--accent-amber);
-            margin-bottom: 0.5rem;
-            display: inline-block;
-        }
-
-        .blog-card h4 {
-            font-size: 1.05rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
-        .blog-card p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .blog-read-more {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-amber);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        /* === SIDEBAR WIDGETS === */
-        .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
-
-        .sidebar-widget {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-        }
-
-        .adsense-placeholder {
-            background-color: var(--bg-input);
-            border: 1px dashed var(--border-color);
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            border-radius: var(--radius-sm);
-        }
-
-        /* === PRE-FOOTER RESUMEN === */
-        .pre-footer {
-            margin-top: 3rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 2rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .pre-footer { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .footer-col h4 { color: var(--accent-amber); margin-bottom: 0.75rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); }
-
-        /* === BOTTOM NAV === */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background-color: var(--bg-main);
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        @media (min-width: 769px) {
-            .bottom-nav { display: none; }
-        }
-
-        .bottom-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-        .bottom-nav-item.active { color: var(--accent-amber); }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -530,11 +90,11 @@
 
                 <aside class="sidebar">
                     <div class="sidebar-widget">
-                        <h4 style="margin-bottom: 0.5rem; font-size: 0.95rem;">Filtro Rápido</h4>
-                        <label style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-secondary);">
+                        <h4>Filtro Rápido</h4>
+                        <label>
                             <input type="checkbox" checked> Solo con sueldo visible
                         </label>
-                        <label style="display: block; font-size: 0.85rem; color: var(--text-secondary);">
+                        <label>
                             <input type="checkbox"> Modalidad Part-Time
                         </label>
                     </div>
@@ -546,18 +106,18 @@
 
                     <!-- Widget Blog (Exclusivo Postulante) -->
                     <div class="sidebar-widget">
-                        <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">Lecturas Recomendadas</h4>
-                        <ul style="list-style: none; font-size: 0.85rem; color: var(--text-secondary);">
-                            <li style="margin-bottom: 0.6rem;"><a href="#">📄 Cómo destacar tu experiencia en la cocina &rarr;</a></li>
-                            <li style="margin-bottom: 0.6rem;"><a href="#">💡 5 tips para impresionar en una prueba técnica &rarr;</a></li>
+                        <h4 class="widget-title-amber">Lecturas Recomendadas</h4>
+                        <ul class="widget-list">
+                            <li><a href="#">📄 Cómo destacar tu experiencia en la cocina &rarr;</a></li>
+                            <li><a href="#">💡 5 tips para impresionar en una prueba técnica &rarr;</a></li>
                             <li><a href="#">💰 Guía de sueldos gastronómicos 2026 &rarr;</a></li>
                         </ul>
                     </div>
 
-                    <div class="sidebar-widget" style="border-color: rgba(255, 183, 3, 0.3);">
-                        <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">¿Sos Empresa?</h4>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
-                        <button class="btn-amber" style="width: 100%;" onclick="setMode('empresa')">Publicar Empleo</button>
+                    <div class="sidebar-widget widget-highlight-amber">
+                        <h4 class="widget-title-amber">¿Sos Empresa?</h4>
+                        <p>Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
+                        <button class="btn-amber btn-full" onclick="setMode('empresa')">Publicar Empleo</button>
                     </div>
                 </aside>
 
@@ -567,7 +127,7 @@
             <section class="blog-section">
                 <div class="blog-header">
                     <h3>Blog & Recursos Gastronómicos</h3>
-                    <a href="#" style="color: var(--accent-amber); font-size: 0.9rem; font-weight: 600;">Ver todos los artículos &rarr;</a>
+                    <a href="#" class="blog-link-all">Ver todos los artículos &rarr;</a>
                 </div>
 
                 <div class="blog-grid">
@@ -609,9 +169,9 @@
             
             <section class="hero-empresa">
                 <div>
-                    <h1 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Contratá personal gastronómico calificado rápido</h1>
-                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Publicá tus ofertas de empleo y accedé a la base de perfiles verificados de tu ciudad.</p>
-                    <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 1.2rem;">
+                    <h1>Contratá personal gastronómico calificado rápido</h1>
+                    <p>Publicá tus ofertas de empleo y accedé a la base de perfiles verificados de tu ciudad.</p>
+                    <ul class="hero-empresa-list">
                         <li>Publicación express en 2 minutos.</li>
                         <li>Contacto directo por WhatsApp con candidatos.</li>
                         <li>Soporte personalizado B2B.</li>
@@ -625,37 +185,37 @@
                         <input type="text" class="input-dark" placeholder="Puesto a buscar">
                         <input type="text" class="input-dark" placeholder="Zona / Ciudad">
                         <input type="tel" class="input-dark full-width" placeholder="Teléfono de contacto (WhatsApp)">
-                        <button class="btn-amber full-width" style="margin-top: 0.5rem;">Publicar Búsqueda</button>
+                        <button class="btn-amber full-width">Publicar Búsqueda</button>
                     </form>
                 </div>
             </section>
 
-            <section style="margin-top: 2rem;">
-                <h3 style="margin-bottom: 1rem;">Talento Gastronómico Disponible</h3>
+            <section class="talent-section">
+                <h3>Talento Gastronómico Disponible</h3>
                 
                 <div class="talent-grid">
                     <div class="talent-card">
                         <div class="talent-avatar">MG</div>
                         <h4>Mariano G.</h4>
-                        <p style="font-size: 0.8rem; color: var(--accent-amber);">Jefe de Cocina / Chef</p>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">8 años de exp. • CABA</p>
-                        <button class="btn-green" style="width: 100%; margin-top: 0.75rem; font-size: 0.8rem; padding: 0.4rem;">Ver Perfil</button>
+                        <p class="talent-role">Jefe de Cocina / Chef</p>
+                        <p class="talent-meta">8 años de exp. • CABA</p>
+                        <button class="btn-green btn-full talent-btn">Ver Perfil</button>
                     </div>
 
                     <div class="talent-card">
                         <div class="talent-avatar">SR</div>
                         <h4>Sofia R.</h4>
-                        <p style="font-size: 0.8rem; color: var(--accent-amber);">Barista Profesional</p>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">Arte latte, Arte en café • Córdoba</p>
-                        <button class="btn-green" style="width: 100%; margin-top: 0.75rem; font-size: 0.8rem; padding: 0.4rem;">Ver Perfil</button>
+                        <p class="talent-role">Barista Profesional</p>
+                        <p class="talent-meta">Arte latte, Arte en café • Córdoba</p>
+                        <button class="btn-green btn-full talent-btn">Ver Perfil</button>
                     </div>
 
                     <div class="talent-card">
                         <div class="talent-avatar">LP</div>
                         <h4>Lucas P.</h4>
-                        <p style="font-size: 0.8rem; color: var(--accent-amber);">Encargado / Bartender</p>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">Manejo de caja y stock • Rosario</p>
-                        <button class="btn-green" style="width: 100%; margin-top: 0.75rem; font-size: 0.8rem; padding: 0.4rem;">Ver Perfil</button>
+                        <p class="talent-role">Encargado / Bartender</p>
+                        <p class="talent-meta">Manejo de caja y stock • Rosario</p>
+                        <button class="btn-green btn-full talent-btn">Ver Perfil</button>
                     </div>
                 </div>
             </section>
@@ -663,7 +223,7 @@
             <div class="main-layout">
                 <div class="sidebar-widget">
                     <h3>Pases y Planes Destacados</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; margin-bottom: 1rem;">Aumentá la visibilidad de tus búsquedas o destacá tu marca frente a miles de postulantes activos diariamente.</p>
+                    <p class="plans-desc">Aumentá la visibilidad de tus búsquedas o destacá tu marca frente a miles de postulantes activos diariamente.</p>
                     <button class="btn-amber">Consultar Planes PRO</button>
                 </div>
 
@@ -673,10 +233,10 @@
                         [ Anuncio AdSense ]
                     </div>
 
-                    <div class="sidebar-widget" style="border-color: rgba(0, 230, 118, 0.3);">
-                        <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">Atención Corporativa</h4>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
-                        <button class="btn-green" style="width: 100%;">Hablar por WhatsApp</button>
+                    <div class="sidebar-widget widget-highlight-green">
+                        <h4 class="widget-title-green">Atención Corporativa</h4>
+                        <p>¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
+                        <button class="btn-green btn-full">Hablar por WhatsApp</button>
                     </div>
                 </aside>
             </div>
@@ -731,27 +291,6 @@
         </div>
     </nav>
 
-    <!-- INTERACTIVIDAD CONMUTADORA -->
-    <script>
-        function setMode(mode) {
-            const postulanteView = document.getElementById('view-postulante');
-            const empresaView = document.getElementById('view-empresa');
-            const btnPostulante = document.getElementById('btn-mode-postulante');
-            const btnEmpresa = document.getElementById('btn-mode-empresa');
-
-            if (mode === 'postulante') {
-                postulanteView.classList.add('active-view');
-                empresaView.classList.remove('active-view');
-                btnPostulante.classList.add('active');
-                btnEmpresa.classList.remove('active');
-            } else {
-                empresaView.classList.add('active-view');
-                postulanteView.classList.remove('active-view');
-                btnEmpresa.classList.add('active');
-                btnPostulante.classList.remove('active');
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
