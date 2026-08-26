@@ -4,14 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOBBERS - Empleo Gastronómico</title>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Estilos -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="role-postulante">
+
+    <!-- MODAL SELECCIÓN DE PERFIL -->
+    <div class="modal-overlay" id="roleModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-card">
+            <button type="button" class="modal-close" id="closeModalBtn" aria-label="Cerrar modal">&times;</button>
+            <h2 class="modal-title" id="modalTitle">¿Cómo querés ingresar? 👋</h2>
+            <p class="modal-subtitle">Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
+            
+            <div class="role-options">
+                <button type="button" class="role-card" onclick="setRole('postulante')">
+                    <span class="role-icon">🔍</span>
+                    <div class="role-info">
+                        <h3>Busco Empleo</h3>
+                        <p>Quiero ver vacantes y postularme directo</p>
+                    </div>
+                </button>
+                
+                <button type="button" class="role-card" onclick="setRole('empresa')">
+                    <span class="role-icon">🏢</span>
+                    <div class="role-info">
+                        <h3>Soy Empresa / Gastronómico</h3>
+                        <p>Quiero publicar una oferta o contratar</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- NAVBAR -->
     <header class="navbar">
@@ -21,14 +44,16 @@
                 <span class="brand-subtitle">Empleo Gastronómico</span>
             </a>
             <nav class="nav-menu">
-                <a href="#" class="nav-link">Buscar empleo</a>
-                <a href="#" class="nav-link">Necesito personal</a>
+                <a href="#buscar" class="nav-link">Buscar empleo</a>
+                <a href="#personal" class="nav-link">Necesito personal</a>
                 <a href="#" class="nav-link">Empresas</a>
-                <a href="#" class="nav-link">Recursos <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                <a href="#" class="nav-link">Recursos <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
                 <a href="#" class="nav-link">Nosotros</a>
             </nav>
             <div class="nav-actions">
-                <button type="button" class="btn-ghost">Iniciar sesión</button>
+                <button type="button" class="btn-ghost" onclick="openModal()">
+                    <i class="fa-solid fa-user-gear"></i> Cambiar Perfil
+                </button>
                 <button type="button" class="btn-accent">Registrarme</button>
             </div>
         </div>
@@ -37,14 +62,19 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-container">
-            
             <div class="hero-left">
                 <h1 class="hero-h1">Laburo Real<br>en <span>Gastronomía.</span></h1>
                 <p class="hero-desc">Conectamos talento con oportunidades reales en cocina, barra, salón y más.</p>
+                
                 <div class="hero-ctas">
-                    <a href="#buscar" class="btn-cta-main"><i class="fa-solid fa-briefcase"></i> Busco trabajo</a>
-                    <a href="#personal" class="btn-cta-secondary"><i class="fa-solid fa-user-plus"></i> Necesito personal</a>
+                    <button type="button" class="btn-cta-main" onclick="setRole('postulante')">
+                        <i class="fa-solid fa-briefcase"></i> Busco trabajo
+                    </button>
+                    <button type="button" class="btn-cta-secondary" onclick="setRole('empresa')">
+                        <i class="fa-solid fa-user-plus"></i> Necesito personal
+                    </button>
                 </div>
+
                 <div class="hero-badges">
                     <span><i class="fa-solid fa-circle-check"></i> Perfiles verificados</span>
                     <span><i class="fa-solid fa-bolt"></i> Proceso rápido</span>
@@ -52,6 +82,7 @@
                 </div>
             </div>
 
+            <!-- FORMULARIO EXPRESS (VISTA EMPRESA / RAPIDA) -->
             <div class="express-card">
                 <div class="express-header">
                     <i class="fa-solid fa-bolt"></i>
@@ -62,7 +93,7 @@
                 </div>
                 <form onsubmit="event.preventDefault();">
                     <div class="form-group-custom">
-                        <select class="select-custom" required>
+                        <select class="select-custom" required aria-label="Puesto que necesitas">
                             <option value="" disabled selected>Puesto que necesitas</option>
                             <option value="cocinero">Cocinero / Ayudante</option>
                             <option value="mozo">Mozo / Garzón</option>
@@ -71,7 +102,7 @@
                         </select>
                     </div>
                     <div class="form-group-custom">
-                        <select class="select-custom" required>
+                        <select class="select-custom" required aria-label="Zona">
                             <option value="" disabled selected>Zona</option>
                             <option value="nueva-cordoba">Nueva Córdoba</option>
                             <option value="guemes">Güemes</option>
@@ -80,7 +111,7 @@
                         </select>
                     </div>
                     <div class="form-group-custom">
-                        <select class="select-custom" required>
+                        <select class="select-custom" required aria-label="Tipo de turno">
                             <option value="" disabled selected>Tipo de turno</option>
                             <option value="full">Full-time</option>
                             <option value="part">Part-time</option>
@@ -94,7 +125,6 @@
                     <p class="express-footer-tip">Te respondemos de inmediato</p>
                 </form>
             </div>
-
         </div>
     </section>
 
@@ -148,27 +178,28 @@
         </div>
     </section>
 
-    <!-- DASHBOARD PRINCIPAL DE TRES SECCIONES -->
+    <!-- DASHBOARD CONDICIONAL SEGÚN ROL -->
     <section class="section-wrapper">
         <div class="dashboard-grid">
             
-            <!-- OFERTAS DESTACADAS -->
-            <div class="dash-card">
+            <!-- SECCIÓN VACANTES (VISIBILIDAD CONTROLADA POR JS/CSS) -->
+            <div class="dash-card view-postulante">
                 <div class="section-header-flex">
                     <h3 class="section-title">Ofertas Destacadas</h3>
+                    <a href="#" class="link-see-all">Ver todas <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
                 <div class="offer-item">
                     <div>
-                        <div style="display: flex; gap: 0.4rem; align-items: center;">
+                        <div class="offer-header-inline">
                             <span class="offer-main-title">Cocinero/a</span>
-                            <span class="badge-urgent">Urgente⚡</span>
+                            <span class="badge-urgent">Urgente ⚡</span>
                         </div>
                         <p class="offer-sub">Casa Norte • Nueva Córdoba</p>
                         <div class="offer-tags">
                             <span class="tag-pill">Tiempo completo</span>
                         </div>
                     </div>
-                    <span style="font-size: 0.72rem; color: var(--text-muted);">Hace 1h</span>
+                    <span class="offer-time">Hace 1h</span>
                 </div>
 
                 <div class="offer-item">
@@ -179,7 +210,7 @@
                             <span class="tag-pill">Part-time</span>
                         </div>
                     </div>
-                    <span style="font-size: 0.72rem; color: var(--text-muted);">Hace 2h</span>
+                    <span class="offer-time">Hace 2h</span>
                 </div>
 
                 <div class="offer-item">
@@ -190,13 +221,12 @@
                             <span class="tag-pill">Turno noche</span>
                         </div>
                     </div>
-                    <span style="font-size: 0.72rem; color: var(--text-muted);">Hace 3h</span>
+                    <span class="offer-time">Hace 3h</span>
                 </div>
-                <a href="#" class="link-see-all" style="margin-top: 0.5rem;">Ver todas las ofertas <i class="fa-solid fa-chevron-right"></i></a>
             </div>
 
-            <!-- TALENTO DESTACADO -->
-            <div class="dash-card">
+            <!-- SECCIÓN TALENTOS (VISIBILIDAD CONTROLADA POR JS/CSS) -->
+            <div class="dash-card view-empresa">
                 <div class="section-header-flex">
                     <h3 class="section-title">Talento Destacado</h3>
                     <a href="#" class="link-see-all">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
@@ -210,7 +240,7 @@
                         <p class="talent-name">Lucas R.</p>
                         <p class="talent-role">Cocinero</p>
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (24)</div>
-                        <p class="talent-role" style="margin-top: 0.2rem;">5 años exp.</p>
+                        <p class="talent-exp">5 años exp.</p>
                     </div>
 
                     <div class="talent-mini-card">
@@ -221,7 +251,7 @@
                         <p class="talent-name">María F.</p>
                         <p class="talent-role">Barista</p>
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (18)</div>
-                        <p class="talent-role" style="margin-top: 0.2rem;">3 años exp.</p>
+                        <p class="talent-exp">3 años exp.</p>
                     </div>
 
                     <div class="talent-mini-card">
@@ -232,22 +262,22 @@
                         <p class="talent-name">Santiago M.</p>
                         <p class="talent-role">Mozo</p>
                         <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (31)</div>
-                        <p class="talent-role" style="margin-top: 0.2rem;">4 años exp.</p>
+                        <p class="talent-exp">4 años exp.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- BLOG / COMUNIDAD JOBBERS -->
+            <!-- BLOG Y COMUNIDAD -->
             <div class="community-card">
                 <h3 class="community-title">Formá parte de la comunidad <span>JOBBERS</span></h3>
                 <p class="community-desc">Recursos, tips y contenido exclusivo para crecer en gastronomía.</p>
-                <button type="button" class="btn-ghost" style="width: fit-content;">IR AL BLOG</button>
+                <button type="button" class="btn-ghost btn-community">IR AL BLOG</button>
             </div>
 
         </div>
     </section>
 
-    <!-- METRICAS Y ESTADÍSTICAS -->
+    <!-- ESTADÍSTICAS -->
     <section class="stats-bar">
         <div class="stats-container">
             <div class="stat-item">
@@ -273,7 +303,7 @@
         </div>
     </section>
 
-    <!-- NAVEGACIÓN BOTTOM (MÓVIL) -->
+    <!-- NAVEGACIÓN INFERIOR MÓVIL -->
     <nav class="bottom-nav">
         <a href="#" class="bnav-item active">
             <i class="fa-solid fa-house"></i>
@@ -283,19 +313,20 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Buscar</span>
         </a>
-        <a href="#" class="bnav-item" style="color: var(--primary);">
+        <a href="#" class="bnav-item bnav-accent">
             <i class="fa-solid fa-bolt"></i>
             <span>Personal YA</span>
         </a>
         <a href="#" class="bnav-item">
             <i class="fa-solid fa-bookmark"></i>
-            <span>Mis postulaciones</span>
+            <span>Postulaciones</span>
         </a>
-        <a href="#" class="bnav-item">
+        <button type="button" class="bnav-item bnav-btn" onclick="openModal()">
             <i class="fa-solid fa-user"></i>
-            <span>Mi cuenta</span>
-        </a>
+            <span>Perfil</span>
+        </button>
     </nav>
 
+    <script src="js/main.js"></script>
 </body>
 </html>
