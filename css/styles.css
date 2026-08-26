@@ -89,7 +89,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 a {
@@ -258,9 +259,10 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   4. MODAL DE SELECCIÓN DE PERFIL
+   4. MODALES & ANIMACIONES
    ========================================================================== */
-.rol-modal-overlay {
+.rol-modal-overlay,
+.jobbers-modal {
   position: fixed;
   inset: 0;
   background-color: #0a0b0c;
@@ -275,7 +277,8 @@ body.role-empresa .bottom-nav .role-empresa-only {
   animation: fadeInOverlay 0.25s var(--transition-cubic);
 }
 
-.rol-modal-card {
+.rol-modal-card,
+.jobbers-modal-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -396,7 +399,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   5. HERO SECTION & FORMULARIO EXPRESS (CENTRADO)
+   5. HERO SECTION & FORMULARIO EXPRESS
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -541,6 +544,10 @@ body.role-empresa .bottom-nav .role-empresa-only {
 .hero-features i { color: var(--primary); }
 
 /* TARJETA FORMULARIO EXPRESS */
+#formulario-express:not(.is-visible) {
+  display: none;
+}
+
 .hero-card-express {
   position: relative;
   z-index: var(--z-content);
