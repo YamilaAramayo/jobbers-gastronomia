@@ -27,6 +27,8 @@ const debounce = (fn, delay = 300) => {
     };
 };
 
+const getElBusqueda = () => document.getElementById('input-busqueda') || document.getElementById('job-search-input');
+
 /* ==========================================================================
    1. EXPOSICIÓN GLOBAL PREVIA
    ========================================================================== */
@@ -139,7 +141,7 @@ function inicializarEventListeners() {
 
     document.getElementById('form-publicar-express')?.addEventListener('submit', enviarAWhatsApp);
 
-    const inputBusqueda = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
+    const inputBusqueda = getElBusqueda();
     if (inputBusqueda) {
         inputBusqueda.addEventListener('input', debounce(filtrarVacantes, 300));
         inputBusqueda.addEventListener('keypress', (e) => {
@@ -272,6 +274,7 @@ async function cargarVacantesDesdeJSON() {
         }
     }
 
+    // Fallback de contingencia si no se puede leer el archivo JSON
     vacantesGastronomia = [
         { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
         { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
@@ -388,7 +391,7 @@ function renderizarOfertas(lista) {
 }
 
 function filtrarVacantes() {
-    const input = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
+    const input = getElBusqueda();
     if (!input) return;
     const termino = input.value.toLowerCase().trim();
 
@@ -401,7 +404,7 @@ function filtrarVacantes() {
 }
 
 function filtrarPorCategoria(categoria) {
-    const input = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
+    const input = getElBusqueda();
     if (input) input.value = categoria;
 
     filtrarVacantes();
@@ -514,10 +517,11 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
         </form>
     `;
 
-    document.getElementById('form-postulacion-modal')?.addEventListener('submit', (e) => {
+    const formModal = document.getElementById('form-postulacion-modal');
+    formModal?.addEventListener('submit', (e) => {
         e.preventDefault();
         procesarPostulacion(puesto, empresa, numLimpio);
-    });
+    }, { once: true });
 
     const modal = document.getElementById('modal-jobbers');
     modal.style.display = 'flex';
