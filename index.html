@@ -4,13 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOBBERS - Empleo Gastronómico</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Font Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="role-postulante">
@@ -52,15 +46,13 @@
             <nav class="nav-menu">
                 <a href="#buscar" class="nav-link">Buscar empleo</a>
                 <a href="#personal" class="nav-link">Necesito personal</a>
-                <a href="#" class="nav-link">Empresas</a>
-                <a href="#" class="nav-link">Recursos <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <a href="#" class="nav-link">Blog</a>
                 <a href="#" class="nav-link">Nosotros</a>
             </nav>
             <div class="nav-actions">
                 <button type="button" class="btn-ghost" onclick="openModal()">
                     <i class="fa-solid fa-user-gear"></i> Cambiar Perfil
                 </button>
-                <button type="button" class="btn-accent">Registrarme</button>
             </div>
         </div>
     </header>
@@ -97,32 +89,32 @@
                         <p>Publicá tu búsqueda en segundos y llegá a los mejores perfiles.</p>
                     </div>
                 </div>
-                <form id="expressForm">
+                <form onsubmit="event.preventDefault();">
                     <div class="form-group-custom">
-                        <select class="select-custom" id="expressPuesto" required aria-label="Puesto que necesitas">
+                        <select class="select-custom" required aria-label="Puesto que necesitas">
                             <option value="" disabled selected>Puesto que necesitas</option>
-                            <option value="Cocinero / Ayudante">Cocinero / Ayudante</option>
-                            <option value="Mozo / Garzón">Mozo / Garzón</option>
-                            <option value="Barista">Barista</option>
-                            <option value="Bartender">Bartender</option>
+                            <option value="cocinero">Cocinero / Ayudante</option>
+                            <option value="mozo">Mozo / Garzón</option>
+                            <option value="barista">Barista</option>
+                            <option value="bartender">Bartender</option>
                         </select>
                     </div>
                     <div class="form-group-custom">
-                        <select class="select-custom" id="expressZona" required aria-label="Zona">
+                        <select class="select-custom" required aria-label="Zona">
                             <option value="" disabled selected>Zona</option>
-                            <option value="Nueva Córdoba">Nueva Córdoba</option>
-                            <option value="Güemes">Güemes</option>
-                            <option value="Centro">Centro</option>
-                            <option value="Palermo, CABA">Palermo, CABA</option>
+                            <option value="nueva-cordoba">Nueva Córdoba</option>
+                            <option value="guemes">Güemes</option>
+                            <option value="centro">Centro</option>
+                            <option value="palermo">Palermo, CABA</option>
                         </select>
                     </div>
                     <div class="form-group-custom">
-                        <select class="select-custom" id="expressTurno" required aria-label="Tipo de turno">
+                        <select class="select-custom" required aria-label="Tipo de turno">
                             <option value="" disabled selected>Tipo de turno</option>
-                            <option value="Full-time">Full-time</option>
-                            <option value="Part-time">Part-time</option>
-                            <option value="Turno Noche">Turno Noche</option>
-                            <option value="Fines de Semana">Fines de Semana</option>
+                            <option value="full">Full-time</option>
+                            <option value="part">Part-time</option>
+                            <option value="noche">Turno Noche</option>
+                            <option value="finde">Fines de Semana</option>
                         </select>
                     </div>
                     <button type="submit" class="btn-whatsapp-full">
