@@ -2,7 +2,25 @@
  * Jobbers Argentina - Módulo Interactivo de Selección y Postulación Gastronómica
  * Versión Mejorada & Optimizada (ES6+)
  */
+function setMode(mode) {
+    const postulanteView = document.getElementById('view-postulante');
+    const empresaView = document.getElementById('view-empresa');
+    const btnPostulante = document.getElementById('btn-mode-postulante');
+    const btnEmpresa = document.getElementById('btn-mode-empresa');
 
+    if (mode === 'postulante') {
+        postulanteView.classList.add('active-view');
+        empresaView.classList.remove('active-view');
+        btnPostulante.classList.add('active');
+        btnEmpresa.classList.remove('active');
+    } else {
+        empresaView.classList.add('active-view');
+        postulanteView.classList.remove('active-view');
+        btnEmpresa.classList.add('active');
+        btnPostulante.classList.remove('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 (function () {
   'use strict';
 
