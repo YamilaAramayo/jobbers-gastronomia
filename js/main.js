@@ -82,31 +82,46 @@ function unirseAComunidad() {
    2. SISTEMA DE CAMBIO DE PERFIL (POSTULANTE / EMPRESA)
    ========================================================================== */
 function asegurarEstructuraModalPerfil() {
-    if (document.getElementById('modal-cambiar-perfil')) return;
+    let modal = document.getElementById('modal-cambiar-perfil');
+    if (modal) return modal;
 
-    const modal = document.createElement('div');
+    modal = document.createElement('div');
     modal.id = 'modal-cambiar-perfil';
-    modal.className = 'modal-overlay';
+    modal.className = 'modal-overlay jobbers-modal';
+    
+    // Estilos inline de resguardo para garantizar visibilidad total
+    modal.style.cssText = `
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(6px);
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    `;
     
     modal.innerHTML = `
-        <div class="modal-card">
-            <button type="button" class="modal-close" onclick="cerrarModalPerfil()" aria-label="Cerrar modal">&times;</button>
-            <h2 class="modal-title">SELECCIONÁ TU PERFIL</h2>
-            <p class="modal-subtitle">Elegí cómo querés navegar Jobbers Argentina</p>
+        <div class="modal-card jobbers-modal-card" style="background: var(--card-bg, #141619); border: 1px solid var(--border-color, #26292E); width: 100%; max-width: 440px; border-radius: 24px; padding: 2rem; position: relative; color: #fff;">
+            <button type="button" class="modal-close" onclick="cerrarModalPerfil()" aria-label="Cerrar modal" style="position:absolute; right:18px; top:18px; background:transparent; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
             
-            <div class="role-options">
-                <div class="role-card" onclick="cambiarPerfil('postulante')">
-                    <span class="role-icon">👤</span>
+            <h2 class="modal-title" style="font-size:1.4rem; font-weight:800; margin-bottom: 8px; text-align:center;">SELECCIONÁ TU PERFIL</h2>
+            <p class="modal-subtitle" style="color:var(--text-muted, #94a3b8); font-size:0.9rem; text-align:center; margin-bottom:1.5rem;">Elegí cómo querés navegar Jobbers Argentina</p>
+            
+            <div class="role-options" style="display:flex; flex-direction:column; gap:12px;">
+                <div class="role-card" onclick="cambiarPerfil('postulante')" style="padding:14px; border-radius:16px; border:1px solid rgba(255,255,255,0.1); background:#1e2227; color:#fff; cursor:pointer; display:flex; align-items:center; gap:12px;">
+                    <span class="role-icon" style="font-size:1.5rem;">👤</span>
                     <div class="role-info">
-                        <h3>Modo Postulante</h3>
-                        <p>Buscar empleo y postularme por WhatsApp</p>
+                        <h3 style="font-size:1rem; margin:0; font-weight:bold;">Modo Postulante</h3>
+                        <p style="font-size:0.75rem; color:#aaa; margin:0;">Buscar empleo y postularme por WhatsApp</p>
                     </div>
                 </div>
-                <div class="role-card" onclick="cambiarPerfil('empresa')">
-                    <span class="role-icon">🏢</span>
+                <div class="role-card" onclick="cambiarPerfil('empresa')" style="padding:14px; border-radius:16px; border:1px solid rgba(255,255,255,0.1); background:#1e2227; color:#fff; cursor:pointer; display:flex; align-items:center; gap:12px;">
+                    <span class="role-icon" style="font-size:1.5rem;">🏢</span>
                     <div class="role-info">
-                        <h3>Modo Empresa</h3>
-                        <p>Publicar búsquedas y contactar talento</p>
+                        <h3 style="font-size:1rem; margin:0; font-weight:bold;">Modo Empresa</h3>
+                        <p style="font-size:0.75rem; color:#aaa; margin:0;">Publicar búsquedas y contactar talento</p>
                     </div>
                 </div>
             </div>
@@ -117,17 +132,26 @@ function asegurarEstructuraModalPerfil() {
     modal.addEventListener('click', (e) => {
         if (e.target === modal) cerrarModalPerfil();
     });
+
+    return modal;
 }
 
 function abrirModalPerfil() {
-    asegurarEstructuraModalPerfil();
-    const modal = document.getElementById('modal-cambiar-perfil');
-    if (modal) modal.classList.add('active');
+    const modal = asegurarEstructuraModalPerfil();
+    if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function cerrarModalPerfil() {
     const modal = document.getElementById('modal-cambiar-perfil');
-    if (modal) modal.classList.remove('active');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 }
 
 function cambiarPerfil(rol) {
@@ -173,7 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function inicializarEventListeners() {
     document.addEventListener('click', (e) => {
-        const btnCambiarRol = e.target.closest('.btn-cambiar-rol, #btn-cambiar-perfil, .trigger-cambio-perfil');
+        // Selector ampliado para capturar el botón independientemente del ID o clase exacta
+        const btnCambiarRol = e.target.closest('.btn-cambiar-rol, #btn-cambiar-perfil, .trigger-cambio-perfil, .btn-perfil, [onclick*="abrirModalPerfil"]');
         if (btnCambiarRol) {
             e.preventDefault();
             abrirModalPerfil();
@@ -242,13 +267,12 @@ function inicializarEventListeners() {
             const modalJobbers = document.getElementById('modal-jobbers');
             const modalPerfil = document.getElementById('modal-cambiar-perfil');
 
-            if (modalJobbers && getComputedStyle(modalJobbers).display !== 'none') cerrarModal();
-            if (modalPerfil && modalPerfil.classList.contains('active')) cerrarModalPerfil();
+            if (modalJobbers && modalJobbers.style.display !== 'none') cerrarModal();
+            if (modalPerfil && modalPerfil.style.display !== 'none') cerrarModalPerfil();
             cerrarDropdown();
         }
     });
 }
-
 /* ==========================================================================
    4. CARGA DE DATOS (JSON) Y FALLBACK
    ========================================================================== */
