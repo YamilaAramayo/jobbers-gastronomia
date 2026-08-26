@@ -4,292 +4,273 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobbers - Portal de Empleo Gastronómico</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome para los íconos del CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="role-postulante">
 
     <!-- NAVBAR HEADER -->
     <header class="navbar">
-        <div class="brand-logo">Jobbers<span>.</span></div>
-        
-        <div class="mode-switch-container">
-            <button class="mode-btn active" id="btn-mode-postulante" onclick="setMode('postulante')">Postulantes</button>
-            <button class="mode-btn" id="btn-mode-empresa" onclick="setMode('empresa')">Empresas</button>
+        <div class="navbar-container">
+            <div class="logo">
+                <h2>Jobbers<span>.</span></h2>
+                <span class="logo-subtitle">Gastronomía</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-link btn-cambiar-rol" onclick="toggleModal(true)">
+                    <i class="fa-solid fa-user-gear"></i> Cambiar Perfil
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-
-        <!-- =================================================== -->
-        <!-- MODO POSTULANTE                                     -->
-        <!-- =================================================== -->
-        <div id="view-postulante" class="view-section active-view">
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-container-centered">
             
-            <section class="hero-postulante">
-                <h1>Tu próximo empleo gastronómico está acá</h1>
-                <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
-                <div class="search-box-inline">
-                    <input type="text" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)...">
-                    <input type="text" class="input-dark" placeholder="Ubicación o Zona...">
-                    <button class="btn-amber">Buscar</button>
+            <!-- MODO POSTULANTE HERO -->
+            <div class="hero-text-col role-postulante-only">
+                <h1 class="hero-title">Tu próximo empleo <span class="highlight">gastronómico</span> está acá</h1>
+                <p class="hero-subtitle">Encontrá oportunidades en cocina, salón, barra y gerencia en todo el país.</p>
+                <div class="hero-buttons">
+                    <div class="hero-btn-wrapper">
+                        <a href="#vacantes" class="btn-primary">Ver Vacantes</a>
+                        <span class="btn-subtext">Actualizado diariamente</span>
+                    </div>
                 </div>
-            </section>
-
-            <div class="chips-scroll-container">
-                <span class="chip-item active">Todos</span>
-                <span class="chip-item">Cocina y Bacha</span>
-                <span class="chip-item">Salón y Mozos</span>
-                <span class="chip-item">Barra y Baristas</span>
-                <span class="chip-item">Encargados y Gerencia</span>
-                <span class="chip-item">Delivery</span>
+                <div class="hero-features">
+                    <span><i class="fa-solid fa-circle-check"></i> Ofertas verificadas</span>
+                    <span><i class="fa-solid fa-bolt"></i> Postulación directa</span>
+                </div>
             </div>
 
-            <div class="main-layout">
-                
-                <div class="job-list">
-                    <div class="job-card">
-                        <div>
-                            <div class="job-title">Cocinero con experiencia para Bodegón</div>
-                            <div class="job-meta">Palermo, CABA • Turno Noche</div>
-                            <div class="badge-salary">$650.000 / mes</div>
-                        </div>
-                        <button class="btn-amber">Postularme</button>
-                    </div>
-
-                    <div class="job-card">
-                        <div>
-                            <div class="job-title">Barista / Ayudante de Barra</div>
-                            <div class="job-meta">Nueva Córdoba, Cba • Full Time</div>
-                            <div class="badge-salary">$520.000 / mes</div>
-                        </div>
-                        <button class="btn-amber">Postularme</button>
-                    </div>
-
-                    <div class="job-card">
-                        <div>
-                            <div class="job-title">Encargado de Local Gastronómico</div>
-                            <div class="job-meta">San Isidro, GBA Norte • Turno Tarde</div>
-                            <div class="badge-salary">$850.000 / mes</div>
-                        </div>
-                        <button class="btn-amber">Postularme</button>
-                    </div>
-
-                    <div class="job-card">
-                        <div>
-                            <div class="job-title">Mozo / Garzón de Salón</div>
-                            <div class="job-meta">Carlos Paz, Cba • Fin de Semana</div>
-                            <div class="badge-salary">Pago diario + Propinas</div>
-                        </div>
-                        <button class="btn-amber">Postularme</button>
-                    </div>
+            <!-- MODO EMPRESA HERO FORM -->
+            <div class="hero-card-express role-empresa-only">
+                <div class="card-header">
+                    <i class="fa-solid fa-paper-plane" style="color: var(--primary);"></i>
+                    <h2>Publicar Búsqueda Express</h2>
                 </div>
-
-                <aside class="sidebar">
-                    <div class="sidebar-widget">
-                        <h4>Filtro Rápido</h4>
-                        <label>
-                            <input type="checkbox" checked> Solo con sueldo visible
-                        </label>
-                        <label>
-                            <input type="checkbox"> Modalidad Part-Time
-                        </label>
+                <p>Publicá tu vacante en menos de 2 minutos y recibí candidatos al instante.</p>
+                <form class="express-form" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nombre de tu Establecimiento / Empresa" required>
                     </div>
-
-                    <!-- Anuncio AdSense en Postulante -->
-                    <div class="adsense-placeholder">
-                        [ Anuncio AdSense ]
+                    <div class="form-row-2col">
+                        <input type="text" placeholder="Puesto (ej. Cocinero, Mozo)" required>
+                        <input type="text" placeholder="Ubicación / Ciudad" required>
                     </div>
-
-                    <!-- Widget Blog (Exclusivo Postulante) -->
-                    <div class="sidebar-widget">
-                        <h4 class="widget-title-amber">Lecturas Recomendadas</h4>
-                        <ul class="widget-list">
-                            <li><a href="blog.html">📄 Cómo destacar tu experiencia en la cocina &rarr;</a></li>
-                            <li><a href="blog.html">💡 5 tips para impresionar en una prueba técnica &rarr;</a></li>
-                            <li><a href="blog.html">💰 Guía de sueldos gastronómicos 2026 &rarr;</a></li>
-                        </ul>
+                    <div class="form-group">
+                        <input type="tel" placeholder="WhatsApp de contacto" required>
                     </div>
-
-                    <div class="sidebar-widget widget-highlight-amber">
-                        <h4 class="widget-title-amber">¿Sos Empresa?</h4>
-                        <p>Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
-                        <button class="btn-amber btn-full" onclick="setMode('empresa')">Publicar Empleo</button>
-                    </div>
-                </aside>
-
+                    <button type="submit" class="btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Publicar por WhatsApp
+                    </button>
+                </form>
             </div>
-
-            <!-- SECCIÓN BLOG / RECURSOS (Exclusiva de Modo Postulante) -->
-            <section class="blog-section">
-                <div class="blog-header">
-                    <h3>Blog & Recursos Gastronómicos</h3>
-                    <a href="blog.html" class="blog-link-all">Ver todos los artículos &rarr;</a>
-                </div>
-
-                <div class="blog-grid">
-                    <article class="blog-card">
-                        <div>
-                            <span class="blog-tag">Consejos CV</span>
-                            <h4>Cómo armar un CV gastronómico de alto impacto</h4>
-                            <p>Destacá tus habilidades clave en cocina, barra o salón para conseguir entrevistas más rápido.</p>
-                        </div>
-                        <a href="blog.html" class="blog-read-more">Leer artículo &rarr;</a>
-                    </article>
-
-                    <article class="blog-card">
-                        <div>
-                            <span class="blog-tag">Entrevistas</span>
-                            <h4>Claves para responder con éxito la prueba técnica en cocina</h4>
-                            <p>Estrategias efectivas para desenvolverte bajo presión durante una prueba en servicio real.</p>
-                        </div>
-                        <a href="blog.html" class="blog-read-more">Leer artículo &rarr;</a>
-                    </article>
-
-                    <article class="blog-card">
-                        <div>
-                            <span class="blog-tag">Novedades</span>
-                            <h4>Guía de sueldos y escalas salariales del rubro</h4>
-                            <p>Conocé los valores de referencia actualizados para cada puesto y especialidad del sector.</p>
-                        </div>
-                        <a href="blog.html" class="blog-read-more">Leer artículo &rarr;</a>
-                    </article>
-                </div>
-            </section>
 
         </div>
+    </section>
 
-        <!-- =================================================== -->
-        <!-- MODO EMPRESA                                        -->
-        <!-- =================================================== -->
-        <div id="view-empresa" class="view-section">
-            
-            <section class="hero-empresa">
+    <!-- CONTENIDO POSTULANTES -->
+    <main class="main-grid-section role-postulante-only" id="vacantes">
+        
+        <!-- BARRA DE BÚSQUEDA -->
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar puestos, zonas o habilidades...">
+            <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+        </div>
+
+        <!-- CATEGORÍAS -->
+        <div class="categories-section">
+            <h4 class="categories-title">Categorías Populares</h4>
+            <div class="categories-grid">
+                <button class="category-card active">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Cocina</span>
+                </button>
+                <button class="category-card">
+                    <i class="fa-solid fa-wine-glass"></i>
+                    <span>Salón</span>
+                </button>
+                <button class="category-card">
+                    <i class="fa-solid fa-martini-glass-citrus"></i>
+                    <span>Barra</span>
+                </button>
+                <button class="category-card">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <span>Cafetería</span>
+                </button>
+                <button class="category-card">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Gerencia</span>
+                </button>
+                <button class="category-card">
+                    <i class="fa-solid fa-motorcycle"></i>
+                    <span>Delivery</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- LISTADO VACANTES -->
+        <div class="vacantes-header-row">
+            <h3>Ofertas Disponibles</h3>
+            <span class="vacantes-count">124 empleos activos</span>
+        </div>
+
+        <div class="vacantes-list">
+            <article class="job-offer-card">
                 <div>
-                    <h1>Contratá personal gastronómico calificado rápido</h1>
-                    <p>Publicá tus ofertas de empleo y accedé a la base de perfiles verificados de tu ciudad.</p>
-                    <ul class="hero-empresa-list">
-                        <li>Publicación express en 2 minutos.</li>
-                        <li>Contacto directo por WhatsApp con candidatos.</li>
-                        <li>Soporte personalizado B2B.</li>
-                    </ul>
-                </div>
-
-                <div class="express-form-card">
-                    <h3>Publicación Rápida</h3>
-                    <form class="form-grid-2" onsubmit="event.preventDefault();">
-                        <input type="text" class="input-dark full-width" placeholder="Nombre de tu Local / Empresa">
-                        <input type="text" class="input-dark" placeholder="Puesto a buscar">
-                        <input type="text" class="input-dark" placeholder="Zona / Ciudad">
-                        <input type="tel" class="input-dark full-width" placeholder="Teléfono de contacto (WhatsApp)">
-                        <button class="btn-amber full-width">Publicar Búsqueda</button>
-                    </form>
-                </div>
-            </section>
-
-            <section class="talent-section">
-                <h3>Talento Gastronómico Disponible</h3>
-                
-                <div class="talent-grid">
-                    <div class="talent-card">
-                        <div class="talent-avatar">MG</div>
-                        <h4>Mariano G.</h4>
-                        <p class="talent-role">Jefe de Cocina / Chef</p>
-                        <p class="talent-meta">8 años de exp. • CABA</p>
-                        <button class="btn-green btn-full talent-btn">Ver Perfil</button>
+                    <div class="job-header-row">
+                        <h4>Cocinero con experiencia para Bodegón</h4>
+                        <span class="badge-urgente">Urgente</span>
                     </div>
-
-                    <div class="talent-card">
-                        <div class="talent-avatar">SR</div>
-                        <h4>Sofia R.</h4>
-                        <p class="talent-role">Barista Profesional</p>
-                        <p class="talent-meta">Arte latte, Arte en café • Córdoba</p>
-                        <button class="btn-green btn-full talent-btn">Ver Perfil</button>
-                    </div>
-
-                    <div class="talent-card">
-                        <div class="talent-avatar">LP</div>
-                        <h4>Lucas P.</h4>
-                        <p class="talent-role">Encargado / Bartender</p>
-                        <p class="talent-meta">Manejo de caja y stock • Rosario</p>
-                        <button class="btn-green btn-full talent-btn">Ver Perfil</button>
+                    <div class="job-company">Bodegón Palermo • Palermo, CABA</div>
+                    <div class="job-details-row">
+                        <span class="job-salary">$650.000 / mes</span>
+                        <span><i class="fa-regular fa-clock"></i> Turno Noche</span>
+                        <span><i class="fa-solid fa-briefcase"></i> Full-Time</span>
                     </div>
                 </div>
-            </section>
-
-            <div class="main-layout">
-                <div class="sidebar-widget">
-                    <h3>Pases y Planes Destacados</h3>
-                    <p class="plans-desc">Aumentá la visibilidad de tus búsquedas o destacá tu marca frente a miles de postulantes activos diariamente.</p>
-                    <button class="btn-amber">Consultar Planes PRO</button>
+                <div class="job-action-col">
+                    <span class="job-time">Hace 2 horas</span>
+                    <button class="btn-postularme">Postularme</button>
                 </div>
+            </article>
 
-                <aside class="sidebar">
-                    <!-- Anuncio AdSense en Modo Empresa -->
-                    <div class="adsense-placeholder">
-                        [ Anuncio AdSense ]
+            <article class="job-offer-card">
+                <div>
+                    <div class="job-header-row">
+                        <h4>Barista Profesional / Ayudante de Barra</h4>
                     </div>
-
-                    <div class="sidebar-widget widget-highlight-green">
-                        <h4 class="widget-title-green">Atención Corporativa</h4>
-                        <p>¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
-                        <button class="btn-green btn-full">Hablar por WhatsApp</button>
+                    <div class="job-company">Café Especialidad • Nueva Córdoba, Cba</div>
+                    <div class="job-details-row">
+                        <span class="job-salary">$520.000 / mes</span>
+                        <span><i class="fa-regular fa-clock"></i> Turno Mañana</span>
+                        <span><i class="fa-solid fa-briefcase"></i> Full-Time</span>
                     </div>
-                </aside>
-            </div>
+                </div>
+                <div class="job-action-col">
+                    <span class="job-time">Hace 5 horas</span>
+                    <button class="btn-postularme">Postularme</button>
+                </div>
+            </article>
 
+            <article class="job-offer-card">
+                <div>
+                    <div class="job-header-row">
+                        <h4>Mozo / Garzón de Salón</h4>
+                    </div>
+                    <div class="job-company">Restó Bar • Carlos Paz, Cba</div>
+                    <div class="job-details-row">
+                        <span class="job-salary">Pago diario + Propinas</span>
+                        <span><i class="fa-regular fa-clock"></i> Fines de semana</span>
+                    </div>
+                </div>
+                <div class="job-action-col">
+                    <span class="job-time">Ayer</span>
+                    <button class="btn-postularme">Postularme</button>
+                </div>
+            </article>
         </div>
 
-        <!-- =================================================== -->
-        <!-- PRE-FOOTER INFORMATIVO UNIFICADO                    -->
-        <!-- =================================================== -->
-        <section class="pre-footer">
-            <div class="footer-col">
-                <h4>Para Postulantes</h4>
-                <ul>
-                    <li><a href="#">Buscar Empleos</a></li>
-                    <li><a href="#">Cargar Curriculum</a></li>
-                    <li><a href="#">Consejos de Entrevista</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Para Empresas</h4>
-                <ul>
-                    <li><a href="#">Publicar Vacantes</a></li>
-                    <li><a href="#">Buscar Talentos</a></li>
-                    <li><a href="#">Planes de Reclutamiento</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Soporte & Recursos</h4>
-                <ul>
-                    <li><a href="#">Centro de Ayuda</a></li>
-                    <li><a href="#">Contacto B2B</a></li>
-                    <li><a href="#">Términos y Condiciones</a></li>
-                </ul>
-            </div>
-        </section>
-
+        <a href="#" class="link-more-full">Ver todas las vacantes &rarr;</a>
     </main>
 
-    <!-- NAVEGACIÓN INFERIOR MOBILE -->
+    <!-- CONTENIDO EMPRESAS -->
+    <section class="talento-section role-empresa-only">
+        <div class="vacantes-header-row">
+            <h3>Talento Gastronómico Destacado</h3>
+            <span class="vacantes-count">Perfiles verificados</span>
+        </div>
+
+        <div class="talento-grid">
+            <div class="talento-card">
+                <div>
+                    <div class="talento-card-header">
+                        <h4 class="talento-nombre">Mariano G.</h4>
+                        <span class="badge-disponible">Disponible</span>
+                    </div>
+                    <div class="talento-info">
+                        <p class="talento-puesto">Jefe de Cocina / Chef</p>
+                        <p class="talento-exp">8 años de experiencia</p>
+                    </div>
+                    <div class="talento-detalles" style="margin-top:0.8rem;">
+                        <span><i class="fa-solid fa-location-dot"></i> Palermo, CABA</span>
+                        <span><i class="fa-solid fa-star"></i> Cocina Italiana, Autor</span>
+                    </div>
+                </div>
+                <button class="btn-contactar-perfil">
+                    <i class="fa-brands fa-whatsapp"></i> Contactar Perfil
+                </button>
+            </div>
+
+            <div class="talento-card">
+                <div>
+                    <div class="talento-card-header">
+                        <h4 class="talento-nombre">Sofía R.</h4>
+                        <span class="badge-disponible">Disponible</span>
+                    </div>
+                    <div class="talento-info">
+                        <p class="talento-puesto">Barista Professional</p>
+                        <p class="talento-exp">4 años de experiencia</p>
+                    </div>
+                    <div class="talento-detalles" style="margin-top:0.8rem;">
+                        <span><i class="fa-solid fa-location-dot"></i> Córdoba Cap.</span>
+                        <span><i class="fa-solid fa-star"></i> Arte Latte, Calibración</span>
+                    </div>
+                </div>
+                <button class="btn-contactar-perfil">
+                    <i class="fa-brands fa-whatsapp"></i> Contactar Perfil
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL SELECCIÓN DE PERFIL -->
+    <div class="rol-modal-overlay" id="modal-rol" style="display:none;">
+        <div class="rol-modal-card">
+            <button class="jobbers-close-btn" onclick="toggleModal(false)">&times;</button>
+            <h2>¿Cómo querés usar Jobbers?</h2>
+            <p>Seleccioná tu perfil para adaptar el contenido a tus necesidades.</p>
+            <div class="rol-options">
+                <button class="btn-rol" onclick="setRole('postulante')">
+                    <span class="rol-icon">🔍</span>
+                    <span class="rol-title">Soy Postulante</span>
+                    <span class="rol-desc">Busco trabajo en bares, restaurantes y hoteles.</span>
+                </button>
+                <button class="btn-rol" onclick="setRole('empresa')">
+                    <span class="rol-icon">👨‍🍳</span>
+                    <span class="rol-title">Soy Empresa</span>
+                    <span class="rol-desc">Quiero publicar vacantes y contratar personal.</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVEGACIÓN INFERIOR MÓVIL -->
     <nav class="bottom-nav">
-        <div class="bottom-nav-item active" id="nav-item-postulante" onclick="setMode('postulante')">
-            <span>🔍</span>
+        <button class="bottom-nav-item active" onclick="setRole('postulante')">
+            <i class="fa-solid fa-magnifying-glass"></i>
             <span>Buscar</span>
-        </div>
-        <div class="bottom-nav-item" id="nav-item-empresa" onclick="setMode('empresa')">
-            <span>📢</span>
-            <span>Publicar</span>
-        </div>
-        <div class="bottom-nav-item">
-            <span>👤</span>
-            <span>Mi Cuenta</span>
-        </div>
+        </button>
+        <button class="bottom-nav-item" onclick="setRole('empresa')">
+            <i class="fa-solid fa-users"></i>
+            <span>Talentos</span>
+        </button>
+        <button class="bottom-nav-item" onclick="toggleModal(true)">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Perfil</span>
+        </button>
     </nav>
 
-    <script src="js/main.js"></script>
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <p>&copy; 2026 Jobbers - Portal de Empleo Gastronómico. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- LOGICA JAVASCRIPT EXTERNA -->
+    <script src="js/main.js" defer></script>
 </body>
 </html>
