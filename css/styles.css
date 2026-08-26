@@ -29,7 +29,7 @@
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
   
-  /* Transición de rendimiento optimizada */
+  /* Transiciones */
   --transition-cubic: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: 0.2s ease;
 
@@ -89,8 +89,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-wrap: break-word;
-  word-break: normal;
 }
 
 a {
@@ -124,7 +122,6 @@ button, input, select {
 /* ==========================================================================
    2. CONTROL DE VISIBILIDAD POR ROLES
    ========================================================================== */
-
 .role-empresa-only,
 .empresa-only,
 body:not(.role-empresa) .role-empresa-only,
@@ -133,7 +130,7 @@ body.role-postulante .role-empresa-only {
 }
 
 body.role-empresa #vacantes,
-body.role-empresa .main-grid-section,
+body.role-empresa .main-layout-container,
 body.role-empresa .role-postulante-only {
   display: none !important;
 }
@@ -169,7 +166,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   top: 0;
   z-index: var(--z-navbar);
   width: 100%;
-  background-color: #0d0d0d;
   background-color: rgba(13, 13, 13, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -179,7 +175,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 [data-theme="light"] .navbar {
-  background-color: #ffffff;
   background-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -205,6 +200,8 @@ body.role-empresa .bottom-nav .role-empresa-only {
   color: var(--text-main);
   line-height: 1;
 }
+
+.logo h2 span { color: var(--primary); }
 
 .logo-subtitle {
   font-size: 0.65rem;
@@ -233,14 +230,9 @@ body.role-empresa .bottom-nav .role-empresa-only {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.50rem 0.85rem;
+  padding: 0.5rem 0.85rem;
   border-radius: var(--radius-sm);
   min-height: 40px;
-}
-
-.nav-link:hover {
-  color: var(--primary);
-  background-color: rgba(243, 156, 18, 0.1);
 }
 
 .btn-cambiar-rol {
@@ -265,7 +257,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
 .jobbers-modal {
   position: fixed;
   inset: 0;
-  background-color: #0a0b0c;
   background-color: var(--modal-overlay-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -299,7 +290,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   border: none;
   color: var(--text-muted);
   font-size: 1.5rem;
-  line-height: 1;
   cursor: pointer;
   width: 44px;
   height: 44px;
@@ -350,9 +340,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   cursor: pointer;
   transition: transform var(--transition-cubic), border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
   width: 100%;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
   min-height: 140px;
 }
 
@@ -363,30 +350,9 @@ body.role-empresa .bottom-nav .role-empresa-only {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-.btn-rol:focus-visible {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.3);
-}
-
-.rol-icon {
-  font-size: 2.2rem;
-  margin-bottom: 0.25rem;
-  display: block;
-}
-
-.rol-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text-main);
-  display: block;
-}
-
-.rol-desc {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-  display: block;
-}
+.rol-icon { font-size: 2.2rem; margin-bottom: 0.25rem; }
+.rol-title { font-size: 1.05rem; font-weight: 800; color: var(--text-main); }
+.rol-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
 
 @keyframes fadeInOverlay {
   from { opacity: 0; }
@@ -399,7 +365,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   5. HERO SECTION & FORMULARIO EXPRESS
+   5. HERO SECTION (ADAPTATIVO 2 COLUMNAS)
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -411,7 +377,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  min-height: 60vh;
 }
 
 .hero-overlay {
@@ -422,14 +388,15 @@ body.role-empresa .bottom-nav .role-empresa-only {
   pointer-events: none;
 }
 
-.hero-container-centered {
+.hero-container {
   position: relative;
   z-index: var(--z-content);
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
   align-items: center;
   text-align: center;
 }
@@ -447,9 +414,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
   color: #FFFFFF;
 }
 
-.hero-title .highlight { 
-  color: var(--primary); 
-}
+.hero-title .highlight { color: var(--primary); }
 
 .hero-subtitle {
   font-size: clamp(0.95rem, 2vw, 1.1rem);
@@ -470,25 +435,9 @@ body.role-empresa .bottom-nav .role-empresa-only {
   width: 100%;
 }
 
-.hero-btn-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  width: 100%;
-  max-width: 280px;
-}
-
-.btn-subtext {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.btn-primary, .btn-secondary {
-  width: 100%;
+.btn-primary {
   min-height: 48px;
-  padding: 0.85rem 1.5rem;
+  padding: 0.85rem 1.75rem;
   border-radius: var(--radius-sm);
   font-weight: 800;
   font-size: 0.9rem;
@@ -499,9 +448,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   transition: transform var(--transition-cubic), background-color var(--transition-fast), box-shadow var(--transition-fast);
   cursor: pointer;
   text-transform: uppercase;
-}
-
-.btn-primary {
   background: var(--primary);
   color: var(--text-dark);
   border: none;
@@ -513,17 +459,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   box-shadow: var(--shadow-md);
 }
 
-.btn-secondary {
-  background: transparent;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-}
-
-.btn-secondary:hover {
-  background: rgba(243, 156, 18, 0.1);
-  transform: translateY(-2px);
-}
-
 .hero-features {
   display: flex;
   flex-wrap: wrap;
@@ -532,7 +467,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   font-size: 0.85rem;
   color: var(--text-muted);
   font-weight: 600;
-  margin-bottom: 2rem;
 }
 
 .hero-features span {
@@ -544,30 +478,28 @@ body.role-empresa .bottom-nav .role-empresa-only {
 .hero-features i { color: var(--primary); }
 
 /* TARJETA FORMULARIO EXPRESS */
-#formulario-express:not(.is-visible) {
-  display: none;
-}
-
 .hero-card-express {
   position: relative;
   z-index: var(--z-content);
   width: 100%;
-  max-width: 520px;
+  max-width: 500px;
+  margin: 0 auto;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   padding: clamp(1.25rem, 3vw, 2rem);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   text-align: left;
-  margin-top: 1rem;
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   margin-bottom: 0.5rem;
 }
+
+.card-header i { color: var(--primary); font-size: 1.2rem; }
 
 .card-header h2 {
   font-size: 1.25rem;
@@ -587,16 +519,13 @@ body.role-empresa .bottom-nav .role-empresa-only {
   gap: 0.85rem;
 }
 
-.express-form .form-group { width: 100%; }
-
 .express-form .form-row-2col {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0.75rem;
 }
 
-.express-form input,
-.express-form select {
+.express-form input {
   width: 100%;
   height: 48px;
   padding: 0 1rem;
@@ -609,8 +538,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
   color: var(--text-main);
 }
 
-.express-form input:focus,
-.express-form select:focus {
+.express-form input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.18);
 }
@@ -640,34 +568,156 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   6. LISTADO DE VACANTES & CATEGORÍAS
+   6. LAYOUT PRINCIPAL (2 COLUMNAS: SIDEBAR + FEED)
    ========================================================================== */
-.main-grid-section, .info-section {
+.main-layout-container {
   max-width: 1200px;
   margin: clamp(2rem, 4vw, 3.5rem) auto;
   padding: 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* SIDEBAR DE FILTROS */
+.filters-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sidebar-block {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.sidebar-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-title i { color: var(--primary); }
+
+.categories-list-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  width: 100%;
+}
+
+.category-item span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.category-item i {
+  width: 16px;
+  text-align: center;
+}
+
+.cat-count {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.category-item:hover,
+.category-item.active {
+  background: var(--card-bg-light);
+  color: var(--primary);
+}
+
+.category-item.active {
+  border-color: rgba(243, 156, 18, 0.3);
+  background: rgba(243, 156, 18, 0.08);
+}
+
+.category-item.active .cat-count {
+  background: var(--primary);
+  color: var(--text-dark);
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+}
+
+.filter-checkbox input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* FEED DE CONTENIDO & BÚSQUEDA */
+.feed-content {
+  display: flex;
+  flex-direction: column;
 }
 
 .search-bar {
   display: flex;
+  align-items: center;
   gap: 0.75rem;
-  margin-bottom: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.4rem 0.4rem 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-bar .search-icon {
+  color: var(--text-muted);
+  font-size: 1rem;
 }
 
 .search-bar input {
   flex: 1;
-  height: 48px;
-  padding: 0 1.25rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  background: var(--card-bg);
+  height: 40px;
+  border: none;
+  background: transparent;
   color: var(--text-main);
   font-size: 0.9rem;
+  outline: none;
 }
 
 .search-bar .btn-search {
-  padding: 0 1.5rem;
-  height: 48px;
+  padding: 0 1.25rem;
+  height: 42px;
   background: var(--primary);
   color: var(--text-dark);
   border: none;
@@ -681,74 +731,11 @@ body.role-empresa .bottom-nav .role-empresa-only {
   background: var(--primary-hover);
 }
 
-/* BLOQUE CATEGORÍAS */
-.categories-section {
-  margin: 2rem 0;
-}
-
-.categories-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-}
-
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 0.75rem;
-}
-
-.category-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 0.5rem;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  color: var(--text-main);
-  cursor: pointer;
-  transition: transform var(--transition-cubic), background-color var(--transition-fast), border-color var(--transition-fast);
-  outline: none;
-  min-height: 85px;
-}
-
-.category-card i {
-  font-size: 1.4rem;
-  margin-bottom: 0.4rem;
-  color: var(--text-muted);
-  transition: color var(--transition-fast);
-}
-
-.category-card span {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.2;
-}
-
-.category-card:hover,
-.category-card.active {
-  background-color: var(--card-bg-light);
-  border-color: var(--primary);
-  transform: translateY(-2px);
-}
-
-.category-card:hover i,
-.category-card.active i {
-  color: var(--primary);
-}
-
-/* Encabezado y contador de vacantes */
 .vacantes-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 0 1rem 0;
+  margin-bottom: 1.25rem;
   gap: 1rem;
 }
 
@@ -770,24 +757,46 @@ body.role-empresa .bottom-nav .role-empresa-only {
   gap: 1rem;
 }
 
+/* TARJETA DE VACANTE REDISEÑADA CON AVATAR */
 .job-offer-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 1.25rem 1.5rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-cubic);
 }
 
 .job-offer-card:hover {
-  border-color: #3F444E;
-  background: #181B1F;
+  border-color: rgba(243, 156, 18, 0.4);
+  background: var(--card-bg-light);
+  transform: translateY(-2px);
+}
+
+.job-avatar {
+  width: 52px;
+  height: 52px;
+  background: rgba(243, 156, 18, 0.1);
+  border: 1px solid rgba(243, 156, 18, 0.2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.job-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .job-offer-card h4 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: var(--text-main);
 }
@@ -806,7 +815,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
   border: 1px solid rgba(231, 76, 60, 0.3);
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.55rem;
   border-radius: 4px;
 }
 
@@ -814,14 +823,13 @@ body.role-empresa .bottom-nav .role-empresa-only {
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--primary);
-  margin-top: 0.2rem;
 }
 
 .job-details-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
 }
 
 .job-details-row span {
@@ -880,7 +888,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
 .link-more-full {
   display: block;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
   color: var(--primary);
   font-weight: 700;
   font-size: 0.9rem;
@@ -931,7 +939,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--primary);
-  margin: 0;
 }
 
 .badge-disponible {
@@ -960,7 +967,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
 .talento-exp {
   font-size: 0.88rem;
   color: var(--text-muted);
-  font-weight: 500;
 }
 
 .talento-detalles {
@@ -1016,7 +1022,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
   right: 0;
   height: calc(65px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background-color: #0d0d0d;
   background-color: rgba(13, 13, 13, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1028,7 +1033,6 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 [data-theme="light"] .bottom-nav {
-  background-color: #ffffff;
   background-color: rgba(255, 255, 255, 0.92);
 }
 
@@ -1047,10 +1051,7 @@ body.role-empresa .bottom-nav .role-empresa-only {
   gap: 2px;
 }
 
-.bottom-nav-item i {
-  font-size: 1.2rem;
-}
-
+.bottom-nav-item i { font-size: 1.2rem; }
 .bottom-nav-item.active { color: var(--primary); }
 
 .main-footer {
@@ -1063,19 +1064,15 @@ body.role-empresa .bottom-nav .role-empresa-only {
 }
 
 /* ==========================================================================
-   9. BREAKPOINTS (DESKTOP / MONITORES GRANDES)
+   9. BREAKPOINTS (RESPONSIVE GRID)
    ========================================================================== */
 
-/* En tablets y laptops (768px+) */
-@media (min-width: 768px) {
-  .categories-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
+/* En Móviles medianos / Tablets (600px+) */
+@media (min-width: 600px) {
   .job-offer-card {
-    flex-direction: row;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    justify-content: space-between;
+    gap: 1.25rem;
   }
 
   .job-action-col {
@@ -1087,23 +1084,44 @@ body.role-empresa .bottom-nav .role-empresa-only {
     padding-top: 0;
     gap: 0.5rem;
   }
-
-  .hero-buttons {
-    flex-direction: row;
-  }
-
-  .hero-btn-wrapper {
-    width: auto;
-  }
 }
 
-/* En Escritorio (900px+) */
-@media (min-width: 900px) {
+/* En Laptops y Desktop (992px+) */
+@media (min-width: 992px) {
   body { 
     padding-bottom: 0; 
   }
 
   .bottom-nav { 
     display: none; 
+  }
+
+  /* Grid del Hero: 2 Columnas */
+  .hero-container {
+    grid-template-columns: 1.2fr 0.8fr;
+    text-align: left;
+  }
+
+  .hero-subtitle {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .hero-buttons,
+  .hero-features {
+    justify-content: flex-start;
+  }
+
+  /* Grid del Layout Principal: Sidebar Sticky + Feed */
+  .main-layout-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    align-items: start;
+    gap: 2.5rem;
+  }
+
+  .filters-sidebar {
+    position: sticky;
+    top: 90px;
   }
 }
