@@ -86,35 +86,29 @@ function asegurarEstructuraModalPerfil() {
 
     const modal = document.createElement('div');
     modal.id = 'modal-cambiar-perfil';
-    modal.className = 'jobbers-modal';
-    // Corrección de z-index elevado a 99999 para evitar que el header u otros elementos lo tapen
-    modal.style.cssText = `
-        display: none; position: fixed; inset: 0; z-index: 99999;
-        background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
-        align-items: center; justify-content: center; padding: 1rem;
-    `;
+    modal.className = 'modal-overlay';
+    
     modal.innerHTML = `
-        <div class="jobbers-modal-card" style="background: var(--card-bg, #141619); border: 1px solid var(--border-color, #26292E); width: 100%; max-width: 440px; border-radius: 24px; padding: 2rem; position: relative; color: #fff;">
-            <button type="button" onclick="cerrarModalPerfil()" style="position:absolute; right:18px; top:18px; background:transparent; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+        <div class="modal-card">
+            <button type="button" class="modal-close" onclick="cerrarModalPerfil()" aria-label="Cerrar modal">&times;</button>
+            <h2 class="modal-title">SELECCIONÁ TU PERFIL</h2>
+            <p class="modal-subtitle">Elegí cómo querés navegar Jobbers Argentina</p>
             
-            <h2 style="font-size:1.4rem; font-weight:800; margin-bottom: 8px; text-align:center;">SELECCIONÁ TU PERFIL</h2>
-            <p style="color:var(--text-muted, #94a3b8); font-size:0.9rem; text-align:center; margin-bottom:1.5rem;">Elegí cómo querés navegar Jobbers Argentina</p>
-            
-            <div style="display:flex; flex-direction:column; gap:12px;">
-                <button type="button" onclick="cambiarPerfil('postulante')" class="btn-rol-select" style="padding:14px; border-radius:16px; border:1px solid #333; background:#1e2227; color:#fff; font-weight:bold; cursor:pointer; text-align:left; display:flex; align-items:center; gap:12px; transition:0.2s;">
-                    <span style="font-size:1.5rem;">👤</span>
-                    <div>
-                        <div style="font-size:1rem;">Modo Postulante</div>
-                        <div style="font-size:0.75rem; color:#aaa; font-weight:normal;">Buscar empleo y postularme por WhatsApp</div>
+            <div class="role-options">
+                <div class="role-card" onclick="cambiarPerfil('postulante')">
+                    <span class="role-icon">👤</span>
+                    <div class="role-info">
+                        <h3>Modo Postulante</h3>
+                        <p>Buscar empleo y postularme por WhatsApp</p>
                     </div>
-                </button>
-                <button type="button" onclick="cambiarPerfil('empresa')" class="btn-rol-select" style="padding:14px; border-radius:16px; border:1px solid #333; background:#1e2227; color:#fff; font-weight:bold; cursor:pointer; text-align:left; display:flex; align-items:center; gap:12px; transition:0.2s;">
-                    <span style="font-size:1.5rem;">🏢</span>
-                    <div>
-                        <div style="font-size:1rem;">Modo Empresa</div>
-                        <div style="font-size:0.75rem; color:#aaa; font-weight:normal;">Publicar búsquedas y contactar talento</div>
+                </div>
+                <div class="role-card" onclick="cambiarPerfil('empresa')">
+                    <span class="role-icon">🏢</span>
+                    <div class="role-info">
+                        <h3>Modo Empresa</h3>
+                        <p>Publicar búsquedas y contactar talento</p>
                     </div>
-                </button>
+                </div>
             </div>
         </div>
     `;
@@ -128,12 +122,12 @@ function asegurarEstructuraModalPerfil() {
 function abrirModalPerfil() {
     asegurarEstructuraModalPerfil();
     const modal = document.getElementById('modal-cambiar-perfil');
-    if (modal) modal.style.display = 'flex';
+    if (modal) modal.classList.add('active');
 }
 
 function cerrarModalPerfil() {
     const modal = document.getElementById('modal-cambiar-perfil');
-    if (modal) modal.style.display = 'none';
+    if (modal) modal.classList.remove('active');
 }
 
 function cambiarPerfil(rol) {
@@ -249,7 +243,7 @@ function inicializarEventListeners() {
             const modalPerfil = document.getElementById('modal-cambiar-perfil');
 
             if (modalJobbers && getComputedStyle(modalJobbers).display !== 'none') cerrarModal();
-            if (modalPerfil && getComputedStyle(modalPerfil).display !== 'none') cerrarModalPerfil();
+            if (modalPerfil && modalPerfil.classList.contains('active')) cerrarModalPerfil();
             cerrarDropdown();
         }
     });
@@ -492,23 +486,23 @@ function abrirModalPostulacion(puesto, empresa, contactoWA) {
     body.innerHTML = `
         <div style="margin-bottom: 1.2rem;">
             <h2 id="modal-title-postulacion" style="font-size:1.35rem; font-weight:800; color:var(--text-main); margin:0 0 4px 0;">POSTULARME</h2>
-            <p style="color:var(--primary, #e74c3c); font-size:0.95rem; font-weight:700; margin:0;">${escapeHTML(puesto)} — ${escapeHTML(empresa)}</p>
+            <p style="color:var(--primary, #F59E0B); font-size:0.95rem; font-weight:700; margin:0;">${escapeHTML(puesto)} — ${escapeHTML(empresa)}</p>
         </div>
 
-        <div style="background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--danger-badge, #e74c3c); padding: 12px 14px; border-radius: 14px; margin-bottom: 1.2rem;">
-            <p style="font-size: 0.85rem; color: #fca5a5; margin: 0; line-height: 1.4;">
+        <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--primary, #F59E0B); padding: 12px 14px; border-radius: 14px; margin-bottom: 1.2rem;">
+            <p style="font-size: 0.85rem; color: #fde68a; margin: 0; line-height: 1.4;">
                 📎 <strong>Recordatorio:</strong> Al abrirse WhatsApp, <u>adjuntá tu CV (PDF)</u> en el chat.
             </p>
         </div>
 
         <form id="form-postulacion-modal" class="express-form">
             <div class="form-group" style="margin-bottom: 12px;">
-                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:12px 16px; border-radius:14px; border:1px solid #333; background:#222; color:#fff;">
+                <input type="text" id="post-nombre" placeholder="Nombre y Apellido" required style="width:100%; padding:12px 16px; border-radius:14px; border:1px solid rgba(255,255,255,0.1); background:#0D1117; color:#fff;">
             </div>
             <div class="form-group" style="margin-bottom: 14px;">
-                <input type="tel" id="post-telefono" placeholder="Tu número de WhatsApp (ej: 3511234567)" required style="width:100%; padding:12px 16px; border-radius:14px; border:1px solid #333; background:#222; color:#fff;">
+                <input type="tel" id="post-telefono" placeholder="Tu número de WhatsApp (ej: 3511234567)" required style="width:100%; padding:12px 16px; border-radius:14px; border:1px solid rgba(255,255,255,0.1); background:#0D1117; color:#fff;">
             </div>
-            <button type="submit" class="btn-primary" style="width:100%; margin-top:6px; padding:14px; background:var(--primary, #e74c3c); border:none; border-radius:999px; color:#fff; font-weight:bold; cursor:pointer; transition: transform 0.2s ease;">
+            <button type="submit" class="btn-accent" style="width:100%; margin-top:6px; padding:14px; font-weight:bold; cursor:pointer;">
                 CONTACTAR AL EMPLEADOR
             </button>
         </form>
@@ -557,10 +551,10 @@ function mostrarToast(mensaje, tipo = "success") {
     const esSuccess = tipo === 'success';
     const toast = document.createElement('div');
     toast.style.cssText = `
-        background: ${esSuccess ? 'var(--salary-green, #2ecc71)' : 'var(--danger-badge, #e74c3c)'};
-        color: ${esSuccess ? '#000000' : '#ffffff'};
+        background: ${esSuccess ? 'var(--primary, #F59E0B)' : '#EF4444'};
+        color: #000000;
         padding: 12px 24px; border-radius: 999px; margin-top: 10px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3); font-weight: 700; font-size: 0.9rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3); font-weight: 800; font-size: 0.9rem;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease; opacity: 1;
     `;
     toast.innerText = mensaje;
