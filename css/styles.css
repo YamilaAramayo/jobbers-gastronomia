@@ -38,9 +38,15 @@ body {
 }
 
 /* --- VISTAS DINÁMICAS POR ROL --- */
-body.role-postulante .express-card {
-  display: none;
+body.role-postulante .express-card,
+body.role-postulante .view-empresa {
+  display: none !important;
 }
+
+body.role-empresa .view-postulante {
+  display: none !important;
+}
+
 body.role-empresa .hero-left {
   max-width: 600px;
 }
