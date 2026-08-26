@@ -87,8 +87,9 @@ function asegurarEstructuraModalPerfil() {
     const modal = document.createElement('div');
     modal.id = 'modal-cambiar-perfil';
     modal.className = 'jobbers-modal';
+    // Corrección de z-index elevado a 99999 para evitar que el header u otros elementos lo tapen
     modal.style.cssText = `
-        display: none; position: fixed; inset: 0; z-index: var(--z-modal, 1000);
+        display: none; position: fixed; inset: 0; z-index: 99999;
         background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
         align-items: center; justify-content: center; padding: 1rem;
     `;
@@ -144,7 +145,6 @@ function cambiarPerfil(rol) {
     cerrarModalPerfil();
     mostrarToast(`Perfil activo: ${rolNombre.toUpperCase()}`, 'success');
 
-    // Notificar cambios a la app
     window.dispatchEvent(new CustomEvent('jobbers:perfilCambiado', { detail: { rol } }));
 }
 
@@ -272,7 +272,6 @@ async function cargarVacantesDesdeJSON() {
         } catch {}
     }
 
-    // Fallback de contingencia local
     vacantesGastronomia = [
         { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
         { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
@@ -447,7 +446,7 @@ function asegurarEstructuraModal() {
     modal.setAttribute('aria-labelledby', 'modal-title-postulacion');
 
     modal.style.cssText = `
-        display: none; position: fixed; inset: 0; z-index: var(--z-modal, 1000);
+        display: none; position: fixed; inset: 0; z-index: 99999;
         background: var(--modal-overlay-bg, rgba(0,0,0,0.8)); backdrop-filter: blur(6px);
         align-items: center; justify-content: center; padding: 1rem;
     `;
@@ -551,7 +550,7 @@ function mostrarToast(mensaje, tipo = "success") {
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
-        container.style.cssText = "position: fixed; bottom: 25px; right: 25px; z-index: var(--z-toast, 2000);";
+        container.style.cssText = "position: fixed; bottom: 25px; right: 25px; z-index: 999999;";
         document.body.appendChild(container);
     }
 
