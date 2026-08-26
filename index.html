@@ -12,7 +12,7 @@
     <!-- MODAL SELECCIÓN DE PERFIL -->
     <div class="modal-overlay" id="roleModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-card">
-            <button type="button" class="modal-close" id="closeModalBtn" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="modal-close" id="closeModalBtn" onclick="closeModal()" aria-label="Cerrar modal">&times;</button>
             <h2 class="modal-title" id="modalTitle">¿Cómo querés ingresar? 👋</h2>
             <p class="modal-subtitle">Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
             
@@ -51,7 +51,7 @@
             </nav>
             <div class="nav-actions">
                 <button type="button" class="btn-ghost" onclick="openModal()">
-                    <i class="fa-solid fa-user-gear"></i> Cambiar Perfil
+                    <i class="fa-solid fa-user-gear"></i> <span id="label-modo-actual">Cambiar Perfil</span>
                 </button>
             </div>
         </div>
@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <!-- FORMULARIO EXPRESS (VISTA EMPRESA / RAPIDA) -->
+            <!-- FORMULARIO EXPRESS (VISTA EMPRESA / RÁPIDA) -->
             <div class="express-card">
                 <div class="express-header">
                     <i class="fa-solid fa-bolt"></i>
@@ -89,32 +89,34 @@
                         <p>Publicá tu búsqueda en segundos y llegá a los mejores perfiles.</p>
                     </div>
                 </div>
-                <form onsubmit="event.preventDefault();">
+                <form id="form-express-hero">
                     <div class="form-group-custom">
-                        <select class="select-custom" required aria-label="Puesto que necesitas">
+                        <select id="express-puesto" class="select-custom" required aria-label="Puesto que necesitas">
                             <option value="" disabled selected>Puesto que necesitas</option>
-                            <option value="cocinero">Cocinero / Ayudante</option>
-                            <option value="mozo">Mozo / Garzón</option>
-                            <option value="barista">Barista</option>
-                            <option value="bartender">Bartender</option>
+                            <option value="Cocinero / Ayudante">Cocinero / Ayudante</option>
+                            <option value="Mozo / Garzón">Mozo / Garzón</option>
+                            <option value="Barista">Barista</option>
+                            <option value="Bartender">Bartender</option>
+                            <option value="Encargado / Leader">Encargado / Leader</option>
                         </select>
                     </div>
                     <div class="form-group-custom">
-                        <select class="select-custom" required aria-label="Zona">
+                        <select id="express-zona" class="select-custom" required aria-label="Zona">
                             <option value="" disabled selected>Zona</option>
-                            <option value="nueva-cordoba">Nueva Córdoba</option>
-                            <option value="guemes">Güemes</option>
-                            <option value="centro">Centro</option>
-                            <option value="palermo">Palermo, CABA</option>
+                            <option value="Nueva Córdoba">Nueva Córdoba</option>
+                            <option value="Güemes">Güemes</option>
+                            <option value="Centro">Centro</option>
+                            <option value="Cerro de las Rosas">Cerro de las Rosas</option>
+                            <option value="General Paz">General Paz</option>
                         </select>
                     </div>
                     <div class="form-group-custom">
-                        <select class="select-custom" required aria-label="Tipo de turno">
+                        <select id="express-turno" class="select-custom" required aria-label="Tipo de turno">
                             <option value="" disabled selected>Tipo de turno</option>
-                            <option value="full">Full-time</option>
-                            <option value="part">Part-time</option>
-                            <option value="noche">Turno Noche</option>
-                            <option value="finde">Fines de Semana</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Turno Noche">Turno Noche</option>
+                            <option value="Fines de Semana">Fines de Semana</option>
                         </select>
                     </div>
                     <button type="submit" class="btn-whatsapp-full">
@@ -127,52 +129,52 @@
     </section>
 
     <!-- CATEGORÍAS DE PUESTOS -->
-    <section class="section-wrapper">
+    <section class="section-wrapper" id="buscar">
         <div class="section-header-flex">
             <h2 class="section-title">Puestos Más Buscados</h2>
             <a href="#" class="link-see-all">Ver todos los puestos <i class="fa-solid fa-chevron-right"></i></a>
         </div>
         <div class="categories-grid">
-            <a href="#" class="cat-card">
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Cocina')">
                 <i class="fa-solid fa-utensils cat-icon"></i>
                 <span class="cat-name">Cocina</span>
                 <span class="cat-count">1.243 ofertas</span>
-            </a>
-            <a href="#" class="cat-card">
+            </button>
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Mozo')">
                 <i class="fa-solid fa-concierge-bell cat-icon"></i>
                 <span class="cat-name">Mozo / Salonero</span>
                 <span class="cat-count">982 ofertas</span>
-            </a>
-            <a href="#" class="cat-card">
+            </button>
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Barista')">
                 <i class="fa-solid fa-mug-hot cat-icon"></i>
                 <span class="cat-name">Barista</span>
                 <span class="cat-count">567 ofertas</span>
-            </a>
-            <a href="#" class="cat-card">
+            </button>
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Bartender')">
                 <i class="fa-solid fa-martini-glass-citrus cat-icon"></i>
                 <span class="cat-name">Bartender</span>
                 <span class="cat-count">458 ofertas</span>
-            </a>
-            <a href="#" class="cat-card">
+            </button>
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Cajero')">
                 <i class="fa-solid fa-cash-register cat-icon"></i>
                 <span class="cat-name">Cajero</span>
                 <span class="cat-count">324 ofertas</span>
-            </a>
-            <a href="#" class="cat-card">
+            </button>
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Delivery')">
                 <i class="fa-solid fa-motorcycle cat-icon"></i>
                 <span class="cat-name">Delivery</span>
                 <span class="cat-count">1.105 ofertas</span>
-            </a>
-            <a href="#" class="cat-card">
+            </button>
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Pastelería')">
                 <i class="fa-solid fa-cake-candles cat-icon"></i>
                 <span class="cat-name">Pastelería</span>
                 <span class="cat-count">256 ofertas</span>
-            </a>
-            <a href="#" class="cat-card">
+            </button>
+            <button type="button" class="cat-card" onclick="filtrarPorCategoria('Encargado')">
                 <i class="fa-solid fa-user-tie cat-icon"></i>
                 <span class="cat-name">Encargado</span>
                 <span class="cat-count">278 ofertas</span>
-            </a>
+            </button>
         </div>
     </section>
 
@@ -180,88 +182,25 @@
     <section class="section-wrapper">
         <div class="dashboard-grid">
             
-            <!-- SECCIÓN VACANTES (VISIBILIDAD CONTROLADA POR JS/CSS) -->
+            <!-- SECCIÓN VACANTES (POSTULANTE) -->
             <div class="dash-card view-postulante">
                 <div class="section-header-flex">
                     <h3 class="section-title">Ofertas Destacadas</h3>
-                    <a href="#" class="link-see-all">Ver todas <i class="fa-solid fa-chevron-right"></i></a>
+                    <span id="vacantes-count" class="badge-count">Cargando vacantes...</span>
                 </div>
-                <div class="offer-item">
-                    <div>
-                        <div class="offer-header-inline">
-                            <span class="offer-main-title">Cocinero/a</span>
-                            <span class="badge-urgent">Urgente ⚡</span>
-                        </div>
-                        <p class="offer-sub">Casa Norte • Nueva Córdoba</p>
-                        <div class="offer-tags">
-                            <span class="tag-pill">Tiempo completo</span>
-                        </div>
-                    </div>
-                    <span class="offer-time">Hace 1h</span>
-                </div>
-
-                <div class="offer-item">
-                    <div>
-                        <span class="offer-main-title">Barista</span>
-                        <p class="offer-sub">Café Central • Güemes</p>
-                        <div class="offer-tags">
-                            <span class="tag-pill">Part-time</span>
-                        </div>
-                    </div>
-                    <span class="offer-time">Hace 2h</span>
-                </div>
-
-                <div class="offer-item">
-                    <div>
-                        <span class="offer-main-title">Bartender</span>
-                        <p class="offer-sub">Barra Sur • Centro</p>
-                        <div class="offer-tags">
-                            <span class="tag-pill">Turno noche</span>
-                        </div>
-                    </div>
-                    <span class="offer-time">Hace 3h</span>
+                <div id="lista-vacantes" class="offers-container">
+                    <!-- Renderizado dinámico vía JS -->
                 </div>
             </div>
 
-            <!-- SECCIÓN TALENTOS (VISIBILIDAD CONTROLADA POR JS/CSS) -->
-            <div class="dash-card view-empresa">
+            <!-- SECCIÓN TALENTOS (EMPRESA) -->
+            <div class="dash-card view-empresa" id="personal">
                 <div class="section-header-flex">
                     <h3 class="section-title">Talento Destacado</h3>
                     <a href="#" class="link-see-all">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
-                <div class="talent-flex-container">
-                    <div class="talent-mini-card">
-                        <div class="talent-avatar-wrapper">
-                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80" alt="Lucas R." class="talent-avatar">
-                            <span class="status-dot"></span>
-                        </div>
-                        <p class="talent-name">Lucas R.</p>
-                        <p class="talent-role">Cocinero</p>
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (24)</div>
-                        <p class="talent-exp">5 años exp.</p>
-                    </div>
-
-                    <div class="talent-mini-card">
-                        <div class="talent-avatar-wrapper">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="María F." class="talent-avatar">
-                            <span class="status-dot"></span>
-                        </div>
-                        <p class="talent-name">María F.</p>
-                        <p class="talent-role">Barista</p>
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (18)</div>
-                        <p class="talent-exp">3 años exp.</p>
-                    </div>
-
-                    <div class="talent-mini-card">
-                        <div class="talent-avatar-wrapper">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Santiago M." class="talent-avatar">
-                            <span class="status-dot"></span>
-                        </div>
-                        <p class="talent-name">Santiago M.</p>
-                        <p class="talent-role">Mozo</p>
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (31)</div>
-                        <p class="talent-exp">4 años exp.</p>
-                    </div>
+                <div class="talent-flex-container" id="grid-talento-destacado">
+                    <!-- Renderizado dinámico vía JS -->
                 </div>
             </div>
 
@@ -269,7 +208,7 @@
             <div class="community-card">
                 <h3 class="community-title">Formá parte de la comunidad <span>JOBBERS</span></h3>
                 <p class="community-desc">Recursos, tips y contenido exclusivo para crecer en gastronomía.</p>
-                <button type="button" class="btn-ghost btn-community">IR AL BLOG</button>
+                <button type="button" class="btn-ghost btn-community" onclick="unirseAComunidad()">UNIRME AHORA</button>
             </div>
 
         </div>
@@ -307,17 +246,13 @@
             <i class="fa-solid fa-house"></i>
             <span>Inicio</span>
         </a>
-        <a href="#" class="bnav-item">
+        <a href="#buscar" class="bnav-item">
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Buscar</span>
         </a>
-        <a href="#" class="bnav-item bnav-accent">
+        <a href="#personal" class="bnav-item bnav-accent">
             <i class="fa-solid fa-bolt"></i>
             <span>Personal YA</span>
-        </a>
-        <a href="#" class="bnav-item">
-            <i class="fa-solid fa-bookmark"></i>
-            <span>Postulaciones</span>
         </a>
         <button type="button" class="bnav-item bnav-btn" onclick="openModal()">
             <i class="fa-solid fa-user"></i>
