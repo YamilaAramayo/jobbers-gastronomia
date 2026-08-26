@@ -30,7 +30,7 @@ const debounce = (fn, delay = 300) => {
 const getElBusqueda = () => document.getElementById('input-busqueda') || document.getElementById('job-search-input');
 
 /* ==========================================================================
-   1. EXPOSICIÓN GLOBAL PREVIA
+   1. EXPOSICIÓN GLOBAL Y NAVEGACIÓN
    ========================================================================== */
 function abrirWhatsApp(numero, mensaje) {
     const urlWA = `https://wa.me/${limpiarNumeroWA(numero)}?text=${encodeURIComponent(mensaje)}`;
@@ -68,16 +68,6 @@ function cerrarModal() {
     }
 }
 
-function abrirModalPerfil() {
-    const modal = document.getElementById('modal-cambiar-perfil');
-    if (modal) modal.style.display = 'flex';
-}
-
-function cerrarModalPerfil() {
-    const modal = document.getElementById('modal-cambiar-perfil');
-    if (modal) modal.style.display = 'none';
-}
-
 function solicitarContactoTalento(nombre, puesto) {
     const mensaje = `¡Hola Jobbers! 👋 Quisiera solicitar el contacto/CV del perfil destacado: *${nombre}* (${puesto}).`;
     abrirWhatsApp(WHATSAPP_JOBBERS_DEFAULT, mensaje);
@@ -89,10 +79,98 @@ function unirseAComunidad() {
 }
 
 /* ==========================================================================
-   2. INICIALIZACIÓN Y EVENT LISTENERS
+   2. SISTEMA DE CAMBIO DE PERFIL (POSTULANTE / EMPRESA)
+   ========================================================================== */
+function asegurarEstructuraModalPerfil() {
+    if (document.getElementById('modal-cambiar-perfil')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'modal-cambiar-perfil';
+    modal.className = 'jobbers-modal';
+    modal.style.cssText = `
+        display: none; position: fixed; inset: 0; z-index: var(--z-modal, 1000);
+        background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+        align-items: center; justify-content: center; padding: 1rem;
+    `;
+    modal.innerHTML = `
+        <div class="jobbers-modal-card" style="background: var(--card-bg, #141619); border: 1px solid var(--border-color, #26292E); width: 100%; max-width: 440px; border-radius: 24px; padding: 2rem; position: relative; color: #fff;">
+            <button type="button" onclick="cerrarModalPerfil()" style="position:absolute; right:18px; top:18px; background:transparent; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+            
+            <h2 style="font-size:1.4rem; font-weight:800; margin-bottom: 8px; text-align:center;">SELECCIONÁ TU PERFIL</h2>
+            <p style="color:var(--text-muted, #94a3b8); font-size:0.9rem; text-align:center; margin-bottom:1.5rem;">Elegí cómo querés navegar Jobbers Argentina</p>
+            
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <button type="button" onclick="cambiarPerfil('postulante')" class="btn-rol-select" style="padding:14px; border-radius:16px; border:1px solid #333; background:#1e2227; color:#fff; font-weight:bold; cursor:pointer; text-align:left; display:flex; align-items:center; gap:12px; transition:0.2s;">
+                    <span style="font-size:1.5rem;">👤</span>
+                    <div>
+                        <div style="font-size:1rem;">Modo Postulante</div>
+                        <div style="font-size:0.75rem; color:#aaa; font-weight:normal;">Buscar empleo y postularme por WhatsApp</div>
+                    </div>
+                </button>
+                <button type="button" onclick="cambiarPerfil('empresa')" class="btn-rol-select" style="padding:14px; border-radius:16px; border:1px solid #333; background:#1e2227; color:#fff; font-weight:bold; cursor:pointer; text-align:left; display:flex; align-items:center; gap:12px; transition:0.2s;">
+                    <span style="font-size:1.5rem;">🏢</span>
+                    <div>
+                        <div style="font-size:1rem;">Modo Empresa</div>
+                        <div style="font-size:0.75rem; color:#aaa; font-weight:normal;">Publicar búsquedas y contactar talento</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) cerrarModalPerfil();
+    });
+}
+
+function abrirModalPerfil() {
+    asegurarEstructuraModalPerfil();
+    const modal = document.getElementById('modal-cambiar-perfil');
+    if (modal) modal.style.display = 'flex';
+}
+
+function cerrarModalPerfil() {
+    const modal = document.getElementById('modal-cambiar-perfil');
+    if (modal) modal.style.display = 'none';
+}
+
+function cambiarPerfil(rol) {
+    const esEmpresa = rol === 'empresa';
+    const rolNombre = esEmpresa ? 'Empresa' : 'Postulante';
+
+    ['jobbers_user_role', 'jobbers_role', 'jobbers_rol'].forEach(k => localStorage.setItem(k, rol));
+    aplicarRol(rol);
+    cerrarModalPerfil();
+    mostrarToast(`Perfil activo: ${rolNombre.toUpperCase()}`, 'success');
+
+    // Notificar cambios a la app
+    window.dispatchEvent(new CustomEvent('jobbers:perfilCambiado', { detail: { rol } }));
+}
+
+function aplicarRol(rol) {
+    const labelModoActual = document.getElementById('label-modo-actual');
+    const esEmpresa = rol === 'empresa';
+
+    document.body.classList.toggle('role-empresa', esEmpresa);
+    document.body.classList.toggle('role-postulante', !esEmpresa);
+
+    if (labelModoActual) {
+        labelModoActual.textContent = esEmpresa ? 'Modo Empresa' : 'Modo Postulante';
+    }
+}
+
+function inicializarModoPerfil() {
+    const rolGuardado = localStorage.getItem('jobbers_user_role') || localStorage.getItem('jobbers_role') || localStorage.getItem('jobbers_rol') || 'postulante';
+    aplicarRol(rolGuardado);
+}
+
+/* ==========================================================================
+   3. INICIALIZACIÓN Y EVENT LISTENERS
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructuraModal();
+    asegurarEstructuraModalPerfil();
     cargarVacantesDesdeJSON();
     cargarTalentoDestacado();
     inicializarModoPerfil();
@@ -101,6 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function inicializarEventListeners() {
     document.addEventListener('click', (e) => {
+        const btnCambiarRol = e.target.closest('.btn-cambiar-rol, #btn-cambiar-perfil, .trigger-cambio-perfil');
+        if (btnCambiarRol) {
+            e.preventDefault();
+            abrirModalPerfil();
+            return;
+        }
+
         const btnPostular = e.target.closest('.btn-postularme');
         if (btnPostular) {
             e.preventDefault();
@@ -171,91 +256,6 @@ function inicializarEventListeners() {
 }
 
 /* ==========================================================================
-   3. MODO Y CAMBIO DE PERFIL
-   ========================================================================== */
-function inicializarModoPerfil() {
-    const btnsCambiarPerfil = document.querySelectorAll('.btn-cambiar-rol, #btn-cambiar-perfil');
-    const modalPerfil = document.getElementById('modal-cambiar-perfil');
-    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
-    
-    const stepSelect = document.getElementById('rol-step-select');
-    const stepConfirm = document.getElementById('rol-step-confirm');
-    const labelConfirmar = document.getElementById('rol-nombre-confirmar');
-    const btnVolverRol = document.getElementById('btn-volver-rol');
-    const btnConfirmarRol = document.getElementById('btn-confirmar-rol');
-
-    let rolSeleccionado = { key: '', nombre: '' };
-
-    const rolGuardado = localStorage.getItem('jobbers_user_role') || localStorage.getItem('jobbers_role') || localStorage.getItem('jobbers_rol');
-    if (rolGuardado) {
-        aplicarRol(rolGuardado);
-    }
-
-    const resetearModalPerfil = () => {
-        if (stepSelect) stepSelect.style.display = 'block';
-        if (stepConfirm) stepConfirm.style.display = 'none';
-        rolSeleccionado = { key: '', nombre: '' };
-    };
-
-    btnsCambiarPerfil.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            resetearModalPerfil();
-            abrirModalPerfil();
-        });
-    });
-
-    btnCerrarModal?.addEventListener('click', cerrarModalPerfil);
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modalPerfil) cerrarModalPerfil();
-    });
-
-    document.querySelectorAll('.btn-rol').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const rolKey = btn.getAttribute('data-rol');
-            const rolNombre = btn.getAttribute('data-nombre') || btn.querySelector('.rol-title')?.textContent || rolKey;
-
-            rolSeleccionado = { key: rolKey, nombre: rolNombre };
-
-            if (stepSelect && stepConfirm) {
-                if (labelConfirmar) labelConfirmar.textContent = rolNombre;
-                stepSelect.style.display = 'none';
-                stepConfirm.style.display = 'block';
-            } else {
-                confirmarYGuardarRol(rolKey, rolNombre);
-            }
-        });
-    });
-
-    btnVolverRol?.addEventListener('click', resetearModalPerfil);
-    btnConfirmarRol?.addEventListener('click', () => {
-        if (rolSeleccionado.key) {
-            confirmarYGuardarRol(rolSeleccionado.key, rolSeleccionado.nombre);
-        }
-    });
-}
-
-function confirmarYGuardarRol(key, nombre) {
-    aplicarRol(key);
-    ['jobbers_user_role', 'jobbers_role', 'jobbers_rol'].forEach(k => localStorage.setItem(k, key));
-    cerrarModalPerfil();
-    mostrarToast(`Perfil cambiado a: ${(nombre || key).toUpperCase()}`, 'success');
-}
-
-function aplicarRol(rol) {
-    const labelModoActual = document.getElementById('label-modo-actual');
-    const esEmpresa = rol === 'empresa';
-
-    document.body.classList.toggle('role-empresa', esEmpresa);
-    document.body.classList.toggle('role-postulante', !esEmpresa);
-
-    if (labelModoActual) {
-        labelModoActual.textContent = esEmpresa ? 'Modo Empresa' : 'Modo Postulante';
-    }
-}
-
-/* ==========================================================================
    4. CARGA DE DATOS (JSON) Y FALLBACK
    ========================================================================== */
 async function cargarVacantesDesdeJSON() {
@@ -269,12 +269,10 @@ async function cargarVacantesDesdeJSON() {
                 renderizarOfertas(vacantesGastronomia);
                 return;
             }
-        } catch {
-            // Continúa a la siguiente ruta
-        }
+        } catch {}
     }
 
-    // Fallback de contingencia si no se puede leer el archivo JSON
+    // Fallback de contingencia local
     vacantesGastronomia = [
         { puesto: "Bartender / Mozo", empresa: "SpeakEasy Club", zona: "Güemes", jornada: "Fines de semana", turno: "Turno Noche", tiempo: "Hace 12 horas", contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
         { puesto: "Pizzero / Cocinero", empresa: "Pizzas & Fuegos", zona: "Centro", jornada: "Full Time", turno: "Turno Tarde/Noche", tiempo: "Hace 1 día", urgente: true, contacto_wa: WHATSAPP_JOBBERS_DEFAULT },
@@ -436,7 +434,7 @@ function enviarAWhatsApp(event) {
 }
 
 /* ==========================================================================
-   8. MODAL DE POSTULACIÓN CON BORDES CURVOS Y PÍLDORA
+   8. MODAL DE POSTULACIÓN
    ========================================================================== */
 function asegurarEstructuraModal() {
     if (document.getElementById('modal-jobbers')) return;
@@ -546,7 +544,7 @@ function procesarPostulacion(puesto, empresa, contactoWA) {
 }
 
 /* ==========================================================================
-   9. TOASTS EN FORMATO PÍLDORA FLOTANTE
+   9. TOASTS Y NOTIFICACIONES
    ========================================================================== */
 function mostrarToast(mensaje, tipo = "success") {
     let container = document.getElementById('toast-container');
@@ -578,14 +576,15 @@ function mostrarToast(mensaje, tipo = "success") {
 }
 
 /* ==========================================================================
-   10. BINDING GLOBAL
+   10. EXPOSICIÓN GLOBAL DE MÉTODOS
    ========================================================================== */
 Object.assign(window, {
+    cambiarPerfil,
+    abrirModalPerfil,
+    cerrarModalPerfil,
     enviarAWhatsApp,
     abrirModalPostulacion,
     cerrarModal,
-    abrirModalPerfil,
-    cerrarModalPerfil,
     filtrarVacantes,
     filtrarPorCategoria,
     toggleDropdown,
