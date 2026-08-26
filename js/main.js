@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function inicializarEventListeners() {
-    // Delegación global para botones de postulación y triggers dinámicos
+    // Delegación global para botones interactivos y triggers dinámicos
     document.addEventListener('click', (e) => {
         // Botones de postularme
         const btnPostular = e.target.closest('.btn-postularme');
@@ -106,6 +106,15 @@ function inicializarEventListeners() {
             e.preventDefault();
             const { puesto, empresa, contacto } = btnPostular.dataset;
             abrirModalPostulacion(puesto, empresa, contacto);
+            return;
+        }
+
+        // Botones para solicitar contacto de talento destacado (Manejo limpio sin inline JS)
+        const btnTalento = e.target.closest('.btn-contactar-perfil');
+        if (btnTalento) {
+            e.preventDefault();
+            const { nombre, puesto } = btnTalento.dataset;
+            solicitarContactoTalento(nombre, puesto);
             return;
         }
 
@@ -256,7 +265,6 @@ function aplicarRol(rol) {
    4. CARGA DE DATOS (JSON) Y FALLBACK
    ========================================================================== */
 async function cargarVacantesDesdeJSON() {
-    // Rutas adaptadas al root actual
     const rutasPosibles = ['base_de_datos.json', './base_de_datos.json', '../base_de_datos.json'];
 
     for (const ruta of rutasPosibles) {
@@ -268,7 +276,7 @@ async function cargarVacantesDesdeJSON() {
                 return;
             }
         } catch {
-            // Sigue a la siguiente ruta
+            // Sigue a la siguiente ruta si falla
         }
     }
 
@@ -314,7 +322,10 @@ function renderizarTalentoDestacado() {
                 <span><i class="fas fa-map-marker-alt"></i> ${escapeHTML(t.zona)}</span>
                 <span><i class="fas fa-user-clock"></i> ${escapeHTML(t.disponibilidad)}</span>
             </div>
-            <button type="button" class="btn-contactar-perfil" onclick="solicitarContactoTalento('${escapeHTML(t.nombre)}', '${escapeHTML(t.puesto)}')">
+            <button type="button" 
+                    class="btn-contactar-perfil" 
+                    data-nombre="${escapeHTML(t.nombre)}" 
+                    data-puesto="${escapeHTML(t.puesto)}">
                 <i class="fab fa-whatsapp"></i> CONTACTAR PERFIL
             </button>
         </article>
@@ -364,7 +375,6 @@ function renderizarOfertas(lista) {
 
     if (!contenedor) return;
 
-    // Actualiza el texto del elemento vacantes-count
     if (contador) {
         const total = lista?.length || 0;
         contador.textContent = `${total} ${total === 1 ? 'vacante encontrada' : 'vacantes encontradas'}`;
@@ -403,17 +413,8 @@ function filtrarPorCategoria(categoria) {
     const input = document.getElementById('input-busqueda') || document.getElementById('job-search-input');
     if (input) input.value = categoria;
 
-    if (!categoria) {
-        renderizarOfertas(vacantesGastronomia);
-    } else {
-        const catBuscada = categoria.toLowerCase();
-        const resultado = vacantesGastronomia.filter(v => {
-            const puesto = (v.puesto || v.titulo || "").toLowerCase();
-            const cat = (v.categoria || "").toLowerCase();
-            return cat.includes(catBuscada) || puesto.includes(catBuscada);
-        });
-        renderizarOfertas(resultado);
-    }
+    // Reutiliza el filtro global existente
+    filtrarVacantes();
 
     const seccionVacantes = document.getElementById('vacantes') || document.getElementById('lista-vacantes');
     seccionVacantes?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -562,10 +563,12 @@ function mostrarToast(mensaje, tipo = "success") {
         document.body.appendChild(container);
     }
 
+    const esSuccess = tipo === 'success';
     const toast = document.createElement('div');
     toast.style.cssText = `
-        background: ${tipo === 'success' ? 'var(--salary-green, #2ecc71)' : 'var(--danger-badge, #e74c3c)'};
-        color: #000; padding: 12px 20px; border-radius: 8px; margin-top: 10px;
+        background: ${esSuccess ? 'var(--salary-green, #2ecc71)' : 'var(--danger-badge, #e74c3c)'};
+        color: ${esSuccess ? '#000000' : '#ffffff'};
+        padding: 12px 20px; border-radius: 8px; margin-top: 10px;
         box-shadow: var(--shadow-md, 0 4px 12px rgba(0,0,0,0.3)); font-weight: 700; font-size: 0.9rem;
         transition: opacity 0.3s ease; opacity: 1;
     `;
