@@ -4,33 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobbers - Portal de Empleo Gastronómico</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- Estilos Principales -->
     <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Script Principal con Defer -->
+    <script src="js/main.js" defer></script>
 </head>
 <body class="role-postulante">
 
-    <!-- NAVBAR HEADER -->
+    <!-- NAVBAR / HEADER -->
     <header class="navbar">
         <div class="navbar-container">
-            <div class="logo">
+            <a href="#" class="logo" aria-label="Inicio Jobbers">
                 <h2>Jobbers<span>.</span></h2>
                 <span class="logo-subtitle">Gastronomía</span>
-            </div>
+            </a>
             <div class="nav-links">
-                <button class="nav-link btn-cambiar-rol" onclick="toggleModal(true)">
-                    <i class="fa-solid fa-user-gear"></i> Cambiar Perfil
+                <button type="button" class="nav-link btn-cambiar-rol" onclick="toggleModal(true)" aria-label="Cambiar perfil de usuario">
+                    <i class="fa-solid fa-user-gear" aria-hidden="true"></i>
+                    <span>Cambiar Perfil</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION (GRID 2 COLUMNAS EN DESKTOP) -->
+    <!-- HERO SECTION -->
     <section class="hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-container">
             
-            <!-- VISTA POSTULANTE HERO -->
+            <!-- VISTA POSTULANTE: HERO TEXT -->
             <div class="hero-text-col role-postulante-only">
                 <h1 class="hero-title">Tu próximo empleo <span class="highlight">gastronómico</span> está acá</h1>
                 <p class="hero-subtitle">Encontrá oportunidades en cocina, salón, barra y gerencia en todo el país.</p>
@@ -38,31 +45,39 @@
                     <a href="#vacantes" class="btn-primary">Ver Vacantes Activas</a>
                 </div>
                 <div class="hero-features">
-                    <span><i class="fa-solid fa-circle-check"></i> Ofertas verificadas</span>
-                    <span><i class="fa-solid fa-bolt"></i> Postulación directa</span>
+                    <span><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Ofertas verificadas</span>
+                    <span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Postulación directa</span>
                 </div>
             </div>
 
-            <!-- VISTA EMPRESA HERO FORM -->
+            <!-- VISTA EMPRESA: FORMULARIO EXPRESS -->
             <div class="hero-card-express role-empresa-only">
                 <div class="card-header">
-                    <i class="fa-solid fa-paper-plane"></i>
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                     <h2>Publicar Búsqueda Express</h2>
                 </div>
                 <p>Publicá tu vacante en menos de 2 minutos y recibí candidatos al instante.</p>
-                <form class="express-form">
+                <form class="express-form" onsubmit="handlePublicacionExpress(event)">
                     <div class="form-group">
-                        <input type="text" placeholder="Nombre del Establecimiento / Empresa" required>
+                        <label for="exp-empresa" class="sr-only">Nombre del Establecimiento</label>
+                        <input type="text" id="exp-empresa" placeholder="Nombre del Establecimiento / Empresa" required>
                     </div>
                     <div class="form-row-2col">
-                        <input type="text" placeholder="Puesto (ej. Cocinero, Mozo)" required>
-                        <input type="text" placeholder="Ubicación / Ciudad" required>
+                        <div>
+                            <label for="exp-puesto" class="sr-only">Puesto</label>
+                            <input type="text" id="exp-puesto" placeholder="Puesto (ej. Cocinero, Mozo)" required>
+                        </div>
+                        <div>
+                            <label for="exp-ubicacion" class="sr-only">Ubicación</label>
+                            <input type="text" id="exp-ubicacion" placeholder="Ubicación / Ciudad" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="WhatsApp de contacto" required>
+                        <label for="exp-whatsapp" class="sr-only">WhatsApp de contacto</label>
+                        <input type="tel" id="exp-whatsapp" placeholder="WhatsApp de contacto" required>
                     </div>
                     <button type="submit" class="btn-whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> Publicar por WhatsApp
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Publicar por WhatsApp
                     </button>
                 </form>
             </div>
@@ -73,66 +88,67 @@
     <!-- LAYOUT PRINCIPAL POSTULANTES: SIDEBAR + FEED -->
     <main class="main-layout-container role-postulante-only" id="vacantes">
         
-        <!-- COLUMNA IZQUIERDA: FILTROS & CATEGORÍAS (SIDEBAR) -->
-        <aside class="filters-sidebar">
+        <!-- SIDEBAR DE FILTROS -->
+        <aside class="filters-sidebar" aria-label="Filtros de búsqueda">
             <div class="sidebar-block">
-                <h4 class="sidebar-title"><i class="fa-solid fa-filter"></i> Categorías</h4>
+                <h4 class="sidebar-title"><i class="fa-solid fa-filter" aria-hidden="true"></i> Categorías</h4>
                 <div class="categories-list-vertical">
-                    <button class="category-item active">
-                        <span><i class="fa-solid fa-utensils"></i> Cocina</span>
+                    <button type="button" class="category-item active">
+                        <span><i class="fa-solid fa-utensils" aria-hidden="true"></i> Cocina</span>
                         <span class="cat-count">48</span>
                     </button>
-                    <button class="category-item">
-                        <span><i class="fa-solid fa-wine-glass"></i> Salón</span>
+                    <button type="button" class="category-item">
+                        <span><i class="fa-solid fa-wine-glass" aria-hidden="true"></i> Salón</span>
                         <span class="cat-count">32</span>
                     </button>
-                    <button class="category-item">
-                        <span><i class="fa-solid fa-martini-glass-citrus"></i> Barra</span>
+                    <button type="button" class="category-item">
+                        <span><i class="fa-solid fa-martini-glass-citrus" aria-hidden="true"></i> Barra</span>
                         <span class="cat-count">19</span>
                     </button>
-                    <button class="category-item">
-                        <span><i class="fa-solid fa-mug-hot"></i> Cafetería</span>
+                    <button type="button" class="category-item">
+                        <span><i class="fa-solid fa-mug-hot" aria-hidden="true"></i> Cafetería</span>
                         <span class="cat-count">14</span>
                     </button>
-                    <button class="category-item">
-                        <span><i class="fa-solid fa-user-tie"></i> Gerencia</span>
+                    <button type="button" class="category-item">
+                        <span><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Gerencia</span>
                         <span class="cat-count">7</span>
                     </button>
-                    <button class="category-item">
-                        <span><i class="fa-solid fa-motorcycle"></i> Delivery</span>
+                    <button type="button" class="category-item">
+                        <span><i class="fa-solid fa-motorcycle" aria-hidden="true"></i> Delivery</span>
                         <span class="cat-count">11</span>
                     </button>
                 </div>
             </div>
 
             <div class="sidebar-block">
-                <h4 class="sidebar-title"><i class="fa-solid fa-clock"></i> Modalidad</h4>
+                <h4 class="sidebar-title"><i class="fa-solid fa-clock" aria-hidden="true"></i> Modalidad</h4>
                 <label class="filter-checkbox"><input type="checkbox" checked> Full-time</label>
                 <label class="filter-checkbox"><input type="checkbox"> Part-time</label>
                 <label class="filter-checkbox"><input type="checkbox"> Eventos / Extra</label>
             </div>
         </aside>
 
-        <!-- COLUMNA DERECHA: BÚSQUEDA Y LISTADO DE VACANTES -->
-        <section class="feed-content">
+        <!-- FEED DE VACANTES -->
+        <section class="feed-content" aria-label="Listado de vacantes de empleo">
             
-            <!-- BARRA DE BÚSQUEDA INTEGRADAS -->
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" placeholder="Buscar puestos, zonas o habilidades...">
-                <button class="btn-search">Buscar</button>
-            </div>
+            <!-- BARRA DE BÚSQUEDA -->
+            <form class="search-bar" role="search" onsubmit="event.preventDefault();">
+                <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                <label for="input-busqueda" class="sr-only">Buscar vacantes</label>
+                <input type="search" id="input-busqueda" placeholder="Buscar puestos, zonas o habilidades...">
+                <button type="submit" class="btn-search">Buscar</button>
+            </form>
 
             <div class="vacantes-header-row">
                 <h3>Ofertas Disponibles</h3>
                 <span class="vacantes-count">124 empleos activos</span>
             </div>
 
-            <!-- TARJETAS DE EMPLEO CON ÍCONO/AVATAR -->
+            <!-- TARJETAS DE VACANTE -->
             <div class="vacantes-list">
                 
                 <article class="job-offer-card">
-                    <div class="job-avatar">
+                    <div class="job-avatar" aria-hidden="true">
                         <i class="fa-solid fa-fire-burner"></i>
                     </div>
                     <div class="job-info">
@@ -143,18 +159,18 @@
                         <div class="job-company">Bodegón Palermo • Palermo, CABA</div>
                         <div class="job-details-row">
                             <span class="job-salary">$650.000 / mes</span>
-                            <span><i class="fa-regular fa-clock"></i> Turno Noche</span>
-                            <span><i class="fa-solid fa-briefcase"></i> Full-Time</span>
+                            <span><i class="fa-regular fa-clock" aria-hidden="true"></i> Turno Noche</span>
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Full-Time</span>
                         </div>
                     </div>
                     <div class="job-action-col">
                         <span class="job-time">Hace 2 horas</span>
-                        <button class="btn-postularme">Postularme</button>
+                        <button type="button" class="btn-postularme">Postularme</button>
                     </div>
                 </article>
 
                 <article class="job-offer-card">
-                    <div class="job-avatar">
+                    <div class="job-avatar" aria-hidden="true">
                         <i class="fa-solid fa-mug-hot"></i>
                     </div>
                     <div class="job-info">
@@ -164,18 +180,18 @@
                         <div class="job-company">Café Especialidad • Nueva Córdoba, Cba</div>
                         <div class="job-details-row">
                             <span class="job-salary">$520.000 / mes</span>
-                            <span><i class="fa-regular fa-clock"></i> Turno Mañana</span>
-                            <span><i class="fa-solid fa-briefcase"></i> Full-Time</span>
+                            <span><i class="fa-regular fa-clock" aria-hidden="true"></i> Turno Mañana</span>
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Full-Time</span>
                         </div>
                     </div>
                     <div class="job-action-col">
                         <span class="job-time">Hace 5 horas</span>
-                        <button class="btn-postularme">Postularme</button>
+                        <button type="button" class="btn-postularme">Postularme</button>
                     </div>
                 </article>
 
                 <article class="job-offer-card">
-                    <div class="job-avatar">
+                    <div class="job-avatar" aria-hidden="true">
                         <i class="fa-solid fa-wine-glass"></i>
                     </div>
                     <div class="job-info">
@@ -185,31 +201,31 @@
                         <div class="job-company">Restó Bar • Carlos Paz, Cba</div>
                         <div class="job-details-row">
                             <span class="job-salary">Pago diario + Propinas</span>
-                            <span><i class="fa-regular fa-clock"></i> Fines de semana</span>
+                            <span><i class="fa-regular fa-clock" aria-hidden="true"></i> Fines de semana</span>
                         </div>
                     </div>
                     <div class="job-action-col">
                         <span class="job-time">Ayer</span>
-                        <button class="btn-postularme">Postularme</button>
+                        <button type="button" class="btn-postularme">Postularme</button>
                     </div>
                 </article>
 
             </div>
 
-            <a href="#" class="link-more-full">Cargar más vacantes &rarr;</a>
+            <button type="button" class="link-more-full">Cargar más vacantes &rarr;</button>
         </section>
 
     </main>
 
-    <!-- CONTENIDO EMPRESAS -->
-    <section class="talento-section role-empresa-only">
+    <!-- LAYOUT PRINCIPAL EMPRESAS: TALENTOS -->
+    <section class="main-layout-container role-empresa-only talento-section" aria-label="Talentos gastronómicos destacados">
         <div class="vacantes-header-row">
             <h3>Talento Gastronómico Destacado</h3>
             <span class="vacantes-count">Perfiles verificados</span>
         </div>
 
         <div class="talento-grid">
-            <div class="talento-card">
+            <article class="talento-card">
                 <div class="talento-card-header">
                     <h4 class="talento-nombre">Mariano G.</h4>
                     <span class="badge-disponible">Disponible</span>
@@ -219,15 +235,15 @@
                     <p class="talento-exp">8 años de experiencia</p>
                 </div>
                 <div class="talento-detalles">
-                    <span><i class="fa-solid fa-location-dot"></i> Palermo, CABA</span>
-                    <span><i class="fa-solid fa-star"></i> Cocina Italiana, Autor</span>
+                    <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Palermo, CABA</span>
+                    <span><i class="fa-solid fa-star" aria-hidden="true"></i> Cocina Italiana, Autor</span>
                 </div>
-                <button class="btn-contactar-perfil">
-                    <i class="fa-brands fa-whatsapp"></i> Contactar Perfil
+                <button type="button" class="btn-contactar-perfil">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Contactar Perfil
                 </button>
-            </div>
+            </article>
 
-            <div class="talento-card">
+            <article class="talento-card">
                 <div class="talento-card-header">
                     <h4 class="talento-nombre">Sofía R.</h4>
                     <span class="badge-disponible">Disponible</span>
@@ -237,30 +253,30 @@
                     <p class="talento-exp">4 años de experiencia</p>
                 </div>
                 <div class="talento-detalles">
-                    <span><i class="fa-solid fa-location-dot"></i> Córdoba Cap.</span>
-                    <span><i class="fa-solid fa-star"></i> Arte Latte, Calibración</span>
+                    <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Córdoba Cap.</span>
+                    <span><i class="fa-solid fa-star" aria-hidden="true"></i> Arte Latte, Calibración</span>
                 </div>
-                <button class="btn-contactar-perfil">
-                    <i class="fa-brands fa-whatsapp"></i> Contactar Perfil
+                <button type="button" class="btn-contactar-perfil">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Contactar Perfil
                 </button>
-            </div>
+            </article>
         </div>
     </section>
 
     <!-- MODAL SELECCIÓN DE PERFIL -->
-    <div class="rol-modal-overlay" id="modal-rol" style="display: none;">
+    <div class="rol-modal-overlay" id="modal-rol" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-rol-title">
         <div class="rol-modal-card">
-            <button class="jobbers-close-btn" onclick="toggleModal(false)">&times;</button>
-            <h2>¿Cómo querés usar Jobbers?</h2>
+            <button type="button" class="jobbers-close-btn" onclick="toggleModal(false)" aria-label="Cerrar ventana modal">&times;</button>
+            <h2 id="modal-rol-title">¿Cómo querés usar Jobbers?</h2>
             <p>Seleccioná tu perfil para adaptar el contenido a tus necesidades.</p>
             <div class="rol-options">
-                <button class="btn-rol" onclick="setRole('postulante')">
-                    <span class="rol-icon">🔍</span>
+                <button type="button" class="btn-rol" onclick="setRole('postulante')">
+                    <span class="rol-icon" aria-hidden="true">🔍</span>
                     <span class="rol-title">Soy Postulante</span>
                     <span class="rol-desc">Busco trabajo en bares, restaurantes y hoteles.</span>
                 </button>
-                <button class="btn-rol" onclick="setRole('empresa')">
-                    <span class="rol-icon">👨‍🍳</span>
+                <button type="button" class="btn-rol" onclick="setRole('empresa')">
+                    <span class="rol-icon" aria-hidden="true">👨‍🍳</span>
                     <span class="rol-title">Soy Empresa</span>
                     <span class="rol-desc">Quiero publicar vacantes y contratar personal.</span>
                 </button>
@@ -269,17 +285,17 @@
     </div>
 
     <!-- NAVEGACIÓN INFERIOR MÓVIL -->
-    <nav class="bottom-nav">
-        <button class="bottom-nav-item active" onclick="setRole('postulante')">
-            <i class="fa-solid fa-magnifying-glass"></i>
+    <nav class="bottom-nav" aria-label="Navegación móvil">
+        <button type="button" class="bottom-nav-item active" onclick="setRole('postulante')">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             <span>Buscar</span>
         </button>
-        <button class="bottom-nav-item" onclick="setRole('empresa')">
-            <i class="fa-solid fa-users"></i>
+        <button type="button" class="bottom-nav-item" onclick="setRole('empresa')">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
             <span>Talentos</span>
         </button>
-        <button class="bottom-nav-item" onclick="toggleModal(true)">
-            <i class="fa-solid fa-user-gear"></i>
+        <button type="button" class="bottom-nav-item" onclick="toggleModal(true)">
+            <i class="fa-solid fa-user-gear" aria-hidden="true"></i>
             <span>Perfil</span>
         </button>
     </nav>
@@ -289,6 +305,5 @@
         <p>&copy; 2026 Jobbers - Portal de Empleo Gastronómico. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="js/main.js" defer></script>
 </body>
 </html>
