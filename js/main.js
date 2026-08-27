@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo de Selección y Postulación Gastronómica
- * Versión Final Unificada con Filtros Visuales
+ * Versión Final Unificada y Sincronizada con base_de_datos.json
  */
 
 // ==========================================
@@ -35,8 +35,9 @@ function setMode(mode) {
   // 2. CONFIGURACIÓN Y ESTADO DE LA APLICACIÓN
   // ==========================================
   const CONFIG = {
-    API_URL: '/wp-json/jobbers/v1/vacantes',
-    DEBOUNCE_MS: 250,
+    // Apunta al archivo JSON local (cambiar a '/wp-json/jobbers/v1/vacantes' al integrar en WP)
+    API_URL: 'base_de_datos.json',
+    DEBOUNCE_MS: 200,
     SELECTORS: {
       GRID_VACANTES: '#grid-vacantes',
       INPUT_BUSQUEDA: '#input-busqueda-vacantes',
@@ -48,34 +49,14 @@ function setMode(mode) {
         id: 101,
         puesto: 'Cocinero / Chef de Partida',
         empresa: 'Bistro Gourmet',
-        ubicacion: 'Córdoba Capital',
-        categoria: 'Cocina',
-        modalidad: 'Presencial - Turno Tarde/Noche',
+        zona: 'Córdoba Capital',
+        categoria: 'cocina',
+        jornada: 'Full Time',
+        turno: 'Turno Tarde/Noche',
+        sueldo: '$500.000',
         descripcion: 'Buscamos cocinero con experiencia previa en despacho, elaboración de carta y manejo de stock.',
-        requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día', 'Trabajo en equipo'],
-        contactoWA: '5493510000000'
-      },
-      {
-        id: 102,
-        puesto: 'Mozo / Camarera',
-        empresa: 'Café Central',
-        ubicacion: 'Carlos Paz',
-        categoria: 'Salón',
-        modalidad: 'Presencial - Full Time',
-        descripcion: 'Atención al cliente en salón, manejo de bandeja, comanda digital y cobro.',
-        requisitos: ['Excelente presencia y dicción', 'Disponibilidad fines de semana'],
-        contactoWA: '5493510000001'
-      },
-      {
-        id: 103,
-        puesto: 'Bartender',
-        empresa: 'Bar & Speakeasy',
-        ubicacion: 'Nueva Córdoba',
-        categoria: 'Barra',
-        modalidad: 'Presencial - Nocturno',
-        descripcion: 'Elaboración de coctelería clásica y de autor, control de insumos de barra.',
-        requisitos: ['Curso de coctelería finalizado', 'Manejo de ritmo de trabajo en volumen'],
-        contactoWA: '5493510000002'
+        requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día'],
+        contacto_wa: '5493513080197'
       }
     ]
   };
@@ -87,6 +68,15 @@ function setMode(mode) {
     filtroCategoria: 'todas',
     elementoPrevioFoco: null,
     vacanteSeleccionada: null
+  };
+
+  // Mapeo entre etiquetas del HTML / Tarjetas y categorías de la Base de Datos
+  const MAPEO_CATEGORIAS = {
+    'barismo': 'barra',
+    'bartender': 'barra',
+    'salón': 'salon',
+    'mozo': 'salon',
+    'bacha': 'limpieza'
   };
 
   // ==========================================
@@ -102,7 +92,7 @@ function setMode(mode) {
       .replace(/'/g, '&#039;');
   }
 
-  function debounce(func, delay = 250) {
+  function debounce(func, delay = 200) {
     let timeoutId;
     return (...args) => {
       clearTimeout(timeoutId);
@@ -116,7 +106,7 @@ function setMode(mode) {
   async function cargarVacantes() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
     if (grid) {
-      grid.innerHTML = `<div class="jobbers-loading"><p>Cargando ofertas de empleo...</p></div>`;
+      grid.innerHTML = `<div class="jobbers-loading" style="grid-column: 1/-1; text-align: center; padding: 2rem;"><p>Cargando ofertas de empleo...</p></div>`;
     }
 
     try {
@@ -125,6 +115,7 @@ function setMode(mode) {
       const data = await response.json();
       state.vacantes = Array.isArray(data) && data.length > 0 ? data : CONFIG.FALLBACK_VACANTES;
     } catch (error) {
+      console.warn('Cargando datos de respaldo (Fallback):', error);
       state.vacantes = [...CONFIG.FALLBACK_VACANTES];
     } finally {
       aplicarFiltros();
@@ -136,16 +127,25 @@ function setMode(mode) {
   // ==========================================
   function aplicarFiltros() {
     const query = state.filtroBusqueda.toLowerCase().trim();
-    const cat = state.filtroCategoria.toLowerCase().trim();
+    const rawCat = state.filtroCategoria.toLowerCase().trim();
+    
+    // Normalizar categoría de búsqueda (ej. "Barismo" -> "barra")
+    const catBuscada = MAPEO_CATEGORIAS[rawCat] || rawCat;
 
     state.vacantesFiltradas = state.vacantes.filter(item => {
-      const coincideQuery = !query || 
-        item.puesto?.toLowerCase().includes(query) ||
-        item.empresa?.toLowerCase().includes(query) ||
-        item.ubicacion?.toLowerCase().includes(query) ||
-        item.descripcion?.toLowerCase().includes(query);
+      const ubicacion = (item.zona || item.ubicacion || '').toLowerCase();
+      const puesto = (item.puesto || '').toLowerCase();
+      const empresa = (item.empresa || '').toLowerCase();
+      const descripcion = (item.descripcion || '').toLowerCase();
+      const itemCat = (item.categoria || '').toLowerCase().trim();
 
-      const coincideCat = cat === 'todas' || cat === 'todos' || item.categoria?.toLowerCase() === cat;
+      const coincideQuery = !query || 
+        puesto.includes(query) ||
+        empresa.includes(query) ||
+        ubicacion.includes(query) ||
+        descripcion.includes(query);
+
+      const coincideCat = catBuscada === 'todas' || catBuscada === 'todos' || itemCat === catBuscada;
 
       return coincideQuery && coincideCat;
     });
@@ -160,7 +160,7 @@ function setMode(mode) {
 
     if (state.vacantesFiltradas.length === 0) {
       grid.innerHTML = `
-        <div class="jobbers-empty-state" style="padding: 2rem; text-align: center;">
+        <div class="jobbers-empty-state" style="grid-column: 1/-1; padding: 2rem; text-align: center;">
           <p>🔍 No se encontraron vacantes que coincidan con tu búsqueda.</p>
           <button type="button" class="btn-amber" id="btn-reset-filtros" style="margin-top: 1rem;">Ver todas las ofertas</button>
         </div>
@@ -174,7 +174,6 @@ function setMode(mode) {
         if (inputBuscador) inputBuscador.value = '';
         if (selectCat) selectCat.value = 'todas';
 
-        // Restablecer clase active en tarjetas y chips
         document.querySelectorAll('.category-card, .chip-item').forEach(el => {
           const val = (el.dataset.category || el.querySelector('span')?.textContent || el.textContent).toLowerCase().trim();
           if (val === 'todas' || val === 'todos') {
@@ -189,20 +188,34 @@ function setMode(mode) {
       return;
     }
 
-    grid.innerHTML = state.vacantesFiltradas.map(v => `
-      <article class="job-card" data-id="${escapeHTML(v.id)}">
-        <div>
-          <span class="badge-salary">${escapeHTML(v.categoria || 'Gastronomía')}</span>
-          <h3 class="job-title" style="margin-top: 0.5rem;">${escapeHTML(v.puesto)}</h3>
-          <p class="job-meta">🏢 ${escapeHTML(v.empresa)} | 📍 ${escapeHTML(v.ubicacion || 'Argentina')}</p>
-          <p class="job-meta" style="margin-top: 0.4rem;">${escapeHTML(v.descripcion?.substring(0, 110))}${v.descripcion?.length > 110 ? '...' : ''}</p>
-        </div>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <button type="button" class="btn-amber btn-ver-detalle" data-id="${escapeHTML(v.id)}" style="background: transparent; border: 1px solid var(--accent-amber); color: var(--accent-amber);">Ver Detalle</button>
-          <button type="button" class="btn-green btn-postularme" data-id="${escapeHTML(v.id)}">Postularme 📲</button>
-        </div>
-      </article>
-    `).join('');
+    grid.innerHTML = state.vacantesFiltradas.map(v => {
+      const ubicacion = escapeHTML(v.zona || v.ubicacion || 'Córdoba');
+      const sueldo = escapeHTML(v.sueldo || 'A convenir');
+      const tiempo = escapeHTML(v.tiempo || 'Reciente');
+      const esUrgente = Boolean(v.urgente);
+
+      return `
+        <article class="job-card ${esUrgente ? 'urgente' : ''}" data-id="${escapeHTML(v.id)}">
+          ${esUrgente ? '<span class="badge-urgente">Urgente</span>' : ''}
+          <div class="job-card-header">
+            <div>
+              <h3 class="job-title">${escapeHTML(v.puesto)}</h3>
+              <p class="job-company">${escapeHTML(v.empresa)} • <span class="job-location">${ubicacion}</span></p>
+            </div>
+            <span class="job-time">${tiempo}</span>
+          </div>
+          <div class="job-details" style="margin: 0.75rem 0; display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            ${v.jornada ? `<span class="badge">${escapeHTML(v.jornada)}</span>` : ''}
+            ${v.turno ? `<span class="badge">${escapeHTML(v.turno)}</span>` : ''}
+            <span class="badge badge-salary">${sueldo}</span>
+          </div>
+          <div class="job-card-footer" style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: center; margin-top: 1rem;">
+            <button type="button" class="btn-amber btn-ver-detalle" data-id="${escapeHTML(v.id)}" style="background: transparent; border: 1px solid var(--accent-amber); color: var(--accent-amber); padding: 0.4rem 0.8rem; font-size: 0.85rem;">Ver Detalle</button>
+            <button type="button" class="btn-green btn-postularme" data-id="${escapeHTML(v.id)}" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Postularme 📲</button>
+          </div>
+        </article>
+      `;
+    }).join('');
   }
 
   function actualizarContador() {
@@ -213,7 +226,7 @@ function setMode(mode) {
   }
 
   // ==========================================
-  // 6. MODALES Y NAVEGACIÓN
+  // 6. MODALES Y POSTULACIÓN
   // ==========================================
   function asegurarEstructurasModales() {
     if (!document.getElementById('modal-jobbers-detalle')) {
@@ -222,13 +235,14 @@ function setMode(mode) {
       modalDetalle.className = 'modal-overlay';
       modalDetalle.innerHTML = `
         <div class="modal-card">
-          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; color:#fff; font-size:1.5rem;">&times;</button>
+          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
           <span id="det-categoria" class="badge-salary"></span>
           <h2 id="det-puesto" style="margin-top: 0.5rem;"></h2>
           <p id="det-empresa" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
           <div style="text-align: left; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
             <p id="det-modalidad"></p>
             <p id="det-ubicacion"></p>
+            <p id="det-sueldo" style="color: var(--accent-green); font-weight: 600; margin-top: 0.4rem;"></p>
             <h4 style="color:#fff; margin-top:1rem;">Descripción</h4>
             <p id="det-descripcion"></p>
             <h4 style="color:#fff; margin-top:1rem;">Requisitos</h4>
@@ -249,7 +263,7 @@ function setMode(mode) {
       modalPostulacion.className = 'modal-overlay';
       modalPostulacion.innerHTML = `
         <div class="modal-card">
-          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; color:#fff; font-size:1.5rem;">&times;</button>
+          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
           <h2>Postulación Express</h2>
           <p id="post-subtitulo" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
           <form id="form-postulacion-jobbers" style="display:flex; flex-direction:column; gap:0.75rem; text-align:left;">
@@ -257,16 +271,16 @@ function setMode(mode) {
             <input type="hidden" id="post-contacto-wa">
             
             <div>
-              <label style="font-size:0.8rem;">Nombre y Apellido *</label>
-              <input type="text" id="post-nombre" class="input-dark" placeholder="Ej: María González" required>
+              <label style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Nombre y Apellido *</label>
+              <input type="text" id="post-nombre" class="input-dark" placeholder="Ej: María González" required style="width:100%;">
             </div>
             <div>
-              <label style="font-size:0.8rem;">Número de WhatsApp *</label>
-              <input type="tel" id="post-telefono" class="input-dark" placeholder="Ej: 3511234567" required>
+              <label style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Número de WhatsApp *</label>
+              <input type="tel" id="post-telefono" class="input-dark" placeholder="Ej: 3511234567" required style="width:100%;">
             </div>
             <div>
-              <label style="font-size:0.8rem;">Experiencia previa (Breve)</label>
-              <textarea id="post-experiencia" class="input-dark" rows="3" placeholder="Contanos tu experiencia en el rubro..."></textarea>
+              <label style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Experiencia previa (Breve)</label>
+              <textarea id="post-experiencia" class="input-dark" rows="3" placeholder="Contanos tu experiencia en el rubro..." style="width:100%;"></textarea>
             </div>
             
             <p style="font-size:0.75rem; color: var(--text-secondary);">📎 Al abrirse WhatsApp, recordá adjuntar tu CV en PDF.</p>
@@ -282,7 +296,7 @@ function setMode(mode) {
       document.getElementById('form-postulacion-jobbers')?.addEventListener('submit', manejarEnvioPostulacion);
     }
 
-    // Cierre de modales global
+    // Listener global de cierre para modales
     document.querySelectorAll('.modal-overlay').forEach(modal => {
       modal.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay') || 
@@ -315,18 +329,21 @@ function setMode(mode) {
     const modal = document.getElementById('modal-jobbers-detalle');
     if (!modal) return;
 
-    document.getElementById('det-categoria').textContent = vacante.categoria || 'Gastronomía';
+    const jornadaTurno = [vacante.jornada, vacante.turno].filter(Boolean).join(' • ') || vacante.modalidad || 'Presencial';
+
+    document.getElementById('det-categoria').textContent = (vacante.categoria || 'Gastronomía').toUpperCase();
     document.getElementById('det-puesto').textContent = vacante.puesto;
     document.getElementById('det-empresa').textContent = `🏢 ${vacante.empresa}`;
-    document.getElementById('det-modalidad').textContent = `💼 Modalidad: ${vacante.modalidad || 'A convenir'}`;
-    document.getElementById('det-ubicacion').textContent = `📍 Ubicación: ${vacante.ubicacion || 'Córdoba'}`;
-    document.getElementById('det-descripcion').textContent = vacante.descripcion;
+    document.getElementById('det-modalidad').textContent = `💼 Modalidad: ${jornadaTurno}`;
+    document.getElementById('det-ubicacion').textContent = `📍 Ubicación: ${vacante.zona || vacante.ubicacion || 'Córdoba'}`;
+    document.getElementById('det-sueldo').textContent = `💰 Sueldo: ${vacante.sueldo || 'A convenir'}`;
+    document.getElementById('det-descripcion').textContent = vacante.descripcion || `Se busca ${vacante.puesto} para sumarse al equipo de ${vacante.empresa}. Postulate enviando tu CV directamente por WhatsApp.`;
 
     const listaReq = document.getElementById('det-requisitos');
     if (listaReq) {
       listaReq.innerHTML = Array.isArray(vacante.requisitos) && vacante.requisitos.length > 0
         ? vacante.requisitos.map(r => `<li>${escapeHTML(r)}</li>`).join('')
-        : '<li>Sin requisitos específicos expresados.</li>';
+        : '<li>Experiencia previa comprobable en el puesto.</li><li>Disponibilidad horaria indicada.</li>';
     }
 
     const btnPostular = document.getElementById('det-btn-postular');
@@ -346,7 +363,7 @@ function setMode(mode) {
 
     document.getElementById('post-subtitulo').textContent = `${vacante.puesto} - ${vacante.empresa}`;
     document.getElementById('post-id-vacante').value = vacante.id;
-    document.getElementById('post-contacto-wa').value = vacante.contactoWA || '5493510000000';
+    document.getElementById('post-contacto-wa').value = vacante.contacto_wa || vacante.contactoWA || '5493513080197';
 
     const form = document.getElementById('form-postulacion-jobbers');
     if (form) form.reset();
@@ -378,7 +395,7 @@ function setMode(mode) {
   }
 
   // ==========================================
-  // 7. LISTENERS DE BOTONES, TARJETAS Y CHIPS
+  // 7. LISTENERS DE BOTONES Y FILTROS
   // ==========================================
   function inicializarEventosGrid() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
@@ -402,7 +419,6 @@ function setMode(mode) {
   }
 
   function inicializarFiltrosYBotones() {
-    // Buscador de texto
     const inputBuscador = document.querySelector(CONFIG.SELECTORS.INPUT_BUSQUEDA);
     if (inputBuscador) {
       inputBuscador.addEventListener('input', debounce((e) => {
@@ -411,7 +427,6 @@ function setMode(mode) {
       }, CONFIG.DEBOUNCE_MS));
     }
 
-    // Tarjetas (.category-card) y Chips (.chip-item) de Categoría
     const categoryElements = document.querySelectorAll('.category-card, .chip-item');
     categoryElements.forEach(item => {
       item.addEventListener('click', () => {
@@ -421,7 +436,6 @@ function setMode(mode) {
         const cat = item.dataset.category || item.querySelector('span')?.textContent.trim() || item.textContent.trim();
         state.filtroCategoria = cat;
 
-        // Sincronizar el select flotante/desplegable si existe
         const selectCat = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
         if (selectCat) {
           selectCat.value = cat.toLowerCase();
@@ -431,7 +445,6 @@ function setMode(mode) {
       });
     });
 
-    // Select Categorías (sincroniza hacia las tarjetas)
     const selectCategoria = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
     if (selectCategoria) {
       selectCategoria.addEventListener('change', (e) => {
@@ -451,7 +464,6 @@ function setMode(mode) {
       });
     }
 
-    // Switches de Vista (Header y Mobile Nav)
     document.getElementById('btn-mode-postulante')?.addEventListener('click', () => setMode('postulante'));
     document.getElementById('btn-mode-empresa')?.addEventListener('click', () => setMode('empresa'));
 
@@ -464,7 +476,6 @@ function setMode(mode) {
       });
     });
 
-    // Formulario Publicar Express (Modo Empresa)
     const formExpress = document.querySelector('.express-form-card form');
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
