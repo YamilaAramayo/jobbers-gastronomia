@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -134,9 +135,20 @@
             <!-- Layout Principal (Listado + Sidebar) -->
             <div class="main-layout">
 
-                <!-- Columna Izquierda: Vacantes DINÁMICAS (Inyectadas por main.js) -->
-                <div class="job-list" id="grid-vacantes">
-                    <!-- JS cargará las vacantes aquí -->
+                <!-- Columna Izquierda: Contenedor con Encabezado + Vacantes -->
+                <div class="jobs-container">
+                    
+                    <!-- Encabezado de Búsquedas Activas -->
+                    <div class="jobs-header">
+                        <h2>Búsquedas Activas</h2>
+                        <span class="jobs-count">Mostrando <strong id="cant-vacantes">14</strong> vacantes disponibles</span>
+                    </div>
+
+                    <!-- Vacantes DINÁMICAS (Inyectadas por main.js) -->
+                    <div class="job-list" id="grid-vacantes">
+                        <!-- JS cargará las vacantes aquí -->
+                    </div>
+
                 </div>
 
                 <!-- Columna Derecha: Sidebar (Anuncios y Filtros) -->
