@@ -31,7 +31,6 @@
     }
   }
 
-  // Exposición explícita en window para compatibilidad con handlers inline HTML (ej: onclick="setMode(...)")
   window.setMode = setMode;
 
   // ==========================================
@@ -72,7 +71,6 @@
     vacanteSeleccionada: null
   };
 
-  // Mapeo entre etiquetas del HTML / Tarjetas y categorías de la Base de Datos
   const MAPEO_CATEGORIAS = {
     'barismo': 'barra',
     'bartender': 'barra',
@@ -82,10 +80,9 @@
     'bacha': 'limpieza'
   };
 
-  // Función auxiliar para normalizar categorías usando el mapeo
   function normalizarCategoria(cat) {
     if (!cat) return 'todas';
-    const c = cat.toLowerCase().trim();
+    const c = String(cat).toLowerCase().trim();
     return MAPEO_CATEGORIAS[c] || c;
   }
 
@@ -172,6 +169,8 @@
           <button type="button" class="btn-amber" id="btn-reset-filtros" style="margin-top: 1rem;">Ver todas las ofertas</button>
         </div>
       `;
+
+      // Se usa { once: true } para evitar duplicación de listeners
       document.getElementById('btn-reset-filtros')?.addEventListener('click', () => {
         state.filtroBusqueda = '';
         state.filtroCategoria = 'todas';
@@ -192,7 +191,7 @@
         });
 
         aplicarFiltros();
-      });
+      }, { once: true });
       return;
     }
 
@@ -241,9 +240,11 @@
       const modalDetalle = document.createElement('div');
       modalDetalle.id = 'modal-jobbers-detalle';
       modalDetalle.className = 'modal-overlay';
+      modalDetalle.setAttribute('role', 'dialog');
+      modalDetalle.setAttribute('aria-modal', 'true');
       modalDetalle.innerHTML = `
         <div class="modal-card">
-          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar">&times;</button>
           <span id="det-categoria" class="badge-salary"></span>
           <h2 id="det-puesto" style="margin-top: 0.5rem;"></h2>
           <p id="det-empresa" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
@@ -269,9 +270,11 @@
       const modalPostulacion = document.createElement('div');
       modalPostulacion.id = 'modal-jobbers-postulacion';
       modalPostulacion.className = 'modal-overlay';
+      modalPostulacion.setAttribute('role', 'dialog');
+      modalPostulacion.setAttribute('aria-modal', 'true');
       modalPostulacion.innerHTML = `
         <div class="modal-card">
-          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar">&times;</button>
           <h2>Postulación Express</h2>
           <p id="post-subtitulo" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
           <form id="form-postulacion-jobbers" style="display:flex; flex-direction:column; gap:0.75rem; text-align:left;">
@@ -304,7 +307,6 @@
       document.getElementById('form-postulacion-jobbers')?.addEventListener('submit', manejarEnvioPostulacion);
     }
 
-    // Listener de cierre por clic en backdrop o botones de cierre
     document.querySelectorAll('.modal-overlay').forEach(modal => {
       modal.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay') || 
@@ -315,7 +317,6 @@
       });
     });
 
-    // Cierre accesible de modales con la tecla ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         cerrarModal();
@@ -390,7 +391,10 @@
     const nombre = document.getElementById('post-nombre')?.value.trim();
     const telefono = document.getElementById('post-telefono')?.value.trim();
     const experiencia = document.getElementById('post-experiencia')?.value.trim();
-    const waContacto = document.getElementById('post-contacto-wa')?.value;
+    const rawWA = document.getElementById('post-contacto-wa')?.value || '5493513080197';
+    
+    // Saneamiento de número telefónico (solo dígitos)
+    const waContacto = rawWA.replace(/\D/g, '');
 
     if (!nombre || !telefono) {
       alert('Por favor completá tu nombre y teléfono.');
@@ -448,7 +452,6 @@
         const rawCat = item.dataset.category || item.querySelector('span')?.textContent.trim() || item.textContent.trim();
         state.filtroCategoria = rawCat;
 
-        // Normalización cruzada para activar elementos equivalentes
         const catTargetNorm = normalizarCategoria(rawCat);
         categoryElements.forEach(c => {
           const cRaw = c.dataset.category || c.querySelector('span')?.textContent.trim() || c.textContent.trim();
