@@ -224,7 +224,54 @@ function setMode(mode) {
     const total = state.vacantesFiltradas.length;
     contador.textContent = `${total} ${total === 1 ? 'oferta encontrada' : 'ofertas encontradas'}`;
   }
+// Función para renderizar las vacantes en el DOM
+function renderVacantes(listaVacantes) {
+    const gridContainer = document.getElementById('grid-vacantes');
+    const contadorElem = document.getElementById('cant-vacantes');
 
+    // 1. Actualizar el contador dinámicamente con la cantidad filtrada
+    if (contadorElem) {
+        contadorElem.textContent = listaVacantes.length;
+    }
+
+    // 2. Limpiar el contenedor antes de inyectar
+    gridContainer.innerHTML = '';
+
+    // Manejar caso sin resultados
+    if (listaVacantes.length === 0) {
+        gridContainer.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No se encontraron vacantes que coincidan con la búsqueda.</p>';
+        return;
+    }
+
+    // 3. Inyectar las tarjetas de empleo
+    listaVacantes.forEach(job => {
+        const jobCard = document.createElement('div');
+        jobCard.className = `job-card ${job.urgente ? 'urgente' : ''}`;
+        
+        jobCard.innerHTML = `
+            ${job.urgente ? '<span class="badge-urgente">Urgente</span>' : ''}
+            
+            <div class="job-card-header">
+                <h3 class="job-title">${job.titulo}</h3>
+                <p class="job-company">${job.empresa} • <span class="job-location">${job.ubicacion}</span></p>
+                <span class="job-time">${job.haceCuanto}</span>
+            </div>
+
+            <div class="job-details">
+                <span class="badge">${job.modalidad}</span>
+                <span class="badge">${job.turno}</span>
+                ${job.sueldo ? `<span class="badge badge-salary">${job.sueldo}</span>` : ''}
+            </div>
+
+            <div class="job-card-footer">
+                <button type="button" class="btn-ver-detalle" onclick="verDetalle(${job.id})">Ver Detalle</button>
+                <button type="button" class="btn-postularme" onclick="postularme(${job.id})">Postularme 📱</button>
+            </div>
+        `;
+
+        gridContainer.appendChild(jobCard);
+    });
+}
   // ==========================================
   // 6. MODALES Y POSTULACIÓN
   // ==========================================
