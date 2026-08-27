@@ -42,15 +42,58 @@
                 </div>
             </section>
 
-            <!-- Categorías con Scroll Horizontal -->
-            <div class="chips-scroll-container">
-                <span class="chip-item active" data-category="todas">Todos</span>
-                <span class="chip-item" data-category="Cocina">Cocina y Bacha</span>
-                <span class="chip-item" data-category="Salón">Salón y Mozos</span>
-                <span class="chip-item" data-category="Barra">Barra y Baristas</span>
-                <span class="chip-item" data-category="Gerencia">Encargados y Gerencia</span>
-                <span class="chip-item" data-category="Delivery">Delivery</span>
-            </div>
+            <!-- SECCIÓN DE CATEGORÍAS TIPO TARJETA -->
+            <section class="categories-section">
+                <h3 class="categories-title">BUSCÁ POR CATEGORÍA</h3>
+                <div class="categories-grid">
+                    
+                    <button type="button" class="category-card active" data-category="todas">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                        <span>Todas</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="Cocina">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2v20"/><path d="M18 2a4 4 0 0 0-4 4v12a2 2 0 0 0 2 2h2"/><path d="M6 2v7a3 3 0 0 0 6 0V2"/><path d="M9 11v11"/></svg>
+                        <span>Cocina</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="Salón">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path d="M2 18h20"/><path d="M20 18a8 8 0 0 0-16 0"/></svg>
+                        <span>Salón / Mozo</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="Barismo">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+                        <span>Barismo</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="Bartender">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22h8"/><path d="M12 11v11"/><path d="m19 3-7 8-7-8Z"/></svg>
+                        <span>Bartender</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="Delivery">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h2l2 4v4h-3"/><path d="M9 18h6"/><path d="m10 9 2 3h3"/></svg>
+                        <span>Delivery</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="Limpieza">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11h10v10H7z"/><path d="M12 3v4"/><path d="M10 3h4"/><path d="M10 7h4v4h-4z"/></svg>
+                        <span>Bacha / Limpieza</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="RRHH">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        <span>RRHH / Gestión</span>
+                    </button>
+
+                    <button type="button" class="category-card" data-category="Administración">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                        <span>Administración</span>
+                    </button>
+
+                </div>
+            </section>
 
             <!-- Layout Principal (Listado + Sidebar) -->
             <div class="main-layout">
