@@ -8,16 +8,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Archivo de estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <!-- NAVBAR HEADER -->
     <header class="navbar">
         <div class="brand-logo">Jobbers<span>.</span></div>
 
-        <!-- Toggle Selector de Modo -->
         <div class="mode-switch-container">
             <button type="button" class="mode-btn active" id="btn-mode-postulante" onclick="setMode('postulante')">Postulantes</button>
             <button type="button" class="mode-btn" id="btn-mode-empresa" onclick="setMode('empresa')">Empresas</button>
@@ -26,12 +23,8 @@
 
     <main class="container">
 
-        <!-- =================================================== -->
-        <!-- MODO POSTULANTE                                     -->
-        <!-- =================================================== -->
         <div id="view-postulante" class="view-section active-view">
 
-            <!-- Hero Postulante con Buscador Integrado -->
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
@@ -42,7 +35,6 @@
                 </div>
             </section>
 
-            <!-- SECCIÓN DE CATEGORÍAS TIPO TARJETA -->
             <section class="categories-section">
                 <h3 class="categories-title">BUSCÁ POR CATEGORÍA</h3>
                 <div class="categories-grid">
@@ -131,29 +123,22 @@
                 </div>
             </section>
 
-            <!-- Layout Principal (Listado + Sidebar) -->
             <div class="main-layout">
 
-                <!-- Columna Izquierda: Contenedor con Encabezado + Vacantes -->
                 <div class="jobs-container">
                     
-                    <!-- Encabezado de Búsquedas Activas -->
                     <div class="jobs-header">
                         <h2>Búsquedas Activas</h2>
                         <span class="jobs-count">Mostrando <strong id="cant-vacantes">0</strong> vacantes disponibles</span>
                     </div>
 
-                    <!-- Vacantes DINÁMICAS (Inyectadas por main.js) -->
                     <div class="job-list" id="grid-vacantes">
-                        <!-- JS cargará las vacantes aquí -->
-                    </div>
+                        </div>
 
                 </div>
 
-                <!-- Columna Derecha: Sidebar -->
                 <aside class="sidebar">
 
-                    <!-- Widget Jobbers Pro -->
                     <div class="sidebar-widget widget-pro">
                         <h3 class="pro-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
                         <p class="pro-text">
@@ -162,7 +147,6 @@
                         <button type="button" class="btn-pro">⚡ DESTACÁ TU PERFIL PRO</button>
                     </div>
 
-                    <!-- Filtro Rápido -->
                     <div class="sidebar-widget">
                         <h4 style="margin-bottom: 0.5rem; font-size: 0.95rem;">Filtro Rápido</h4>
                         <label style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-secondary);">
@@ -173,12 +157,10 @@
                         </label>
                     </div>
 
-                    <!-- Espacio AdSense Estabilizado -->
                     <div class="adsense-placeholder">
                         [ Anuncio AdSense ]
                     </div>
 
-                    <!-- Widget Blog (Exclusivo Postulante) -->
                     <div class="sidebar-widget">
                         <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">Lecturas Recomendadas</h4>
                         <ul style="list-style: none; font-size: 0.85rem; color: var(--text-secondary);">
@@ -197,7 +179,18 @@
 
             </div>
 
-            <!-- SECCIÓN BLOG / RECURSOS -->
+            <section class="banner-patrocinado">
+                <span class="tag-patrocinado">ESPACIO PATROCINADO / DESTACADO</span>
+                <h3 class="titulo-patrocinado">¡Promocioná tus cursos, indumentaria o herramientas gastronómicas acá!</h3>
+                <p class="bajada-patrocinado">Llegá de forma directa a cientos de restaurantes, bares y cocineros de Córdoba.</p>
+                <a href="https://wa.me/5493513080197?text=Hola!%20Quiero%20consultar%20por%20espacios%20publicitarios%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-publicidad">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.55 6.55 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.582 6.592z"/>
+                    </svg>
+                    CONSULTAR ESPACIO PUBLICITARIO
+                </a>
+            </section>
+
             <section class="blog-section">
                 <div class="blog-header">
                     <h3>Blog & Recursos Gastronómicos</h3>
@@ -236,12 +229,8 @@
 
         </div>
 
-        <!-- =================================================== -->
-        <!-- MODO EMPRESA                                        -->
-        <!-- =================================================== -->
         <div id="view-empresa" class="view-section">
 
-            <!-- Hero Empresa 50/50 -->
             <section class="hero-empresa">
                 <div>
                     <h1 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Contratá personal gastronómico calificado rápido</h1>
@@ -253,7 +242,6 @@
                     </ul>
                 </div>
 
-                <!-- Formulario Express -->
                 <div class="express-form-card">
                     <h3>Publicación Rápida</h3>
                     <form class="form-grid-2">
@@ -266,7 +254,6 @@
                 </div>
             </section>
 
-            <!-- Sección Talento Destacado -->
             <section style="margin-top: 2rem;">
                 <h3 style="margin-bottom: 1rem;">Talento Gastronómico Disponible</h3>
 
@@ -303,10 +290,20 @@
                 </div>
             </section>
 
-            <!-- Layout Secundario Empresa -->
+            <section class="banner-patrocinado">
+                <span class="tag-patrocinado">ESPACIO PATROCINADO / DESTACADO</span>
+                <h3 class="titulo-patrocinado">¡Promocioná tu equipamiento, vajilla o insumos para gastronomía!</h3>
+                <p class="bajada-patrocinado">Conectá de forma directa con los dueños, gerentes y encargados de restaurantes y bares de Córdoba.</p>
+                <a href="https://wa.me/5493513080197?text=Hola!%20Quiero%20consultar%20por%20espacios%20publicitarios%20para%20Empresas." target="_blank" rel="noopener noreferrer" class="btn-publicidad">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.55 6.55 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.582 6.592z"/>
+                    </svg>
+                    CONSULTAR ESPACIO PUBLICITARIO
+                </a>
+            </section>
+
             <div class="main-layout" style="margin-top: 2rem;">
                 <aside class="sidebar" style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-                    <!-- Anuncio AdSense en Modo Empresa -->
                     <div class="adsense-placeholder">
                         [ Anuncio AdSense ]
                     </div>
@@ -321,9 +318,6 @@
 
         </div>
 
-        <!-- =================================================== -->
-        <!-- PRE-FOOTER INFORMATIVO UNIFICADO                    -->
-        <!-- =================================================== -->
         <section class="pre-footer">
             <div class="footer-col">
                 <h4>Para Postulantes</h4>
@@ -354,7 +348,6 @@
 
     </main>
 
-    <!-- NAVEGACIÓN INFERIOR MOBILE -->
     <nav class="bottom-nav">
         <div class="bottom-nav-item active" onclick="setMode('postulante')">
             <span>🔍</span>
@@ -370,7 +363,6 @@
         </div>
     </nav>
 
-    <!-- Archivo de lógica JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>
