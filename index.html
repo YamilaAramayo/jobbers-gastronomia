@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Archivo de estilos CSS externo -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,9 +26,12 @@
 
     <main class="container">
 
-        <!-- MODO POSTULANTE -->
+        <!-- =================================================== -->
+        <!-- MODO POSTULANTE                                      -->
+        <!-- =================================================== -->
         <div id="view-postulante" class="view-section active-view">
 
+            <!-- Hero Postulante con Buscador Integrado -->
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
@@ -37,6 +42,7 @@
                 </div>
             </section>
 
+            <!-- Categorías con Scroll Horizontal -->
             <div class="chips-scroll-container">
                 <span class="chip-item active">Todos</span>
                 <span class="chip-item">Cocina y Bacha</span>
@@ -46,9 +52,12 @@
                 <span class="chip-item">Delivery</span>
             </div>
 
+            <!-- Layout Principal (Listado + Sidebar) -->
             <div class="main-layout">
 
+                <!-- Columna Izquierda: Vacantes -->
                 <div class="job-list">
+                    
                     <div class="job-card">
                         <div>
                             <div class="job-title">Cocinero con experiencia para Bodegón</div>
@@ -84,8 +93,10 @@
                         </div>
                         <button class="btn-amber">Postularme</button>
                     </div>
+
                 </div>
 
+                <!-- Columna Derecha: Sidebar (Anuncios y Filtros) -->
                 <aside class="sidebar">
                     <div class="sidebar-widget">
                         <h4 style="margin-bottom: 0.5rem; font-size: 0.95rem;">Filtro Rápido</h4>
@@ -97,10 +108,12 @@
                         </label>
                     </div>
 
+                    <!-- Espacio AdSense Estabilizado -->
                     <div class="adsense-placeholder">
                         [ Anuncio AdSense ]
                     </div>
 
+                    <!-- Widget Blog (Exclusivo Postulante) -->
                     <div class="sidebar-widget">
                         <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">Lecturas Recomendadas</h4>
                         <ul style="list-style: none; font-size: 0.85rem; color: var(--text-secondary);">
@@ -119,6 +132,7 @@
 
             </div>
 
+            <!-- SECCIÓN BLOG / RECURSOS (Exclusiva de Modo Postulante) -->
             <section class="blog-section">
                 <div class="blog-header">
                     <h3>Blog & Recursos Gastronómicos</h3>
@@ -157,9 +171,12 @@
 
         </div>
 
-        <!-- MODO EMPRESA -->
+        <!-- =================================================== -->
+        <!-- MODO EMPRESA                                        -->
+        <!-- =================================================== -->
         <div id="view-empresa" class="view-section">
 
+            <!-- Hero Empresa 50/50 -->
             <section class="hero-empresa">
                 <div>
                     <h1 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Contratá personal gastronómico calificado rápido</h1>
@@ -171,6 +188,7 @@
                     </ul>
                 </div>
 
+                <!-- Formulario Express -->
                 <div class="express-form-card">
                     <h3>Publicación Rápida</h3>
                     <form class="form-grid-2" onsubmit="event.preventDefault();">
@@ -183,6 +201,7 @@
                 </div>
             </section>
 
+            <!-- Sección Talento Destacado -->
             <section style="margin-top: 2rem;">
                 <h3 style="margin-bottom: 1rem;">Talento Gastronómico Disponible</h3>
 
@@ -213,6 +232,7 @@
                 </div>
             </section>
 
+            <!-- Layout Secundario Empresa -->
             <div class="main-layout">
                 <div class="sidebar-widget">
                     <h3>Pases y Planes Destacados</h3>
@@ -221,6 +241,7 @@
                 </div>
 
                 <aside class="sidebar">
+                    <!-- Anuncio AdSense en Modo Empresa -->
                     <div class="adsense-placeholder">
                         [ Anuncio AdSense ]
                     </div>
@@ -235,7 +256,48 @@
 
         </div>
 
-        <!-- PRE-FOOTER INFORMATIVO -->
+        <!-- =================================================== -->
+        <!-- SECCIÓN BLOG / NOVEDADES Y CONSEJOS                -->
+        <!-- =================================================== -->
+        <section class="blog-section">
+            <div class="blog-header">
+                <h3>Blog & Recursos Gastronómicos</h3>
+                <a href="#" style="color: var(--accent-amber); font-size: 0.9rem; font-weight: 600;">Ver todos los artículos &rarr;</a>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div>
+                        <span class="blog-tag">Consejos CV</span>
+                        <h4>Cómo armar un CV gastronómico de alto impacto</h4>
+                        <p>Destacá tus habilidades clave en cocina, barra o salón para conseguir entrevistas más rápido.</p>
+                    </div>
+                    <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                </article>
+
+                <article class="blog-card">
+                    <div>
+                        <span class="blog-tag">Para Empresas</span>
+                        <h4>Claves para reducir la rotación de personal gastronómico</h4>
+                        <p>Estrategias efectivas de fidelización y buen clima laboral en la industria de la gastronomía.</p>
+                    </div>
+                    <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                </article>
+
+                <article class="blog-card">
+                    <div>
+                        <span class="blog-tag">Novedades</span>
+                        <h4>Guía de sueldos y escalas salariales del rubro</h4>
+                        <p>Conocé los valores de referencia actualizados para cada puesto y especialidad del sector.</p>
+                    </div>
+                    <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- =================================================== -->
+        <!-- PRE-FOOTER INFORMATIVO UNIFICADO                   -->
+        <!-- =================================================== -->
         <section class="pre-footer">
             <div class="footer-col">
                 <h4>Para Postulantes</h4>
@@ -282,6 +344,7 @@
         </div>
     </nav>
 
+    <!-- Archivo de lógica JavaScript externo -->
     <script src="app.js"></script>
 </body>
 </html>
