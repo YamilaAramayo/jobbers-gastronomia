@@ -1,31 +1,31 @@
 /**
  * Jobbers Argentina - Módulo Interactivo de Selección y Postulación Gastronómica
- * Versión Final Unificada
+ * Versión Final Unificada con Filtros Visuales
  */
 
 // ==========================================
 // 1. CAMBIO DE MODO GLOBAL (Postulante / Empresa)
 // ==========================================
 function setMode(mode) {
-    const postulanteView = document.getElementById('view-postulante');
-    const empresaView = document.getElementById('view-empresa');
-    const btnPostulante = document.getElementById('btn-mode-postulante');
-    const btnEmpresa = document.getElementById('btn-mode-empresa');
+  const postulanteView = document.getElementById('view-postulante');
+  const empresaView = document.getElementById('view-empresa');
+  const btnPostulante = document.getElementById('btn-mode-postulante');
+  const btnEmpresa = document.getElementById('btn-mode-empresa');
 
-    if (postulanteView && empresaView) {
-        if (mode === 'postulante') {
-            postulanteView.classList.add('active-view');
-            empresaView.classList.remove('active-view');
-            btnPostulante?.classList.add('active');
-            btnEmpresa?.classList.remove('active');
-        } else {
-            empresaView.classList.add('active-view');
-            postulanteView.classList.remove('active-view');
-            btnEmpresa?.classList.add('active');
-            btnPostulante?.classList.remove('active');
-        }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (postulanteView && empresaView) {
+    if (mode === 'postulante') {
+      postulanteView.classList.add('active-view');
+      empresaView.classList.remove('active-view');
+      btnPostulante?.classList.add('active');
+      btnEmpresa?.classList.remove('active');
+    } else {
+      empresaView.classList.add('active-view');
+      postulanteView.classList.remove('active-view');
+      btnEmpresa?.classList.add('active');
+      btnPostulante?.classList.remove('active');
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 (function () {
@@ -168,11 +168,22 @@ function setMode(mode) {
       document.getElementById('btn-reset-filtros')?.addEventListener('click', () => {
         state.filtroBusqueda = '';
         state.filtroCategoria = 'todas';
+
         const inputBuscador = document.querySelector(CONFIG.SELECTORS.INPUT_BUSQUEDA);
         const selectCat = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
         if (inputBuscador) inputBuscador.value = '';
         if (selectCat) selectCat.value = 'todas';
-        document.querySelectorAll('.chip-item').forEach(c => c.classList.remove('active'));
+
+        // Restablecer clase active en tarjetas y chips
+        document.querySelectorAll('.category-card, .chip-item').forEach(el => {
+          const val = (el.dataset.category || el.querySelector('span')?.textContent || el.textContent).toLowerCase().trim();
+          if (val === 'todas' || val === 'todos') {
+            el.classList.add('active');
+          } else {
+            el.classList.remove('active');
+          }
+        });
+
         aplicarFiltros();
       });
       return;
@@ -367,7 +378,7 @@ function setMode(mode) {
   }
 
   // ==========================================
-  // 7. LISTENERS DE BOTONES Y CHIPS
+  // 7. LISTENERS DE BOTONES, TARJETAS Y CHIPS
   // ==========================================
   function inicializarEventosGrid() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
@@ -391,7 +402,7 @@ function setMode(mode) {
   }
 
   function inicializarFiltrosYBotones() {
-    // Buscador
+    // Buscador de texto
     const inputBuscador = document.querySelector(CONFIG.SELECTORS.INPUT_BUSQUEDA);
     if (inputBuscador) {
       inputBuscador.addEventListener('input', debounce((e) => {
@@ -400,26 +411,45 @@ function setMode(mode) {
       }, CONFIG.DEBOUNCE_MS));
     }
 
-    // Select Categorías
-    const selectCategoria = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
-    if (selectCategoria) {
-      selectCategoria.addEventListener('change', (e) => {
-        state.filtroCategoria = e.target.value;
-        aplicarFiltros();
-      });
-    }
+    // Tarjetas (.category-card) y Chips (.chip-item) de Categoría
+    const categoryElements = document.querySelectorAll('.category-card, .chip-item');
+    categoryElements.forEach(item => {
+      item.addEventListener('click', () => {
+        categoryElements.forEach(c => c.classList.remove('active'));
+        item.classList.add('active');
 
-    // Chips de Filtrado Rápido
-    const chips = document.querySelectorAll('.chip-item');
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        chips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        const cat = chip.dataset.category || chip.textContent.trim();
+        const cat = item.dataset.category || item.querySelector('span')?.textContent.trim() || item.textContent.trim();
         state.filtroCategoria = cat;
+
+        // Sincronizar el select flotante/desplegable si existe
+        const selectCat = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
+        if (selectCat) {
+          selectCat.value = cat.toLowerCase();
+        }
+
         aplicarFiltros();
       });
     });
+
+    // Select Categorías (sincroniza hacia las tarjetas)
+    const selectCategoria = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
+    if (selectCategoria) {
+      selectCategoria.addEventListener('change', (e) => {
+        const val = e.target.value.toLowerCase().trim();
+        state.filtroCategoria = val;
+
+        categoryElements.forEach(c => {
+          const cCat = (c.dataset.category || c.querySelector('span')?.textContent || c.textContent).toLowerCase().trim();
+          if (cCat === val) {
+            c.classList.add('active');
+          } else {
+            c.classList.remove('active');
+          }
+        });
+
+        aplicarFiltros();
+      });
+    }
 
     // Switches de Vista (Header y Mobile Nav)
     document.getElementById('btn-mode-postulante')?.addEventListener('click', () => setMode('postulante'));
@@ -434,7 +464,7 @@ function setMode(mode) {
       });
     });
 
-    // Formulario Publicar Exprès (Modo Empresa)
+    // Formulario Publicar Express (Modo Empresa)
     const formExpress = document.querySelector('.express-form-card form');
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
