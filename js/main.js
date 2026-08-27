@@ -1,35 +1,38 @@
 /**
  * Jobbers Argentina - Módulo Interactivo de Selección y Postulación Gastronómica
- * Versión Final Unificada y Sincronizada con base_de_datos.json
+ * Versión Final Unificada, Optimizada y Sincronizada con base_de_datos.json
  */
-
-// ==========================================
-// 1. CAMBIO DE MODO GLOBAL (Postulante / Empresa)
-// ==========================================
-function setMode(mode) {
-  const postulanteView = document.getElementById('view-postulante');
-  const empresaView = document.getElementById('view-empresa');
-  const btnPostulante = document.getElementById('btn-mode-postulante');
-  const btnEmpresa = document.getElementById('btn-mode-empresa');
-
-  if (postulanteView && empresaView) {
-    if (mode === 'postulante') {
-      postulanteView.classList.add('active-view');
-      empresaView.classList.remove('active-view');
-      btnPostulante?.classList.add('active');
-      btnEmpresa?.classList.remove('active');
-    } else {
-      empresaView.classList.add('active-view');
-      postulanteView.classList.remove('active-view');
-      btnEmpresa?.classList.add('active');
-      btnPostulante?.classList.remove('active');
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-}
 
 (function () {
   'use strict';
+
+  // ==========================================
+  // 1. CAMBIO DE MODO GLOBAL (Postulante / Empresa)
+  // ==========================================
+  function setMode(mode) {
+    const postulanteView = document.getElementById('view-postulante');
+    const empresaView = document.getElementById('view-empresa');
+    const btnPostulante = document.getElementById('btn-mode-postulante');
+    const btnEmpresa = document.getElementById('btn-mode-empresa');
+
+    if (postulanteView && empresaView) {
+      if (mode === 'postulante') {
+        postulanteView.classList.add('active-view');
+        empresaView.classList.remove('active-view');
+        btnPostulante?.classList.add('active');
+        btnEmpresa?.classList.remove('active');
+      } else {
+        empresaView.classList.add('active-view');
+        postulanteView.classList.remove('active-view');
+        btnEmpresa?.classList.add('active');
+        btnPostulante?.classList.remove('active');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  // Exposición explícita en window para compatibilidad con handlers inline HTML (ej: onclick="setMode(...)")
+  window.setMode = setMode;
 
   // ==========================================
   // 2. CONFIGURACIÓN Y ESTADO DE LA APLICACIÓN
@@ -74,9 +77,17 @@ function setMode(mode) {
     'barismo': 'barra',
     'bartender': 'barra',
     'salón': 'salon',
+    'salon': 'salon',
     'mozo': 'salon',
     'bacha': 'limpieza'
   };
+
+  // Función auxiliar para normalizar categorías usando el mapeo
+  function normalizarCategoria(cat) {
+    if (!cat) return 'todas';
+    const c = cat.toLowerCase().trim();
+    return MAPEO_CATEGORIAS[c] || c;
+  }
 
   // ==========================================
   // 3. UTILIDADES
@@ -126,17 +137,14 @@ function setMode(mode) {
   // ==========================================
   function aplicarFiltros() {
     const query = state.filtroBusqueda.toLowerCase().trim();
-    const rawCat = state.filtroCategoria.toLowerCase().trim();
-    
-    // Normalizar categoría de búsqueda (ej. "Barismo" -> "barra")
-    const catBuscada = MAPEO_CATEGORIAS[rawCat] || rawCat;
+    const catBuscada = normalizarCategoria(state.filtroCategoria);
 
     state.vacantesFiltradas = state.vacantes.filter(item => {
       const ubicacion = (item.zona || item.ubicacion || '').toLowerCase();
       const puesto = (item.puesto || '').toLowerCase();
       const empresa = (item.empresa || '').toLowerCase();
       const descripcion = (item.descripcion || '').toLowerCase();
-      const itemCat = (item.categoria || '').toLowerCase().trim();
+      const itemCat = normalizarCategoria(item.categoria || '');
 
       const coincideQuery = !query || 
         puesto.includes(query) ||
@@ -174,8 +182,9 @@ function setMode(mode) {
         if (selectCat) selectCat.value = 'todas';
 
         document.querySelectorAll('.category-card, .chip-item').forEach(el => {
-          const val = (el.dataset.category || el.querySelector('span')?.textContent || el.textContent).toLowerCase().trim();
-          if (val === 'todas' || val === 'todos') {
+          const rawVal = (el.dataset.category || el.querySelector('span')?.textContent || el.textContent).trim();
+          const normVal = normalizarCategoria(rawVal);
+          if (normVal === 'todas' || normVal === 'todos') {
             el.classList.add('active');
           } else {
             el.classList.remove('active');
@@ -295,7 +304,7 @@ function setMode(mode) {
       document.getElementById('form-postulacion-jobbers')?.addEventListener('submit', manejarEnvioPostulacion);
     }
 
-    // Listener global de cierre para modales
+    // Listener de cierre por clic en backdrop o botones de cierre
     document.querySelectorAll('.modal-overlay').forEach(modal => {
       modal.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay') || 
@@ -304,6 +313,13 @@ function setMode(mode) {
           cerrarModal(modal);
         }
       });
+    });
+
+    // Cierre accesible de modales con la tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        cerrarModal();
+      }
     });
   }
 
@@ -429,15 +445,23 @@ function setMode(mode) {
     const categoryElements = document.querySelectorAll('.category-card, .chip-item');
     categoryElements.forEach(item => {
       item.addEventListener('click', () => {
-        categoryElements.forEach(c => c.classList.remove('active'));
-        item.classList.add('active');
+        const rawCat = item.dataset.category || item.querySelector('span')?.textContent.trim() || item.textContent.trim();
+        state.filtroCategoria = rawCat;
 
-        const cat = item.dataset.category || item.querySelector('span')?.textContent.trim() || item.textContent.trim();
-        state.filtroCategoria = cat;
+        // Normalización cruzada para activar elementos equivalentes
+        const catTargetNorm = normalizarCategoria(rawCat);
+        categoryElements.forEach(c => {
+          const cRaw = c.dataset.category || c.querySelector('span')?.textContent.trim() || c.textContent.trim();
+          if (normalizarCategoria(cRaw) === catTargetNorm) {
+            c.classList.add('active');
+          } else {
+            c.classList.remove('active');
+          }
+        });
 
         const selectCat = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
         if (selectCat) {
-          selectCat.value = cat.toLowerCase();
+          selectCat.value = rawCat.toLowerCase();
         }
 
         aplicarFiltros();
@@ -450,9 +474,10 @@ function setMode(mode) {
         const val = e.target.value.toLowerCase().trim();
         state.filtroCategoria = val;
 
+        const catTargetNorm = normalizarCategoria(val);
         categoryElements.forEach(c => {
-          const cCat = (c.dataset.category || c.querySelector('span')?.textContent || c.textContent).toLowerCase().trim();
-          if (cCat === val) {
+          const cRaw = (c.dataset.category || c.querySelector('span')?.textContent || c.textContent).toLowerCase().trim();
+          if (normalizarCategoria(cRaw) === catTargetNorm) {
             c.classList.add('active');
           } else {
             c.classList.remove('active');
