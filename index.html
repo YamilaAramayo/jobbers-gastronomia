@@ -3,44 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobbers - Portal de Empleo Gastronómico</title>
+    <title>Jobbers | Portal de Empleo Gastronómico</title>
+    
+    <!-- Metaetiquetas SEO -->
+    <meta name="description" content="Encontrá y publicá empleos gastronómicos en Argentina. Oportunidades en cocina, salón, barismo y más. Conexión rápida entre perfiles y locales.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / WhatsApp / Redes Sociales -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Jobbers - Portal de Empleo Gastronómico">
+    <meta property="og:description" content="Conectá con las mejores ofertas laborales o contratá personal calificado para tu local gastronómico.">
+    <meta property="og:image" content="img/og-image.jpg">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Tipografía y Estilos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
+    <!-- Header Navbar -->
     <header class="navbar">
         <div class="brand-logo">Jobbers<span>.</span></div>
 
-        <div class="mode-switch-container">
-            <button type="button" class="mode-btn active" id="btn-mode-postulante" onclick="setMode('postulante')">Postulantes</button>
-            <button type="button" class="mode-btn" id="btn-mode-empresa" onclick="setMode('empresa')">Empresas</button>
+        <div class="mode-switch-container" role="tablist" aria-label="Modo de usuario">
+            <button type="button" class="mode-btn active" id="btn-mode-postulante" role="tab" aria-selected="true" aria-controls="view-postulante" onclick="setMode('postulante')">
+                Postulantes
+            </button>
+            <button type="button" class="mode-btn" id="btn-mode-empresa" role="tab" aria-selected="false" aria-controls="view-empresa" onclick="setMode('empresa')">
+                Empresas
+            </button>
         </div>
     </header>
 
+    <!-- Main Content Container -->
     <main class="container">
 
-        <div id="view-postulante" class="view-section active-view">
+        <!-- ==================== VISTA POSTULANTE ==================== -->
+        <div id="view-postulante" class="view-section active-view" role="tabpanel" aria-labelledby="btn-mode-postulante">
 
+            <!-- Hero Section Postulante -->
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
-                <div class="search-box-inline">
-                    <input type="text" id="input-busqueda-vacantes" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)...">
-                    <input type="text" class="input-dark" placeholder="Ubicación o Zona...">
-                    <button type="button" class="btn-amber">Buscar</button>
-                </div>
+                <form id="form-busqueda-postulante" class="search-box-inline" onsubmit="event.preventDefault();">
+                    <input type="text" id="input-busqueda-vacantes" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)..." aria-label="Buscar por puesto">
+                    <input type="text" id="input-busqueda-ubicacion" class="input-dark" placeholder="Ubicación o Zona..." aria-label="Buscar por ubicación">
+                    <button type="submit" class="btn-amber" id="btn-buscar-vacantes">Buscar</button>
+                </form>
             </section>
 
+            <!-- Categorías -->
             <section class="categories-section">
                 <h3 class="categories-title">BUSCÁ POR CATEGORÍA</h3>
-                <div class="categories-grid">
+                <div class="categories-grid" role="group" aria-label="Filtro de categorías">
                     
                     <button type="button" class="category-card active" data-category="todas">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="3" y="3" width="7" height="7" rx="1"></rect>
                             <rect x="14" y="3" width="7" height="7" rx="1"></rect>
                             <rect x="14" y="14" width="7" height="7" rx="1"></rect>
@@ -50,14 +71,14 @@
                     </button>
 
                     <button type="button" class="category-card" data-category="Cocina">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M18 2v20M6 2v6a3 3 0 0 0 6 0V2M9 11v11"></path>
                         </svg>
                         <span>Cocina</span>
                     </button>
 
                     <button type="button" class="category-card" data-category="Salón">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M2 18a10 10 0 0 1 20 0H2z"></path>
                             <path d="M12 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             <path d="M4 21h16"></path>
@@ -66,7 +87,7 @@
                     </button>
 
                     <button type="button" class="category-card" data-category="Barismo">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
                             <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"></path>
                             <line x1="6" y1="2" x2="6" y2="4"></line>
@@ -77,7 +98,7 @@
                     </button>
 
                     <button type="button" class="category-card" data-category="Bartender">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polygon points="12 15 3 3 21 3 12 15"></polygon>
                             <line x1="12" y1="15" x2="12" y2="21"></line>
                             <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -86,7 +107,7 @@
                     </button>
 
                     <button type="button" class="category-card" data-category="Delivery">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <circle cx="5.5" cy="17.5" r="2.5"></circle>
                             <circle cx="18.5" cy="17.5" r="2.5"></circle>
                             <path d="M15 6h4l3 5v7h-2"></path>
@@ -97,7 +118,7 @@
                     </button>
 
                     <button type="button" class="category-card" data-category="Limpieza">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M12 3v3m0 12v3M3 12h3m12 0h3"></path>
                             <path d="M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"></path>
                         </svg>
@@ -105,7 +126,7 @@
                     </button>
 
                     <button type="button" class="category-card" data-category="RRHH">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                         </svg>
@@ -113,7 +134,7 @@
                     </button>
 
                     <button type="button" class="category-card" data-category="Administración">
-                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
                             <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
                         </svg>
@@ -123,18 +144,19 @@
                 </div>
             </section>
 
+            <!-- Layout Principal (Listado + Sidebar) -->
             <div class="main-layout">
 
                 <div class="jobs-container">
-                    
                     <div class="jobs-header">
                         <h2>Búsquedas Activas</h2>
                         <span class="jobs-count">Mostrando <strong id="cant-vacantes">0</strong> vacantes disponibles</span>
                     </div>
 
+                    <!-- Grilla dinámica de ofertas -->
                     <div class="job-list" id="grid-vacantes">
+                        <!-- Renderizado desde JavaScript / Backend -->
                     </div>
-
                 </div>
 
                 <aside class="sidebar">
@@ -155,11 +177,11 @@
 
                     <div class="sidebar-widget">
                         <h4 style="margin-bottom: 0.5rem; font-size: 0.95rem;">Filtro Rápido</h4>
-                        <label style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-secondary);">
-                            <input type="checkbox" checked> Solo con sueldo visible
+                        <label style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-secondary); cursor: pointer;">
+                            <input type="checkbox" id="chk-sueldo-visible" checked> Solo con sueldo visible
                         </label>
-                        <label style="display: block; font-size: 0.85rem; color: var(--text-secondary);">
-                            <input type="checkbox"> Modalidad Part-Time
+                        <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                            <input type="checkbox" id="chk-part-time"> Modalidad Part-Time
                         </label>
                     </div>
 
@@ -181,22 +203,25 @@
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
                         <button type="button" class="btn-amber" style="width: 100%;" onclick="setMode('empresa')">Publicar Empleo</button>
                     </div>
+
                 </aside>
 
             </div>
 
+            <!-- Banner Patrocinado -->
             <section class="banner-patrocinado">
                 <span class="tag-patrocinado">ESPACIO PATROCINADO / DESTACADO</span>
                 <h3 class="titulo-patrocinado">¡Promocioná tus cursos, indumentaria o herramientas gastronómicas acá!</h3>
                 <p class="bajada-patrocinado">Llegá de forma directa a cientos de restaurantes, bares y cocineros de Córdoba.</p>
                 <a href="https://wa.me/5493541582448?text=Hola!%20Quiero%20consultar%20por%20espacios%20publicitarios%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-publicidad">
-                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.55 6.55 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.582 6.592z"/>
                     </svg>
                     CONSULTAR ESPACIO PUBLICITARIO
                 </a>
             </section>
 
+            <!-- Blog Section -->
             <section class="blog-section">
                 <div class="blog-header">
                     <h3>Blog & Recursos Gastronómicos</h3>
@@ -235,8 +260,10 @@
 
         </div>
 
-        <div id="view-empresa" class="view-section">
+        <!-- ==================== VISTA EMPRESA ==================== -->
+        <div id="view-empresa" class="view-section" role="tabpanel" aria-labelledby="btn-mode-empresa">
 
+            <!-- Hero Section Empresa -->
             <section class="hero-empresa">
                 <div>
                     <h1 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Contratá personal gastronómico calificado rápido</h1>
@@ -250,16 +277,17 @@
 
                 <div class="express-form-card">
                     <h3>Publicación Rápida</h3>
-                    <form class="form-grid-2">
-                        <input type="text" class="input-dark full-width" placeholder="Nombre de tu Local / Empresa" required>
-                        <input type="text" class="input-dark" placeholder="Puesto a buscar" required>
-                        <input type="text" class="input-dark" placeholder="Zona / Ciudad" required>
-                        <input type="tel" class="input-dark full-width" placeholder="Teléfono de contacto (WhatsApp)" required>
+                    <form id="form-publicar-express" class="form-grid-2">
+                        <input type="text" id="empresa-nombre" class="input-dark full-width" placeholder="Nombre de tu Local / Empresa" required>
+                        <input type="text" id="empresa-puesto" class="input-dark" placeholder="Puesto a buscar" required>
+                        <input type="text" id="empresa-zona" class="input-dark" placeholder="Zona / Ciudad" required>
+                        <input type="tel" id="empresa-telefono" class="input-dark full-width" placeholder="Teléfono de contacto (WhatsApp)" required>
                         <button type="submit" class="btn-amber full-width" style="margin-top: 0.5rem;">Publicar Búsqueda</button>
                     </form>
                 </div>
             </section>
 
+            <!-- Sección Talentos -->
             <section style="margin-top: 2rem;">
                 <h3 style="margin-bottom: 1rem;">Talento Gastronómico Disponible</h3>
 
@@ -296,12 +324,13 @@
                 </div>
             </section>
 
+            <!-- Banner Patrocinado B2B -->
             <section class="banner-patrocinado">
                 <span class="tag-patrocinado">ESPACIO PATROCINADO / DESTACADO</span>
                 <h3 class="titulo-patrocinado">¡Promocioná tu equipamiento, vajilla o insumos para gastronomía!</h3>
                 <p class="bajada-patrocinado">Conectá de forma directa con los dueños, gerentes y encargados de restaurantes y bares de Córdoba.</p>
                 <a href="https://wa.me/5493541582448?text=Hola!%20Quiero%20consultar%20por%20espacios%20publicitarios%20para%20Empresas." target="_blank" rel="noopener noreferrer" class="btn-publicidad">
-                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.55 6.55 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.582 6.592z"/>
                     </svg>
                     CONSULTAR ESPACIO PUBLICITARIO
@@ -324,6 +353,7 @@
 
         </div>
 
+        <!-- Pre-Footer -->
         <section class="pre-footer">
             <div class="footer-col">
                 <h4>Para Postulantes</h4>
@@ -354,21 +384,23 @@
 
     </main>
 
-    <nav class="bottom-nav">
-        <div class="bottom-nav-item active" onclick="setMode('postulante')">
-            <span>🔍</span>
+    <!-- Navegación Inferior Mobile -->
+    <nav class="bottom-nav" aria-label="Navegación inferior">
+        <button type="button" class="bottom-nav-item active" onclick="setMode('postulante')">
+            <span aria-hidden="true">🔍</span>
             <span>Buscar</span>
-        </div>
-        <div class="bottom-nav-item" onclick="setMode('empresa')">
-            <span>📢</span>
+        </button>
+        <button type="button" class="bottom-nav-item" onclick="setMode('empresa')">
+            <span aria-hidden="true">📢</span>
             <span>Publicar</span>
-        </div>
-        <div class="bottom-nav-item">
-            <span>👤</span>
+        </button>
+        <button type="button" class="bottom-nav-item">
+            <span aria-hidden="true">👤</span>
             <span>Mi Cuenta</span>
-        </div>
+        </button>
     </nav>
 
+    <!-- Script Principal JS -->
     <script src="js/main.js"></script>
 </body>
 </html>
