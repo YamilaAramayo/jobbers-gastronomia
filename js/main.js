@@ -35,7 +35,6 @@ function setMode(mode) {
   // 2. CONFIGURACIÓN Y ESTADO DE LA APLICACIÓN
   // ==========================================
   const CONFIG = {
-    // Apunta al archivo JSON local (cambiar a '/wp-json/jobbers/v1/vacantes' al integrar en WP)
     API_URL: 'base_de_datos.json',
     DEBOUNCE_MS: 200,
     SELECTORS: {
@@ -191,7 +190,7 @@ function setMode(mode) {
     grid.innerHTML = state.vacantesFiltradas.map(v => {
       const ubicacion = escapeHTML(v.zona || v.ubicacion || 'Córdoba');
       const sueldo = escapeHTML(v.sueldo || 'A convenir');
-      const tiempo = escapeHTML(v.tiempo || 'Reciente');
+      const tiempo = escapeHTML(v.tiempo || v.haceCuanto || 'Reciente');
       const esUrgente = Boolean(v.urgente);
 
       return `
@@ -204,14 +203,14 @@ function setMode(mode) {
             </div>
             <span class="job-time">${tiempo}</span>
           </div>
-          <div class="job-details" style="margin: 0.75rem 0; display: flex; gap: 0.4rem; flex-wrap: wrap;">
+          <div class="job-details">
             ${v.jornada ? `<span class="badge">${escapeHTML(v.jornada)}</span>` : ''}
             ${v.turno ? `<span class="badge">${escapeHTML(v.turno)}</span>` : ''}
             <span class="badge badge-salary">${sueldo}</span>
           </div>
-          <div class="job-card-footer" style="display: flex; gap: 0.5rem; justify-content: space-between; align-items: center; margin-top: 1rem;">
-            <button type="button" class="btn-amber btn-ver-detalle" data-id="${escapeHTML(v.id)}" style="background: transparent; border: 1px solid var(--accent-amber); color: var(--accent-amber); padding: 0.4rem 0.8rem; font-size: 0.85rem;">Ver Detalle</button>
-            <button type="button" class="btn-green btn-postularme" data-id="${escapeHTML(v.id)}" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Postularme 📲</button>
+          <div class="job-card-footer">
+            <button type="button" class="btn-ver-detalle" data-id="${escapeHTML(v.id)}">Ver Detalle</button>
+            <button type="button" class="btn-postularme" data-id="${escapeHTML(v.id)}">Postularme 📲</button>
           </div>
         </article>
       `;
@@ -219,59 +218,12 @@ function setMode(mode) {
   }
 
   function actualizarContador() {
-    const contador = document.querySelector(CONFIG.SELECTORS.CONTADOR_RESULTADOS);
+    const contador = document.querySelector(CONFIG.SELECTORS.CONTADOR_RESULTADOS) || document.getElementById('cant-vacantes');
     if (!contador) return;
     const total = state.vacantesFiltradas.length;
     contador.textContent = `${total} ${total === 1 ? 'oferta encontrada' : 'ofertas encontradas'}`;
   }
-// Función para renderizar las vacantes en el DOM
-function renderVacantes(listaVacantes) {
-    const gridContainer = document.getElementById('grid-vacantes');
-    const contadorElem = document.getElementById('cant-vacantes');
 
-    // 1. Actualizar el contador dinámicamente con la cantidad filtrada
-    if (contadorElem) {
-        contadorElem.textContent = listaVacantes.length;
-    }
-
-    // 2. Limpiar el contenedor antes de inyectar
-    gridContainer.innerHTML = '';
-
-    // Manejar caso sin resultados
-    if (listaVacantes.length === 0) {
-        gridContainer.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No se encontraron vacantes que coincidan con la búsqueda.</p>';
-        return;
-    }
-
-    // 3. Inyectar las tarjetas de empleo
-    listaVacantes.forEach(job => {
-        const jobCard = document.createElement('div');
-        jobCard.className = `job-card ${job.urgente ? 'urgente' : ''}`;
-        
-        jobCard.innerHTML = `
-            ${job.urgente ? '<span class="badge-urgente">Urgente</span>' : ''}
-            
-            <div class="job-card-header">
-                <h3 class="job-title">${job.titulo}</h3>
-                <p class="job-company">${job.empresa} • <span class="job-location">${job.ubicacion}</span></p>
-                <span class="job-time">${job.haceCuanto}</span>
-            </div>
-
-            <div class="job-details">
-                <span class="badge">${job.modalidad}</span>
-                <span class="badge">${job.turno}</span>
-                ${job.sueldo ? `<span class="badge badge-salary">${job.sueldo}</span>` : ''}
-            </div>
-
-            <div class="job-card-footer">
-                <button type="button" class="btn-ver-detalle" onclick="verDetalle(${job.id})">Ver Detalle</button>
-                <button type="button" class="btn-postularme" onclick="postularme(${job.id})">Postularme 📱</button>
-            </div>
-        `;
-
-        gridContainer.appendChild(jobCard);
-    });
-}
   // ==========================================
   // 6. MODALES Y POSTULACIÓN
   // ==========================================
