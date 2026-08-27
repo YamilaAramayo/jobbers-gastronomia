@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobbers | Portal de Empleo Gastronómico</title>
     
-    <!-- Metaetiquetas SEO -->
     <meta name="description" content="Encontrá y publicá empleos gastronómicos en Argentina. Oportunidades en cocina, salón, barismo y más. Conexión rápida entre perfiles y locales.">
     <meta name="robots" content="index, follow">
     
-    <!-- Open Graph / WhatsApp / Redes Sociales -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Jobbers - Portal de Empleo Gastronómico">
     <meta property="og:description" content="Conectá con las mejores ofertas laborales o contratá personal calificado para tu local gastronómico.">
     <meta property="og:image" content="img/og-image.jpg">
     <meta property="og:locale" content="es_AR">
 
-    <!-- Tipografía y Estilos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +21,6 @@
 </head>
 <body>
 
-    <!-- Header Navbar -->
     <header class="navbar">
         <div class="brand-logo">Jobbers<span>.</span></div>
 
@@ -38,13 +34,10 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="container">
 
-        <!-- ==================== VISTA POSTULANTE ==================== -->
         <div id="view-postulante" class="view-section active-view" role="tabpanel" aria-labelledby="btn-mode-postulante">
 
-            <!-- Hero Section Postulante -->
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
@@ -55,7 +48,6 @@
                 </form>
             </section>
 
-            <!-- Categorías -->
             <section class="categories-section">
                 <h3 class="categories-title">BUSCÁ POR CATEGORÍA</h3>
                 <div class="categories-grid" role="group" aria-label="Filtro de categorías">
@@ -144,7 +136,6 @@
                 </div>
             </section>
 
-            <!-- Layout Principal (Listado + Sidebar) -->
             <div class="main-layout">
 
                 <div class="jobs-container">
@@ -153,10 +144,8 @@
                         <span class="jobs-count">Mostrando <strong id="cant-vacantes">0</strong> vacantes disponibles</span>
                     </div>
 
-                    <!-- Grilla dinámica de ofertas -->
                     <div class="job-list" id="grid-vacantes">
-                        <!-- Renderizado desde JavaScript / Backend -->
-                    </div>
+                        </div>
                 </div>
 
                 <aside class="sidebar">
@@ -208,7 +197,6 @@
 
             </div>
 
-            <!-- Banner Patrocinado -->
             <section class="banner-patrocinado">
                 <span class="tag-patrocinado">ESPACIO PATROCINADO / DESTACADO</span>
                 <h3 class="titulo-patrocinado">¡Promocioná tus cursos, indumentaria o herramientas gastronómicas acá!</h3>
@@ -221,7 +209,6 @@
                 </a>
             </section>
 
-            <!-- Blog Section -->
             <section class="blog-section">
                 <div class="blog-header">
                     <h3>Blog & Recursos Gastronómicos</h3>
@@ -260,10 +247,8 @@
 
         </div>
 
-        <!-- ==================== VISTA EMPRESA ==================== -->
         <div id="view-empresa" class="view-section" role="tabpanel" aria-labelledby="btn-mode-empresa">
 
-            <!-- Hero Section Empresa -->
             <section class="hero-empresa">
                 <div>
                     <h1 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Contratá personal gastronómico calificado rápido</h1>
@@ -277,17 +262,66 @@
 
                 <div class="express-form-card">
                     <h3>Publicación Rápida</h3>
-                    <form id="form-publicar-express" class="form-grid-2">
-                        <input type="text" id="empresa-nombre" class="input-dark full-width" placeholder="Nombre de tu Local / Empresa" required>
-                        <input type="text" id="empresa-puesto" class="input-dark" placeholder="Puesto a buscar" required>
-                        <input type="text" id="empresa-zona" class="input-dark" placeholder="Zona / Ciudad" required>
-                        <input type="tel" id="empresa-telefono" class="input-dark full-width" placeholder="Teléfono de contacto (WhatsApp)" required>
-                        <button type="submit" class="btn-amber full-width" style="margin-top: 0.5rem;">Publicar Búsqueda</button>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
+                    
+                    <form id="form-publicacion-express" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div>
+                            <input type="text" id="exp-empresa" class="input-dark" placeholder="Nombre de tu local / Gastronómico" required style="width: 100%;">
+                        </div>
+
+                        <div>
+                            <input type="tel" id="exp-telefono" class="input-dark" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required style="width: 100%;">
+                        </div>
+
+                        <div>
+                            <select id="exp-puesto" class="input-dark" required style="width: 100%;">
+                                <option value="" disabled selected>Puesto que necesitás</option>
+                                <option value="Cocinero / Chef">Cocinero / Chef</option>
+                                <option value="Ayudante de Cocina">Ayudante de Cocina</option>
+                                <option value="Mozo / Garzón">Mozo / Garzón</option>
+                                <option value="Bartender / Barman">Bartender / Barman</option>
+                                <option value="Barista">Barista</option>
+                                <option value="Bachero / Limpieza">Bachero / Limpieza</option>
+                                <option value="Encargado / Mánager">Encargado / Mánager</option>
+                                <option value="Otro puesto">Otro puesto</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <select id="exp-zona" class="input-dark" required style="width: 100%;">
+                                <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
+                                <option value="Centro / Alberdi">Centro / Alberdi</option>
+                                <option value="Nueva Córdoba / Güemes">Nueva Córdoba / Güemes</option>
+                                <option value="General Paz / Alta Córdoba">General Paz / Alta Córdoba</option>
+                                <option value="Zona Norte (Argüello, Cerro, Villa Belgrano)">Zona Norte (Argüello, Cerro, Villa Belgrano)</option>
+                                <option value="Gran Córdoba / Sierras Chicas">Gran Córdoba / Sierras Chicas</option>
+                                <option value="Otra zona">Otra zona</option>
+                            </select>
+                        </div>
+
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="exp-turno" class="input-dark" style="flex: 1;" required>
+                                <option value="" disabled selected>Turno</option>
+                                <option value="Turno Mañana">Turno Mañana</option>
+                                <option value="Turno Tarde">Turno Tarde</option>
+                                <option value="Turno Noche">Turno Noche</option>
+                                <option value="Rotativo">Rotativo</option>
+                            </select>
+
+                            <select id="exp-jornada" class="input-dark" style="flex: 1;" required>
+                                <option value="" disabled selected>Jornada</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Part Time">Part Time</option>
+                                <option value="Fines de Semana">Fines de Semana</option>
+                                <option value="Eventual">Eventual</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-amber" style="width: 100%; margin-top: 0.5rem; font-weight: bold; padding: 0.8rem;">Publicar Búsqueda 🚀</button>
                     </form>
                 </div>
             </section>
 
-            <!-- Sección Talentos -->
             <section style="margin-top: 2rem;">
                 <h3 style="margin-bottom: 1rem;">Talento Gastronómico Disponible</h3>
 
@@ -324,7 +358,6 @@
                 </div>
             </section>
 
-            <!-- Banner Patrocinado B2B -->
             <section class="banner-patrocinado">
                 <span class="tag-patrocinado">ESPACIO PATROCINADO / DESTACADO</span>
                 <h3 class="titulo-patrocinado">¡Promocioná tu equipamiento, vajilla o insumos para gastronomía!</h3>
@@ -353,7 +386,6 @@
 
         </div>
 
-        <!-- Pre-Footer -->
         <section class="pre-footer">
             <div class="footer-col">
                 <h4>Para Postulantes</h4>
@@ -384,7 +416,6 @@
 
     </main>
 
-    <!-- Navegación Inferior Mobile -->
     <nav class="bottom-nav" aria-label="Navegación inferior">
         <button type="button" class="bottom-nav-item active" onclick="setMode('postulante')">
             <span aria-hidden="true">🔍</span>
@@ -400,7 +431,6 @@
         </button>
     </nav>
 
-    <!-- Script Principal JS -->
     <script src="js/main.js"></script>
 </body>
 </html>
