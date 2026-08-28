@@ -25,10 +25,10 @@
         <div class="brand-logo">Jobbers<span>.</span></div>
 
         <div class="mode-switch-container" role="tablist" aria-label="Modo de usuario">
-            <button type="button" class="mode-btn active" id="btn-mode-postulante" role="tab" aria-selected="true" aria-controls="view-postulante" onclick="setMode('postulante')">
+            <button type="button" class="mode-btn active" id="btn-mode-postulante" role="tab" aria-selected="true" aria-controls="view-postulante" onclick="cambiarModoConConfirmacion('postulante')">
                 Postulantes
             </button>
-            <button type="button" class="mode-btn" id="btn-mode-empresa" role="tab" aria-selected="false" aria-controls="view-empresa" onclick="setMode('empresa')">
+            <button type="button" class="mode-btn" id="btn-mode-empresa" role="tab" aria-selected="false" aria-controls="view-empresa" onclick="cambiarModoConConfirmacion('empresa')">
                 Empresas
             </button>
         </div>
@@ -190,7 +190,7 @@
                     <div class="sidebar-widget" style="border-color: rgba(255, 183, 3, 0.3);">
                         <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem;">¿Sos Empresa?</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
-                        <button type="button" class="btn-amber" style="width: 100%;" onclick="setMode('empresa')">Publicar Empleo</button>
+                        <button type="button" class="btn-amber" style="width: 100%;" onclick="cambiarModoConConfirmacion('empresa')">Publicar Empleo</button>
                     </div>
 
                 </aside>
@@ -417,11 +417,11 @@
     </main>
 
     <nav class="bottom-nav" aria-label="Navegación inferior">
-        <button type="button" class="bottom-nav-item active" onclick="setMode('postulante')">
+        <button type="button" class="bottom-nav-item active" onclick="cambiarModoConConfirmacion('postulante')">
             <span aria-hidden="true">🔍</span>
             <span>Buscar</span>
         </button>
-        <button type="button" class="bottom-nav-item" onclick="setMode('empresa')">
+        <button type="button" class="bottom-nav-item" onclick="cambiarModoConConfirmacion('empresa')">
             <span aria-hidden="true">📢</span>
             <span>Publicar</span>
         </button>
@@ -430,6 +430,17 @@
             <span>Mi Cuenta</span>
         </button>
     </nav>
+
+    <div id="modal-bienvenida" class="modal-overlay">
+        <div class="modal-box">
+            <h3>¡Bienvenido/a a Jobbers!</h3>
+            <p>Seleccioná tu perfil para continuar:</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-amber" onclick="seleccionarModoInicial('postulante')">Soy Postulante</button>
+                <button type="button" class="btn-green" onclick="seleccionarModoInicial('empresa')">Soy Empresa</button>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>
