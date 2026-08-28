@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Final Sincronizada con HTML/CSS (Modal de entrada, filtros y WhatsApp)
+ * Versión Optimizada (Accesibilidad a11y, Focus Trap y Sincronización de Estado)
  */
 
 (function () {
@@ -13,6 +13,7 @@
     API_URL: 'base_de_datos.json',
     DEBOUNCE_MS: 200,
     STORAGE_KEY: 'jobbers_user_mode',
+    WA_DEFAULT: '5493541582448',
     SELECTORS: {
       GRID_VACANTES: '#grid-vacantes',
       INPUT_PUESTO: '#input-busqueda-vacantes',
@@ -87,7 +88,7 @@
   }
 
   // ==========================================
-  // 2. UTILIDADES
+  // 2. UTILIDADES Y ACCESIBILIDAD (A11Y)
   // ==========================================
   function escapeHTML(str) {
     if (!str && str !== 0) return '';
@@ -99,12 +100,29 @@
       .replace(/'/g, '&#039;');
   }
 
-  function debounce(func, delay = 200) {
+  function debounce(func, delay = CONFIG.DEBOUNCE_MS) {
     let timeoutId;
     return (...args) => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => func.apply(this, args), delay);
     };
+  }
+
+  function manejarTrampaDeFoco(e, modal) {
+    if (e.key !== 'Tab') return;
+    const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!focusables.length) return;
+
+    const primero = focusables[0];
+    const ultimo = focusables[focusables.length - 1];
+
+    if (e.shiftKey && document.activeElement === primero) {
+      e.preventDefault();
+      ultimo.focus();
+    } else if (!e.shiftKey && document.activeElement === ultimo) {
+      e.preventDefault();
+      primero.focus();
+    }
   }
 
   // ==========================================
@@ -117,28 +135,21 @@
     const btnEmpresa = document.getElementById('btn-mode-empresa');
 
     if (postulanteView && empresaView) {
-      if (mode === 'postulante') {
-        postulanteView.classList.add('active-view');
-        empresaView.classList.remove('active-view');
-        btnPostulante?.classList.add('active');
-        btnEmpresa?.classList.remove('active');
-      } else {
-        empresaView.classList.add('active-view');
-        postulanteView.classList.remove('active-view');
-        btnEmpresa?.classList.add('active');
-        btnPostulante?.classList.remove('active');
-      }
+      const esPostulante = mode === 'postulante';
+      postulanteView.classList.toggle('active-view', esPostulante);
+      empresaView.classList.toggle('active-view', !esPostulante);
+
+      btnPostulante?.classList.toggle('active', esPostulante);
+      btnEmpresa?.classList.toggle('active', !esPostulante);
+
       localStorage.setItem(CONFIG.STORAGE_KEY, mode);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
-  // 1. AHORA SÍ MUESTRA EL CARTEL DE CONFIRMACIÓN AL CAMBIAR
   window.cambiarModoConConfirmacion = function (mode) {
     const textoModo = mode === 'empresa' ? 'Empresas / Reclutadores' : 'Postulantes / Búsqueda de empleo';
-    const confirmado = confirm(`¿Estás seguro de que deseas cambiar al perfil de ${textoModo}?`);
-    
-    if (confirmado) {
+    if (confirm(`¿Estás seguro de que deseas cambiar al perfil de ${textoModo}?`)) {
       setMode(mode);
     }
   };
@@ -146,24 +157,18 @@
   window.seleccionarModoInicial = function (mode) {
     setMode(mode);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
-    if (modalBienvenida) {
-      modalBienvenida.classList.remove('active');
-    }
+    if (modalBienvenida) cerrarModal(modalBienvenida);
   };
 
-  // 2. AHORA SIEMPRE MUESTRA LA MODAL DE BIENVENIDA AL REFROSCAR LA PÁGINA
   function verificarPerfilInicial() {
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
-    
-    // Mostramos siempre la modal al refrescar para que el usuario elija
     if (modalBienvenida) {
-      modalBienvenida.classList.add('active');
+      abrirModal(modalBienvenida);
     }
-
-    // Por defecto dejamos cargada la vista de postulante hasta que elija
     const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY) || 'postulante';
     setMode(perfilGuardado);
   }
+
   // ==========================================
   // 4. CARGA DE DATOS
   // ==========================================
@@ -235,13 +240,9 @@
         if (inputUbicacion) inputUbicacion.value = '';
 
         document.querySelectorAll('.category-card').forEach(el => {
-          const rawVal = (el.dataset.category || el.querySelector('span')?.textContent || el.textContent).trim();
+          const rawVal = el.dataset.category || el.textContent.trim();
           const normVal = normalizarCategoria(rawVal);
-          if (normVal === 'todas' || normVal === 'todos') {
-            el.classList.add('active');
-          } else {
-            el.classList.remove('active');
-          }
+          el.classList.toggle('active', normVal === 'todas' || normVal === 'todos');
         });
 
         aplicarFiltros();
@@ -281,9 +282,9 @@
 
   function actualizarContador() {
     const contador = document.querySelector(CONFIG.SELECTORS.CONTADOR_RESULTADOS);
-    if (!contador) return;
-    const total = state.vacantesFiltradas.length;
-    contador.textContent = `${total}`;
+    if (contador) {
+      contador.textContent = String(state.vacantesFiltradas.length);
+    }
   }
 
   // ==========================================
@@ -336,15 +337,15 @@
             <input type="hidden" id="post-contacto-wa">
             
             <div>
-              <label style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Nombre y Apellido *</label>
+              <label for="post-nombre" style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Nombre y Apellido *</label>
               <input type="text" id="post-nombre" class="input-dark" placeholder="Ej: María González" required style="width:100%;">
             </div>
             <div>
-              <label style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Número de WhatsApp *</label>
+              <label for="post-telefono" style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Número de WhatsApp *</label>
               <input type="tel" id="post-telefono" class="input-dark" placeholder="Ej: 3511234567" required style="width:100%;">
             </div>
             <div>
-              <label style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Experiencia previa (Breve)</label>
+              <label for="post-experiencia" style="font-size:0.8rem; display:block; margin-bottom:0.2rem;">Experiencia previa (Breve)</label>
               <textarea id="post-experiencia" class="input-dark" rows="3" placeholder="Contanos tu experiencia en el rubro..." style="width:100%;"></textarea>
             </div>
             
@@ -369,26 +370,34 @@
           cerrarModal(modal);
         }
       });
+
+      modal.addEventListener('keydown', (e) => manejarTrampaDeFoco(e, modal));
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        cerrarModal();
-      }
+      if (e.key === 'Escape') cerrarModal();
     });
   }
 
   function abrirModal(modalEl) {
     if (!modalEl) return;
     state.elementoPrevioFoco = document.activeElement;
-    modalEl.classList.add('active');
+
+    requestAnimationFrame(() => {
+      modalEl.classList.add('active');
+      const primerInput = modalEl.querySelector('input, textarea, button:not(.jobbers-close-btn)');
+      primerInput?.focus();
+    });
   }
 
   function cerrarModal(modalEl = null) {
     const modalActivo = modalEl || document.querySelector('.modal-overlay.active');
     if (!modalActivo) return;
+
     modalActivo.classList.remove('active');
-    if (state.elementoPrevioFoco?.focus) state.elementoPrevioFoco.focus();
+    if (state.elementoPrevioFoco?.focus) {
+      state.elementoPrevioFoco.focus();
+    }
   }
 
   function mostrarDetalleVacante(idVacante) {
@@ -431,9 +440,10 @@
     const modal = document.getElementById('modal-jobbers-postulacion');
     if (!modal) return;
 
+    state.vacanteSeleccionada = vacante;
     document.getElementById('post-subtitulo').textContent = `${vacante.puesto} - ${vacante.empresa}`;
     document.getElementById('post-id-vacante').value = vacante.id;
-    document.getElementById('post-contacto-wa').value = vacante.contacto_wa || vacante.contactoWA || '5493541582448';
+    document.getElementById('post-contacto-wa').value = vacante.contacto_wa || vacante.contactoWA || CONFIG.WA_DEFAULT;
 
     const form = document.getElementById('form-postulacion-jobbers');
     if (form) form.reset();
@@ -442,11 +452,13 @@
 
   function manejarEnvioPostulacion(e) {
     e.preventDefault();
+    const idVacante = document.getElementById('post-id-vacante')?.value;
+    const vacante = state.vacantes.find(v => String(v.id) === String(idVacante)) || state.vacanteSeleccionada || {};
+
     const nombre = document.getElementById('post-nombre')?.value.trim();
     const telefono = document.getElementById('post-telefono')?.value.trim();
     const experiencia = document.getElementById('post-experiencia')?.value.trim();
-    const rawWA = document.getElementById('post-contacto-wa')?.value || '5493541582448';
-    
+    const rawWA = document.getElementById('post-contacto-wa')?.value || CONFIG.WA_DEFAULT;
     const waContacto = rawWA.replace(/\D/g, '');
 
     if (!nombre || !telefono) {
@@ -454,7 +466,6 @@
       return;
     }
 
-    const vacante = state.vacanteSeleccionada || {};
     let mensaje = `👋 *Hola! Mi nombre es ${nombre}.*\n\n`;
     mensaje += `Me postulo para la vacante de *${vacante.puesto || 'Puesto Gastronómico'}* en *${vacante.empresa || 'Jobbers Argentina'}*.\n\n`;
     mensaje += `📱 *Mi Teléfono:* ${telefono}\n`;
@@ -480,12 +491,8 @@
       if (btnDetalle) {
         mostrarDetalleVacante(btnDetalle.dataset.id);
       } else if (btnPostularme) {
-        const id = btnPostularme.dataset.id;
-        const vacante = state.vacantes.find(v => String(v.id) === String(id));
-        if (vacante) {
-          state.vacanteSeleccionada = vacante;
-          abrirFormularioPostulacion(vacante);
-        }
+        const vacante = state.vacantes.find(v => String(v.id) === String(btnPostularme.dataset.id));
+        if (vacante) abrirFormularioPostulacion(vacante);
       }
     });
   }
@@ -496,7 +503,7 @@
       inputPuesto.addEventListener('input', debounce((e) => {
         state.filtroPuesto = e.target.value;
         aplicarFiltros();
-      }, CONFIG.DEBOUNCE_MS));
+      }));
     }
 
     const inputUbicacion = document.querySelector(CONFIG.SELECTORS.INPUT_UBICACION);
@@ -504,7 +511,7 @@
       inputUbicacion.addEventListener('input', debounce((e) => {
         state.filtroUbicacion = e.target.value;
         aplicarFiltros();
-      }, CONFIG.DEBOUNCE_MS));
+      }));
     }
 
     const formBusquedaHero = document.getElementById('form-busqueda-postulante');
@@ -518,17 +525,13 @@
     const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
       card.addEventListener('click', () => {
-        const rawCat = card.dataset.category || card.querySelector('span')?.textContent.trim() || card.textContent.trim();
+        const rawCat = card.dataset.category || card.textContent.trim();
         state.filtroCategoria = rawCat;
 
         const catTargetNorm = normalizarCategoria(rawCat);
         categoryCards.forEach(c => {
-          const cRaw = c.dataset.category || c.querySelector('span')?.textContent.trim() || c.textContent.trim();
-          if (normalizarCategoria(cRaw) === catTargetNorm) {
-            c.classList.add('active');
-          } else {
-            c.classList.remove('active');
-          }
+          const cRaw = c.dataset.category || c.textContent.trim();
+          c.classList.toggle('active', normalizarCategoria(cRaw) === catTargetNorm);
         });
 
         aplicarFiltros();
@@ -555,7 +558,7 @@
         mensaje += `📱 *WhatsApp de Contacto:* ${telefono}\n\n`;
         mensaje += `Solicito la activación y difusión de esta oferta en Jobbers Argentina.`;
 
-        const urlWA = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
+        const urlWA = `https://wa.me/${CONFIG.WA_DEFAULT}?text=${encodeURIComponent(mensaje)}`;
         window.open(urlWA, '_blank', 'noopener,noreferrer');
         formExpress.reset();
       });
