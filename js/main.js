@@ -1,13 +1,114 @@
 /**
- * Jobbers Argentina - Módulo Interactivo de Selección y Postulación Gastronómica
- * Versión Final Unificada, Optimizada y Sincronizada con base_de_datos.json
+ * Jobbers Argentina - Módulo Interactivo Gastronómico
+ * Versión Final Sincronizada con HTML/CSS (Modal de entrada, filtros y WhatsApp)
  */
 
 (function () {
   'use strict';
 
   // ==========================================
-  // 1. CAMBIO DE MODO GLOBAL (Postulante / Empresa)
+  // 1. CONFIGURACIÓN Y ESTADO DE LA APLICACIÓN
+  // ==========================================
+  const CONFIG = {
+    API_URL: 'base_de_datos.json',
+    DEBOUNCE_MS: 200,
+    STORAGE_KEY: 'jobbers_user_mode',
+    SELECTORS: {
+      GRID_VACANTES: '#grid-vacantes',
+      INPUT_PUESTO: '#input-busqueda-vacantes',
+      INPUT_UBICACION: '#input-busqueda-ubicacion',
+      FILTRO_CATEGORIA: '#filtro-categoria-vacantes',
+      CONTADOR_RESULTADOS: '#cant-vacantes',
+      FORM_EXPRESS: '#form-publicacion-express',
+      MODAL_BIENVENIDA: '#modal-bienvenida'
+    },
+    FALLBACK_VACANTES: [
+      {
+        id: 101,
+        puesto: 'Cocinero / Chef de Partida',
+        empresa: 'Bistro Gourmet',
+        zona: 'Centro / Alberdi',
+        categoria: 'cocina',
+        jornada: 'Full Time',
+        turno: 'Turno Tarde/Noche',
+        sueldo: '$500.000',
+        urgente: true,
+        descripcion: 'Buscamos cocinero con experiencia previa en despacho, elaboración de carta y manejo de stock.',
+        requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día'],
+        contacto_wa: '5493541582448'
+      },
+      {
+        id: 102,
+        puesto: 'Barista Profesional',
+        empresa: 'Café de Especialidad',
+        zona: 'Nueva Córdoba / Güemes',
+        categoria: 'barismo',
+        jornada: 'Part Time',
+        turno: 'Turno Mañana',
+        sueldo: '$380.000',
+        urgente: false,
+        descripcion: 'Atención al público, calibración de molino, arte latte y despacho de pastelería.',
+        requisitos: ['Curso de Barismo comprobable', 'Excelente presencia y trato'],
+        contacto_wa: '5493541582448'
+      }
+    ]
+  };
+
+  const state = {
+    vacantes: [],
+    vacantesFiltradas: [],
+    filtroPuesto: '',
+    filtroUbicacion: '',
+    filtroCategoria: 'todas',
+    elementoPrevioFoco: null,
+    vacanteSeleccionada: null
+  };
+
+  const MAPEO_CATEGORIAS = {
+    'barismo': 'barismo',
+    'bartender': 'bartender',
+    'salón / mozo': 'salón',
+    'salón': 'salón',
+    'salon': 'salón',
+    'mozo': 'salón',
+    'bacha / limpieza': 'limpieza',
+    'limpieza': 'limpieza',
+    'rrhh / gestión': 'rrhh',
+    'rrhh': 'rrhh',
+    'administración': 'administración',
+    'cocina': 'cocina',
+    'delivery': 'delivery'
+  };
+
+  function normalizarCategoria(cat) {
+    if (!cat) return 'todas';
+    const c = String(cat).toLowerCase().trim();
+    return MAPEO_CATEGORIAS[c] || c;
+  }
+
+  // ==========================================
+  // 2. UTILIDADES
+  // ==========================================
+  function escapeHTML(str) {
+    if (!str && str !== 0) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function debounce(func, delay = 200) {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+  }
+
+  // ==========================================
+  // 3. CAMBIO DE MODO GLOBAL Y MODAL INICIAL
   // ==========================================
   function setMode(mode) {
     const postulanteView = document.getElementById('view-postulante');
@@ -27,84 +128,33 @@
         btnEmpresa?.classList.add('active');
         btnPostulante?.classList.remove('active');
       }
+      localStorage.setItem(CONFIG.STORAGE_KEY, mode);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
-  window.setMode = setMode;
-
-  // ==========================================
-  // 2. CONFIGURACIÓN Y ESTADO DE LA APLICACIÓN
-  // ==========================================
-  const CONFIG = {
-    API_URL: 'base_de_datos.json',
-    DEBOUNCE_MS: 200,
-    SELECTORS: {
-      GRID_VACANTES: '#grid-vacantes',
-      INPUT_BUSQUEDA: '#input-busqueda-vacantes',
-      FILTRO_CATEGORIA: '#filtro-categoria-vacantes',
-      CONTADOR_RESULTADOS: '#contador-vacantes'
-    },
-    FALLBACK_VACANTES: [
-      {
-        id: 101,
-        puesto: 'Cocinero / Chef de Partida',
-        empresa: 'Bistro Gourmet',
-        zona: 'Córdoba Capital',
-        categoria: 'cocina',
-        jornada: 'Full Time',
-        turno: 'Turno Tarde/Noche',
-        sueldo: '$500.000',
-        descripcion: 'Buscamos cocinero con experiencia previa en despacho, elaboración de carta y manejo de stock.',
-        requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día'],
-        contacto_wa: '5493513080197'
-      }
-    ]
+  window.cambiarModoConConfirmacion = function (mode) {
+    setMode(mode);
   };
 
-  const state = {
-    vacantes: [],
-    vacantesFiltradas: [],
-    filtroBusqueda: '',
-    filtroCategoria: 'todas',
-    elementoPrevioFoco: null,
-    vacanteSeleccionada: null
+  window.seleccionarModoInicial = function (mode) {
+    setMode(mode);
+    const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
+    if (modalBienvenida) {
+      modalBienvenida.classList.remove('active');
+    }
   };
 
-  const MAPEO_CATEGORIAS = {
-    'barismo': 'barra',
-    'bartender': 'barra',
-    'salón': 'salon',
-    'salon': 'salon',
-    'mozo': 'salon',
-    'bacha': 'limpieza'
-  };
+  function verificarPerfilInicial() {
+    const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY);
+    const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
 
-  function normalizarCategoria(cat) {
-    if (!cat) return 'todas';
-    const c = String(cat).toLowerCase().trim();
-    return MAPEO_CATEGORIAS[c] || c;
-  }
-
-  // ==========================================
-  // 3. UTILIDADES
-  // ==========================================
-  function escapeHTML(str) {
-    if (!str && str !== 0) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  function debounce(func, delay = 200) {
-    let timeoutId;
-    return (...args) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func.apply(this, args), delay);
-    };
+    if (perfilGuardado) {
+      setMode(perfilGuardado);
+      if (modalBienvenida) modalBienvenida.classList.remove('active');
+    } else if (modalBienvenida) {
+      modalBienvenida.classList.add('active');
+    }
   }
 
   // ==========================================
@@ -133,7 +183,8 @@
   // 5. FILTRADO Y RENDERIZADO DE GRILLA
   // ==========================================
   function aplicarFiltros() {
-    const query = state.filtroBusqueda.toLowerCase().trim();
+    const qPuesto = state.filtroPuesto.toLowerCase().trim();
+    const qUbicacion = state.filtroUbicacion.toLowerCase().trim();
     const catBuscada = normalizarCategoria(state.filtroCategoria);
 
     state.vacantesFiltradas = state.vacantes.filter(item => {
@@ -143,15 +194,11 @@
       const descripcion = (item.descripcion || '').toLowerCase();
       const itemCat = normalizarCategoria(item.categoria || '');
 
-      const coincideQuery = !query || 
-        puesto.includes(query) ||
-        empresa.includes(query) ||
-        ubicacion.includes(query) ||
-        descripcion.includes(query);
-
+      const coincidePuesto = !qPuesto || puesto.includes(qPuesto) || empresa.includes(qPuesto) || descripcion.includes(qPuesto);
+      const coincideUbicacion = !qUbicacion || ubicacion.includes(qUbicacion);
       const coincideCat = catBuscada === 'todas' || catBuscada === 'todos' || itemCat === catBuscada;
 
-      return coincideQuery && coincideCat;
+      return coincidePuesto && coincideUbicacion && coincideCat;
     });
 
     renderizarGrid();
@@ -170,17 +217,17 @@
         </div>
       `;
 
-      // Se usa { once: true } para evitar duplicación de listeners
       document.getElementById('btn-reset-filtros')?.addEventListener('click', () => {
-        state.filtroBusqueda = '';
+        state.filtroPuesto = '';
+        state.filtroUbicacion = '';
         state.filtroCategoria = 'todas';
 
-        const inputBuscador = document.querySelector(CONFIG.SELECTORS.INPUT_BUSQUEDA);
-        const selectCat = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
-        if (inputBuscador) inputBuscador.value = '';
-        if (selectCat) selectCat.value = 'todas';
+        const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
+        const inputUbicacion = document.querySelector(CONFIG.SELECTORS.INPUT_UBICACION);
+        if (inputPuesto) inputPuesto.value = '';
+        if (inputUbicacion) inputUbicacion.value = '';
 
-        document.querySelectorAll('.category-card, .chip-item').forEach(el => {
+        document.querySelectorAll('.category-card').forEach(el => {
           const rawVal = (el.dataset.category || el.querySelector('span')?.textContent || el.textContent).trim();
           const normVal = normalizarCategoria(rawVal);
           if (normVal === 'todas' || normVal === 'todos') {
@@ -226,14 +273,14 @@
   }
 
   function actualizarContador() {
-    const contador = document.querySelector(CONFIG.SELECTORS.CONTADOR_RESULTADOS) || document.getElementById('cant-vacantes');
+    const contador = document.querySelector(CONFIG.SELECTORS.CONTADOR_RESULTADOS);
     if (!contador) return;
     const total = state.vacantesFiltradas.length;
-    contador.textContent = `${total} ${total === 1 ? 'oferta encontrada' : 'ofertas encontradas'}`;
+    contador.textContent = `${total}`;
   }
 
   // ==========================================
-  // 6. MODALES Y POSTULACIÓN
+  // 6. MODALES Y POSTULACIÓN EXPRESS
   // ==========================================
   function asegurarEstructurasModales() {
     if (!document.getElementById('modal-jobbers-detalle')) {
@@ -245,7 +292,7 @@
       modalDetalle.innerHTML = `
         <div class="modal-card">
           <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar">&times;</button>
-          <span id="det-categoria" class="badge-salary"></span>
+          <span id="det-categoria" class="badge badge-salary"></span>
           <h2 id="det-puesto" style="margin-top: 0.5rem;"></h2>
           <p id="det-empresa" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
           <div style="text-align: left; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
@@ -345,7 +392,7 @@
     const modal = document.getElementById('modal-jobbers-detalle');
     if (!modal) return;
 
-    const jornadaTurno = [vacante.jornada, vacante.turno].filter(Boolean).join(' • ') || vacante.modalidad || 'Presencial';
+    const jornadaTurno = [vacante.jornada, vacante.turno].filter(Boolean).join(' • ') || 'Presencial';
 
     document.getElementById('det-categoria').textContent = (vacante.categoria || 'Gastronomía').toUpperCase();
     document.getElementById('det-puesto').textContent = vacante.puesto;
@@ -353,7 +400,7 @@
     document.getElementById('det-modalidad').textContent = `💼 Modalidad: ${jornadaTurno}`;
     document.getElementById('det-ubicacion').textContent = `📍 Ubicación: ${vacante.zona || vacante.ubicacion || 'Córdoba'}`;
     document.getElementById('det-sueldo').textContent = `💰 Sueldo: ${vacante.sueldo || 'A convenir'}`;
-    document.getElementById('det-descripcion').textContent = vacante.descripcion || `Se busca ${vacante.puesto} para sumarse al equipo de ${vacante.empresa}. Postulate enviando tu CV directamente por WhatsApp.`;
+    document.getElementById('det-descripcion').textContent = vacante.descripcion || `Se busca ${vacante.puesto} para sumarse al equipo. Postulate enviando tu CV por WhatsApp.`;
 
     const listaReq = document.getElementById('det-requisitos');
     if (listaReq) {
@@ -379,7 +426,7 @@
 
     document.getElementById('post-subtitulo').textContent = `${vacante.puesto} - ${vacante.empresa}`;
     document.getElementById('post-id-vacante').value = vacante.id;
-    document.getElementById('post-contacto-wa').value = vacante.contacto_wa || vacante.contactoWA || '5493513080197';
+    document.getElementById('post-contacto-wa').value = vacante.contacto_wa || vacante.contactoWA || '5493541582448';
 
     const form = document.getElementById('form-postulacion-jobbers');
     if (form) form.reset();
@@ -391,9 +438,8 @@
     const nombre = document.getElementById('post-nombre')?.value.trim();
     const telefono = document.getElementById('post-telefono')?.value.trim();
     const experiencia = document.getElementById('post-experiencia')?.value.trim();
-    const rawWA = document.getElementById('post-contacto-wa')?.value || '5493513080197';
+    const rawWA = document.getElementById('post-contacto-wa')?.value || '5493541582448';
     
-    // Saneamiento de número telefónico (solo dígitos)
     const waContacto = rawWA.replace(/\D/g, '');
 
     if (!nombre || !telefono) {
@@ -414,7 +460,7 @@
   }
 
   // ==========================================
-  // 7. LISTENERS DE BOTONES Y FILTROS
+  // 7. LISTENERS DE EVENTOS Y FORMULARIO EXPRESS
   // ==========================================
   function inicializarEventosGrid() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
@@ -438,22 +484,38 @@
   }
 
   function inicializarFiltrosYBotones() {
-    const inputBuscador = document.querySelector(CONFIG.SELECTORS.INPUT_BUSQUEDA);
-    if (inputBuscador) {
-      inputBuscador.addEventListener('input', debounce((e) => {
-        state.filtroBusqueda = e.target.value;
+    const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
+    if (inputPuesto) {
+      inputPuesto.addEventListener('input', debounce((e) => {
+        state.filtroPuesto = e.target.value;
         aplicarFiltros();
       }, CONFIG.DEBOUNCE_MS));
     }
 
-    const categoryElements = document.querySelectorAll('.category-card, .chip-item');
-    categoryElements.forEach(item => {
-      item.addEventListener('click', () => {
-        const rawCat = item.dataset.category || item.querySelector('span')?.textContent.trim() || item.textContent.trim();
+    const inputUbicacion = document.querySelector(CONFIG.SELECTORS.INPUT_UBICACION);
+    if (inputUbicacion) {
+      inputUbicacion.addEventListener('input', debounce((e) => {
+        state.filtroUbicacion = e.target.value;
+        aplicarFiltros();
+      }, CONFIG.DEBOUNCE_MS));
+    }
+
+    const formBusquedaHero = document.getElementById('form-busqueda-postulante');
+    if (formBusquedaHero) {
+      formBusquedaHero.addEventListener('submit', (e) => {
+        e.preventDefault();
+        aplicarFiltros();
+      });
+    }
+
+    const categoryCards = document.querySelectorAll('.category-card');
+    categoryCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const rawCat = card.dataset.category || card.querySelector('span')?.textContent.trim() || card.textContent.trim();
         state.filtroCategoria = rawCat;
 
         const catTargetNorm = normalizarCategoria(rawCat);
-        categoryElements.forEach(c => {
+        categoryCards.forEach(c => {
           const cRaw = c.dataset.category || c.querySelector('span')?.textContent.trim() || c.textContent.trim();
           if (normalizarCategoria(cRaw) === catTargetNorm) {
             c.classList.add('active');
@@ -462,52 +524,32 @@
           }
         });
 
-        const selectCat = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
-        if (selectCat) {
-          selectCat.value = rawCat.toLowerCase();
-        }
-
         aplicarFiltros();
       });
     });
 
-    const selectCategoria = document.querySelector(CONFIG.SELECTORS.FILTRO_CATEGORIA);
-    if (selectCategoria) {
-      selectCategoria.addEventListener('change', (e) => {
-        const val = e.target.value.toLowerCase().trim();
-        state.filtroCategoria = val;
-
-        const catTargetNorm = normalizarCategoria(val);
-        categoryElements.forEach(c => {
-          const cRaw = (c.dataset.category || c.querySelector('span')?.textContent || c.textContent).toLowerCase().trim();
-          if (normalizarCategoria(cRaw) === catTargetNorm) {
-            c.classList.add('active');
-          } else {
-            c.classList.remove('active');
-          }
-        });
-
-        aplicarFiltros();
-      });
-    }
-
-    document.getElementById('btn-mode-postulante')?.addEventListener('click', () => setMode('postulante'));
-    document.getElementById('btn-mode-empresa')?.addEventListener('click', () => setMode('empresa'));
-
-    document.querySelectorAll('.bottom-nav-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const mode = item.dataset.mode || (item.textContent.includes('Empresa') ? 'empresa' : 'postulante');
-        document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        setMode(mode);
-      });
-    });
-
-    const formExpress = document.querySelector('.express-form-card form');
+    // Publicación Express Empresas a WhatsApp
+    const formExpress = document.querySelector(CONFIG.SELECTORS.FORM_EXPRESS);
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('¡Oferta express recibida! Nos pondremos en contacto para activarla.');
+        const empresa = document.getElementById('exp-empresa')?.value.trim();
+        const telefono = document.getElementById('exp-telefono')?.value.trim();
+        const puesto = document.getElementById('exp-puesto')?.value;
+        const zona = document.getElementById('exp-zona')?.value;
+        const turno = document.getElementById('exp-turno')?.value;
+        const jornada = document.getElementById('exp-jornada')?.value;
+
+        let mensaje = `📢 *NUEVA BÚSQUEDA EXPRES (EMPRESA)*\n\n`;
+        mensaje += `🏢 *Local/Empresa:* ${empresa}\n`;
+        mensaje += `💼 *Puesto:* ${puesto}\n`;
+        mensaje += `📍 *Zona:* ${zona}\n`;
+        mensaje += `⏰ *Turno/Jornada:* ${turno} - ${jornada}\n`;
+        mensaje += `📱 *WhatsApp de Contacto:* ${telefono}\n\n`;
+        mensaje += `Solicito la activación y difusión de esta oferta en Jobbers Argentina.`;
+
+        const urlWA = `https://wa.me/5493541582448?text=${encodeURIComponent(mensaje)}`;
+        window.open(urlWA, '_blank', 'noopener,noreferrer');
         formExpress.reset();
       });
     }
@@ -517,6 +559,7 @@
   // 8. INICIALIZACIÓN
   // ==========================================
   function init() {
+    verificarPerfilInicial();
     asegurarEstructurasModales();
     inicializarEventosGrid();
     inicializarFiltrosYBotones();
