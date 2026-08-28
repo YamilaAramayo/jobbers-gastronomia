@@ -133,8 +133,14 @@
     }
   }
 
+  // 1. AHORA SÍ MUESTRA EL CARTEL DE CONFIRMACIÓN AL CAMBIAR
   window.cambiarModoConConfirmacion = function (mode) {
-    setMode(mode);
+    const textoModo = mode === 'empresa' ? 'Empresas / Reclutadores' : 'Postulantes / Búsqueda de empleo';
+    const confirmado = confirm(`¿Estás seguro de que deseas cambiar al perfil de ${textoModo}?`);
+    
+    if (confirmado) {
+      setMode(mode);
+    }
   };
 
   window.seleccionarModoInicial = function (mode) {
@@ -145,18 +151,19 @@
     }
   };
 
+  // 2. AHORA SIEMPRE MUESTRA LA MODAL DE BIENVENIDA AL REFROSCAR LA PÁGINA
   function verificarPerfilInicial() {
-    const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
-
-    if (perfilGuardado) {
-      setMode(perfilGuardado);
-      if (modalBienvenida) modalBienvenida.classList.remove('active');
-    } else if (modalBienvenida) {
+    
+    // Mostramos siempre la modal al refrescar para que el usuario elija
+    if (modalBienvenida) {
       modalBienvenida.classList.add('active');
     }
-  }
 
+    // Por defecto dejamos cargada la vista de postulante hasta que elija
+    const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY) || 'postulante';
+    setMode(perfilGuardado);
+  }
   // ==========================================
   // 4. CARGA DE DATOS
   // ==========================================
