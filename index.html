@@ -46,10 +46,10 @@
         <div class="brand-logo">Jobbers<span>.</span></div>
 
         <div class="mode-switch-container" role="tablist" aria-label="Modo de usuario">
-            <button type="button" class="mode-btn active" id="btn-mode-postulante" role="tab" aria-selected="true" aria-controls="view-postulante" onclick="cambiarModoConConfirmacion('postulante')">
+            <button type="button" class="mode-btn active" id="btn-mode-postulante" role="tab" aria-selected="true" aria-controls="view-postulante" data-action="switch-mode" data-mode="postulante">
                 Postulantes
             </button>
-            <button type="button" class="mode-btn" id="btn-mode-empresa" role="tab" aria-selected="false" aria-controls="view-empresa" onclick="cambiarModoConConfirmacion('empresa')">
+            <button type="button" class="mode-btn" id="btn-mode-empresa" role="tab" aria-selected="false" aria-controls="view-empresa" data-action="switch-mode" data-mode="empresa">
                 Empresas
             </button>
         </div>
@@ -62,9 +62,13 @@
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
-                <form id="form-busqueda-postulante" class="search-box-inline" onsubmit="event.preventDefault();">
-                    <input type="text" id="input-busqueda-vacantes" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)..." aria-label="Buscar por puesto">
-                    <input type="text" id="input-busqueda-ubicacion" class="input-dark" placeholder="Ubicación o Zona..." aria-label="Buscar por ubicación">
+                <form id="form-busqueda-postulante" class="search-box-inline">
+                    <label for="input-busqueda-vacantes" class="sr-only">Buscar por puesto</label>
+                    <input type="text" id="input-busqueda-vacantes" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)...">
+                    
+                    <label for="input-busqueda-ubicacion" class="sr-only">Buscar por ubicación</label>
+                    <input type="text" id="input-busqueda-ubicacion" class="input-dark" placeholder="Ubicación o Zona...">
+                    
                     <button type="submit" class="btn-amber" id="btn-buscar-vacantes">Buscar</button>
                 </form>
             </section>
@@ -165,7 +169,7 @@
                     </div>
 
                     <div class="job-list" id="grid-vacantes" aria-live="polite">
-                        </div>
+                    </div>
                 </div>
 
                 <aside class="sidebar">
@@ -186,10 +190,10 @@
 
                     <div class="sidebar-widget">
                         <h4 class="mb-1 text-md">Filtro Rápido</h4>
-                        <label class="checkbox-label mb-1">
+                        <label class="checkbox-label mb-1" for="chk-sueldo-visible">
                             <input type="checkbox" id="chk-sueldo-visible" checked> Solo con sueldo visible
                         </label>
-                        <label class="checkbox-label">
+                        <label class="checkbox-label" for="chk-part-time">
                             <input type="checkbox" id="chk-part-time"> Modalidad Part-Time
                         </label>
                     </div>
@@ -210,7 +214,7 @@
                     <div class="sidebar-widget widget-accent-amber">
                         <h4 class="text-amber mb-1">¿Sos Empresa?</h4>
                         <p class="text-secondary text-sm mb-2">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
-                        <button type="button" class="btn-amber btn-block" onclick="cambiarModoConConfirmacion('empresa')">Publicar Empleo</button>
+                        <button type="button" class="btn-amber btn-block" data-action="switch-mode" data-mode="empresa">Publicar Empleo</button>
                     </div>
 
                 </aside>
@@ -285,14 +289,17 @@
                     
                     <form id="form-publicacion-express" class="flex-col gap-2">
                         <div>
+                            <label for="exp-empresa" class="sr-only">Nombre de tu local o establecimiento gastronómico</label>
                             <input type="text" id="exp-empresa" class="input-dark w-full" placeholder="Nombre de tu local / Gastronómico" required>
                         </div>
 
                         <div>
+                            <label for="exp-telefono" class="sr-only">Número de WhatsApp de contacto</label>
                             <input type="tel" id="exp-telefono" class="input-dark w-full" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required>
                         </div>
 
                         <div>
+                            <label for="exp-puesto" class="sr-only">Seleccionar puesto requerido</label>
                             <select id="exp-puesto" class="input-dark w-full" required>
                                 <option value="" disabled selected>Puesto que necesitás</option>
                                 <option value="Cocinero / Chef">Cocinero / Chef</option>
@@ -307,6 +314,7 @@
                         </div>
 
                         <div>
+                            <label for="exp-zona" class="sr-only">Seleccionar zona o barrio</label>
                             <select id="exp-zona" class="input-dark w-full" required>
                                 <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
                                 <option value="Centro / Alberdi">Centro / Alberdi</option>
@@ -319,21 +327,27 @@
                         </div>
 
                         <div class="flex-row gap-1">
-                            <select id="exp-turno" class="input-dark flex-1" required>
-                                <option value="" disabled selected>Turno</option>
-                                <option value="Turno Mañana">Turno Mañana</option>
-                                <option value="Turno Tarde">Turno Tarde</option>
-                                <option value="Turno Noche">Turno Noche</option>
-                                <option value="Rotativo">Rotativo</option>
-                            </select>
+                            <div class="flex-1">
+                                <label for="exp-turno" class="sr-only">Seleccionar turno</label>
+                                <select id="exp-turno" class="input-dark w-full" required>
+                                    <option value="" disabled selected>Turno</option>
+                                    <option value="Turno Mañana">Turno Mañana</option>
+                                    <option value="Turno Tarde">Turno Tarde</option>
+                                    <option value="Turno Noche">Turno Noche</option>
+                                    <option value="Rotativo">Rotativo</option>
+                                </select>
+                            </div>
 
-                            <select id="exp-jornada" class="input-dark flex-1" required>
-                                <option value="" disabled selected>Jornada</option>
-                                <option value="Full Time">Full Time</option>
-                                <option value="Part Time">Part Time</option>
-                                <option value="Fines de Semana">Fines de Semana</option>
-                                <option value="Eventual">Eventual</option>
-                            </select>
+                            <div class="flex-1">
+                                <label for="exp-jornada" class="sr-only">Seleccionar tipo de jornada</label>
+                                <select id="exp-jornada" class="input-dark w-full" required>
+                                    <option value="" disabled selected>Jornada</option>
+                                    <option value="Full Time">Full Time</option>
+                                    <option value="Part Time">Part Time</option>
+                                    <option value="Fines de Semana">Fines de Semana</option>
+                                    <option value="Eventual">Eventual</option>
+                                </select>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn-amber w-full mt-1 font-bold p-3">Publicar Búsqueda 🚀</button>
@@ -347,7 +361,7 @@
                 <div class="talent-grid">
                     <div class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/mariano.jpg" alt="Mariano G." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='MG';">
+                            <img src="img/mariano.jpg" alt="Mariano G. - Jefe de Cocina" loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='MG';">
                         </div>
                         <h4>Mariano G.</h4>
                         <p class="text-xs text-amber">Jefe de Cocina / Chef</p>
@@ -357,7 +371,7 @@
 
                     <div class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/sofia.jpg" alt="Sofia R." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='SR';">
+                            <img src="img/sofia.jpg" alt="Sofia R. - Barista Profesional" loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='SR';">
                         </div>
                         <h4>Sofia R.</h4>
                         <p class="text-xs text-amber">Barista Profesional</p>
@@ -367,7 +381,7 @@
 
                     <div class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/lucas.jpg" alt="Lucas P." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='LP';">
+                            <img src="img/lucas.jpg" alt="Lucas P. - Encargado / Bartender" loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='LP';">
                         </div>
                         <h4>Lucas P.</h4>
                         <p class="text-xs text-amber">Encargado / Bartender</p>
@@ -438,11 +452,11 @@
     </footer>
 
     <nav class="bottom-nav" aria-label="Navegación inferior">
-        <button type="button" class="bottom-nav-item active" onclick="cambiarModoConConfirmacion('postulante')">
+        <button type="button" class="bottom-nav-item active" data-action="switch-mode" data-mode="postulante">
             <span aria-hidden="true">🔍</span>
             <span>Buscar</span>
         </button>
-        <button type="button" class="bottom-nav-item" onclick="cambiarModoConConfirmacion('empresa')">
+        <button type="button" class="bottom-nav-item" data-action="switch-mode" data-mode="empresa">
             <span aria-hidden="true">📢</span>
             <span>Publicar</span>
         </button>
@@ -452,13 +466,13 @@
         </button>
     </nav>
 
-    <div id="modal-bienvenida" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="modal-bienvenida" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" tabindex="-1">
         <div class="modal-box">
             <h3 id="modal-title">¡Bienvenido/a a Jobbers!</h3>
-            <p>Seleccioná tu perfil para continuar:</p>
+            <p id="modal-desc">Seleccioná tu perfil para continuar:</p>
             <div class="modal-actions">
-                <button type="button" class="btn-amber" onclick="seleccionarModoInicial('postulante')">Soy Postulante</button>
-                <button type="button" class="btn-green" onclick="seleccionarModoInicial('empresa')">Soy Empresa</button>
+                <button type="button" class="btn-amber" data-action="init-mode" data-mode="postulante">Soy Postulante</button>
+                <button type="button" class="btn-green" data-action="init-mode" data-mode="empresa">Soy Empresa</button>
             </div>
         </div>
     </div>
