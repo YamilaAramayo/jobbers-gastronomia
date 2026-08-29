@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Optimizada (Accesibilidad a11y, Focus Trap y Sincronización de Estado)
+ * Versión Optimizada y Corregida (Eventos vinculados, Accesibilidad a11y, Focus Trap y Sincronización)
  */
 
 (function () {
@@ -498,6 +498,33 @@
   }
 
   function inicializarFiltrosYBotones() {
+    // 1. Vincular Botones de Modo en la Cabecera
+    const btnPostulante = document.getElementById('btn-mode-postulante');
+    const btnEmpresa = document.getElementById('btn-mode-empresa');
+
+    if (btnPostulante) {
+      btnPostulante.addEventListener('click', () => setMode('postulante'));
+    }
+    if (btnEmpresa) {
+      btnEmpresa.addEventListener('click', () => cambiarModoConConfirmacion('empresa'));
+    }
+
+    // 2. Delegación Global para Modal de Bienvenida y Atributos data-*
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-mode], [data-action]');
+      if (!btn) return;
+
+      const mode = btn.dataset.mode;
+      const action = btn.dataset.action;
+
+      if (action === 'init-mode' || action === 'switch-mode') {
+        seleccionarModoInicial(mode);
+      } else if (mode && !btn.id) {
+        setMode(mode);
+      }
+    });
+
+    // 3. Inputs de Búsqueda
     const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
     if (inputPuesto) {
       inputPuesto.addEventListener('input', debounce((e) => {
@@ -522,6 +549,7 @@
       });
     }
 
+    // 4. Tarjetas de Categorías
     const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
       card.addEventListener('click', () => {
@@ -538,7 +566,7 @@
       });
     });
 
-    // Publicación Express Empresas a WhatsApp
+    // 5. Publicación Express Empresas a WhatsApp
     const formExpress = document.querySelector(CONFIG.SELECTORS.FORM_EXPRESS);
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
@@ -550,7 +578,7 @@
         const turno = document.getElementById('exp-turno')?.value;
         const jornada = document.getElementById('exp-jornada')?.value;
 
-        let mensaje = `📢 *NUEVA BÚSQUEDA EXPRES (EMPRESA)*\n\n`;
+        let mensaje = `📢 *NUEVA BÚSQUEDA EXPRESS (EMPRESA)*\n\n`;
         mensaje += `🏢 *Local/Empresa:* ${empresa}\n`;
         mensaje += `💼 *Puesto:* ${puesto}\n`;
         mensaje += `📍 *Zona:* ${zona}\n`;
