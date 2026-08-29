@@ -1,6 +1,7 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Optimizada y Corregida (Eventos vinculados, Accesibilidad a11y, Focus Trap y Sincronización)
+ * Versión Completa, Consolidada y Optimizada
+ * (Eventos vinculados, Accesibilidad a11y, Focus Trap, Persistencia y Normalización de Teléfonos)
  */
 
 (function () {
@@ -108,6 +109,16 @@
     };
   }
 
+  function normalizarWhatsApp(num) {
+    if (!num) return CONFIG.WA_DEFAULT;
+    let limpio = String(num).replace(/\D/g, '');
+    if (!limpio) return CONFIG.WA_DEFAULT;
+    if (limpio.length === 10 && !limpio.startsWith('54')) {
+      limpio = `549${limpio}`;
+    }
+    return limpio;
+  }
+
   function manejarTrampaDeFoco(e, modal) {
     if (e.key !== 'Tab') return;
     const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
@@ -161,12 +172,16 @@
   };
 
   function verificarPerfilInicial() {
+    const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
-    if (modalBienvenida) {
+
+    if (!perfilGuardado && modalBienvenida) {
       abrirModal(modalBienvenida);
+    } else if (modalBienvenida) {
+      cerrarModal(modalBienvenida);
     }
-    const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY) || 'postulante';
-    setMode(perfilGuardado);
+
+    setMode(perfilGuardado || 'postulante');
   }
 
   // ==========================================
@@ -381,7 +396,9 @@
 
   function abrirModal(modalEl) {
     if (!modalEl) return;
-    state.elementoPrevioFoco = document.activeElement;
+    if (!modalEl.classList.contains('active')) {
+      state.elementoPrevioFoco = document.activeElement;
+    }
 
     requestAnimationFrame(() => {
       modalEl.classList.add('active');
@@ -428,7 +445,7 @@
     const btnPostular = document.getElementById('det-btn-postular');
     if (btnPostular) {
       btnPostular.onclick = () => {
-        cerrarModal(modal);
+        modal.classList.remove('active');
         abrirFormularioPostulacion(vacante);
       };
     }
@@ -459,7 +476,7 @@
     const telefono = document.getElementById('post-telefono')?.value.trim();
     const experiencia = document.getElementById('post-experiencia')?.value.trim();
     const rawWA = document.getElementById('post-contacto-wa')?.value || CONFIG.WA_DEFAULT;
-    const waContacto = rawWA.replace(/\D/g, '');
+    const waContacto = normalizarWhatsApp(rawWA);
 
     if (!nombre || !telefono) {
       alert('Por favor completá tu nombre y teléfono.');
