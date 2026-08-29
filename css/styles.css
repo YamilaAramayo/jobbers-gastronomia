@@ -315,8 +315,9 @@ button { cursor: pointer; border: none; font-family: inherit; background: none; 
   }
 }
 
-/* === TARJETAS DE EMPLEO === */
-.job-list { 
+/* === TARJETAS DE EMPLEO (#grid-vacantes) === */
+.job-list,
+#grid-vacantes { 
   display: flex; 
   flex-direction: column; 
   gap: 1rem; 
@@ -534,7 +535,7 @@ button { cursor: pointer; border: none; font-family: inherit; background: none; 
   align-items: center;
 }
 
-/* === OPTIMIZACIÓN Y FIJACIÓN DE FOTO DE PERFIL DE TALENTO === */
+/* === AVATAR DE TALENTO === */
 .talent-avatar {
   width: 68px;
   height: 68px;
