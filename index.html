@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f59e0b">
     <title>Jobbers | Portal de Empleo Gastronómico en Argentina</title>
     
     <meta name="description" content="Encontrá y publicá empleos gastronómicos en Argentina. Oportunidades en cocina, salón, barismo y más. Conexión rápida entre perfiles y locales.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jobbers.com.ar/">
     
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jobbers.com.ar/">
     <meta property="og:title" content="Jobbers - Portal de Empleo Gastronómico">
@@ -16,16 +18,19 @@
     <meta property="og:image" content="https://jobbers.com.ar/img/og-image.jpg">
     <meta property="og:locale" content="es_AR">
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Jobbers - Portal de Empleo Gastronómico">
     <meta name="twitter:description" content="Búsquedas activas de empleo y talento gastronómico en Argentina.">
     <meta name="twitter:image" content="https://jobbers.com.ar/img/og-image.jpg">
 
+    <!-- Styles & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 
+    <!-- Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,27 +62,28 @@
 
     <main class="container">
 
+        <!-- VISTA POSTULANTE -->
         <div id="view-postulante" class="view-section active-view" role="tabpanel" aria-labelledby="btn-mode-postulante">
 
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
-                <form id="form-busqueda-postulante" class="search-box-inline">
+                <form id="form-busqueda-postulante" class="search-box-inline" action="/buscar" method="GET" role="search">
                     <label for="input-busqueda-vacantes" class="sr-only">Buscar por puesto</label>
-                    <input type="text" id="input-busqueda-vacantes" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)...">
+                    <input type="text" id="input-busqueda-vacantes" name="q" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)..." autocomplete="off">
                     
                     <label for="input-busqueda-ubicacion" class="sr-only">Buscar por ubicación</label>
-                    <input type="text" id="input-busqueda-ubicacion" class="input-dark" placeholder="Ubicación o Zona...">
+                    <input type="text" id="input-busqueda-ubicacion" name="location" class="input-dark" placeholder="Ubicación o Zona..." autocomplete="off">
                     
                     <button type="submit" class="btn-amber" id="btn-buscar-vacantes">Buscar</button>
                 </form>
             </section>
 
-            <section class="categories-section">
-                <h2 class="categories-title">BUSCÁ POR CATEGORÍA</h2>
-                <div class="categories-grid" role="group" aria-label="Filtro de categorías">
+            <section class="categories-section" aria-labelledby="cat-title">
+                <h2 id="cat-title" class="categories-title">BUSCÁ POR CATEGORÍA</h2>
+                <div class="categories-grid" role="toolbar" aria-label="Filtro por categoría">
                     
-                    <button type="button" class="category-card active" data-category="todas">
+                    <button type="button" class="category-card active" data-category="todas" aria-pressed="true">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="3" y="3" width="7" height="7" rx="1"></rect>
                             <rect x="14" y="3" width="7" height="7" rx="1"></rect>
@@ -87,14 +93,14 @@
                         <span>Todas</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="Cocina">
+                    <button type="button" class="category-card" data-category="Cocina" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M18 2v20M6 2v6a3 3 0 0 0 6 0V2M9 11v11"></path>
                         </svg>
                         <span>Cocina</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="Salón">
+                    <button type="button" class="category-card" data-category="Salón" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M2 18a10 10 0 0 1 20 0H2z"></path>
                             <path d="M12 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
@@ -103,7 +109,7 @@
                         <span>Salón / Mozo</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="Barismo">
+                    <button type="button" class="category-card" data-category="Barismo" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
                             <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"></path>
@@ -114,7 +120,7 @@
                         <span>Barismo</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="Bartender">
+                    <button type="button" class="category-card" data-category="Bartender" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polygon points="12 15 3 3 21 3 12 15"></polygon>
                             <line x1="12" y1="15" x2="12" y2="21"></line>
@@ -123,7 +129,7 @@
                         <span>Bartender</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="Delivery">
+                    <button type="button" class="category-card" data-category="Delivery" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <circle cx="5.5" cy="17.5" r="2.5"></circle>
                             <circle cx="18.5" cy="17.5" r="2.5"></circle>
@@ -134,7 +140,7 @@
                         <span>Delivery</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="Limpieza">
+                    <button type="button" class="category-card" data-category="Limpieza" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M12 3v3m0 12v3M3 12h3m12 0h3"></path>
                             <path d="M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"></path>
@@ -142,7 +148,7 @@
                         <span>Bacha / Limpieza</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="RRHH">
+                    <button type="button" class="category-card" data-category="RRHH" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
@@ -150,7 +156,7 @@
                         <span>RRHH / Gestión</span>
                     </button>
 
-                    <button type="button" class="category-card" data-category="Administración">
+                    <button type="button" class="category-card" data-category="Administración" aria-pressed="false">
                         <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
                             <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
@@ -168,7 +174,7 @@
                         <span class="jobs-count">Mostrando <strong id="cant-vacantes">0</strong> vacantes disponibles</span>
                     </div>
 
-                    <div class="job-list" id="grid-vacantes" aria-live="polite">
+                    <div class="job-list" id="grid-vacantes" aria-live="polite" aria-busy="false">
                     </div>
                 </div>
 
@@ -183,13 +189,13 @@
                     </div>
 
                     <div class="sidebar-widget widget-accent-amber">
-                        <h4 class="text-amber mb-1">Soporte al Postulante</h4>
+                        <h3 class="text-amber mb-1 text-md">Soporte al Postulante</h3>
                         <p class="text-secondary text-sm mb-2">¿Tuviste problemas para postularte o tenés dudas con tu CV?</p>
                         <a href="https://wa.me/5493541582448?text=Hola%2C%20necesito%20ayuda%20o%20soporte%20t%C3%A9cnico%20como%20Postulante%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-amber btn-block text-center">Hablar con Soporte</a>
                     </div>
 
                     <div class="sidebar-widget">
-                        <h4 class="mb-1 text-md">Filtro Rápido</h4>
+                        <h3 class="mb-1 text-md">Filtro Rápido</h3>
                         <label class="checkbox-label mb-1" for="chk-sueldo-visible">
                             <input type="checkbox" id="chk-sueldo-visible" checked> Solo con sueldo visible
                         </label>
@@ -198,12 +204,12 @@
                         </label>
                     </div>
 
-                    <div class="adsense-placeholder" aria-label="Publicidad">
+                    <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada">
                         [ Anuncio AdSense ]
                     </div>
 
                     <div class="sidebar-widget">
-                        <h4 class="text-amber mb-1">Lecturas Recomendadas</h4>
+                        <h3 class="text-amber mb-1 text-md">Lecturas Recomendadas</h3>
                         <ul class="widget-list">
                             <li><a href="#">📄 Cómo destacar tu experiencia en la cocina &rarr;</a></li>
                             <li><a href="#">💡 5 tips para impresionar en una prueba técnica &rarr;</a></li>
@@ -212,7 +218,7 @@
                     </div>
 
                     <div class="sidebar-widget widget-accent-amber">
-                        <h4 class="text-amber mb-1">¿Sos Empresa?</h4>
+                        <h3 class="text-amber mb-1 text-md">¿Sos Empresa?</h3>
                         <p class="text-secondary text-sm mb-2">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
                         <button type="button" class="btn-amber btn-block" data-action="switch-mode" data-mode="empresa">Publicar Empleo</button>
                     </div>
@@ -245,7 +251,7 @@
                             <h4>Cómo armar un CV gastronómico de alto impacto</h4>
                             <p>Destacá tus habilidades clave en cocina, barra o salón para conseguir entrevistas más rápido.</p>
                         </div>
-                        <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                        <a href="#" class="blog-read-more" aria-label="Leer más sobre cómo armar un CV gastronómico">Leer artículo &rarr;</a>
                     </article>
 
                     <article class="blog-card">
@@ -254,7 +260,7 @@
                             <h4>Claves para responder con éxito la prueba técnica en cocina</h4>
                             <p>Estrategias efectivas para desenvolverte bajo presión durante una prueba en servicio real.</p>
                         </div>
-                        <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                        <a href="#" class="blog-read-more" aria-label="Leer más sobre claves de prueba técnica">Leer artículo &rarr;</a>
                     </article>
 
                     <article class="blog-card">
@@ -263,18 +269,20 @@
                             <h4>Guía de sueldos y escalas salariales del rubro</h4>
                             <p>Conocé los valores de referencia actualizados para cada puesto y especialidad del sector.</p>
                         </div>
-                        <a href="#" class="blog-read-more">Leer artículo &rarr;</a>
+                        <a href="#" class="blog-read-more" aria-label="Leer más sobre guía de sueldos">Leer artículo &rarr;</a>
                     </article>
                 </div>
             </section>
 
         </div>
 
-        <div id="view-empresa" class="view-section" role="tabpanel" aria-labelledby="btn-mode-empresa">
+        <!-- VISTA EMPRESA -->
+        <div id="view-empresa" class="view-section" role="tabpanel" aria-labelledby="btn-mode-empresa" hidden>
 
             <section class="hero-empresa">
                 <div>
-                    <h1 class="text-xl mb-1">Contratá personal gastronómico calificado rápido</h1>
+                    <!-- Cambiado de H1 a H2 para mantener único H1 principal en la app/landing -->
+                    <h2 class="text-xl mb-1">Contratá personal gastronómico calificado rápido</h2>
                     <p class="text-secondary mb-2">Publicá tus ofertas de empleo y accedé a la base de perfiles verificados de tu ciudad.</p>
                     <ul class="text-secondary text-sm pl-4">
                         <li>Publicación express en 2 minutos.</li>
@@ -290,17 +298,17 @@
                     <form id="form-publicacion-express" class="flex-col gap-2">
                         <div>
                             <label for="exp-empresa" class="sr-only">Nombre de tu local o establecimiento gastronómico</label>
-                            <input type="text" id="exp-empresa" class="input-dark w-full" placeholder="Nombre de tu local / Gastronómico" required>
+                            <input type="text" id="exp-empresa" name="empresa" class="input-dark w-full" placeholder="Nombre de tu local / Gastronómico" required aria-required="true" autocomplete="organization">
                         </div>
 
                         <div>
                             <label for="exp-telefono" class="sr-only">Número de WhatsApp de contacto</label>
-                            <input type="tel" id="exp-telefono" class="input-dark w-full" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required>
+                            <input type="tel" id="exp-telefono" name="telefono" class="input-dark w-full" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required aria-required="true" autocomplete="tel">
                         </div>
 
                         <div>
                             <label for="exp-puesto" class="sr-only">Seleccionar puesto requerido</label>
-                            <select id="exp-puesto" class="input-dark w-full" required>
+                            <select id="exp-puesto" name="puesto" class="input-dark w-full" required aria-required="true">
                                 <option value="" disabled selected>Puesto que necesitás</option>
                                 <option value="Cocinero / Chef">Cocinero / Chef</option>
                                 <option value="Ayudante de Cocina">Ayudante de Cocina</option>
@@ -315,7 +323,7 @@
 
                         <div>
                             <label for="exp-zona" class="sr-only">Seleccionar zona o barrio</label>
-                            <select id="exp-zona" class="input-dark w-full" required>
+                            <select id="exp-zona" name="zona" class="input-dark w-full" required aria-required="true">
                                 <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
                                 <option value="Centro / Alberdi">Centro / Alberdi</option>
                                 <option value="Nueva Córdoba / Güemes">Nueva Córdoba / Güemes</option>
@@ -329,7 +337,7 @@
                         <div class="flex-row gap-1">
                             <div class="flex-1">
                                 <label for="exp-turno" class="sr-only">Seleccionar turno</label>
-                                <select id="exp-turno" class="input-dark w-full" required>
+                                <select id="exp-turno" name="turno" class="input-dark w-full" required aria-required="true">
                                     <option value="" disabled selected>Turno</option>
                                     <option value="Turno Mañana">Turno Mañana</option>
                                     <option value="Turno Tarde">Turno Tarde</option>
@@ -340,7 +348,7 @@
 
                             <div class="flex-1">
                                 <label for="exp-jornada" class="sr-only">Seleccionar tipo de jornada</label>
-                                <select id="exp-jornada" class="input-dark w-full" required>
+                                <select id="exp-jornada" name="jornada" class="input-dark w-full" required aria-required="true">
                                     <option value="" disabled selected>Jornada</option>
                                     <option value="Full Time">Full Time</option>
                                     <option value="Part Time">Part Time</option>
@@ -359,35 +367,35 @@
                 <h3 class="mb-2">Talento Gastronómico Disponible</h3>
 
                 <div class="talent-grid">
-                    <div class="talent-card">
+                    <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/mariano.jpg" alt="Mariano G. - Jefe de Cocina" loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='MG';">
+                            <img src="img/mariano.jpg" alt="Foto de Mariano G." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='MG';">
                         </div>
                         <h4>Mariano G.</h4>
                         <p class="text-xs text-amber">Jefe de Cocina / Chef</p>
                         <p class="text-xs text-secondary mt-1">8 años de exp. • CABA</p>
                         <button type="button" class="btn-green w-full mt-2 text-xs p-1">Ver Perfil</button>
-                    </div>
+                    </article>
 
-                    <div class="talent-card">
+                    <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/sofia.jpg" alt="Sofia R. - Barista Profesional" loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='SR';">
+                            <img src="img/sofia.jpg" alt="Foto de Sofia R." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='SR';">
                         </div>
                         <h4>Sofia R.</h4>
                         <p class="text-xs text-amber">Barista Profesional</p>
                         <p class="text-xs text-secondary mt-1">Arte latte, Arte en café • Córdoba</p>
                         <button type="button" class="btn-green w-full mt-2 text-xs p-1">Ver Perfil</button>
-                    </div>
+                    </article>
 
-                    <div class="talent-card">
+                    <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/lucas.jpg" alt="Lucas P. - Encargado / Bartender" loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='LP';">
+                            <img src="img/lucas.jpg" alt="Foto de Lucas P." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='LP';">
                         </div>
                         <h4>Lucas P.</h4>
                         <p class="text-xs text-amber">Encargado / Bartender</p>
                         <p class="text-xs text-secondary mt-1">Manejo de caja y stock • Rosario</p>
                         <button type="button" class="btn-green w-full mt-2 text-xs p-1">Ver Perfil</button>
-                    </div>
+                    </article>
                 </div>
             </section>
 
@@ -405,12 +413,12 @@
 
             <div class="main-layout mt-4">
                 <aside class="sidebar sidebar-full-grid">
-                    <div class="adsense-placeholder" aria-label="Publicidad">
+                    <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada">
                         [ Anuncio AdSense ]
                     </div>
 
                     <div class="sidebar-widget widget-accent-green">
-                        <h4 class="text-green mb-1">Atención Corporativa</h4>
+                        <h3 class="text-green mb-1 text-md">Atención Corporativa</h3>
                         <p class="text-secondary text-sm mb-2">¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
                         <a href="https://wa.me/5493541582448?text=Hola%2C%20necesito%20soporte%20t%C3%A9cnico%20o%20asesoramiento%20para%20Empresas%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-green btn-block text-center">Hablar por WhatsApp</a>
                     </div>
@@ -424,7 +432,7 @@
     <footer class="footer-section">
         <div class="container footer-grid">
             <div class="footer-col">
-                <h4>Para Postulantes</h4>
+                <h4 class="footer-title">Para Postulantes</h4>
                 <ul>
                     <li><a href="#">Buscar Empleos</a></li>
                     <li><a href="#">Cargar Curriculum</a></li>
@@ -432,7 +440,7 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Para Empresas</h4>
+                <h4 class="footer-title">Para Empresas</h4>
                 <ul>
                     <li><a href="#">Publicar Vacantes</a></li>
                     <li><a href="#">Buscar Talentos</a></li>
@@ -440,7 +448,7 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Soporte & Recursos</h4>
+                <h4 class="footer-title">Soporte & Recursos</h4>
                 <ul>
                     <li><a href="#">Blog Gastronómico</a></li>
                     <li><a href="#">Centro de Ayuda</a></li>
@@ -451,16 +459,16 @@
         </div>
     </footer>
 
-    <nav class="bottom-nav" aria-label="Navegación inferior">
-        <button type="button" class="bottom-nav-item active" data-action="switch-mode" data-mode="postulante">
+    <nav class="bottom-nav" aria-label="Navegación inferior movil">
+        <button type="button" class="bottom-nav-item active" aria-selected="true" data-action="switch-mode" data-mode="postulante">
             <span aria-hidden="true">🔍</span>
             <span>Buscar</span>
         </button>
-        <button type="button" class="bottom-nav-item" data-action="switch-mode" data-mode="empresa">
+        <button type="button" class="bottom-nav-item" aria-selected="false" data-action="switch-mode" data-mode="empresa">
             <span aria-hidden="true">📢</span>
             <span>Publicar</span>
         </button>
-        <button type="button" class="bottom-nav-item">
+        <button type="button" class="bottom-nav-item" aria-selected="false">
             <span aria-hidden="true">👤</span>
             <span>Mi Cuenta</span>
         </button>
