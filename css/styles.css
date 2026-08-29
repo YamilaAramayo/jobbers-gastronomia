@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
 /* === VARIABLES DE DISEÑO Y PALETA === */
@@ -196,7 +195,7 @@ button { cursor: pointer; border: none; font-family: inherit; background: none; 
   .search-box-inline { flex-direction: row; }
 }
 
-/* === SECCIÓN DE CATEGORÍAS TIPO TARJETA === */
+/* === SECCIÓN DE CATEGORÍAS === */
 .categories-section {
   margin-top: 1.75rem;
   margin-bottom: 1.25rem;
@@ -535,7 +534,7 @@ button { cursor: pointer; border: none; font-family: inherit; background: none; 
   align-items: center;
 }
 
-/* === AVATAR DE TALENTO === */
+/* === AVATARES E IMÁGENES (TALENTOS Y LOGOS) === */
 .talent-avatar {
   width: 68px;
   height: 68px;
@@ -548,6 +547,7 @@ button { cursor: pointer; border: none; font-family: inherit; background: none; 
   align-items: center;
   justify-content: center;
   font-weight: 700;
+  color: var(--accent-amber);
   border: 2px solid var(--accent-amber);
   overflow: hidden;
   position: relative;
@@ -560,6 +560,43 @@ button { cursor: pointer; border: none; font-family: inherit; background: none; 
   object-fit: cover;
   display: block;
   aspect-ratio: 1 / 1;
+}
+
+.company-logo {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+
+/* Fallback y animaciones de carga para imágenes */
+.talent-avatar img:not([src]), 
+.talent-avatar img[src=""] {
+  display: none;
+}
+
+@keyframes skeleton-loading {
+  0% { background-color: var(--bg-input); }
+  50% { background-color: var(--bg-card-hover); }
+  100% { background-color: var(--bg-input); }
+}
+
+.talent-avatar.loading,
+.company-logo.loading {
+  animation: skeleton-loading 1.5s infinite ease-in-out;
 }
 
 /* === BANNER PATROCINADO === */
