@@ -832,35 +832,55 @@ button {
   border-radius: var(--radius-sm);
 }
 
-/* === PRE-FOOTER INFORMATIVO === */
-.pre-footer {
-  margin-top: 3rem;
+/* === FOOTER === */
+.footer-section {
+  width: 100%;
+  background-color: var(--bg-main);
   border-top: 1px solid var(--border-color);
-  padding-top: 2rem;
+  padding: 3rem 1.5rem 2rem 1.5rem;
+  margin-top: 3rem;
+}
+
+.footer-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-  .pre-footer {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
+.footer-col .footer-title,
 .footer-col h4 {
   color: var(--accent-amber);
-  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 .footer-col ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-col ul li {
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.footer-col ul li a {
   color: var(--text-secondary);
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* === NAVEGACIÓN MOBILE Y BOTTOM NAV === */
