@@ -149,6 +149,20 @@ button {
 }
 
 /* === BOTONES GENERALES E INPUTS === */
+.btn-amber,
+.btn-green,
+.btn-pro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  line-height: 1.2;
+  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .btn-amber {
   background-color: var(--accent-amber);
   color: #000;
@@ -689,6 +703,7 @@ button {
 .btn-publicidad {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   background-color: #25d366;
   color: #000;
@@ -770,7 +785,7 @@ button {
   gap: 0.25rem;
 }
 
-/* === SIDEBAR WIDGETS === */
+/* === SIDEBAR & WIDGETS CORREGIDOS === */
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -782,6 +797,43 @@ button {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.85rem;
+  box-sizing: border-box;
+  height: auto;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.sidebar-widget h3,
+.sidebar-widget h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.sidebar-widget p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.sidebar-widget .btn-amber,
+.sidebar-widget .btn-green,
+.sidebar-widget .btn-pro,
+.sidebar-widget button,
+.sidebar-widget a.btn-amber {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+  box-sizing: border-box;
 }
 
 .widget-pro {
@@ -795,13 +847,14 @@ button {
   font-weight: 800;
   color: var(--accent-amber);
   letter-spacing: 0.05em;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
 }
 
 .pro-text {
   font-size: 0.82rem;
   color: var(--text-secondary);
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
 .btn-pro {
@@ -830,6 +883,8 @@ button {
   color: var(--text-secondary);
   font-size: 0.8rem;
   border-radius: var(--radius-sm);
+  padding: 1rem;
+  text-align: center;
 }
 
 /* === FOOTER === */
