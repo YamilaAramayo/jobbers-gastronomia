@@ -65,15 +65,21 @@
         <!-- VISTA POSTULANTE -->
         <div id="view-postulante" class="view-section active-view" role="tabpanel" aria-labelledby="btn-mode-postulante">
 
+            <!-- HERO REESTRUCTURADO Y ALINEADO -->
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
+                
                 <form id="form-busqueda-postulante" class="search-box-inline" action="/buscar" method="GET" role="search">
-                    <label for="input-busqueda-vacantes" class="sr-only">Buscar por puesto</label>
-                    <input type="text" id="input-busqueda-vacantes" name="q" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)..." autocomplete="off">
+                    <div class="input-wrapper">
+                        <label for="input-busqueda-vacantes">Buscar por puesto</label>
+                        <input type="text" id="input-busqueda-vacantes" name="q" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)..." autocomplete="off">
+                    </div>
 
-                    <label for="input-busqueda-ubicacion" class="sr-only">Buscar por ubicación</label>
-                    <input type="text" id="input-busqueda-ubicacion" name="location" class="input-dark" placeholder="Ubicación o Zona..." autocomplete="off">
+                    <div class="input-wrapper">
+                        <label for="input-busqueda-ubicacion">Buscar por ubicación</label>
+                        <input type="text" id="input-busqueda-ubicacion" name="location" class="input-dark" placeholder="Ubicación o Zona..." autocomplete="off">
+                    </div>
 
                     <button type="submit" class="btn-amber" id="btn-buscar-vacantes">Buscar</button>
                 </form>
