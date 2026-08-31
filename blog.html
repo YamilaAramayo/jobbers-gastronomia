@@ -1,73 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog y Novedades - Jobbers Argentina</title>
-    <meta name="description" content="Actualidad del sector gastronómico, consejos de empleo, indumentaria y equipamiento para cocinas en Córdoba.">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f59e0b">
+    <title>Blog & Recursos Gastronómicos | Jobbers Argentina</title>
+
+    <meta name="description" content="Novedades, guías salariales, consejos de empleo e indumentaria y equipamiento para gastronómicos en Córdoba y Argentina.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jobbers.com.ar/blog.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="blog">
+    <meta property="og:url" content="https://jobbers.com.ar/blog.html">
+    <meta property="og:title" content="Blog y Recursos Gastronómicos - Jobbers">
+    <meta property="og:description" content="Consejos para profesionales, guías de equipamiento y novedades del sector gastronómico.">
+    <meta property="og:image" content="https://jobbers.com.ar/img/og-blog.jpg">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Schema.org Blog Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Blog Gastronómico Jobbers",
+      "description": "Recursos, guías y consejos para el sector gastronómico en Argentina.",
+      "url": "https://jobbers.com.ar/blog.html"
+    }
+    </script>
 </head>
 <body class="role-postulante">
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <a href="index.html" class="logo">
-            <span class="logo-title">JOBBERS</span>
-            <span class="logo-subtitle">EMPLEO GASTRONÓMICO</span>
-        </a>
-        <nav class="nav-links">
-            <a href="index.html" class="nav-link">Volver al Inicio</a>
-        </nav>
-    </header>
+    <!-- HEADER / NAVBAR -->
+    <header class="navbar">
+        <a href="index.html" class="brand-logo" style="text-decoration: none; color: inherit;">
+            Jobbers<span>.</span>
+        </a>
+        <nav class="nav-links">
+            <a href="index.html" class="btn-amber" style="padding: 0.5rem 1rem; text-decoration: none; font-size: 0.85rem; font-weight: 700;">
+                &larr; Volver al Inicio
+            </a>
+        </nav>
+    </header>
 
-    <!-- CONTENIDO DEL BLOG -->
-    <main style="max-width: 900px; margin: 4rem auto; padding: 0 1.5rem;">
-        
-        <div style="text-align: center; margin-bottom: 2.5rem;">
-            <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">ACTUALIDAD GASTRONÓMICA</span>
-            <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-top: 0.5rem;">Blog, Guías y Espacios Patrocinados</h1>
-            <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.5rem;">Consejos para profesionales y novedades para locales de Córdoba.</p>
-        </div>
+    <main class="container" style="max-width: 1000px; padding-top: 2rem; padding-bottom: 4rem;">
 
-        <!-- ESPACIO PUBLICITARIO (Ideal para ropa o artefactos de cocina) -->
-        <div style="background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, var(--card-bg-light) 100%); border: 2px dashed rgba(243, 156, 18, 0.4); border-radius: var(--radius-md); padding: 1.8rem; text-align: center; margin-bottom: 2.5rem;">
-            <span style="font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase;">ESPACIO PATROCINADO / DESTACADO</span>
-            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin: 0.3rem 0;">¡Promocioná tu marca de indumentaria o artefactos de cocina acá!</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Llegá de forma directa a cientos de restaurantes, bares y cocineros de Córdoba.</p>
-            <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Quiero%20consultar%20para%20anunciar%20en%20el%20blog." target="_blank" class="btn-whatsapp" style="display: inline-flex; width: auto; padding: 0.6rem 1.4rem; font-size: 0.8rem;">
-                <i class="fab fa-whatsapp"></i> CONSULTAR ESPACIO PUBLICITARIO
-            </a>
-        </div>
+        <!-- HERO BLOG -->
+        <section class="hero-postulante" style="text-align: center; margin-bottom: 2.5rem; background: transparent; padding: 1rem 0;">
+            <span class="blog-tag" style="margin-bottom: 0.5rem; display: inline-block;">ACTUALIDAD GASTRONÓMICA</span>
+            <h1 style="font-size: 2.4rem; font-weight: 800; margin-bottom: 0.5rem;">Blog, Guías y Recursos</h1>
+            <p style="color: var(--text-secondary); max-width: 650px; margin: 0 auto;">Consejos profesionales para postulantes, novedades de equipamiento y tendencias para locales de Córdoba.</p>
+        </section>
 
-        <!-- LISTADO DE ARTÍCULOS -->
-        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
-            
-            <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem;">
-                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Equipamiento</span>
-                <h2 style="font-size: 1.3rem; color: var(--text-main); margin: 0.4rem 0;">Qué tener en cuenta al elegir artefactos de cocina de alta rotación</h2>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Consejos para optimizar el espacio y el rendimiento energético en cocinas comerciales.</p>
-            </article>
+        <!-- ESPACIO PUBLICITARIO B2B -->
+        <section class="banner-patrocinado" style="margin-bottom: 3rem;">
+            <span class="tag-patrocinado">ESPACIO PATROCINADO / DESTACADO</span>
+            <h3 class="titulo-patrocinado">¡Promocioná tu marca de indumentaria o artefactos de cocina acá!</h3>
+            <p class="bajada-patrocinado">Llegá de forma directa a cientos de restaurantes, bares y cocineros de Córdoba y la región.</p>
+            <a href="https://wa.me/5493513080197?text=Hola%20Jobbers!%20Quiero%20consultar%20para%20anunciar%20en%20el%20blog." target="_blank" rel="noopener noreferrer" class="btn-publicidad">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i> CONSULTAR ESPACIO PUBLICITARIO
+            </a>
+        </section>
 
-            <article style="background: var(--card-bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem;">
-                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Indumentaria</span>
-                <h2 style="font-size: 1.3rem; color: var(--text-main); margin: 0.4rem 0;">La importancia de la ropa de trabajo adecuada en brigadas de cocina</h2>
-                <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Comodidad, seguridad y presentación: claves para equipar a cocineros y personal de salón.</p>
-            </article>
+        <!-- GRID DE ARTÍCULOS -->
+        <section class="blog-grid-expanded" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+            
+            <article class="blog-card flex-col justify-between">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                        <span class="blog-tag">Equipamiento</span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Lectura: 4 min</span>
+                    </div>
+                    <h4>Qué tener en cuenta al elegir artefactos de cocina de alta rotación</h4>
+                    <p>Consejos para optimizar el espacio, reducir el consumo energético y garantizar durabilidad en cocinas comerciales de alto flujo.</p>
+                </div>
+                <a href="#" class="blog-read-more" style="margin-top: 1rem;">Leer artículo completo &rarr;</a>
+            </article>
 
-        </div>
+            <article class="blog-card flex-col justify-between">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                        <span class="blog-tag">Indumentaria</span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Lectura: 3 min</span>
+                    </div>
+                    <h4>La importancia de la ropa de trabajo en brigadas de cocina</h4>
+                    <p>Comodidad, telas ignífugas y ergonomía: claves de seguridad e higiene para equipar adecuadamente a cocineros y personal de salón.</p>
+                </div>
+                <a href="#" class="blog-read-more" style="margin-top: 1rem;">Leer artículo completo &rarr;</a>
+            </article>
 
-        <!-- BLOQUE DE ANUNCIO GOOGLE ADSENSE -->
-        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
-            <span>[ Espacio Publicitario Google AdSense ]</span>
-        </div>
+            <article class="blog-card flex-col justify-between">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                        <span class="blog-tag">Consejos CV</span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Lectura: 5 min</span>
+                    </div>
+                    <h4>Cómo armar un CV gastronómico de alto impacto</h4>
+                    <p>Estructura recomendada para destacar experiencia en cocina, manejo de volumen, comandas y certificaciones de manipulación de alimentos.</p>
+                </div>
+                <a href="#" class="blog-read-more" style="margin-top: 1rem;">Leer artículo completo &rarr;</a>
+            </article>
 
-    </main>
+            <article class="blog-card flex-col justify-between">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                        <span class="blog-tag">Salarios</span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Lectura: 6 min</span>
+                    </div>
+                    <h4>Escala salarial gastronómica 2026: Valores de referencia</h4>
+                    <p>Revisá los acuerdos paritarios y promedios actualizados de mercado para sueldos básicos por puesto y horas extras en el sector.</p>
+                </div>
+                <a href="#" class="blog-read-more" style="margin-top: 1rem;">Leer artículo completo &rarr;</a>
+            </article>
 
-    <!-- FOOTER -->
-    <footer class="main-footer">
-        <p>&copy; 2026 Jobbers Argentina. Todos los derechos reservados.</p>
-    </footer>
+        </section>
+
+        <!-- ANUNCIO GOOGLE ADSENSE -->
+        <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada" style="margin-bottom: 3rem;">
+            [ Espacio Publicitario Google AdSense ]
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-section">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 class="footer-title">Navegación</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html">Buscar Empleos</a></li>
+                    <li><a href="index.html">Publicar Vacantes</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">Recursos</h4>
+                <ul>
+                    <li><a href="blog.html">Blog Gastronómico</a></li>
+                    <li><a href="#">Guía de Sueldos 2026</a></li>
+                    <li><a href="#">Creador de CV</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">Contacto & Anuncios</h4>
+                <ul>
+                    <li><a href="https://wa.me/5493513080197" target="_blank" rel="noopener noreferrer">Publicidad B2B</a></li>
+                    <li><a href="#">Soporte Técnico</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-secondary);">
+            &copy; 2026 Jobbers Argentina. Todos los derechos reservados.
+        </div>
+    </footer>
 
 </body>
 </html>
