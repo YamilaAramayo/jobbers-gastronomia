@@ -1,7 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Completa, Consolidada y Optimizada
- * (Eventos vinculados, Accesibilidad a11y, Focus Trap, Persistencia y Normalización de Teléfonos)
+ * Versión Consolidada, Accesible (A11y) y Optimizada
  */
 
 (function () {
@@ -10,7 +9,7 @@
   // ==========================================
   // 1. CONFIGURACIÓN Y ESTADO DE LA APLICACIÓN
   // ==========================================
-  const CONFIG = {
+  const CONFIG = Object.freeze({
     API_URL: 'base_de_datos.json',
     DEBOUNCE_MS: 200,
     STORAGE_KEY: 'jobbers_user_mode',
@@ -54,7 +53,7 @@
         contacto_wa: '5493541582448'
       }
     ]
-  };
+  });
 
   const state = {
     vacantes: [],
@@ -66,7 +65,7 @@
     vacanteSeleccionada: null
   };
 
-  const MAPEO_CATEGORIAS = {
+  const MAPEO_CATEGORIAS = Object.freeze({
     'barismo': 'barismo',
     'bartender': 'bartender',
     'salón / mozo': 'salón',
@@ -80,7 +79,7 @@
     'administración': 'administración',
     'cocina': 'cocina',
     'delivery': 'delivery'
-  };
+  });
 
   function normalizarCategoria(cat) {
     if (!cat) return 'todas';
@@ -92,7 +91,7 @@
   // 2. UTILIDADES Y ACCESIBILIDAD (A11Y)
   // ==========================================
   function escapeHTML(str) {
-    if (!str && str !== 0) return '';
+    if (str === null || str === undefined) return '';
     return String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -103,7 +102,7 @@
 
   function debounce(func, delay = CONFIG.DEBOUNCE_MS) {
     let timeoutId;
-    return (...args) => {
+    return function (...args) {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => func.apply(this, args), delay);
     };
@@ -117,6 +116,33 @@
       limpio = `549${limpio}`;
     }
     return limpio;
+  }
+
+  function mostrarNotificacion(mensaje, tipo = 'info') {
+    let toast = document.getElementById('jobbers-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'jobbers-toast';
+      toast.setAttribute('aria-live', 'polite');
+      toast.style.cssText = `
+        position: fixed; bottom: 20px; right: 20px; z-index: 10000;
+        padding: 12px 20px; border-radius: 8px; font-weight: 600;
+        color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        opacity: 0; transform: translateY(20px); pointer-events: none;
+      `;
+      document.body.appendChild(toast);
+    }
+
+    toast.style.backgroundColor = tipo === 'error' ? '#e74c3c' : tipo === 'exito' ? '#2ecc71' : '#f39c12';
+    toast.textContent = mensaje;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(20px)';
+    }, 3500);
   }
 
   function manejarTrampaDeFoco(e, modal) {
@@ -153,6 +179,9 @@
       btnPostulante?.classList.toggle('active', esPostulante);
       btnEmpresa?.classList.toggle('active', !esPostulante);
 
+      btnPostulante?.setAttribute('aria-selected', esPostulante);
+      btnEmpresa?.setAttribute('aria-selected', !esPostulante);
+
       localStorage.setItem(CONFIG.STORAGE_KEY, mode);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -185,21 +214,21 @@
   }
 
   // ==========================================
-  // 4. CARGA DE DATOS
+  // 4. CARGA DE DATOS Y CONEXIÓN
   // ==========================================
   async function cargarVacantes() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
     if (grid) {
-      grid.innerHTML = `<div class="jobbers-loading" style="grid-column: 1/-1; text-align: center; padding: 2rem;"><p>Cargando ofertas de empleo...</p></div>`;
+      grid.innerHTML = `<div class="jobbers-loading" style="grid-column: 1/-1; text-align: center; padding: 2rem;"><p>⌛ Cargando ofertas de empleo...</p></div>`;
     }
 
     try {
       const response = await fetch(CONFIG.API_URL);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`Error de red: ${response.statusText} (${response.status})`);
       const data = await response.json();
       state.vacantes = Array.isArray(data) && data.length > 0 ? data : CONFIG.FALLBACK_VACANTES;
     } catch (error) {
-      console.warn('Cargando datos de respaldo (Fallback):', error);
+      console.warn('[Jobbers] Servidor no disponible. Usando datos de respaldo.', error);
       state.vacantes = [...CONFIG.FALLBACK_VACANTES];
     } finally {
       aplicarFiltros();
@@ -238,9 +267,9 @@
 
     if (state.vacantesFiltradas.length === 0) {
       grid.innerHTML = `
-        <div class="jobbers-empty-state" style="grid-column: 1/-1; padding: 2rem; text-align: center;">
-          <p>🔍 No se encontraron vacantes que coincidan con tu búsqueda.</p>
-          <button type="button" class="btn-amber" id="btn-reset-filtros" style="margin-top: 1rem;">Ver todas las ofertas</button>
+        <div class="jobbers-empty-state" style="grid-column: 1/-1; padding: 2.5rem; text-align: center;">
+          <p style="font-size: 1.1rem;">🔍 No se encontraron vacantes que coincidan con tu búsqueda.</p>
+          <button type="button" class="btn-amber" id="btn-reset-filtros" style="margin-top: 1rem; cursor: pointer;">Ver todas las ofertas</button>
         </div>
       `;
 
@@ -312,9 +341,10 @@
       modalDetalle.className = 'modal-overlay';
       modalDetalle.setAttribute('role', 'dialog');
       modalDetalle.setAttribute('aria-modal', 'true');
+      modalDetalle.setAttribute('aria-hidden', 'true');
       modalDetalle.innerHTML = `
         <div class="modal-card">
-          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar">&times;</button>
+          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar ventana">&times;</button>
           <span id="det-categoria" class="badge badge-salary"></span>
           <h2 id="det-puesto" style="margin-top: 0.5rem;"></h2>
           <p id="det-empresa" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
@@ -342,9 +372,10 @@
       modalPostulacion.className = 'modal-overlay';
       modalPostulacion.setAttribute('role', 'dialog');
       modalPostulacion.setAttribute('aria-modal', 'true');
+      modalPostulacion.setAttribute('aria-hidden', 'true');
       modalPostulacion.innerHTML = `
         <div class="modal-card">
-          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar">&times;</button>
+          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar ventana">&times;</button>
           <h2>Postulación Express</h2>
           <p id="post-subtitulo" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
           <form id="form-postulacion-jobbers" style="display:flex; flex-direction:column; gap:0.75rem; text-align:left;">
@@ -402,6 +433,7 @@
 
     requestAnimationFrame(() => {
       modalEl.classList.add('active');
+      modalEl.setAttribute('aria-hidden', 'false');
       const primerInput = modalEl.querySelector('input, textarea, button:not(.jobbers-close-btn)');
       primerInput?.focus();
     });
@@ -412,6 +444,7 @@
     if (!modalActivo) return;
 
     modalActivo.classList.remove('active');
+    modalActivo.setAttribute('aria-hidden', 'true');
     if (state.elementoPrevioFoco?.focus) {
       state.elementoPrevioFoco.focus();
     }
@@ -445,7 +478,7 @@
     const btnPostular = document.getElementById('det-btn-postular');
     if (btnPostular) {
       btnPostular.onclick = () => {
-        modal.classList.remove('active');
+        cerrarModal(modal);
         abrirFormularioPostulacion(vacante);
       };
     }
@@ -479,7 +512,7 @@
     const waContacto = normalizarWhatsApp(rawWA);
 
     if (!nombre || !telefono) {
-      alert('Por favor completá tu nombre y teléfono.');
+      mostrarNotificacion('Por favor completá tu nombre y teléfono.', 'error');
       return;
     }
 
@@ -491,6 +524,7 @@
 
     const urlWA = `https://wa.me/${waContacto}?text=${encodeURIComponent(mensaje)}`;
     cerrarModal(document.querySelector('.modal-overlay.active'));
+    mostrarNotificacion('Redirigiendo a WhatsApp...', 'exito');
     window.open(urlWA, '_blank', 'noopener,noreferrer');
   }
 
@@ -515,7 +549,7 @@
   }
 
   function inicializarFiltrosYBotones() {
-    // 1. Vincular Botones de Modo en la Cabecera
+    // 1. Botones de Modo en Cabecera
     const btnPostulante = document.getElementById('btn-mode-postulante');
     const btnEmpresa = document.getElementById('btn-mode-empresa');
 
@@ -526,7 +560,7 @@
       btnEmpresa.addEventListener('click', () => cambiarModoConConfirmacion('empresa'));
     }
 
-    // 2. Delegación Global para Modal de Bienvenida y Atributos data-*
+    // 2. Delegación Global para Modal de Bienvenida
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
@@ -595,6 +629,11 @@
         const turno = document.getElementById('exp-turno')?.value;
         const jornada = document.getElementById('exp-jornada')?.value;
 
+        if (!empresa || !telefono) {
+          mostrarNotificacion('Completá al menos el nombre de la empresa y el teléfono.', 'error');
+          return;
+        }
+
         let mensaje = `📢 *NUEVA BÚSQUEDA EXPRESS (EMPRESA)*\n\n`;
         mensaje += `🏢 *Local/Empresa:* ${empresa}\n`;
         mensaje += `💼 *Puesto:* ${puesto}\n`;
@@ -604,6 +643,7 @@
         mensaje += `Solicito la activación y difusión de esta oferta en Jobbers Argentina.`;
 
         const urlWA = `https://wa.me/${CONFIG.WA_DEFAULT}?text=${encodeURIComponent(mensaje)}`;
+        mostrarNotificacion('Generando anuncio Express...', 'exito');
         window.open(urlWA, '_blank', 'noopener,noreferrer');
         formExpress.reset();
       });
