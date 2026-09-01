@@ -369,17 +369,17 @@
                         <h4>Mariano G.</h4>
                         <p class="text-xs text-amber">Jefe de Cocina / Chef</p>
                         <p class="text-xs text-secondary mt-1">8 años de exp. • CABA</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1">Ver Perfil</button>
+                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="mariano-g">Ver Perfil</button>
                     </article>
 
                     <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/talentos/Sofia R..png" alt="Foto de Sofia R." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='SR';">
+                            <img src="img/talentos/Sofia R..webp" alt="Foto de Sofia R." loading="lazy" onerror="this.style.display='none'; this.parentNode.innerText='SR';">
                         </div>
                         <h4>Sofia R.</h4>
                         <p class="text-xs text-amber">Barista Profesional</p>
                         <p class="text-xs text-secondary mt-1">Arte latte, Arte en café • Córdoba</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1">Ver Perfil</button>
+                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="sofia-r">Ver Perfil</button>
                     </article>
 
                     <article class="talent-card">
@@ -389,7 +389,7 @@
                         <h4>Lucas P.</h4>
                         <p class="text-xs text-amber">Encargado / Bartender</p>
                         <p class="text-xs text-secondary mt-1">Manejo de caja y stock • Rosario</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1">Ver Perfil</button>
+                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="lucas-p">Ver Perfil</button>
                     </article>
                 </div>
             </section>
@@ -468,6 +468,7 @@
         </button>
     </nav>
 
+    <!-- MODAL DE BIENVENIDA -->
     <div id="modal-bienvenida" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" tabindex="-1">
         <div class="modal-box">
             <h3 id="modal-title">¡Bienvenido/a a Jobbers!</h3>
@@ -475,6 +476,35 @@
             <div class="modal-actions">
                 <button type="button" class="btn-amber" data-action="init-mode" data-mode="postulante">Soy Postulante</button>
                 <button type="button" class="btn-green" data-action="init-mode" data-mode="empresa">Soy Empresa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL VER TALENTO -->
+    <div id="modal-talento" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-talento-nombre" tabindex="-1" hidden>
+        <div class="modal-box modal-talento-box">
+            <button type="button" class="modal-close-btn" id="btn-cerrar-modal-talento" aria-label="Cerrar modal">&times;</button>
+            <div class="modal-talento-header">
+                <div class="talent-avatar talent-avatar-lg" id="modal-talento-avatar"></div>
+                <div>
+                    <h3 id="modal-talento-nombre"></h3>
+                    <p class="text-amber font-semibold text-sm" id="modal-talento-puesto"></p>
+                    <p class="text-secondary text-xs" id="modal-talento-ubicacion"></p>
+                </div>
+            </div>
+            <div class="modal-talento-body">
+                <p class="text-sm text-secondary mb-3" id="modal-talento-bio"></p>
+                <div class="mb-3">
+                    <strong class="text-xs text-amber uppercase block mb-1">Habilidades</strong>
+                    <div id="modal-talento-skills" class="skills-tags"></div>
+                </div>
+                <div class="mb-3">
+                    <strong class="text-xs text-amber uppercase block mb-1">Experiencia Destacada</strong>
+                    <p class="text-xs text-secondary" id="modal-talento-exp"></p>
+                </div>
+            </div>
+            <div class="modal-talento-footer">
+                <a id="modal-talento-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-green w-full text-center block">Contactar por WhatsApp</a>
             </div>
         </div>
     </div>
