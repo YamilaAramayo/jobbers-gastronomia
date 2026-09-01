@@ -95,7 +95,7 @@ button {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
-  padding: 0.85rem 1.5rem;
+  padding: max(0.85rem, env(safe-area-inset-top, 0.85rem)) 1.5rem 0.85rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -115,7 +115,7 @@ button {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   padding: 4px;
-  border-radius: 30px;
+  border-radius: var(--radius-pill);
   display: flex;
   gap: 4px;
 }
@@ -123,7 +123,7 @@ button {
 .mode-btn {
   color: var(--text-secondary);
   padding: 6px 16px;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   font-size: 0.85rem;
   font-weight: 600;
   transition: all 0.2s ease;
@@ -273,7 +273,7 @@ button {
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   gap: 0.65rem;
 }
 
@@ -678,6 +678,11 @@ button {
 .talent-avatar.loading,
 .company-logo.loading {
   animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+.talent-avatar.loading img,
+.company-logo.loading img {
+  opacity: 0;
 }
 
 /* === BANNER PATROCINADO === */
