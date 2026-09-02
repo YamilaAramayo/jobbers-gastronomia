@@ -374,32 +374,32 @@
                 <div class="talent-grid">
                     <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/talentos/mariano-g.webp" alt="Foto de Mariano G." loading="lazy" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Mariano+G&background=1e293b&color=f59e0b&bold=true';">
+                            <img src="img/talentos/mariano-g.webp" alt="Foto de Mariano G." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Mariano+G&background=1e293b&color=f59e0b&bold=true';">
                         </div>
                         <h4>Mariano G.</h4>
                         <p class="text-xs text-amber">Jefe de Cocina / Chef</p>
                         <p class="text-xs text-secondary mt-1">8 años de exp. • CABA</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="mariano-g">Ver Perfil</button>
+                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="mariano-g" aria-label="Ver perfil completo de Mariano G.">Ver Perfil</button>
                     </article>
 
                     <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/talentos/sofia-r.webp" alt="Foto de Sofia R." loading="lazy" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sofia+R&background=1e293b&color=f59e0b&bold=true';">
+                            <img src="img/talentos/sofia-r.webp" alt="Foto de Sofia R." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sofia+R&background=1e293b&color=f59e0b&bold=true';">
                         </div>
                         <h4>Sofia R.</h4>
                         <p class="text-xs text-amber">Barista Profesional</p>
                         <p class="text-xs text-secondary mt-1">Arte latte, Arte en café • Córdoba</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="sofia-r">Ver Perfil</button>
+                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="sofia-r" aria-label="Ver perfil completo de Sofia R.">Ver Perfil</button>
                     </article>
 
                     <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/talentos/lucas-p.webp" alt="Foto de Lucas P." loading="lazy" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Lucas+P&background=1e293b&color=f59e0b&bold=true';">
+                            <img src="img/talentos/lucas-p.webp" alt="Foto de Lucas P." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Lucas+P&background=1e293b&color=f59e0b&bold=true';">
                         </div>
                         <h4>Lucas P.</h4>
                         <p class="text-xs text-amber">Encargado / Bartender</p>
                         <p class="text-xs text-secondary mt-1">Manejo de caja y stock • Rosario</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="lucas-p">Ver Perfil</button>
+                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="lucas-p" aria-label="Ver perfil completo de Lucas P.">Ver Perfil</button>
                     </article>
                 </div>
             </section>
@@ -465,7 +465,7 @@
         </div>
     </footer>
 
-    <nav class="bottom-nav" aria-label="Navegación inferior movil">
+    <nav class="bottom-nav" aria-label="Navegación inferior móvil">
         <button type="button" class="bottom-nav-item active" aria-selected="true" data-action="switch-mode" data-mode="postulante">
             <span aria-hidden="true">🔍</span>
             <span>Buscar</span>
@@ -481,9 +481,9 @@
     </nav>
 
     <!-- Modal Selector de Perfil -->
-    <div id="modal-role-selector" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-role-title" aria-hidden="true" hidden>
+    <div id="modal-role-selector" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-role-title" hidden>
         <div class="modal-box modal-welcome-card">
-            <button type="button" class="modal-close-btn" id="btn-close-role-modal" aria-label="Cerrar">&times;</button>
+            <button type="button" class="modal-close-btn" id="btn-close-role-modal" aria-label="Cerrar modal de selección">&times;</button>
             
             <h2 id="modal-role-title" class="welcome-title">¿Cómo querés ingresar? 👋</h2>
             <p class="welcome-subtitle">Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
@@ -511,7 +511,7 @@
     <!-- MODAL VER TALENTO -->
     <div id="modal-talento" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-talento-nombre" tabindex="-1" hidden>
         <div class="modal-box modal-talento-box">
-            <button type="button" class="modal-close-btn" id="btn-cerrar-modal-talento" aria-label="Cerrar modal">&times;</button>
+            <button type="button" class="modal-close-btn" id="btn-cerrar-modal-talento" aria-label="Cerrar detalles del candidato">&times;</button>
             <div class="modal-talento-header">
                 <div class="talent-avatar talent-avatar-lg" id="modal-talento-avatar"></div>
                 <div>
