@@ -99,6 +99,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .brand-logo {
@@ -271,7 +273,6 @@ button {
   text-transform: uppercase;
 }
 
-/* Modificado para asegurar la estructura 3 columnas x 3 filas */
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -343,11 +344,12 @@ button {
   stroke: var(--accent-amber);
 }
 
-/* === CONTENEDOR DE VACANTES === */
+/* === CONTENEDOR DE VACANTES CON CONTAINER QUERIES === */
 .jobs-container {
   display: flex;
   flex-direction: column;
   width: 100%;
+  container-type: inline-size;
 }
 
 .jobs-header {
@@ -402,7 +404,8 @@ button {
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-@media (min-width: 768px) {
+/* Layout responsivo adaptable mediante Container Query */
+@container (min-width: 550px) {
   .job-card {
     grid-template-columns: 1.3fr 1fr auto;
     align-items: center;
@@ -528,7 +531,7 @@ button {
   transform: translateY(-1px);
 }
 
-@media (max-width: 767px) {
+@container (max-width: 549px) {
   .job-card-footer {
     width: 100%;
     justify-content: space-between;
@@ -641,6 +644,13 @@ button {
   overflow: hidden;
   position: relative;
   box-shadow: 0 0 12px rgba(255, 183, 3, 0.25);
+}
+
+.talent-avatar-lg {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
 }
 
 .talent-avatar img {
@@ -997,6 +1007,8 @@ button {
     justify-content: space-around;
     align-items: center;
     z-index: 1000;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .bottom-nav-item {
@@ -1016,7 +1028,7 @@ button {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: flex;
@@ -1028,6 +1040,7 @@ button {
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  will-change: opacity, visibility;
 }
 
 .modal-overlay.active {
@@ -1036,32 +1049,104 @@ button {
   pointer-events: all;
 }
 
-.modal-card {
+.modal-box {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 2.25rem 1.75rem 1.75rem;
-  max-width: 440px;
+  padding: 2rem 1.75rem;
+  max-width: 480px;
   width: 100%;
   position: relative;
   box-shadow: var(--shadow-card);
-  text-align: center;
   transform: translateY(15px) scale(0.96);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.modal-overlay.active .modal-card {
+.modal-overlay.active .modal-box {
   transform: translateY(0) scale(1);
 }
 
-.modal-close {
+/* Modal de Bienvenida (Estilo Tarjetas) */
+.modal-welcome-card {
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.welcome-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.modal-welcome-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.welcome-option-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+.welcome-option-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--accent-amber);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 183, 3, 0.1);
+}
+
+.welcome-option-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.welcome-option-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-option-title {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.welcome-option-desc {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+/* Modal Ver Talento */
+.modal-talento-box {
+  max-width: 520px;
+}
+
+.modal-close-btn {
   position: absolute;
   top: 1rem;
   right: 1rem;
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  line-height: 1;
   cursor: pointer;
   width: 32px;
   height: 32px;
@@ -1072,9 +1157,33 @@ button {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.modal-close:hover {
+.modal-close-btn:hover {
   background-color: var(--bg-card-hover);
   color: var(--text-primary);
+}
+
+.modal-talento-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.skills-tags span {
+  font-size: 0.75rem;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
 }
 
 /* === ACCESIBILIDAD: PREFERENCIA DE MOVIMIENTO REDUCIDO === */
