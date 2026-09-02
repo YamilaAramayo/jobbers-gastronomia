@@ -1,3 +1,4 @@
+
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
  * Versión Consolidada, Accesible (A11y) y Optimizada (Corregida)
@@ -249,7 +250,6 @@
 
     setMode(perfilGuardado || 'postulante');
 
-    // Muestra el modal de bienvenida solo si el usuario no ha elegido perfil previamente
     if (!perfilGuardado && modalBienvenida) {
       abrirModal(modalBienvenida);
     }
@@ -483,7 +483,7 @@
     modalEl.removeAttribute('hidden');
     modalEl.setAttribute('aria-hidden', 'false');
 
-    void modalEl.offsetWidth; // Forzamos reflujo DOM para suavizar animación CSS
+    void modalEl.offsetWidth;
     modalEl.classList.add('active');
 
     const primerInput = modalEl.querySelector('button:not([disabled]), input:not([disabled]), textarea:not([disabled])');
@@ -612,6 +612,20 @@
       const modal = document.getElementById('modal-talento');
       if (!modal) return;
 
+      // Inyección y control de error para la imagen del Modal
+      const avatarEl = document.getElementById('modal-talento-avatar');
+      if (avatarEl) {
+        const iniciales = t.nombre.split(' ').map(n => n[0]).join('').toUpperCase();
+        const imgPath = `img/talentos/${id}.webp`;
+
+        avatarEl.innerHTML = `
+          <img src="${imgPath}" 
+               alt="Foto de ${escapeHTML(t.nombre)}" 
+               style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;" 
+               onerror="this.style.display='none'; this.parentNode.innerText='${iniciales}';">
+        `;
+      }
+
       document.getElementById('modal-talento-nombre').textContent = t.nombre;
       document.getElementById('modal-talento-puesto').textContent = t.puesto;
       document.getElementById('modal-talento-ubicacion').textContent = t.ubicacion;
@@ -650,27 +664,23 @@
       });
     }
 
-    // 2. Delegación Global para Modal de Bienvenida y Cambios de Modo (CORREGIDO)
+    // 2. Delegación Global para Modal de Bienvenida y Cambios de Modo
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
 
-      // Evita recargas si la etiqueta es un <a> o un submit button dentro de un form
       e.preventDefault();
 
       const mode = btn.dataset.mode;
       const action = btn.dataset.action;
       const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
 
-      // Si la acción es abrir el cartel selector de perfil
       if (action === 'switch-mode' || action === 'open-role-modal') {
         if (modalBienvenida) abrirModal(modalBienvenida);
       } 
-      // Si la acción proviene de las tarjetas dentro del modal selector
       else if (action === 'init-mode') {
         seleccionarModoInicial(mode);
       } 
-      // Para cualquier otro botón que configure el modo directamente
       else if (mode && !btn.id && !btn.classList.contains('category-card')) {
         setMode(mode);
       }
