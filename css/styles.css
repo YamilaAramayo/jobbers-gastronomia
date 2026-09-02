@@ -1276,3 +1276,106 @@ button {
     scroll-behavior: auto !important;
   }
 }
+/* ==========================================================================
+   18. CORRECCIONES DE CLASES Y UTILIDADES FALTANTES
+   ========================================================================== */
+
+/* Aliases de botones */
+.btn-destacar-pro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  margin-top: 0.25rem;
+  background: linear-gradient(135deg, var(--accent-amber) 0%, #d97706 100%);
+  border-radius: var(--radius-sm);
+  color: #000000;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-align: center;
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-consultar-publicidad {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  background-color: #25d366;
+  border-radius: var(--radius-sm);
+  color: #000000;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-destacar-pro:hover,
+.btn-consultar-publicidad:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Variaciones de Sidebar Widgets */
+.widget-accent-amber {
+  border-left: 3px solid var(--accent-amber);
+}
+
+.widget-accent-green {
+  border-left: 3px solid var(--accent-green);
+}
+
+/* Utilidades de Texto y Color */
+.text-amber { color: var(--accent-amber) !important; }
+.text-green { color: var(--accent-green) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-md { font-size: 1.1rem; }
+.text-xl { font-size: 1.5rem; font-weight: 800; }
+
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.uppercase { text-transform: uppercase; }
+.text-center { text-align: center; }
+
+/* Utilidades de Display y Layout */
+.block { display: block; }
+.w-full { width: 100%; }
+.btn-block { display: block; width: 100%; }
+
+.flex-col { display: flex; flex-direction: column; }
+.flex-row { display: flex; flex-direction: row; }
+.flex-1 { flex: 1; }
+
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+
+/* Utilidades de Spacing (Margin / Padding) */
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1.5rem; }
+
+.p-1 { padding: 0.25rem 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.pl-4 { padding-left: 1rem; }
+
+/* Accesibilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
