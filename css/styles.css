@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
 /* ==========================================================================
@@ -726,7 +725,7 @@ button {
 }
 
 /* ==========================================================================
-   11. BANNER PATROCINADO
+   11. BANNER PATROCINADO Y GRILLA PROMO (ALINEACIÓN PERFECTA DE BLOQUES)
    ========================================================================== */
 .banner-patrocinado {
   display: flex;
@@ -787,6 +786,56 @@ button {
 .btn-publicidad:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
+}
+
+/* Grilla de Tarjetas Inferiores (Anuncios / Atención Corporativa) */
+.promo-cards-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  align-items: stretch; /* Igualación de altura automática */
+}
+
+@media (min-width: 768px) {
+  .promo-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.promo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  text-align: center;
+  gap: 0.75rem;
+  box-sizing: border-box;
+}
+
+.promo-card h3,
+.promo-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.promo-card p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.promo-card .btn-green,
+.promo-card .btn-amber {
+  width: 100%;
+  max-width: 280px;
+  margin-top: 0.25rem;
 }
 
 /* ==========================================================================
@@ -939,7 +988,9 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 200px;
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
   padding: 1rem;
   background-color: var(--bg-input);
   border: 1px dashed var(--border-color);
