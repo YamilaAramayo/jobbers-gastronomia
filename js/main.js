@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada, Accesible (A11y) y Optimizada (Corregida)
+ * Versión Consolidada, Accesible (A11y) y Optimizada
  */
 
 (function () {
@@ -611,17 +611,16 @@
       const modal = document.getElementById('modal-talento');
       if (!modal) return;
 
-      // Inyección y control de error para la imagen del Modal
       const avatarEl = document.getElementById('modal-talento-avatar');
       if (avatarEl) {
-        const iniciales = t.nombre.split(' ').map(n => n[0]).join('').toUpperCase();
         const imgPath = `img/talentos/${id}.webp`;
+        const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.nombre)}&background=1e293b&color=f59e0b&bold=true`;
 
         avatarEl.innerHTML = `
           <img src="${imgPath}" 
                alt="Foto de ${escapeHTML(t.nombre)}" 
                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;" 
-               onerror="this.style.display='none'; this.parentNode.innerText='${iniciales}';">
+               onerror="this.onerror=null; this.src='${fallbackUrl}';">
         `;
       }
 
