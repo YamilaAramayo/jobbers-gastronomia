@@ -1,3 +1,4 @@
+
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
  * Versión Consolidada, Accesible (A11y) y Optimizada
@@ -231,10 +232,8 @@
   }
 
   function cambiarModoConConfirmacion(mode) {
-    const textoModo = mode === 'empresa' ? 'Empresas / Reclutadores' : 'Postulantes / Búsqueda de empleo';
-    if (confirm(`¿Estás seguro de que deseas cambiar al perfil de ${textoModo}?`)) {
-      setMode(mode);
-    }
+    // Transición directa sin alerta
+    setMode(mode);
   }
 
   function seleccionarModoInicial(mode) {
@@ -658,7 +657,7 @@
     if (btnEmpresa) {
       btnEmpresa.addEventListener('click', (e) => {
         e.preventDefault();
-        cambiarModoConConfirmacion('empresa');
+        setMode('empresa');
       });
     }
 
