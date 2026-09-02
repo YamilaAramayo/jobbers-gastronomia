@@ -1,4 +1,3 @@
-
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
  * Versión Consolidada, Accesible (A11y) y Optimizada (Corregida)
