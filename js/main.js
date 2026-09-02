@@ -13,7 +13,7 @@
     API_URL: 'base_de_datos.json',
     DEBOUNCE_MS: 200,
     STORAGE_KEY: 'jobbers_user_mode',
-    WA_DEFAULT: '5493541582448',
+    WA_DEFAULT: '5493513080197',
     SELECTORS: {
       GRID_VACANTES: '#grid-vacantes',
       INPUT_PUESTO: '#input-busqueda-vacantes',
@@ -36,7 +36,7 @@
         urgente: true,
         descripcion: 'Buscamos cocinero con experiencia previa en despacho, elaboración de carta y manejo de stock.',
         requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día'],
-        contacto_wa: '5493541582448'
+        contacto_wa: '5493513080197'
       },
       {
         id: 102,
@@ -50,7 +50,7 @@
         urgente: false,
         descripcion: 'Atención al público, calibración de molino, arte latte y despacho de pastelería.',
         requisitos: ['Curso de Barismo comprobable', 'Excelente presencia y trato'],
-        contacto_wa: '5493541582448'
+        contacto_wa: '5493513080197'
       }
     ]
   });
@@ -63,7 +63,7 @@
       bio: 'Chef ejecutivo especializado en cocina internacional, gestión de brigadas y control de costos.',
       skills: ['Cocina Internacional', 'Manejo de Costos', 'Gestión de Brigada'],
       exp: 'Chef Ejecutivo en Restaurante Puerto Madero (4 años).',
-      wa: '5493541582448'
+      wa: '5493513080197'
     },
     'sofia-r': {
       nombre: 'Sofia R.',
@@ -72,7 +72,7 @@
       bio: 'Barista apasionada por el café de especialidad y atención de alta gama.',
       skills: ['Arte Latte', 'Calibración Espresso', 'Filtrados V60/Chemex'],
       exp: 'Barista Principal en Café Central Córdoba (2 años).',
-      wa: '5493541582448'
+      wa: '5493513080197'
     },
     'lucas-p': {
       nombre: 'Lucas P.',
@@ -81,7 +81,7 @@
       bio: 'Mixólogo y encargado de salón con experiencia en coctelería de autor e inventarios.',
       skills: ['Coctelería de Autor', 'Manejo de Caja', 'Control de Stock'],
       exp: 'Head Bartender en Bar Güemes (3 años).',
-      wa: '5493541582448'
+      wa: '5493513080197'
     }
   };
 
@@ -185,7 +185,6 @@
   function manejarTrampaDeFoco(e, modal) {
     if (e.key !== 'Tab') return;
     
-    // Filtrado estricto: solo elementos visibles y habilitados
     const focusables = Array.from(
       modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
     ).filter(el => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden') && el.offsetWidth > 0 && el.offsetHeight > 0);
@@ -707,10 +706,10 @@
         e.preventDefault();
         const empresa = document.getElementById('exp-empresa')?.value.trim();
         const telefono = document.getElementById('exp-telefono')?.value.trim();
-        const puesto = document.getElementById('exp-puesto')?.value;
-        const zona = document.getElementById('exp-zona')?.value;
-        const turno = document.getElementById('exp-turno')?.value;
-        const jornada = document.getElementById('exp-jornada')?.value;
+        const puesto = document.getElementById('exp-puesto')?.value || 'Puesto no especificado';
+        const zona = document.getElementById('exp-zona')?.value || 'Zona no especificada';
+        const turno = document.getElementById('exp-turno')?.value || 'Turno no especificado';
+        const jornada = document.getElementById('exp-jornada')?.value || 'Jornada no especificada';
 
         if (!empresa || !telefono) {
           mostrarNotificacion('Completá al menos el nombre de la empresa y el teléfono.', 'error');
@@ -720,7 +719,7 @@
         let mensaje = `📢 *NUEVA BÚSQUEDA EXPRESS (EMPRESA)*\n\n`;
         mensaje += `🏢 *Local/Empresa:* ${empresa}\n`;
         mensaje += `💼 *Puesto:* ${puesto}\n`;
-        mensaje += `📍 *Zona:* ${zona}\n`;
+        mensaje += `📍 *Zona/Barrio:* ${zona}\n`;
         mensaje += `⏰ *Turno/Jornada:* ${turno} - ${jornada}\n`;
         mensaje += `📱 *WhatsApp de Contacto:* ${telefono}\n\n`;
         mensaje += `Solicito la activación y difusión de esta oferta en Jobbers Argentina.`;
