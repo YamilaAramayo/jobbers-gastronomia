@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada, Accesible (A11y) y Optimizada
+ * Versión Consolidada, Accesible (A11y) y Optimizada (Corregida)
  */
 
 (function () {
@@ -249,10 +249,9 @@
 
     setMode(perfilGuardado || 'postulante');
 
+    // Muestra el modal de bienvenida solo si el usuario no ha elegido perfil previamente
     if (!perfilGuardado && modalBienvenida) {
       abrirModal(modalBienvenida);
-    } else if (modalBienvenida) {
-      cerrarModal(modalBienvenida);
     }
   }
 
@@ -639,22 +638,31 @@
     const btnEmpresa = document.getElementById('btn-mode-empresa');
 
     if (btnPostulante) {
-      btnPostulante.addEventListener('click', () => setMode('postulante'));
+      btnPostulante.addEventListener('click', (e) => {
+        e.preventDefault();
+        setMode('postulante');
+      });
     }
     if (btnEmpresa) {
-      btnEmpresa.addEventListener('click', () => cambiarModoConConfirmacion('empresa'));
+      btnEmpresa.addEventListener('click', (e) => {
+        e.preventDefault();
+        cambiarModoConConfirmacion('empresa');
+      });
     }
 
-    // 2. Delegación Global para Modal de Bienvenida y Cambios de Modo
+    // 2. Delegación Global para Modal de Bienvenida y Cambios de Modo (CORREGIDO)
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
+
+      // Evita recargas si la etiqueta es un <a> o un submit button dentro de un form
+      e.preventDefault();
 
       const mode = btn.dataset.mode;
       const action = btn.dataset.action;
       const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
 
-      // Si la acción es solicitar/abrir el cartel selector de perfil
+      // Si la acción es abrir el cartel selector de perfil
       if (action === 'switch-mode' || action === 'open-role-modal') {
         if (modalBienvenida) abrirModal(modalBienvenida);
       } 
