@@ -65,7 +65,6 @@
         <!-- VISTA POSTULANTE -->
         <div id="view-postulante" class="view-section active-view" role="tabpanel" aria-labelledby="btn-mode-postulante">
 
-            <!-- HERO REESTRUCTURADO Y ALINEADO -->
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
@@ -406,7 +405,6 @@
                 </a>
             </section>
 
-            <!-- PANELES DE INFERIORES ACOMODADOS EN GRID PARALELO -->
             <section class="empresa-bottom-grid mt-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; align-items: stretch;">
                 <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada" style="margin: 0; min-height: 100%; display: flex; align-items: center; justify-content: center;">
                     [ Anuncio AdSense ]
@@ -468,14 +466,30 @@
         </button>
     </nav>
 
-    <!-- MODAL DE BIENVENIDA -->
-    <div id="modal-bienvenida" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" tabindex="-1">
-        <div class="modal-box">
-            <h3 id="modal-title">¡Bienvenido/a a Jobbers!</h3>
-            <p id="modal-desc">Seleccioná tu perfil para continuar:</p>
-            <div class="modal-actions">
-                <button type="button" class="btn-amber" data-action="init-mode" data-mode="postulante">Soy Postulante</button>
-                <button type="button" class="btn-green" data-action="init-mode" data-mode="empresa">Soy Empresa</button>
+    <!-- Modal Selector de Perfil -->
+    <div id="modal-role-selector" class="modal-overlay active" role="dialog" aria-modal="true" aria-labelledby="modal-role-title">
+        <div class="modal-card modal-role-card">
+            <button type="button" class="modal-close" id="btn-close-role-modal" aria-label="Cerrar">&times;</button>
+            
+            <h2 id="modal-role-title">¿Cómo querés ingresar? 👋</h2>
+            <p class="modal-subtitle">Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
+
+            <div class="role-options">
+                <button type="button" class="role-option-btn" data-action="init-mode" data-mode="postulante" data-role="postulante">
+                    <span class="role-icon" aria-hidden="true">🔍</span>
+                    <div class="role-info">
+                        <strong>Busco Empleo</strong>
+                        <small>Quiero ver vacantes y postularme directo</small>
+                    </div>
+                </button>
+
+                <button type="button" class="role-option-btn" data-action="init-mode" data-mode="empresa" data-role="empresa">
+                    <span class="role-icon" aria-hidden="true">🏢</span>
+                    <div class="role-info">
+                        <strong>Soy Empresa</strong>
+                        <small>Quiero publicar una oferta o contratar</small>
+                    </div>
+                </button>
             </div>
         </div>
     </div>
