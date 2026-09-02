@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f59e0b">
+    <meta name="theme-color" content="#ffb703">
     <title>Jobbers | Portal de Empleo Gastronómico en Argentina</title>
 
     <meta name="description" content="Encontrá y publicá empleos gastronómicos en Argentina. Oportunidades en cocina, salón, barismo y más. Conexión rápida entre perfiles y locales.">
@@ -27,7 +27,7 @@
     <!-- Styles & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 
     <!-- Schema.org -->
@@ -35,7 +35,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Jobbers",
+      "name": "Jobbers Gastronomía",
       "url": "https://jobbers.com.ar/",
       "potentialAction": {
         "@type": "SearchAction",
@@ -48,7 +48,7 @@
 <body>
 
     <header class="navbar">
-        <div class="brand-logo">Jobbers<span>.</span></div>
+        <a href="/" class="brand-logo" aria-label="Inicio Jobbers">Jobbers<span>.</span></a>
 
         <div class="mode-switch-container" role="tablist" aria-label="Modo de usuario">
             <button type="button" class="mode-btn active" id="btn-mode-postulante" role="tab" aria-selected="true" aria-controls="view-postulante" data-action="switch-mode" data-mode="postulante">
@@ -70,17 +70,17 @@
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
                 
                 <form id="form-busqueda-postulante" class="search-box-inline" action="/buscar" method="GET" role="search">
-                    <div class="input-wrapper">
-                        <label for="input-busqueda-vacantes">Buscar por puesto</label>
+                    <div class="input-wrapper flex-1">
+                        <label for="input-busqueda-vacantes" class="sr-only">Buscar por puesto</label>
                         <input type="text" id="input-busqueda-vacantes" name="q" class="input-dark" placeholder="Puesto (ej. Mozo, Cocinero, Barista)..." autocomplete="off">
                     </div>
 
-                    <div class="input-wrapper">
-                        <label for="input-busqueda-ubicacion">Buscar por ubicación</label>
+                    <div class="input-wrapper flex-1">
+                        <label for="input-busqueda-ubicacion" class="sr-only">Buscar por ubicación</label>
                         <input type="text" id="input-busqueda-ubicacion" name="location" class="input-dark" placeholder="Ubicación o Zona..." autocomplete="off">
                     </div>
 
-                    <button type="submit" class="btn-amber" id="btn-buscar-vacantes">Buscar</button>
+                    <button type="submit" class="btn btn-amber" id="btn-buscar-vacantes">Buscar</button>
                 </form>
             </section>
 
@@ -180,6 +180,7 @@
                     </div>
 
                     <div class="job-list" id="grid-vacantes" aria-live="polite" aria-busy="false">
+                        <!-- Las vacantes se renderizan dinámicamente vía main.js -->
                     </div>
                 </div>
 
@@ -188,26 +189,26 @@
                     <div class="sidebar-widget widget-pro">
                         <h3 class="pro-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
                         <p class="pro-text">
-                            Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
+                            Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos.
                         </p>
                         <a href="https://wa.me/5493513080197?text=Hola!%20Me%20interesa%20formar%20parte%20de%20Jobbers%20Pro%20para%20destacar%20mi%20perfil" 
                            target="_blank" 
                            rel="noopener noreferrer" 
-                           class="btn-destacar-pro">
+                           class="btn btn-destacar-pro">
                             ⚡ DESTACÁ TU PERFIL PRO
                         </a>
                     </div>
 
                     <div class="sidebar-widget widget-accent-amber">
-                        <h3 class="text-amber mb-1 text-md">Soporte al Postulante</h3>
-                        <p class="text-secondary text-sm mb-2">¿Tuviste problemas para postularte o tenés dudas con tu CV?</p>
-                        <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20ayuda%20o%20soporte%20t%C3%A9cnico%20como%20Postulante%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-amber btn-block text-center">Hablar con Soporte</a>
+                        <h3 class="text-amber text-md">Soporte al Postulante</h3>
+                        <p class="text-secondary text-sm">¿Tuviste problemas para postularte o tenés dudas con tu CV?</p>
+                        <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20ayuda%20o%20soporte%20t%C3%A9cnico%20como%20Postulante%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn btn-amber w-full text-center">Hablar con Soporte</a>
                     </div>
 
                     <div class="sidebar-widget widget-accent-amber">
-                        <h3 class="text-amber mb-1 text-md">¿Sos Empresa?</h3>
-                        <p class="text-secondary text-sm mb-2">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
-                        <button type="button" class="btn-amber btn-block" data-action="switch-mode" data-mode="empresa">Publicar Empleo</button>
+                        <h3 class="text-amber text-md">¿Sos Empresa?</h3>
+                        <p class="text-secondary text-sm">Publicá tu vacante hoy y conectá con personal capacitado en menos de 24 hs.</p>
+                        <button type="button" class="btn btn-amber w-full" data-action="switch-mode" data-mode="empresa">Publicar Empleo</button>
                     </div>
 
                 </aside>
@@ -220,17 +221,13 @@
                 <a href="https://wa.me/5493513080197?text=Hola!%20Quisiera%20consultar%20sobre%20los%20espacios%20publicitarios%20en%20Jobbers" 
                    target="_blank" 
                    rel="noopener noreferrer" 
-                   class="btn-consultar-publicidad">
+                   class="btn btn-consultar-publicidad">
                     💬 CONSULTAR ESPACIO PUBLICITARIO
                 </a>
             </section>
 
-            <div class="adsense-placeholder mt-4 mb-4" role="region" aria-label="Publicidad patrocinada">
-                [ Anuncio AdSense ]
-            </div>
-
             <section class="blog-section">
-                <div class="blog-header">
+                <div class="jobs-header mb-3">
                     <h3>Blog & Recursos Gastronómicos</h3>
                     <a href="blog.html" class="text-amber font-semibold text-sm">Ver todos los artículos &rarr;</a>
                 </div>
@@ -272,12 +269,12 @@
 
             <section class="hero-empresa">
                 <div>
-                    <h2 class="text-xl mb-1">Contratá personal gastronómico calificado rápido</h2>
-                    <p class="text-secondary mb-2">Publicá tus ofertas de empleo y accedé a la base de perfiles verificados de tu ciudad.</p>
-                    <ul class="text-secondary text-sm pl-4">
-                        <li>Publicación express en 2 minutos.</li>
-                        <li>Contacto directo por WhatsApp con candidatos.</li>
-                        <li>Soporte personalizado B2B.</li>
+                    <h2 class="text-xl mb-2">Contratá personal gastronómico calificado rápido</h2>
+                    <p class="text-secondary mb-3">Publicá tus ofertas de empleo y accedé a la base de perfiles verificados de tu ciudad.</p>
+                    <ul class="text-secondary text-sm flex-col gap-1">
+                        <li>✓ Publicación express en 2 minutos.</li>
+                        <li>✓ Contacto directo por WhatsApp con candidatos.</li>
+                        <li>✓ Soporte personalizado B2B.</li>
                     </ul>
                 </div>
 
@@ -288,17 +285,17 @@
                     <form id="form-publicacion-express" class="flex-col gap-2">
                         <div>
                             <label for="exp-empresa" class="sr-only">Nombre de tu local o establecimiento gastronómico</label>
-                            <input type="text" id="exp-empresa" name="empresa" class="input-dark w-full" placeholder="Nombre de tu local / Gastronómico" required aria-required="true" autocomplete="organization">
+                            <input type="text" id="exp-empresa" name="empresa" class="input-dark" placeholder="Nombre de tu local / Gastronómico" required aria-required="true" autocomplete="organization">
                         </div>
 
                         <div>
                             <label for="exp-telefono" class="sr-only">Número de WhatsApp de contacto</label>
-                            <input type="tel" id="exp-telefono" name="telefono" class="input-dark w-full" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required aria-required="true" autocomplete="tel" inputmode="tel">
+                            <input type="tel" id="exp-telefono" name="telefono" class="input-dark" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required aria-required="true" autocomplete="tel" inputmode="tel">
                         </div>
 
                         <div>
                             <label for="exp-puesto" class="sr-only">Seleccionar puesto requerido</label>
-                            <select id="exp-puesto" name="puesto" class="input-dark w-full" required aria-required="true">
+                            <select id="exp-puesto" name="puesto" class="input-dark" required aria-required="true">
                                 <option value="" disabled selected>Puesto que necesitás</option>
                                 <option value="Cocinero / Chef">Cocinero / Chef</option>
                                 <option value="Ayudante de Cocina">Ayudante de Cocina</option>
@@ -320,7 +317,7 @@
 
                         <div>
                             <label for="exp-zona" class="sr-only">Seleccionar zona o barrio</label>
-                            <select id="exp-zona" name="zona" class="input-dark w-full" required aria-required="true">
+                            <select id="exp-zona" name="zona" class="input-dark" required aria-required="true">
                                 <option value="" disabled selected>Zona / Barrio (Córdoba Capital)</option>
                                 <option value="Centro">Centro</option>
                                 <option value="Nueva Córdoba">Nueva Córdoba</option>
@@ -342,7 +339,7 @@
                         <div class="flex-row gap-1">
                             <div class="flex-1">
                                 <label for="exp-turno" class="sr-only">Seleccionar turno</label>
-                                <select id="exp-turno" name="turno" class="input-dark w-full" required aria-required="true">
+                                <select id="exp-turno" name="turno" class="input-dark" required aria-required="true">
                                     <option value="" disabled selected>Turno</option>
                                     <option value="Turno Mañana">Turno Mañana</option>
                                     <option value="Turno Tarde">Turno Tarde</option>
@@ -353,7 +350,7 @@
 
                             <div class="flex-1">
                                 <label for="exp-jornada" class="sr-only">Seleccionar tipo de jornada</label>
-                                <select id="exp-jornada" name="jornada" class="input-dark w-full" required aria-required="true">
+                                <select id="exp-jornada" name="jornada" class="input-dark" required aria-required="true">
                                     <option value="" disabled selected>Jornada</option>
                                     <option value="Full Time">Full Time</option>
                                     <option value="Part Time">Part Time</option>
@@ -363,7 +360,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-amber w-full mt-1 font-bold p-3">Publicar Búsqueda 🚀</button>
+                        <button type="submit" class="btn btn-amber w-full mt-1">Publicar Búsqueda 🚀</button>
                     </form>
                 </div>
             </section>
@@ -374,32 +371,32 @@
                 <div class="talent-grid">
                     <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/talentos/mariano-g.webp" alt="Foto de Mariano G." loading="lazy" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Mariano+G&background=1e293b&color=f59e0b&bold=true';">
+                            <img src="img/talentos/mariano-g.webp" alt="Foto de Mariano G." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Mariano+G&background=1e293b&color=ffb703&bold=true';">
                         </div>
                         <h4>Mariano G.</h4>
-                        <p class="text-xs text-amber">Jefe de Cocina / Chef</p>
-                        <p class="text-xs text-secondary mt-1">8 años de exp. • CABA</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="mariano-g">Ver Perfil</button>
+                        <p class="text-xs text-amber font-semibold">Jefe de Cocina / Chef</p>
+                        <p class="text-xs text-secondary mt-1">8 años de exp. • Córdoba</p>
+                        <button type="button" class="btn btn-green w-full mt-2 text-xs btn-ver-talento" data-talent-id="mariano-g">Ver Perfil</button>
                     </article>
 
                     <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/talentos/sofia-r.webp" alt="Foto de Sofia R." loading="lazy" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sofia+R&background=1e293b&color=f59e0b&bold=true';">
+                            <img src="img/talentos/sofia-r.webp" alt="Foto de Sofia R." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sofia+R&background=1e293b&color=ffb703&bold=true';">
                         </div>
                         <h4>Sofia R.</h4>
-                        <p class="text-xs text-amber">Barista Profesional</p>
-                        <p class="text-xs text-secondary mt-1">Arte latte, Arte en café • Córdoba</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="sofia-r">Ver Perfil</button>
+                        <p class="text-xs text-amber font-semibold">Barista Profesional</p>
+                        <p class="text-xs text-secondary mt-1">Arte latte, Especialidad • Córdoba</p>
+                        <button type="button" class="btn btn-green w-full mt-2 text-xs btn-ver-talento" data-talent-id="sofia-r">Ver Perfil</button>
                     </article>
 
                     <article class="talent-card">
                         <div class="talent-avatar">
-                            <img src="img/talentos/lucas-p.webp" alt="Foto de Lucas P." loading="lazy" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Lucas+P&background=1e293b&color=f59e0b&bold=true';">
+                            <img src="img/talentos/lucas-p.webp" alt="Foto de Lucas P." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Lucas+P&background=1e293b&color=ffb703&bold=true';">
                         </div>
                         <h4>Lucas P.</h4>
-                        <p class="text-xs text-amber">Encargado / Bartender</p>
-                        <p class="text-xs text-secondary mt-1">Manejo de caja y stock • Rosario</p>
-                        <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="lucas-p">Ver Perfil</button>
+                        <p class="text-xs text-amber font-semibold">Encargado / Bartender</p>
+                        <p class="text-xs text-secondary mt-1">Manejo de caja y stock • Córdoba</p>
+                        <button type="button" class="btn btn-green w-full mt-2 text-xs btn-ver-talento" data-talent-id="lucas-p">Ver Perfil</button>
                     </article>
                 </div>
             </section>
@@ -411,20 +408,16 @@
                 <a href="https://wa.me/5493513080197?text=Hola!%20Quisiera%20consultar%20sobre%20los%20espacios%20publicitarios%20en%20Jobbers" 
                    target="_blank" 
                    rel="noopener noreferrer" 
-                   class="btn-consultar-publicidad">
+                   class="btn btn-consultar-publicidad">
                     💬 CONSULTAR ESPACIO PUBLICITARIO
                 </a>
             </section>
 
-            <section class="empresa-bottom-grid mt-4">
-                <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada">
-                    [ Anuncio AdSense ]
-                </div>
-
-                <div class="sidebar-widget widget-accent-green">
-                    <h3 class="text-green mb-1 text-md">Atención Corporativa</h3>
-                    <p class="text-secondary text-sm mb-2">¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
-                    <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20soporte%20t%C3%A9cnico%20o%20asesoramiento%20para%20Empresas%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-green btn-block text-center">Hablar por WhatsApp</a>
+            <section class="promo-cards-container mt-4">
+                <div class="sidebar-widget widget-accent-green flex-1">
+                    <h3 class="text-green text-md">Atención Corporativa B2B</h3>
+                    <p class="text-secondary text-sm">¿Necesitás cubrir múltiples vacantes o requerís selección personalizada?</p>
+                    <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20soporte%20t%C3%A9cnico%20o%20asesoramiento%20para%20Empresas%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn btn-green w-full text-center mt-2">Hablar por WhatsApp</a>
                 </div>
             </section>
 
@@ -432,21 +425,21 @@
 
     </main>
 
-    <!-- FOOTER MODULAR ESTRUCTURADO -->
-    <footer class="jobbers-footer">
-        <div class="footer-container">
+    <!-- FOOTER MODULAR CON GRID OPTIMIZADO -->
+    <footer class="footer-section">
+        <div class="footer-grid">
             <div class="footer-col">
                 <h3 class="footer-title">Para Postulantes</h3>
-                <ul class="footer-links">
+                <ul>
                     <li><a href="#grid-vacantes" data-action="buscar-empleos">Buscar Empleos</a></li>
                     <li><a href="#" data-action="cargar-cv">Cargar Curriculum</a></li>
-                    <li><a href="#" data-action="consejos-entrevista">Consejos de Entrevista</a></li>
+                    <li><a href="blog.html" data-action="consejos-entrevista">Consejos de Entrevista</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
                 <h3 class="footer-title">Para Empresas</h3>
-                <ul class="footer-links">
+                <ul>
                     <li><a href="#form-publicacion-express" data-action="publicar-vacantes">Publicar Vacantes</a></li>
                     <li><a href="#seccion-talentos" data-action="buscar-talentos">Buscar Talentos</a></li>
                     <li><a href="#" data-action="planes-reclutamiento">Planes de Reclutamiento</a></li>
@@ -455,7 +448,7 @@
 
             <div class="footer-col">
                 <h3 class="footer-title">Soporte & Recursos</h3>
-                <ul class="footer-links">
+                <ul>
                     <li><a href="blog.html" data-action="blog">Blog Gastronómico</a></li>
                     <li><a href="#" data-action="centro-ayuda">Centro de Ayuda</a></li>
                     <li><a href="#" data-action="contacto-b2b">Contacto B2B</a></li>
@@ -465,7 +458,8 @@
         </div>
     </footer>
 
-    <nav class="bottom-nav" aria-label="Navegación inferior movil">
+    <!-- BOTTOM NAV MOBILE -->
+    <nav class="bottom-nav" aria-label="Navegación inferior móvil">
         <button type="button" class="bottom-nav-item active" aria-selected="true" data-action="switch-mode" data-mode="postulante">
             <span aria-hidden="true">🔍</span>
             <span>Buscar</span>
@@ -480,59 +474,51 @@
         </a>
     </nav>
 
-    <!-- Modal Selector de Perfil -->
+    <!-- MODAL SELECCION DE ROL -->
     <div id="modal-role-selector" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-role-title" aria-hidden="true" hidden>
-        <div class="modal-box modal-welcome-card">
-            <button type="button" class="modal-close-btn" id="btn-close-role-modal" aria-label="Cerrar">&times;</button>
+        <div class="modal-box">
+            <button type="button" class="modal-close-btn" id="btn-close-role-modal" aria-label="Cerrar modal">&times;</button>
             
-            <h2 id="modal-role-title" class="welcome-title">¿Cómo querés ingresar? 👋</h2>
-            <p class="welcome-subtitle">Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
+            <h2 id="modal-role-title" class="text-xl text-center mb-1">¿Cómo querés ingresar? 👋</h2>
+            <p class="text-secondary text-sm text-center mb-3">Seleccioná tu perfil para adaptar las funciones del portal:</p>
 
-            <div class="modal-welcome-options">
-                <button type="button" class="welcome-option-card" data-action="init-mode" data-mode="postulante" data-role="postulante">
-                    <span class="welcome-option-icon" aria-hidden="true">🔍</span>
-                    <div class="welcome-option-content">
-                        <span class="welcome-option-title">Busco Empleo</span>
-                        <span class="welcome-option-desc">Quiero ver vacantes y postularme directo</span>
-                    </div>
+            <div class="flex-col gap-2">
+                <button type="button" class="btn btn-amber w-full" data-action="init-mode" data-mode="postulante">
+                    🔍 Busco Empleo Gastronómico
                 </button>
 
-                <button type="button" class="welcome-option-card" data-action="init-mode" data-mode="empresa" data-role="empresa">
-                    <span class="welcome-option-icon" aria-hidden="true">🏢</span>
-                    <div class="welcome-option-content">
-                        <span class="welcome-option-title">Soy Empresa</span>
-                        <span class="welcome-option-desc">Quiero publicar una oferta o contratar</span>
-                    </div>
+                <button type="button" class="btn btn-green w-full" data-action="init-mode" data-mode="empresa">
+                    🏢 Soy Empresa / Quiero Contratar
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL VER TALENTO -->
-    <div id="modal-talento" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-talento-nombre" tabindex="-1" hidden>
-        <div class="modal-box modal-talento-box">
+    <!-- MODAL TALENTO -->
+    <div id="modal-talento" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-talento-nombre" aria-hidden="true" hidden>
+        <div class="modal-box">
             <button type="button" class="modal-close-btn" id="btn-cerrar-modal-talento" aria-label="Cerrar modal">&times;</button>
-            <div class="modal-talento-header">
-                <div class="talent-avatar talent-avatar-lg" id="modal-talento-avatar"></div>
+            <div class="flex-row gap-2 mb-3">
+                <div class="talent-avatar" id="modal-talento-avatar"></div>
                 <div>
                     <h3 id="modal-talento-nombre"></h3>
                     <p class="text-amber font-semibold text-sm" id="modal-talento-puesto"></p>
                     <p class="text-secondary text-xs" id="modal-talento-ubicacion"></p>
                 </div>
             </div>
-            <div class="modal-talento-body">
-                <p class="text-sm text-secondary mb-3" id="modal-talento-bio"></p>
-                <div class="mb-3">
-                    <strong class="text-xs text-amber uppercase block mb-1">Habilidades</strong>
-                    <div id="modal-talento-skills" class="skills-tags"></div>
+            <div class="mb-3">
+                <p class="text-sm text-secondary mb-2" id="modal-talento-bio"></p>
+                <div class="mb-2">
+                    <strong class="text-xs text-amber uppercase block mb-1">Habilidades Key</strong>
+                    <div id="modal-talento-skills" class="job-details"></div>
                 </div>
-                <div class="mb-3">
+                <div>
                     <strong class="text-xs text-amber uppercase block mb-1">Experiencia Destacada</strong>
                     <p class="text-xs text-secondary" id="modal-talento-exp"></p>
                 </div>
             </div>
-            <div class="modal-talento-footer">
-                <a id="modal-talento-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-green w-full text-center block">Contactar por WhatsApp</a>
+            <div>
+                <a id="modal-talento-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-green w-full text-center">Contactar por WhatsApp</a>
             </div>
         </div>
     </div>
