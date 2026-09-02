@@ -21,7 +21,7 @@
       FILTRO_CATEGORIA: '#filtro-categoria-vacantes',
       CONTADOR_RESULTADOS: '#cant-vacantes',
       FORM_EXPRESS: '#form-publicacion-express',
-      MODAL_BIENVENIDA: '#modal-bienvenida'
+      MODAL_BIENVENIDA: '#modal-role-selector' // Corregido según ID del HTML
     },
     FALLBACK_VACANTES: [
       {
@@ -54,6 +54,36 @@
       }
     ]
   });
+
+  const TALENTOS_MOCK = {
+    'mariano-g': {
+      nombre: 'Mariano G.',
+      puesto: 'Jefe de Cocina / Chef',
+      ubicacion: '8 años de exp. • CABA',
+      bio: 'Chef ejecutivo especializado en cocina internacional, gestión de brigadas y control de costos.',
+      skills: ['Cocina Internacional', 'Manejo de Costos', 'Gestión de Brigada'],
+      exp: 'Chef Ejecutivo en Restaurante Puerto Madero (4 años).',
+      wa: '5493541582448'
+    },
+    'sofia-r': {
+      nombre: 'Sofia R.',
+      puesto: 'Barista Profesional',
+      ubicacion: 'Arte latte, Arte en café • Córdoba',
+      bio: 'Barista apasionada por el café de especialidad y atención de alta gama.',
+      skills: ['Arte Latte', 'Calibración Espresso', 'Filtrados V60/Chemex'],
+      exp: 'Barista Principal en Café Central Córdoba (2 años).',
+      wa: '5493541582448'
+    },
+    'lucas-p': {
+      nombre: 'Lucas P.',
+      puesto: 'Encargado / Bartender',
+      ubicacion: 'Manejo de caja y stock • Rosario',
+      bio: 'Mixólogo y encargado de salón con experiencia en coctelería de autor e inventarios.',
+      skills: ['Coctelería de Autor', 'Manejo de Caja', 'Control de Stock'],
+      exp: 'Head Bartender en Bar Güemes (3 años).',
+      wa: '5493541582448'
+    }
+  };
 
   const state = {
     vacantes: [],
@@ -175,6 +205,8 @@
       const esPostulante = mode === 'postulante';
       postulanteView.classList.toggle('active-view', esPostulante);
       empresaView.classList.toggle('active-view', !esPostulante);
+      postulanteView.hidden = !esPostulante;
+      empresaView.hidden = esPostulante;
 
       btnPostulante?.classList.toggle('active', esPostulante);
       btnEmpresa?.classList.toggle('active', !esPostulante);
@@ -408,11 +440,17 @@
       document.getElementById('form-postulacion-jobbers')?.addEventListener('submit', manejarEnvioPostulacion);
     }
 
+    // Escuchador global para cerrar modales (asume clases .modal-overlay, .jobbers-close-btn, .modal-close-btn)
     document.querySelectorAll('.modal-overlay').forEach(modal => {
       modal.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay') || 
-            e.target.classList.contains('jobbers-close-btn') || 
-            e.target.classList.contains('btn-cerrar-modal')) {
+        if (
+          e.target.classList.contains('modal-overlay') || 
+          e.target.classList.contains('jobbers-close-btn') || 
+          e.target.classList.contains('modal-close-btn') ||
+          e.target.classList.contains('btn-cerrar-modal') ||
+          e.target.closest('#btn-close-role-modal') ||
+          e.target.closest('#btn-cerrar-modal-talento')
+        ) {
           cerrarModal(modal);
         }
       });
@@ -433,8 +471,9 @@
 
     requestAnimationFrame(() => {
       modalEl.classList.add('active');
+      modalEl.removeAttribute('hidden');
       modalEl.setAttribute('aria-hidden', 'false');
-      const primerInput = modalEl.querySelector('input, textarea, button:not(.jobbers-close-btn)');
+      const primerInput = modalEl.querySelector('button, input, textarea');
       primerInput?.focus();
     });
   }
@@ -445,6 +484,8 @@
 
     modalActivo.classList.remove('active');
     modalActivo.setAttribute('aria-hidden', 'true');
+    modalActivo.setAttribute('hidden', '');
+
     if (state.elementoPrevioFoco?.focus) {
       state.elementoPrevioFoco.focus();
     }
@@ -548,6 +589,37 @@
     });
   }
 
+  function inicializarTalentos() {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-ver-talento');
+      if (!btn) return;
+      const id = btn.dataset.talentId;
+      const t = TALENTOS_MOCK[id];
+      if (!t) return;
+
+      const modal = document.getElementById('modal-talento');
+      if (!modal) return;
+
+      document.getElementById('modal-talento-nombre').textContent = t.nombre;
+      document.getElementById('modal-talento-puesto').textContent = t.puesto;
+      document.getElementById('modal-talento-ubicacion').textContent = t.ubicacion;
+      document.getElementById('modal-talento-bio').textContent = t.bio;
+      document.getElementById('modal-talento-exp').textContent = t.exp;
+
+      const skillsEl = document.getElementById('modal-talento-skills');
+      if (skillsEl) {
+        skillsEl.innerHTML = t.skills.map(s => `<span class="badge" style="margin-right:4px;">${escapeHTML(s)}</span>`).join('');
+      }
+
+      const btnWa = document.getElementById('modal-talento-wa');
+      if (btnWa) {
+        btnWa.href = `https://wa.me/${t.wa}?text=${encodeURIComponent(`Hola! Vi el perfil de ${t.nombre} (${t.puesto}) en Jobbers y me interesa contactarlo.`)}`;
+      }
+
+      abrirModal(modal);
+    });
+  }
+
   function inicializarFiltrosYBotones() {
     // 1. Botones de Modo en Cabecera
     const btnPostulante = document.getElementById('btn-mode-postulante');
@@ -560,7 +632,7 @@
       btnEmpresa.addEventListener('click', () => cambiarModoConConfirmacion('empresa'));
     }
 
-    // 2. Delegación Global para Modal de Bienvenida
+    // 2. Delegación Global para Modal de Bienvenida y Botones de Fondo
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
@@ -657,6 +729,7 @@
     verificarPerfilInicial();
     asegurarEstructurasModales();
     inicializarEventosGrid();
+    inicializarTalentos();
     inicializarFiltrosYBotones();
     cargarVacantes();
   }
