@@ -21,7 +21,7 @@
       FILTRO_CATEGORIA: '#filtro-categoria-vacantes',
       CONTADOR_RESULTADOS: '#cant-vacantes',
       FORM_EXPRESS: '#form-publicacion-express',
-      MODAL_BIENVENIDA: '#modal-role-selector' // Corregido según ID del HTML
+      MODAL_BIENVENIDA: '#modal-role-selector'
     },
     FALLBACK_VACANTES: [
       {
@@ -32,7 +32,7 @@
         categoria: 'cocina',
         jornada: 'Full Time',
         turno: 'Turno Tarde/Noche',
-        sueldo: '$500.000',
+        sueldo: 500000,
         urgente: true,
         descripcion: 'Buscamos cocinero con experiencia previa en despacho, elaboración de carta y manejo de stock.',
         requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día'],
@@ -46,7 +46,7 @@
         categoria: 'barismo',
         jornada: 'Part Time',
         turno: 'Turno Mañana',
-        sueldo: '$380.000',
+        sueldo: 380000,
         urgente: false,
         descripcion: 'Atención al público, calibración de molino, arte latte y despacho de pastelería.',
         requisitos: ['Curso de Barismo comprobable', 'Excelente presencia y trato'],
@@ -130,6 +130,13 @@
       .replace(/'/g, '&#039;');
   }
 
+  function formatearSueldo(sueldo) {
+    if (typeof sueldo === 'number') {
+      return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(sueldo);
+    }
+    return sueldo || 'A convenir';
+  }
+
   function debounce(func, delay = CONFIG.DEBOUNCE_MS) {
     let timeoutId;
     return function (...args) {
@@ -177,7 +184,12 @@
 
   function manejarTrampaDeFoco(e, modal) {
     if (e.key !== 'Tab') return;
-    const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    
+    // Filtrado estricto: solo elementos visibles y habilitados
+    const focusables = Array.from(
+      modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter(el => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden') && el.offsetWidth > 0 && el.offsetHeight > 0);
+
     if (!focusables.length) return;
 
     const primero = focusables[0];
@@ -193,7 +205,7 @@
   }
 
   // ==========================================
-  // 3. CAMBIO DE MODO GLOBAL Y MODAL INICIAL
+  // 3. CAMBIO DE MODO Y MODAL INICIAL
   // ==========================================
   function setMode(mode) {
     const postulanteView = document.getElementById('view-postulante');
@@ -219,18 +231,18 @@
     }
   }
 
-  window.cambiarModoConConfirmacion = function (mode) {
+  function cambiarModoConConfirmacion(mode) {
     const textoModo = mode === 'empresa' ? 'Empresas / Reclutadores' : 'Postulantes / Búsqueda de empleo';
     if (confirm(`¿Estás seguro de que deseas cambiar al perfil de ${textoModo}?`)) {
       setMode(mode);
     }
-  };
+  }
 
-  window.seleccionarModoInicial = function (mode) {
+  function seleccionarModoInicial(mode) {
     setMode(mode);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
     if (modalBienvenida) cerrarModal(modalBienvenida);
-  };
+  }
 
   function verificarPerfilInicial() {
     const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY);
@@ -328,7 +340,7 @@
 
     grid.innerHTML = state.vacantesFiltradas.map(v => {
       const ubicacion = escapeHTML(v.zona || v.ubicacion || 'Córdoba');
-      const sueldo = escapeHTML(v.sueldo || 'A convenir');
+      const sueldoText = escapeHTML(formatearSueldo(v.sueldo));
       const tiempo = escapeHTML(v.tiempo || v.haceCuanto || 'Reciente');
       const esUrgente = Boolean(v.urgente);
 
@@ -345,7 +357,7 @@
           <div class="job-details">
             ${v.jornada ? `<span class="badge">${escapeHTML(v.jornada)}</span>` : ''}
             ${v.turno ? `<span class="badge">${escapeHTML(v.turno)}</span>` : ''}
-            <span class="badge badge-salary">${sueldo}</span>
+            <span class="badge badge-salary">${sueldoText}</span>
           </div>
           <div class="job-card-footer">
             <button type="button" class="btn-ver-detalle" data-id="${escapeHTML(v.id)}">Ver Detalle</button>
@@ -440,7 +452,6 @@
       document.getElementById('form-postulacion-jobbers')?.addEventListener('submit', manejarEnvioPostulacion);
     }
 
-    // Escuchador global para cerrar modales (asume clases .modal-overlay, .jobbers-close-btn, .modal-close-btn)
     document.querySelectorAll('.modal-overlay').forEach(modal => {
       modal.addEventListener('click', (e) => {
         if (
@@ -473,7 +484,7 @@
       modalEl.classList.add('active');
       modalEl.removeAttribute('hidden');
       modalEl.setAttribute('aria-hidden', 'false');
-      const primerInput = modalEl.querySelector('button, input, textarea');
+      const primerInput = modalEl.querySelector('button:not([disabled]), input:not([disabled]), textarea:not([disabled])');
       primerInput?.focus();
     });
   }
@@ -506,7 +517,7 @@
     document.getElementById('det-empresa').textContent = `🏢 ${vacante.empresa}`;
     document.getElementById('det-modalidad').textContent = `💼 Modalidad: ${jornadaTurno}`;
     document.getElementById('det-ubicacion').textContent = `📍 Ubicación: ${vacante.zona || vacante.ubicacion || 'Córdoba'}`;
-    document.getElementById('det-sueldo').textContent = `💰 Sueldo: ${vacante.sueldo || 'A convenir'}`;
+    document.getElementById('det-sueldo').textContent = `💰 Sueldo: ${formatearSueldo(vacante.sueldo)}`;
     document.getElementById('det-descripcion').textContent = vacante.descripcion || `Se busca ${vacante.puesto} para sumarse al equipo. Postulate enviando tu CV por WhatsApp.`;
 
     const listaReq = document.getElementById('det-requisitos');
@@ -632,7 +643,7 @@
       btnEmpresa.addEventListener('click', () => cambiarModoConConfirmacion('empresa'));
     }
 
-    // 2. Delegación Global para Modal de Bienvenida y Botones de Fondo
+    // 2. Delegación Global para Modal de Bienvenida y Cambios de Modo
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
