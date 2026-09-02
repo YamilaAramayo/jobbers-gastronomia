@@ -250,7 +250,9 @@
     if (!perfilGuardado && modalBienvenida) {
       abrirModal(modalBienvenida);
     } else if (modalBienvenida) {
-      cerrarModal(modalBienvenida);
+      modalBienvenida.classList.remove('active');
+      modalBienvenida.setAttribute('aria-hidden', 'true');
+      modalBienvenida.setAttribute('hidden', '');
     }
 
     setMode(perfilGuardado || 'postulante');
@@ -385,6 +387,7 @@
       modalDetalle.setAttribute('role', 'dialog');
       modalDetalle.setAttribute('aria-modal', 'true');
       modalDetalle.setAttribute('aria-hidden', 'true');
+      modalDetalle.setAttribute('hidden', '');
       modalDetalle.innerHTML = `
         <div class="modal-card">
           <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar ventana">&times;</button>
@@ -416,6 +419,7 @@
       modalPostulacion.setAttribute('role', 'dialog');
       modalPostulacion.setAttribute('aria-modal', 'true');
       modalPostulacion.setAttribute('aria-hidden', 'true');
+      modalPostulacion.setAttribute('hidden', '');
       modalPostulacion.innerHTML = `
         <div class="modal-card">
           <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar ventana">&times;</button>
@@ -479,13 +483,14 @@
       state.elementoPrevioFoco = document.activeElement;
     }
 
-    requestAnimationFrame(() => {
-      modalEl.classList.add('active');
-      modalEl.removeAttribute('hidden');
-      modalEl.setAttribute('aria-hidden', 'false');
-      const primerInput = modalEl.querySelector('button:not([disabled]), input:not([disabled]), textarea:not([disabled])');
-      primerInput?.focus();
-    });
+    modalEl.removeAttribute('hidden');
+    modalEl.setAttribute('aria-hidden', 'false');
+
+    void modalEl.offsetWidth; // Forzamos reflujo DOM para suavizar animación CSS
+    modalEl.classList.add('active');
+
+    const primerInput = modalEl.querySelector('button:not([disabled]), input:not([disabled]), textarea:not([disabled])');
+    primerInput?.focus();
   }
 
   function cerrarModal(modalEl = null) {
@@ -736,8 +741,8 @@
   // 8. INICIALIZACIÓN
   // ==========================================
   function init() {
-    verificarPerfilInicial();
     asegurarEstructurasModales();
+    verificarPerfilInicial();
     inicializarEventosGrid();
     inicializarTalentos();
     inicializarFiltrosYBotones();
