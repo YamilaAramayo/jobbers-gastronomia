@@ -247,15 +247,13 @@
     const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
 
+    setMode(perfilGuardado || 'postulante');
+
     if (!perfilGuardado && modalBienvenida) {
       abrirModal(modalBienvenida);
     } else if (modalBienvenida) {
-      modalBienvenida.classList.remove('active');
-      modalBienvenida.setAttribute('aria-hidden', 'true');
-      modalBienvenida.setAttribute('hidden', '');
+      cerrarModal(modalBienvenida);
     }
-
-    setMode(perfilGuardado || 'postulante');
   }
 
   // ==========================================
@@ -654,10 +652,18 @@
 
       const mode = btn.dataset.mode;
       const action = btn.dataset.action;
+      const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
 
-      if (action === 'init-mode' || action === 'switch-mode') {
+      // Si la acción es solicitar/abrir el cartel selector de perfil
+      if (action === 'switch-mode' || action === 'open-role-modal') {
+        if (modalBienvenida) abrirModal(modalBienvenida);
+      } 
+      // Si la acción proviene de las tarjetas dentro del modal selector
+      else if (action === 'init-mode') {
         seleccionarModoInicial(mode);
-      } else if (mode && !btn.id) {
+      } 
+      // Para cualquier otro botón que configure el modo directamente
+      else if (mode && !btn.id && !btn.classList.contains('category-card')) {
         setMode(mode);
       }
     });
