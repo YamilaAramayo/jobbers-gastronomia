@@ -468,26 +468,26 @@
 
     <!-- Modal Selector de Perfil -->
     <div id="modal-role-selector" class="modal-overlay active" role="dialog" aria-modal="true" aria-labelledby="modal-role-title">
-        <div class="modal-card modal-role-card">
-            <button type="button" class="modal-close" id="btn-close-role-modal" aria-label="Cerrar">&times;</button>
+        <div class="modal-box modal-welcome-card">
+            <button type="button" class="modal-close-btn" id="btn-close-role-modal" aria-label="Cerrar">&times;</button>
             
-            <h2 id="modal-role-title">¿Cómo querés ingresar? 👋</h2>
-            <p class="modal-subtitle">Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
+            <h2 id="modal-role-title" class="welcome-title">¿Cómo querés ingresar? 👋</h2>
+            <p class="welcome-subtitle">Seleccioná tu perfil para adaptar las funciones de la plataforma:</p>
 
-            <div class="role-options">
-                <button type="button" class="role-option-btn" data-action="init-mode" data-mode="postulante" data-role="postulante">
-                    <span class="role-icon" aria-hidden="true">🔍</span>
-                    <div class="role-info">
-                        <strong>Busco Empleo</strong>
-                        <small>Quiero ver vacantes y postularme directo</small>
+            <div class="modal-welcome-options">
+                <button type="button" class="welcome-option-card" data-action="init-mode" data-mode="postulante" data-role="postulante">
+                    <span class="welcome-option-icon" aria-hidden="true">🔍</span>
+                    <div class="welcome-option-content">
+                        <span class="welcome-option-title">Busco Empleo</span>
+                        <span class="welcome-option-desc">Quiero ver vacantes y postularme directo</span>
                     </div>
                 </button>
 
-                <button type="button" class="role-option-btn" data-action="init-mode" data-mode="empresa" data-role="empresa">
-                    <span class="role-icon" aria-hidden="true">🏢</span>
-                    <div class="role-info">
-                        <strong>Soy Empresa</strong>
-                        <small>Quiero publicar una oferta o contratar</small>
+                <button type="button" class="welcome-option-card" data-action="init-mode" data-mode="empresa" data-role="empresa">
+                    <span class="welcome-option-icon" aria-hidden="true">🏢</span>
+                    <div class="welcome-option-content">
+                        <span class="welcome-option-title">Soy Empresa</span>
+                        <span class="welcome-option-desc">Quiero publicar una oferta o contratar</span>
                     </div>
                 </button>
             </div>
