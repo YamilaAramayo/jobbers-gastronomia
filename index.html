@@ -293,7 +293,7 @@
 
                         <div>
                             <label for="exp-telefono" class="sr-only">Número de WhatsApp de contacto</label>
-                            <input type="tel" id="exp-telefono" name="telefono" class="input-dark w-full" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required aria-required="true" autocomplete="tel">
+                            <input type="tel" id="exp-telefono" name="telefono" class="input-dark w-full" placeholder="Tu WhatsApp de contacto (ej: 3511234567)" required aria-required="true" autocomplete="tel" inputmode="tel">
                         </div>
 
                         <div>
@@ -368,7 +368,7 @@
                 </div>
             </section>
 
-            <section class="mt-4">
+            <section id="seccion-talentos" class="mt-4">
                 <h3 class="mb-2">Talento Gastronómico Disponible</h3>
 
                 <div class="talent-grid">
@@ -416,12 +416,12 @@
                 </a>
             </section>
 
-            <section class="empresa-bottom-grid mt-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; align-items: stretch;">
-                <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada" style="margin: 0; min-height: 100%; display: flex; align-items: center; justify-content: center;">
+            <section class="empresa-bottom-grid mt-4">
+                <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada">
                     [ Anuncio AdSense ]
                 </div>
 
-                <div class="sidebar-widget widget-accent-green" style="margin: 0;">
+                <div class="sidebar-widget widget-accent-green">
                     <h3 class="text-green mb-1 text-md">Atención Corporativa</h3>
                     <p class="text-secondary text-sm mb-2">¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
                     <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20soporte%20t%C3%A9cnico%20o%20asesoramiento%20para%20Empresas%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-green btn-block text-center">Hablar por WhatsApp</a>
@@ -432,31 +432,34 @@
 
     </main>
 
-    <footer class="footer-section">
-        <div class="footer-grid">
+    <!-- FOOTER MODULAR ESTRUCTURADO -->
+    <footer class="jobbers-footer">
+        <div class="footer-container">
             <div class="footer-col">
-                <h4 class="footer-title">Para Postulantes</h4>
-                <ul>
-                    <li><a href="#">Buscar Empleos</a></li>
-                    <li><a href="#">Cargar Curriculum</a></li>
-                    <li><a href="#">Consejos de Entrevista</a></li>
+                <h3 class="footer-title">Para Postulantes</h3>
+                <ul class="footer-links">
+                    <li><a href="#grid-vacantes" data-action="buscar-empleos">Buscar Empleos</a></li>
+                    <li><a href="#" data-action="cargar-cv">Cargar Curriculum</a></li>
+                    <li><a href="#" data-action="consejos-entrevista">Consejos de Entrevista</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h4 class="footer-title">Para Empresas</h4>
-                <ul>
-                    <li><a href="#">Publicar Vacantes</a></li>
-                    <li><a href="#">Buscar Talentos</a></li>
-                    <li><a href="#">Planes de Reclutamiento</a></li>
+                <h3 class="footer-title">Para Empresas</h3>
+                <ul class="footer-links">
+                    <li><a href="#form-publicacion-express" data-action="publicar-vacantes">Publicar Vacantes</a></li>
+                    <li><a href="#seccion-talentos" data-action="buscar-talentos">Buscar Talentos</a></li>
+                    <li><a href="#" data-action="planes-reclutamiento">Planes de Reclutamiento</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h4 class="footer-title">Soporte & Recursos</h4>
-                <ul>
-                    <li><a href="blog.html">Blog Gastronómico</a></li>
-                    <li><a href="#">Centro de Ayuda</a></li>
-                    <li><a href="#">Contacto B2B</a></li>
-                    <li><a href="#">Términos y Condiciones</a></li>
+                <h3 class="footer-title">Soporte & Recursos</h3>
+                <ul class="footer-links">
+                    <li><a href="blog.html" data-action="blog">Blog Gastronómico</a></li>
+                    <li><a href="#" data-action="centro-ayuda">Centro de Ayuda</a></li>
+                    <li><a href="#" data-action="contacto-b2b">Contacto B2B</a></li>
+                    <li><a href="#" data-action="terminos">Términos y Condiciones</a></li>
                 </ul>
             </div>
         </div>
