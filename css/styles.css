@@ -256,7 +256,7 @@ button {
   }
 }
 
-/* === SECCIÓN DE CATEGORÍAS === */
+/* === SECCIÓN DE CATEGORÍAS (GRILLA 3x3) === */
 .categories-section {
   margin-top: 1.75rem;
   margin-bottom: 1.25rem;
@@ -271,15 +271,22 @@ button {
   text-transform: uppercase;
 }
 
+/* Modificado para asegurar la estructura 3 columnas x 3 filas */
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.65rem;
 }
 
 @media (min-width: 600px) {
   .categories-grid {
     gap: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .categories-grid {
+    gap: 0.4rem;
   }
 }
 
