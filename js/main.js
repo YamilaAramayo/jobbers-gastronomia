@@ -1,4 +1,3 @@
-
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
  * Versión Consolidada, Accesible (A11y) y Optimizada
@@ -112,9 +111,18 @@
     'delivery': 'delivery'
   });
 
+  function normalizarTexto(str) {
+    if (!str) return '';
+    return String(str)
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
   function normalizarCategoria(cat) {
     if (!cat) return 'todas';
-    const c = String(cat).toLowerCase().trim();
+    const c = normalizarTexto(cat);
     return MAPEO_CATEGORIAS[c] || c;
   }
 
@@ -185,7 +193,7 @@
 
   function manejarTrampaDeFoco(e, modal) {
     if (e.key !== 'Tab') return;
-    
+
     const focusables = Array.from(
       modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
     ).filter(el => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden') && el.offsetWidth > 0 && el.offsetHeight > 0);
@@ -231,11 +239,6 @@
     }
   }
 
-  function cambiarModoConConfirmacion(mode) {
-    // Transición directa sin alerta
-    setMode(mode);
-  }
-
   function seleccionarModoInicial(mode) {
     setMode(mode);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
@@ -279,15 +282,15 @@
   // 5. FILTRADO Y RENDERIZADO DE GRILLA
   // ==========================================
   function aplicarFiltros() {
-    const qPuesto = state.filtroPuesto.toLowerCase().trim();
-    const qUbicacion = state.filtroUbicacion.toLowerCase().trim();
+    const qPuesto = normalizarTexto(state.filtroPuesto);
+    const qUbicacion = normalizarTexto(state.filtroUbicacion);
     const catBuscada = normalizarCategoria(state.filtroCategoria);
 
     state.vacantesFiltradas = state.vacantes.filter(item => {
-      const ubicacion = (item.zona || item.ubicacion || '').toLowerCase();
-      const puesto = (item.puesto || '').toLowerCase();
-      const empresa = (item.empresa || '').toLowerCase();
-      const descripcion = (item.descripcion || '').toLowerCase();
+      const ubicacion = normalizarTexto(item.zona || item.ubicacion || '');
+      const puesto = normalizarTexto(item.puesto || '');
+      const empresa = normalizarTexto(item.empresa || '');
+      const descripcion = normalizarTexto(item.descripcion || '');
       const itemCat = normalizarCategoria(item.categoria || '');
 
       const coincidePuesto = !qPuesto || puesto.includes(qPuesto) || empresa.includes(qPuesto) || descripcion.includes(qPuesto);
