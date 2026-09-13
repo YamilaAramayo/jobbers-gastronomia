@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada, Accesible (A11y) y Optimizada
+ * Versión Consolidada, Accesible (A11y), Sanitizada y Optimizada
  */
 
 (function () {
@@ -55,7 +55,7 @@
     ]
   });
 
-  const TALENTOS_MOCK = {
+  const TALENTOS_MOCK = Object.freeze({
     'mariano-g': {
       nombre: 'Mariano G.',
       puesto: 'Jefe de Cocina / Chef',
@@ -83,7 +83,7 @@
       exp: 'Head Bartender en Bar Güemes (3 años).',
       wa: '5493513080197'
     }
-  };
+  });
 
   const state = {
     vacantes: [],
@@ -391,18 +391,18 @@
           <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar ventana">&times;</button>
           <span id="det-categoria" class="badge badge-salary"></span>
           <h2 id="det-puesto" style="margin-top: 0.5rem;"></h2>
-          <p id="det-empresa" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
-          <div style="text-align: left; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+          <p id="det-empresa" style="color: var(--accent-amber, #f59e0b); margin-bottom: 1rem;"></p>
+          <div style="text-align: left; font-size: 0.9rem; color: var(--text-secondary, #94a3b8); margin-bottom: 1.5rem;">
             <p id="det-modalidad"></p>
             <p id="det-ubicacion"></p>
-            <p id="det-sueldo" style="color: var(--accent-green); font-weight: 600; margin-top: 0.4rem;"></p>
+            <p id="det-sueldo" style="color: var(--accent-green, #10b981); font-weight: 600; margin-top: 0.4rem;"></p>
             <h4 style="color:#fff; margin-top:1rem;">Descripción</h4>
             <p id="det-descripcion"></p>
             <h4 style="color:#fff; margin-top:1rem;">Requisitos</h4>
             <ul id="det-requisitos" style="padding-left: 1.2rem;"></ul>
           </div>
           <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
-            <button type="button" class="btn-amber btn-cerrar-modal" style="background:transparent; border:1px solid var(--border-color); color:#fff;">Cerrar</button>
+            <button type="button" class="btn-amber btn-cerrar-modal" style="background:transparent; border:1px solid var(--border-color, #334155); color:#fff;">Cerrar</button>
             <button type="button" id="det-btn-postular" class="btn-green">Postularme Ahora</button>
           </div>
         </div>
@@ -422,7 +422,7 @@
         <div class="modal-card">
           <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar ventana">&times;</button>
           <h2>Postulación Express</h2>
-          <p id="post-subtitulo" style="color: var(--accent-amber); margin-bottom: 1rem;"></p>
+          <p id="post-subtitulo" style="color: var(--accent-amber, #f59e0b); margin-bottom: 1rem;"></p>
           <form id="form-postulacion-jobbers" style="display:flex; flex-direction:column; gap:0.75rem; text-align:left;">
             <input type="hidden" id="post-id-vacante">
             <input type="hidden" id="post-contacto-wa">
@@ -440,10 +440,10 @@
               <textarea id="post-experiencia" class="input-dark" rows="3" placeholder="Contanos tu experiencia en el rubro..." style="width:100%;"></textarea>
             </div>
             
-            <p style="font-size:0.75rem; color: var(--text-secondary);">📎 Al abrirse WhatsApp, recordá adjuntar tu CV en PDF.</p>
+            <p style="font-size:0.75rem; color: var(--text-secondary, #94a3b8);">📎 Al abrirse WhatsApp, recordá adjuntar tu CV en PDF.</p>
 
             <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
-              <button type="button" class="btn-amber btn-cerrar-modal" style="flex:1; background:transparent; border:1px solid var(--border-color); color:#fff;">Cancelar</button>
+              <button type="button" class="btn-amber btn-cerrar-modal" style="flex:1; background:transparent; border:1px solid var(--border-color, #334155); color:#fff;">Cancelar</button>
               <button type="submit" class="btn-green" style="flex:2;">Enviar WhatsApp 📲</button>
             </div>
           </form>
@@ -762,7 +762,7 @@
   }
 
   // ==========================================
-  // 8. INICIALIZACIÓN
+  // 8. INICIALIZACIÓN Y API PÚBLICA
   // ==========================================
   function init() {
     asegurarEstructurasModales();
@@ -778,4 +778,14 @@
   } else {
     init();
   }
+
+  // Exposición de API pública
+  window.JobbersGastronomia = {
+    init,
+    cargarVacantes,
+    setMode,
+    abrirModal,
+    cerrarModal,
+    aplicarFiltros
+  };
 })();
