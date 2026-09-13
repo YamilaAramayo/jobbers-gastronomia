@@ -68,8 +68,16 @@
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
+                
+                <!-- BUSCADOR PRINCIPAL POR TEXTO Y UBICACIÓN -->
+                <form id="form-busqueda-postulante" class="hero-search-form">
+                    <input type="text" id="input-busqueda-vacantes" class="input-dark" placeholder="Puesto, empresa o palabra clave...">
+                    <input type="text" id="input-busqueda-ubicacion" class="input-dark" placeholder="Ubicación o zona...">
+                    <button type="submit" class="btn-amber">Buscar</button>
+                </form>
             </section>
 
+            <!-- SECCIÓN CATEGORÍAS -->
             <section class="categories-section" aria-labelledby="cat-title">
                 <h2 id="cat-title" class="categories-title">BUSCÁ POR CATEGORÍA</h2>
                 <div class="categories-grid" role="toolbar" aria-label="Filtro por categoría">
@@ -158,6 +166,39 @@
                 </div>
             </section>
 
+            <!-- BARRA DE FILTROS ESTILO CHIPS (UBICADA ENTRE CATEGORÍAS Y BÚSQUEDAS ACTIVAS) -->
+            <div class="jobbers-filters-bar" id="bar-filtros-chips">
+                <select id="filtro-fecha" class="chip-select" aria-label="Filtrar por fecha de publicación">
+                    <option value="todas">Fecha de publicación</option>
+                    <option value="24h">Últimas 24 horas</option>
+                    <option value="7d">Última semana</option>
+                    <option value="30d">Último mes</option>
+                </select>
+
+                <select id="filtro-jornada" class="chip-select" aria-label="Filtrar por tipo de empleo">
+                    <option value="todas">Tipo de empleo</option>
+                    <option value="full time">Full Time</option>
+                    <option value="part time">Part Time</option>
+                    <option value="por turno">Por Turno</option>
+                </select>
+
+                <select id="filtro-turno" class="chip-select" aria-label="Filtrar por turno">
+                    <option value="todos">Turno</option>
+                    <option value="mañana">Turno Mañana</option>
+                    <option value="tarde">Turno Tarde</option>
+                    <option value="noche">Turno Noche</option>
+                </select>
+
+                <button type="button" id="chip-urgente" class="chip-btn" data-active="false">
+                    ⚡ Solicitud urgente
+                </button>
+
+                <button type="button" id="btn-limpiar-chips" class="chip-btn chip-btn-reset" style="display: none;">
+                    ✕ Limpiar filtros
+                </button>
+            </div>
+
+            <!-- BÚSQUEDAS ACTIVAS & SIDEBAR -->
             <div class="main-layout">
                 <div class="jobs-container">
                     <div class="jobs-header">
