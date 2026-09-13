@@ -382,7 +382,7 @@ button {
 }
 
 /* ==========================================================================
-   8. LISTADO DE VACANTES
+   8. LISTADO DE VACANTES Y PAGINACIÓN
    ========================================================================== */
 .jobs-container {
   display: flex;
@@ -552,6 +552,53 @@ button {
   .job-card-footer button {
     flex: 1;
   }
+}
+
+/* Componente de Paginación */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  padding-top: 1rem;
+  user-select: none;
+}
+
+.pagination-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.pagination-btn:hover:not(:disabled):not(.active) {
+  color: #ffffff;
+  background-color: var(--bg-card-hover);
+}
+
+.pagination-btn.active {
+  background-color: #ffffff;
+  color: #090B0E;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  font-weight: 700;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 /* ==========================================================================
