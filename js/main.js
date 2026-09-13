@@ -19,6 +19,10 @@
       INPUT_PUESTO: '#input-busqueda-vacantes',
       INPUT_UBICACION: '#input-busqueda-ubicacion',
       FILTRO_CATEGORIA: '#filtro-categoria-vacantes',
+      FILTRO_FECHA: '#filtro-fecha-publicacion',
+      FILTRO_JORNADA: '#filtro-tipo-empleo',
+      FILTRO_TURNO: '#filtro-turno',
+      FILTRO_URGENTE: '#btn-filtro-urgente',
       CONTADOR_RESULTADOS: '#cant-vacantes',
       FORM_EXPRESS: '#form-publicacion-express',
       MODAL_BIENVENIDA: '#modal-role-selector'
@@ -34,6 +38,8 @@
         turno: 'Turno Tarde/Noche',
         sueldo: 500000,
         urgente: true,
+        fecha: new Date().toISOString(),
+        tiempo: 'Hoy',
         descripcion: 'Buscamos cocinero con experiencia previa en despacho, elaboración de carta y manejo de stock.',
         requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día'],
         contacto_wa: '5493513080197'
@@ -48,6 +54,8 @@
         turno: 'Turno Mañana',
         sueldo: 380000,
         urgente: false,
+        fecha: new Date(Date.now() - 86400000 * 3).toISOString(),
+        tiempo: 'Hace 3 días',
         descripcion: 'Atención al público, calibración de molino, arte latte y despacho de pastelería.',
         requisitos: ['Curso de Barismo comprobable', 'Excelente presencia y trato'],
         contacto_wa: '5493513080197'
@@ -91,6 +99,10 @@
     filtroPuesto: '',
     filtroUbicacion: '',
     filtroCategoria: 'todas',
+    filtroFecha: 'todas',
+    filtroJornada: 'todas',
+    filtroTurno: 'todos',
+    filtroUrgente: false,
     elementoPrevioFoco: null,
     vacanteSeleccionada: null
   };
@@ -285,6 +297,8 @@
     const qPuesto = normalizarTexto(state.filtroPuesto);
     const qUbicacion = normalizarTexto(state.filtroUbicacion);
     const catBuscada = normalizarCategoria(state.filtroCategoria);
+    const jBuscada = normalizarTexto(state.filtroJornada);
+    const tBuscado = normalizarTexto(state.filtroTurno);
 
     state.vacantesFiltradas = state.vacantes.filter(item => {
       const ubicacion = normalizarTexto(item.zona || item.ubicacion || '');
@@ -292,12 +306,34 @@
       const empresa = normalizarTexto(item.empresa || '');
       const descripcion = normalizarTexto(item.descripcion || '');
       const itemCat = normalizarCategoria(item.categoria || '');
+      const itemJornada = normalizarTexto(item.jornada || '');
+      const itemTurno = normalizarTexto(item.turno || '');
 
       const coincidePuesto = !qPuesto || puesto.includes(qPuesto) || empresa.includes(qPuesto) || descripcion.includes(qPuesto);
       const coincideUbicacion = !qUbicacion || ubicacion.includes(qUbicacion);
       const coincideCat = catBuscada === 'todas' || catBuscada === 'todos' || itemCat === catBuscada;
+      const coincideJornada = !jBuscada || jBuscada === 'todas' || jBuscada === 'todos' || itemJornada.includes(jBuscada);
+      const coincideTurno = !tBuscado || tBuscado === 'todos' || tBuscado === 'todas' || itemTurno.includes(tBuscado);
+      const coincideUrgente = !state.filtroUrgente || Boolean(item.urgente);
 
-      return coincidePuesto && coincideUbicacion && coincideCat;
+      // Evaluación del filtro por fecha de publicación
+      let coincideFecha = true;
+      if (state.filtroFecha && state.filtroFecha !== 'todas') {
+        const fechaVacante = item.fecha ? new Date(item.fecha) : null;
+        if (fechaVacante && !isNaN(fechaVacante.getTime())) {
+          const ahora = new Date();
+          const diferenciaDias = (ahora - fechaVacante) / (1000 * 60 * 60 * 24);
+          if (state.filtroFecha === '24h') coincideFecha = diferenciaDias <= 1;
+          else if (state.filtroFecha === '7d') coincideFecha = diferenciaDias <= 7;
+          else if (state.filtroFecha === '30d') coincideFecha = diferenciaDias <= 30;
+        } else {
+          const tiempoStr = normalizarTexto(item.tiempo || item.haceCuanto || '');
+          if (state.filtroFecha === '24h') coincideFecha = tiempoStr.includes('hoy') || tiempoStr.includes('24h') || tiempoStr.includes('1 dia');
+          else if (state.filtroFecha === '7d') coincideFecha = tiempoStr.includes('hoy') || tiempoStr.includes('dia') || tiempoStr.includes('semana');
+        }
+      }
+
+      return coincidePuesto && coincideUbicacion && coincideCat && coincideJornada && coincideTurno && coincideUrgente && coincideFecha;
     });
 
     renderizarGrid();
@@ -320,11 +356,27 @@
         state.filtroPuesto = '';
         state.filtroUbicacion = '';
         state.filtroCategoria = 'todas';
+        state.filtroFecha = 'todas';
+        state.filtroJornada = 'todas';
+        state.filtroTurno = 'todos';
+        state.filtroUrgente = false;
 
         const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
         const inputUbicacion = document.querySelector(CONFIG.SELECTORS.INPUT_UBICACION);
+        const selectFecha = document.querySelector(CONFIG.SELECTORS.FILTRO_FECHA);
+        const selectJornada = document.querySelector(CONFIG.SELECTORS.FILTRO_JORNADA);
+        const selectTurno = document.querySelector(CONFIG.SELECTORS.FILTRO_TURNO);
+        const btnUrgente = document.querySelector(CONFIG.SELECTORS.FILTRO_URGENTE);
+
         if (inputPuesto) inputPuesto.value = '';
         if (inputUbicacion) inputUbicacion.value = '';
+        if (selectFecha) selectFecha.value = 'todas';
+        if (selectJornada) selectJornada.value = 'todas';
+        if (selectTurno) selectTurno.value = 'todos';
+        if (btnUrgente) {
+          btnUrgente.classList.remove('active');
+          btnUrgente.setAttribute('aria-pressed', 'false');
+        }
 
         document.querySelectorAll('.category-card').forEach(el => {
           const rawVal = el.dataset.category || el.textContent.trim();
@@ -686,7 +738,7 @@
       }
     });
 
-    // 3. Inputs de Búsqueda
+    // 3. Inputs y Formularios de Búsqueda Hero
     const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
     if (inputPuesto) {
       inputPuesto.addEventListener('input', debounce((e) => {
@@ -705,10 +757,7 @@
 
     const formBusquedaHero = document.getElementById('form-busqueda-postulante');
     if (formBusquedaHero) {
-      formBusquedaHero.addEventListener('submit', (e) => {
-        e.preventDefault();
-        aplicarFiltros();
-      });
+      formBusquedaHero.addEventListener('submit', (e) => e.preventDefault());
     }
 
     // 4. Tarjetas de Categorías
@@ -728,7 +777,43 @@
       });
     });
 
-    // 5. Publicación Express Empresas a WhatsApp
+    // 5. Filtros Secundarios (Fecha, Tipo de Empleo, Turno, Urgencias)
+    const selectFecha = document.querySelector(CONFIG.SELECTORS.FILTRO_FECHA);
+    if (selectFecha) {
+      selectFecha.addEventListener('change', (e) => {
+        state.filtroFecha = e.target.value;
+        aplicarFiltros();
+      });
+    }
+
+    const selectJornada = document.querySelector(CONFIG.SELECTORS.FILTRO_JORNADA);
+    if (selectJornada) {
+      selectJornada.addEventListener('change', (e) => {
+        state.filtroJornada = e.target.value;
+        aplicarFiltros();
+      });
+    }
+
+    const selectTurno = document.querySelector(CONFIG.SELECTORS.FILTRO_TURNO);
+    if (selectTurno) {
+      selectTurno.addEventListener('change', (e) => {
+        state.filtroTurno = e.target.value;
+        aplicarFiltros();
+      });
+    }
+
+    const btnUrgente = document.querySelector(CONFIG.SELECTORS.FILTRO_URGENTE);
+    if (btnUrgente) {
+      btnUrgente.addEventListener('click', (e) => {
+        e.preventDefault();
+        state.filtroUrgente = !state.filtroUrgente;
+        btnUrgente.classList.toggle('active', state.filtroUrgente);
+        btnUrgente.setAttribute('aria-pressed', state.filtroUrgente ? 'true' : 'false');
+        aplicarFiltros();
+      });
+    }
+
+    // 6. Publicación Express Empresas a WhatsApp
     const formExpress = document.querySelector(CONFIG.SELECTORS.FORM_EXPRESS);
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
