@@ -314,7 +314,15 @@
       const coincideCat = catBuscada === 'todas' || catBuscada === 'todos' || itemCat === catBuscada;
       const coincideJornada = !jBuscada || jBuscada === 'todas' || jBuscada === 'todos' || itemJornada.includes(jBuscada);
       const coincideTurno = !tBuscado || tBuscado === 'todos' || tBuscado === 'todas' || itemTurno.includes(tBuscado);
-      const coincideUrgente = !state.filtroUrgente || Boolean(item.urgente);
+
+      // Evaluador flexible para el valor de urgente (boolean, string o number)
+      const esUrgenteItem = 
+        item.urgente === true || 
+        item.urgente === 1 || 
+        String(item.urgente).toLowerCase() === 'true' || 
+        String(item.urgente).toLowerCase() === 'si';
+
+      const coincideUrgente = !state.filtroUrgente || esUrgenteItem;
 
       // Evaluación del filtro por fecha de publicación
       let coincideFecha = true;
@@ -393,7 +401,7 @@
       const ubicacion = escapeHTML(v.zona || v.ubicacion || 'Córdoba');
       const sueldoText = escapeHTML(formatearSueldo(v.sueldo));
       const tiempo = escapeHTML(v.tiempo || v.haceCuanto || 'Reciente');
-      const esUrgente = Boolean(v.urgente);
+      const esUrgente = v.urgente === true || v.urgente === 1 || String(v.urgente).toLowerCase() === 'true' || String(v.urgente).toLowerCase() === 'si';
 
       return `
         <article class="job-card ${esUrgente ? 'urgente' : ''}" data-id="${escapeHTML(v.id)}">
@@ -716,8 +724,20 @@
       });
     }
 
-    // 2. Delegación Global para Modal de Bienvenida y Cambios de Modo
+    // 2. Delegación Global para Modal de Bienvenida, Cambios de Modo y Filtro Urgencias
     document.addEventListener('click', (e) => {
+      // Captura de Filtro Urgencias mediante delegación
+      const btnUrgente = e.target.closest(CONFIG.SELECTORS.FILTRO_URGENTE);
+      if (btnUrgente) {
+        e.preventDefault();
+        state.filtroUrgente = !state.filtroUrgente;
+        btnUrgente.classList.toggle('active', state.filtroUrgente);
+        btnUrgente.setAttribute('aria-pressed', state.filtroUrgente ? 'true' : 'false');
+        aplicarFiltros();
+        return;
+      }
+
+      // Captura de cambio de modos
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
 
@@ -738,7 +758,7 @@
       }
     });
 
-    // 3. Inputs y Formularios de Búsqueda Hero
+    // 3. Inputs de Búsqueda Hero
     const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
     if (inputPuesto) {
       inputPuesto.addEventListener('input', debounce((e) => {
@@ -777,7 +797,7 @@
       });
     });
 
-    // 5. Filtros Secundarios (Fecha, Tipo de Empleo, Turno, Urgencias)
+    // 5. Filtros Secundarios (Fecha, Tipo de Empleo, Turno)
     const selectFecha = document.querySelector(CONFIG.SELECTORS.FILTRO_FECHA);
     if (selectFecha) {
       selectFecha.addEventListener('change', (e) => {
@@ -798,17 +818,6 @@
     if (selectTurno) {
       selectTurno.addEventListener('change', (e) => {
         state.filtroTurno = e.target.value;
-        aplicarFiltros();
-      });
-    }
-
-    const btnUrgente = document.querySelector(CONFIG.SELECTORS.FILTRO_URGENTE);
-    if (btnUrgente) {
-      btnUrgente.addEventListener('click', (e) => {
-        e.preventDefault();
-        state.filtroUrgente = !state.filtroUrgente;
-        btnUrgente.classList.toggle('active', state.filtroUrgente);
-        btnUrgente.setAttribute('aria-pressed', state.filtroUrgente ? 'true' : 'false');
         aplicarFiltros();
       });
     }
