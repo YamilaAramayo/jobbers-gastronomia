@@ -6,9 +6,11 @@
     <meta name="theme-color" content="#f59e0b">
     <title>Jobbers | Portal de Empleo Gastronómico en Argentina</title>
 
+    <!-- SEO Meta Tags -->
     <meta name="description" content="Encontrá y publicá empleos gastronómicos en Argentina. Oportunidades en cocina, salón, barismo y más. Conexión rápida entre perfiles y locales.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jobbers.com.ar/">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -48,7 +50,7 @@
 <body>
 
     <header class="navbar">
-        <div class="brand-logo">Jobbers<span>.</span></div>
+        <a href="/" class="brand-logo" aria-label="Inicio Jobbers">Jobbers<span>.</span></a>
 
         <div class="mode-switch-container" role="tablist" aria-label="Modo de usuario">
             <button type="button" class="mode-btn active" id="btn-mode-postulante" role="tab" aria-selected="true" aria-controls="view-postulante" data-action="switch-mode" data-mode="postulante">
@@ -202,11 +204,10 @@
                         <span class="jobs-count">Mostrando <strong id="cant-vacantes">0</strong> vacantes disponibles</span>
                     </div>
 
-                    <div class="job-list" id="grid-vacantes" aria-live="polite" aria-busy="false">
-                    </div>
+                    <div class="job-list" id="grid-vacantes" aria-live="polite" aria-busy="false"></div>
 
                     <!-- CONTENEDOR DE PAGINACIÓN -->
-                    <div class="pagination-container" id="pagination-container"></div>
+                    <nav class="pagination-container" id="pagination-container" aria-label="Paginación de vacantes"></nav>
                 </div>
 
                 <aside class="sidebar">
@@ -311,7 +312,7 @@
                     <h3>Publicación Rápida</h3>
                     <p class="text-sm text-secondary mb-2">Publicá tu búsqueda en segundos sin crear cuenta ni formularios largos.</p>
 
-                    <form id="form-publicacion-express" class="flex-col gap-2">
+                    <form id="form-publicacion-express" class="flex-col gap-2" action="publicar_vacante.php" method="POST">
                         <div>
                             <label for="exp-empresa" class="sr-only">Nombre de tu local o establecimiento gastronómico</label>
                             <input type="text" id="exp-empresa" name="empresa" class="input-dark w-full" placeholder="Nombre de tu local / Gastronómico" required aria-required="true" autocomplete="organization">
