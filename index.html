@@ -213,15 +213,16 @@
                 <aside class="sidebar">
 
                     <div class="sidebar-widget widget-pro">
-                        <h3 class="pro-title">FORMÁ PARTE DE LA COMUNIDAD JOBBERS PRO</h3>
+                        <span class="badge-pro">JOBBERS PRO</span>
+                        <h3 class="pro-title">ACELERÁ TU CONTRATACIÓN</h3>
                         <p class="pro-text">
-                            Destacá tu perfil al tope de la lista que ven los empleadores, accedé al creador de CVs y obtené beneficios exclusivos para acelerar tu contratación.
+                            Aparecé en la grilla destacada de talentos, accedé al Creador de CV Gastronómico PDF y recibí alertas exclusivas en tiempo real.
                         </p>
                         <a href="https://wa.me/5493513080197?text=Hola!%20Me%20interesa%20formar%20parte%20de%20Jobbers%20Pro%20para%20destacar%20mi%20perfil" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="btn-destacar-pro">
-                            ⚡ DESTACÁ TU PERFIL PRO
+                            ⚡ UNIRME A JOBBERS PRO
                         </a>
                     </div>
 
@@ -304,7 +305,7 @@
                     <ul class="text-secondary text-sm pl-4">
                         <li>Publicación express en 2 minutos.</li>
                         <li>Contacto directo por WhatsApp con candidatos.</li>
-                        <li>Soporte personalizado B2B.</li>
+                        <li>Servicios PRO: Vacantes Fijadas, Solicitud Urgente y Difusión Express.</li>
                     </ul>
                 </div>
 
@@ -390,16 +391,27 @@
                             </div>
                         </div>
 
+                        <div class="checkbox-pro-option mt-1">
+                            <label class="flex-row items-center gap-1 text-xs text-amber cursor-pointer">
+                                <input type="checkbox" name="solicitud_urgente" value="1">
+                                <span>⚡ Marcar como Solicitud Urgente (Destacado Pro)</span>
+                            </label>
+                        </div>
+
                         <button type="submit" class="btn-amber w-full mt-1 font-bold p-3">Publicar Búsqueda 🚀</button>
                     </form>
                 </div>
             </section>
 
             <section id="seccion-talentos" class="mt-4">
-                <h3 class="mb-2">Talento Gastronómico Disponible</h3>
+                <div class="flex-row justify-between items-center mb-2">
+                    <h3>Talento Gastronómico Disponible</h3>
+                    <span class="badge-pro text-xs">GRILLA TALENTO PRO</span>
+                </div>
 
                 <div class="talent-grid">
-                    <article class="talent-card">
+                    <article class="talent-card card-pro">
+                        <span class="talent-badge-pro">TALENTO PRO</span>
                         <div class="talent-avatar">
                             <img src="img/talentos/Mariano G..webp" alt="Foto de Mariano G." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Mariano+G&background=1e293b&color=f59e0b&bold=true';">
                         </div>
@@ -409,7 +421,8 @@
                         <button type="button" class="btn-green w-full mt-2 text-xs p-1 btn-ver-talento" data-talent-id="mariano-g" aria-label="Ver perfil completo de Mariano G.">Ver Perfil</button>
                     </article>
 
-                    <article class="talent-card">
+                    <article class="talent-card card-pro">
+                        <span class="talent-badge-pro">TALENTO PRO</span>
                         <div class="talent-avatar">
                             <img src="img/talentos/Sofia R..webp" alt="Foto de Sofia R." loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sofia+R&background=1e293b&color=f59e0b&bold=true';">
                         </div>
@@ -449,8 +462,8 @@
                 </div>
 
                 <div class="sidebar-widget widget-accent-green">
-                    <h3 class="text-green mb-1 text-md">Atención Corporativa</h3>
-                    <p class="text-secondary text-sm mb-2">¿Necesitás cubrir múltiples vacantes o asesoramiento técnico personalizado?</p>
+                    <h3 class="text-green mb-1 text-md">Atención Corporativa B2B</h3>
+                    <p class="text-secondary text-sm mb-2">¿Necesitás cobertura urgente, vacantes fijadas o soluciones a medida para tu marca?</p>
                     <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20soporte%20t%C3%A9cnico%20o%20asesoramiento%20para%20Empresas%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-green btn-block text-center">Hablar por WhatsApp</a>
                 </div>
             </section>
@@ -466,8 +479,9 @@
                 <h3 class="footer-title">Para Postulantes</h3>
                 <ul class="footer-links">
                     <li><a href="#grid-vacantes" data-action="buscar-empleos">Buscar Empleos</a></li>
-                    <li><a href="#" data-action="cargar-cv">Cargar Curriculum</a></li>
-                    <li><a href="#" data-action="consejos-entrevista">Consejos de Entrevista</a></li>
+                    <li><a href="#" data-action="cargar-cv">Creador de CV PDF</a></li>
+                    <li><a href="https://wa.me/5493513080197?text=Hola!%20Quiero%20sumarme%20a%20Jobbers%20Pro" target="_blank" rel="noopener noreferrer">Jobbers Pro Postulantes</a></li>
+                    <li><a href="blog.html" data-action="consejos-entrevista">Consejos de Entrevista</a></li>
                 </ul>
             </div>
 
@@ -475,8 +489,8 @@
                 <h3 class="footer-title">Para Empresas</h3>
                 <ul class="footer-links">
                     <li><a href="#form-publicacion-express" data-action="publicar-vacantes">Publicar Vacantes</a></li>
-                    <li><a href="#seccion-talentos" data-action="buscar-talentos">Buscar Talentos</a></li>
-                    <li><a href="#" data-action="planes-reclutamiento">Planes de Reclutamiento</a></li>
+                    <li><a href="#seccion-talentos" data-action="buscar-talentos">Grilla de Talentos Pro</a></li>
+                    <li><a href="https://wa.me/5493513080197?text=Hola!%20Quiero%20consultar%20los%20planes%20de%20reclutamiento%20Pro" target="_blank" rel="noopener noreferrer">Planes de Reclutamiento</a></li>
                 </ul>
             </div>
 
@@ -485,7 +499,7 @@
                 <ul class="footer-links">
                     <li><a href="blog.html" data-action="blog">Blog Gastronómico</a></li>
                     <li><a href="#" data-action="centro-ayuda">Centro de Ayuda</a></li>
-                    <li><a href="#" data-action="contacto-b2b">Contacto B2B</a></li>
+                    <li><a href="https://wa.me/5493513080197?text=Contacto%20B2B%20Jobbers" target="_blank" rel="noopener noreferrer">Contacto B2B</a></li>
                     <li><a href="#" data-action="terminos">Términos y Condiciones</a></li>
                 </ul>
             </div>
