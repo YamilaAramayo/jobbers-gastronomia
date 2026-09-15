@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada, Accesible (A11y), Sanitizada y Optimizada
+ * Versión Consolidada, Accesible (A11y), Sanitizada, Optimizada y Paginada
  */
 
 (function () {
@@ -12,10 +12,12 @@
   const CONFIG = Object.freeze({
     API_URL: 'base_de_datos.json',
     DEBOUNCE_MS: 200,
+    VACANTES_POR_PAGINA: 10,
     STORAGE_KEY: 'jobbers_user_mode',
     WA_DEFAULT: '5493513080197',
     SELECTORS: {
       GRID_VACANTES: '#grid-vacantes',
+      PAGINACION_CONTAINER: '#pagination-container',
       INPUT_PUESTO: '#input-busqueda-vacantes',
       INPUT_UBICACION: '#input-busqueda-ubicacion',
       FILTRO_CATEGORIA: '#filtro-categoria-vacantes',
@@ -96,6 +98,7 @@
   const state = {
     vacantes: [],
     vacantesFiltradas: [],
+    paginaActual: 1,
     filtroPuesto: '',
     filtroUbicacion: '',
     filtroCategoria: 'todas',
@@ -291,9 +294,11 @@
   }
 
   // ==========================================
-  // 5. FILTRADO Y RENDERIZADO DE GRILLA
+  // 5. FILTRADO, PAGINACIÓN Y RENDERIZADO
   // ==========================================
   function aplicarFiltros() {
+    state.paginaActual = 1; // Reiniciar siempre a la primera página al cambiar filtros
+
     const qPuesto = normalizarTexto(state.filtroPuesto);
     const qUbicacion = normalizarTexto(state.filtroUbicacion);
     const catBuscada = normalizarCategoria(state.filtroCategoria);
@@ -315,7 +320,6 @@
       const coincideJornada = !jBuscada || jBuscada === 'todas' || jBuscada === 'todos' || itemJornada.includes(jBuscada);
       const coincideTurno = !tBuscado || tBuscado === 'todos' || tBuscado === 'todas' || itemTurno.includes(tBuscado);
 
-      // Evaluador flexible para el valor de urgente (boolean, string o number)
       const esUrgenteItem = 
         item.urgente === true || 
         item.urgente === 1 || 
@@ -324,7 +328,6 @@
 
       const coincideUrgente = !state.filtroUrgente || esUrgenteItem;
 
-      // Evaluación del filtro por fecha de publicación
       let coincideFecha = true;
       if (state.filtroFecha && state.filtroFecha !== 'todas') {
         const fechaVacante = item.fecha ? new Date(item.fecha) : null;
@@ -350,6 +353,7 @@
 
   function renderizarGrid() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
+    const pagContainer = document.querySelector(CONFIG.SELECTORS.PAGINACION_CONTAINER);
     if (!grid) return;
 
     if (state.vacantesFiltradas.length === 0) {
@@ -359,6 +363,8 @@
           <button type="button" class="btn-amber" id="btn-reset-filtros" style="margin-top: 1rem; cursor: pointer;">Ver todas las ofertas</button>
         </div>
       `;
+
+      if (pagContainer) pagContainer.innerHTML = '';
 
       document.getElementById('btn-reset-filtros')?.addEventListener('click', () => {
         state.filtroPuesto = '';
@@ -397,7 +403,12 @@
       return;
     }
 
-    grid.innerHTML = state.vacantesFiltradas.map(v => {
+    // Recorte del array para paginación de 10 elementos por página
+    const inicio = (state.paginaActual - 1) * CONFIG.VACANTES_POR_PAGINA;
+    const fin = inicio + CONFIG.VACANTES_POR_PAGINA;
+    const vacantesPagina = state.vacantesFiltradas.slice(inicio, fin);
+
+    grid.innerHTML = vacantesPagina.map(v => {
       const ubicacion = escapeHTML(v.zona || v.ubicacion || 'Córdoba');
       const sueldoText = escapeHTML(formatearSueldo(v.sueldo));
       const tiempo = escapeHTML(v.tiempo || v.haceCuanto || 'Reciente');
@@ -425,6 +436,55 @@
         </article>
       `;
     }).join('');
+
+    renderizarPaginacion();
+  }
+
+  function renderizarPaginacion() {
+    const container = document.querySelector(CONFIG.SELECTORS.PAGINACION_CONTAINER);
+    if (!container) return;
+
+    const totalItems = state.vacantesFiltradas.length;
+    const totalPaginas = Math.ceil(totalItems / CONFIG.VACANTES_POR_PAGINA);
+
+    if (totalPaginas <= 1) {
+      container.innerHTML = '';
+      return;
+    }
+
+    let html = '';
+
+    // Botón Anterior
+    if (state.paginaActual > 1) {
+      html += `<button type="button" class="pagination-btn" data-page="${state.paginaActual - 1}">‹ Anterior</button>`;
+    }
+
+    // Botones numéricos
+    for (let i = 1; i <= totalPaginas; i++) {
+      const activeClass = i === state.paginaActual ? 'active' : '';
+      html += `<button type="button" class="pagination-btn ${activeClass}" data-page="${i}">${i}</button>`;
+    }
+
+    // Botón Siguiente
+    if (state.paginaActual < totalPaginas) {
+      html += `<button type="button" class="pagination-btn" data-page="${state.paginaActual + 1}">Siguiente ›</button>`;
+    }
+
+    container.innerHTML = html;
+
+    // Asignar eventos a los botones de paginación
+    container.querySelectorAll('.pagination-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        state.paginaActual = parseInt(e.currentTarget.dataset.page, 10);
+        renderizarGrid();
+
+        // Scroll suave al top de la grilla
+        const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
+        if (grid) {
+          grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
   }
 
   function actualizarContador() {
@@ -726,7 +786,6 @@
 
     // 2. Delegación Global para Modal de Bienvenida, Cambios de Modo y Filtro Urgencias
     document.addEventListener('click', (e) => {
-      // Captura de Filtro Urgencias mediante delegación
       const btnUrgente = e.target.closest(CONFIG.SELECTORS.FILTRO_URGENTE);
       if (btnUrgente) {
         e.preventDefault();
@@ -737,7 +796,6 @@
         return;
       }
 
-      // Captura de cambio de modos
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
 
