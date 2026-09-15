@@ -70,6 +70,14 @@
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
+
+                <!-- BUSCADOR RÁPIDO DE VACANTES -->
+                <div class="hero-search-box mt-3 mb-2">
+                    <form id="form-search-hero" class="flex-row gap-1" onsubmit="return false;">
+                        <input type="search" id="input-search-text" class="input-dark flex-1" placeholder="🔍 Buscar por puesto, local o palabra clave..." aria-label="Buscar vacantes por palabra clave">
+                        <button type="submit" class="btn-amber font-bold">Buscar</button>
+                    </form>
+                </div>
             </section>
 
             <!-- SECCIÓN CATEGORÍAS -->
@@ -176,7 +184,7 @@
                     <option value="part time">Part Time</option>
                     <option value="fines de semana">Fines de Semana</option>
                     <option value="por turno">Por Turno / A convenir</option>
-                    <option value="eventual">Eventual</option>
+                    <option value="eventual">Eventual / Extra</option>
                 </select>
 
                 <select id="filtro-turno" class="chip-select" aria-label="Filtrar por turno">
@@ -184,7 +192,9 @@
                     <option value="mañana">Turno Mañana</option>
                     <option value="tarde">Turno Tarde</option>
                     <option value="noche">Turno Noche</option>
+                    <option value="cortado">Turno Cortado</option>
                     <option value="rotativo">Rotativo</option>
+                    <option value="convenir">A convenir</option>
                 </select>
 
                 <button type="button" id="chip-urgente" class="chip-btn" data-active="false">
@@ -424,7 +434,9 @@
                                     <option value="Turno Mañana">Turno Mañana</option>
                                     <option value="Turno Tarde">Turno Tarde</option>
                                     <option value="Turno Noche">Turno Noche</option>
+                                    <option value="Turno Cortado">Turno Cortado</option>
                                     <option value="Rotativo">Rotativo</option>
+                                    <option value="Otro / A convenir">Otro / A convenir</option>
                                 </select>
                             </div>
 
@@ -435,9 +447,15 @@
                                     <option value="Full Time">Full Time</option>
                                     <option value="Part Time">Part Time</option>
                                     <option value="Fines de Semana">Fines de Semana</option>
-                                    <option value="Eventual">Eventual</option>
+                                    <option value="Eventual / Extra">Eventual / Extra</option>
+                                    <option value="Otra / A convenir">Otra / A convenir</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div>
+                            <label for="exp-descripcion" class="sr-only">Detalles o requisitos de la propuesta</label>
+                            <textarea id="exp-descripcion" name="descripcion" class="input-dark w-full" rows="3" placeholder="Detalles de la búsqueda / Requisitos (Opcional)"></textarea>
                         </div>
 
                         <div class="checkbox-pro-option mt-1">
