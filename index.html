@@ -38,12 +38,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Jobbers",
-      "url": "https://jobbers.com.ar/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://jobbers.com.ar/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "url": "https://jobbers.com.ar/"
     }
     </script>
 </head>
@@ -70,14 +65,6 @@
             <section class="hero-postulante">
                 <h1>Tu próximo empleo gastronómico está acá</h1>
                 <p>Encontrá oportunidades en bares, restaurantes y hoteles de todo el país.</p>
-
-                <!-- BUSCADOR RÁPIDO DE VACANTES -->
-                <div class="hero-search-box mt-3 mb-2">
-                    <form id="form-search-hero" class="flex-row gap-1" onsubmit="return false;">
-                        <input type="search" id="input-search-text" class="input-dark flex-1" placeholder="🔍 Buscar por puesto, local o palabra clave..." aria-label="Buscar vacantes por palabra clave">
-                        <button type="submit" class="btn-amber font-bold">Buscar</button>
-                    </form>
-                </div>
             </section>
 
             <!-- SECCIÓN CATEGORÍAS -->
@@ -237,10 +224,16 @@
                         </a>
                     </div>
 
+                    <!-- SOPORTE PERSONALIZADO AL POSTULANTE -->
                     <div class="sidebar-widget widget-accent-amber">
-                        <h3 class="text-amber mb-1 text-md">Soporte al Postulante</h3>
-                        <p class="text-secondary text-sm mb-2">¿Tuviste problemas para postularte o tenés dudas con tu CV?</p>
-                        <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20ayuda%20o%20soporte%20t%C3%A9cnico%20como%20Postulante%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-amber btn-block text-center">Hablar con Soporte</a>
+                        <span class="badge-pro badge-amber font-bold">🛠️ SOPORTE TÉCNICO & CV</span>
+                        <h3 class="text-amber mb-1 text-md mt-1">¿Necesitás ayuda con tu perfil?</h3>
+                        <p class="text-secondary text-sm mb-2">
+                            Si tenés problemas para postularte, dudas para armar tu CV en PDF o consultas técnicas, te atendemos directamente de forma personalizada.
+                        </p>
+                        <a href="https://wa.me/5493513080197?text=Hola%2C%20necesito%20asistencia%20personalizada%20con%20mi%20postulaci%C3%B3n%20o%20mi%20CV%20en%20Jobbers." target="_blank" rel="noopener noreferrer" class="btn-amber btn-block text-center font-bold">
+                            💬 HABLAR CON UN ASESOR
+                        </a>
                     </div>
 
                     <div class="sidebar-widget widget-accent-amber">
@@ -525,10 +518,6 @@
             </section>
 
             <section class="empresa-bottom-grid mt-4">
-                <div class="adsense-placeholder" role="region" aria-label="Publicidad patrocinada">
-                    [ Anuncio AdSense ]
-                </div>
-
                 <!-- WIDGET MEMBRESÍA PREMIUM EMPRESAS -->
                 <div class="sidebar-widget widget-accent-green">
                     <span class="badge-pro badge-green font-bold">⭐ PLANES & MEMBRESÍAS B2B</span>
@@ -539,8 +528,23 @@
                     <a href="https://wa.me/5493513080197?text=Hola%2C%20quisiera%20consultar%20las%20membres%C3%ADas%20premium%20y%20planes%20para%20Empresas." 
                        target="_blank" 
                        rel="noopener noreferrer" 
-                       class="btn-green btn-block text-center font-bold">
+                       class="btn-green btn-block text-center font-bold mb-2">
                         VER PLANES PREMIUM
+                    </a>
+                </div>
+
+                <!-- SOPORTE TÉCNICO A EMPRESAS / B2B -->
+                <div class="sidebar-widget widget-accent-green">
+                    <span class="badge-pro badge-green font-bold">🛠️ SOPORTE TÉCNICO B2B</span>
+                    <h3 class="text-green mb-1 text-md mt-1">Asistencia Directa a Empleadores</h3>
+                    <p class="text-secondary text-sm mb-2">
+                        ¿Dudas al publicar tu aviso, gestionar candidatos o requerir facturación? Contactate con nuestro soporte para empresas al instante.
+                    </p>
+                    <a href="https://wa.me/5493513080197?text=Hola%2C%20soy%20una%20Empresa%20y%20necesito%20asistencia%20t%C3%A9cnica%20o%20soporte%20en%20Jobbers." 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="btn-green btn-block text-center font-bold">
+                        💬 SOPORTE A EMPRESAS
                     </a>
                 </div>
             </section>
