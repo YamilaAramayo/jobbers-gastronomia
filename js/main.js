@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada con Soporte Completo de Navegación y Footer Activo
+ * Versión Consolidada con Selección de Rol Obligatoria y Confirmación de Cambio
  */
 
 (function () {
@@ -230,9 +230,18 @@
   }
 
   // ==========================================
-  // 3. CAMBIO DE MODO
+  // 3. CAMBIO DE MODO Y MODAL DE INICIO
   // ==========================================
-  function setMode(mode) {
+  function setMode(mode, forzarSinConfirmar = false) {
+    const perfilActual = localStorage.getItem(CONFIG.STORAGE_KEY) || 'postulante';
+
+    // Solicitud de confirmación si se intenta cambiar de pestaña manualmente
+    if (!forzarSinConfirmar && perfilActual !== mode) {
+      const textoModo = mode === 'empresa' ? 'Empresa' : 'Postulante';
+      const confirmar = confirm(`¿Estás seguro de que querés cambiar al perfil de ${textoModo}?`);
+      if (!confirmar) return;
+    }
+
     const postulanteView = document.getElementById('view-postulante');
     const empresaView = document.getElementById('view-empresa');
     const btnPostulante = document.getElementById('btn-mode-postulante');
@@ -256,19 +265,21 @@
   }
 
   function seleccionarModoInicial(mode) {
-    setMode(mode);
+    // Aplica el modo directamente sin lanzar la confirmación adicional
+    setMode(mode, true);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
     if (modalBienvenida) cerrarModal(modalBienvenida);
   }
 
   function verificarPerfilInicial() {
-    const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
 
-    setMode(perfilGuardado || 'postulante');
-
-    if (!perfilGuardado && modalBienvenida) {
+    // Despliega siempre el modal inicial para que el usuario elija su perfil al ingresar
+    if (modalBienvenida) {
       abrirModal(modalBienvenida);
+    } else {
+      const perfilGuardado = localStorage.getItem(CONFIG.STORAGE_KEY) || 'postulante';
+      setMode(perfilGuardado, true);
     }
   }
 
@@ -930,6 +941,7 @@
     init,
     cargarVacantes,
     setMode,
+    seleccionarModoInicial,
     abrirModal,
     cerrarModal,
     aplicarFiltros
