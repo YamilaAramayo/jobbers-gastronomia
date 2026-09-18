@@ -878,18 +878,30 @@
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
         e.preventDefault();
-        const empresa = document.getElementById('exp-empresa')?.value.trim();
-        const telefono = document.getElementById('exp-telefono')?.value.trim();
-        const puesto = document.getElementById('exp-puesto')?.value || 'Puesto no especificado';
-        const zona = document.getElementById('exp-zona')?.value || 'Zona no especificada';
+
+        const empresa = document.getElementById('exp-empresa')?.value.trim() || '';
+        const telefono = document.getElementById('exp-telefono')?.value.trim() || '';
+        const puesto = document.getElementById('exp-puesto')?.value || 'No especificado';
+        const zona = document.getElementById('exp-zona')?.value || 'No especificada';
+        const turno = document.getElementById('exp-turno')?.value || 'No especificado';
+        const jornada = document.getElementById('exp-jornada')?.value || 'No especificada';
 
         if (!empresa || !telefono) {
           mostrarNotificacion('Completá al menos el nombre de la empresa y el teléfono.', 'error');
           return;
         }
 
-        let mensaje = `📢 *NUEVA BÚSQUEDA EXPRESS (EMPRESA)*\n\n🏢 *Empresa:* ${empresa}\n💼 *Puesto:* ${puesto}\n📍 *Zona:* ${zona}\n📱 *Contacto:* ${telefono}`;
-        window.open(`https://wa.me/${CONFIG.WA_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener,noreferrer');
+        const mensaje = `Hola! Quiero publicar una nueva búsqueda en Jobbers:
+
+🏢 *Empresa / Local:* ${empresa}
+📌 *Puesto:* ${puesto}
+📍 *Zona:* ${zona}
+⏰ *Turno:* ${turno}
+⏳ *Jornada:* ${jornada}
+📞 *Contacto:* ${telefono}`;
+
+        const waUrl = `https://wa.me/${CONFIG.WA_DEFAULT}?text=${encodeURIComponent(mensaje)}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
         formExpress.reset();
       });
     }
