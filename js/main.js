@@ -21,10 +21,11 @@
       INPUT_PUESTO: '#input-busqueda-vacantes',
       INPUT_UBICACION: '#input-busqueda-ubicacion',
       FILTRO_CATEGORIA: '#filtro-categoria-vacantes',
-      FILTRO_FECHA: '#filtro-fecha-publicacion',
-      FILTRO_JORNADA: '#filtro-tipo-empleo',
+      FILTRO_FECHA: '#filtro-fecha',
+      FILTRO_JORNADA: '#filtro-jornada',
       FILTRO_TURNO: '#filtro-turno',
-      FILTRO_URGENTE: '#btn-filtro-urgente',
+      FILTRO_URGENTE: '#chip-urgente',
+      BTN_LIMPIAR_CHIPS: '#btn-limpiar-chips',
       CONTADOR_RESULTADOS: '#cant-vacantes',
       FORM_EXPRESS: '#form-publicacion-express',
       MODAL_BIENVENIDA: '#modal-role-selector'
@@ -297,13 +298,20 @@
   // 5. FILTRADO, PAGINACIÓN Y RENDERIZADO
   // ==========================================
   function aplicarFiltros() {
-    state.paginaActual = 1; // Reiniciar siempre a la primera página al cambiar filtros
+    state.paginaActual = 1;
 
     const qPuesto = normalizarTexto(state.filtroPuesto);
     const qUbicacion = normalizarTexto(state.filtroUbicacion);
     const catBuscada = normalizarCategoria(state.filtroCategoria);
     const jBuscada = normalizarTexto(state.filtroJornada);
     const tBuscado = normalizarTexto(state.filtroTurno);
+
+    // Visibilidad del botón "Limpiar filtros"
+    const btnLimpiar = document.querySelector(CONFIG.SELECTORS.BTN_LIMPIAR_CHIPS);
+    const hayFiltrosActivos = qPuesto || qUbicacion || catBuscada !== 'todas' || state.filtroFecha !== 'todas' || jBuscada !== 'todas' || tBuscado !== 'todos' || state.filtroUrgente;
+    if (btnLimpiar) {
+      btnLimpiar.style.display = hayFiltrosActivos ? 'inline-flex' : 'none';
+    }
 
     state.vacantesFiltradas = state.vacantes.filter(item => {
       const ubicacion = normalizarTexto(item.zona || item.ubicacion || '');
@@ -332,11 +340,10 @@
       if (state.filtroFecha && state.filtroFecha !== 'todas') {
         const fechaVacante = item.fecha ? new Date(item.fecha) : null;
         if (fechaVacante && !isNaN(fechaVacante.getTime())) {
-          const ahora = new Date();
-          const diferenciaDias = (ahora - fechaVacante) / (1000 * 60 * 60 * 24);
-          if (state.filtroFecha === '24h') coincideFecha = diferenciaDias <= 1;
-          else if (state.filtroFecha === '7d') coincideFecha = diferenciaDias <= 7;
-          else if (state.filtroFecha === '30d') coincideFecha = diferenciaDias <= 30;
+          const horasAntiguedad = (new Date() - fechaVacante) / (1000 * 60 * 60);
+          if (state.filtroFecha === '24h') coincideFecha = horasAntiguedad <= 24;
+          else if (state.filtroFecha === '7d') coincideFecha = horasAntiguedad <= 168;
+          else if (state.filtroFecha === '30d') coincideFecha = horasAntiguedad <= 720;
         } else {
           const tiempoStr = normalizarTexto(item.tiempo || item.haceCuanto || '');
           if (state.filtroFecha === '24h') coincideFecha = tiempoStr.includes('hoy') || tiempoStr.includes('24h') || tiempoStr.includes('1 dia');
@@ -366,44 +373,10 @@
 
       if (pagContainer) pagContainer.innerHTML = '';
 
-      document.getElementById('btn-reset-filtros')?.addEventListener('click', () => {
-        state.filtroPuesto = '';
-        state.filtroUbicacion = '';
-        state.filtroCategoria = 'todas';
-        state.filtroFecha = 'todas';
-        state.filtroJornada = 'todas';
-        state.filtroTurno = 'todos';
-        state.filtroUrgente = false;
-
-        const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
-        const inputUbicacion = document.querySelector(CONFIG.SELECTORS.INPUT_UBICACION);
-        const selectFecha = document.querySelector(CONFIG.SELECTORS.FILTRO_FECHA);
-        const selectJornada = document.querySelector(CONFIG.SELECTORS.FILTRO_JORNADA);
-        const selectTurno = document.querySelector(CONFIG.SELECTORS.FILTRO_TURNO);
-        const btnUrgente = document.querySelector(CONFIG.SELECTORS.FILTRO_URGENTE);
-
-        if (inputPuesto) inputPuesto.value = '';
-        if (inputUbicacion) inputUbicacion.value = '';
-        if (selectFecha) selectFecha.value = 'todas';
-        if (selectJornada) selectJornada.value = 'todas';
-        if (selectTurno) selectTurno.value = 'todos';
-        if (btnUrgente) {
-          btnUrgente.classList.remove('active');
-          btnUrgente.setAttribute('aria-pressed', 'false');
-        }
-
-        document.querySelectorAll('.category-card').forEach(el => {
-          const rawVal = el.dataset.category || el.textContent.trim();
-          const normVal = normalizarCategoria(rawVal);
-          el.classList.toggle('active', normVal === 'todas' || normVal === 'todos');
-        });
-
-        aplicarFiltros();
-      }, { once: true });
+      document.getElementById('btn-reset-filtros')?.addEventListener('click', resetearFiltros, { once: true });
       return;
     }
 
-    // Recorte del array para paginación de 10 elementos por página
     const inicio = (state.paginaActual - 1) * CONFIG.VACANTES_POR_PAGINA;
     const fin = inicio + CONFIG.VACANTES_POR_PAGINA;
     const vacantesPagina = state.vacantesFiltradas.slice(inicio, fin);
@@ -453,36 +426,26 @@
     }
 
     let html = '';
-
-    // Botón Anterior
     if (state.paginaActual > 1) {
       html += `<button type="button" class="pagination-btn" data-page="${state.paginaActual - 1}">‹ Anterior</button>`;
     }
 
-    // Botones numéricos
     for (let i = 1; i <= totalPaginas; i++) {
       const activeClass = i === state.paginaActual ? 'active' : '';
       html += `<button type="button" class="pagination-btn ${activeClass}" data-page="${i}">${i}</button>`;
     }
 
-    // Botón Siguiente
     if (state.paginaActual < totalPaginas) {
       html += `<button type="button" class="pagination-btn" data-page="${state.paginaActual + 1}">Siguiente ›</button>`;
     }
 
     container.innerHTML = html;
 
-    // Asignar eventos a los botones de paginación
     container.querySelectorAll('.pagination-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         state.paginaActual = parseInt(e.currentTarget.dataset.page, 10);
         renderizarGrid();
-
-        // Scroll suave al top de la grilla
-        const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
-        if (grid) {
-          grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        document.querySelector(CONFIG.SELECTORS.GRID_VACANTES)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
   }
@@ -492,6 +455,41 @@
     if (contador) {
       contador.textContent = String(state.vacantesFiltradas.length);
     }
+  }
+
+  function resetearFiltros() {
+    state.filtroPuesto = '';
+    state.filtroUbicacion = '';
+    state.filtroCategoria = 'todas';
+    state.filtroFecha = 'todas';
+    state.filtroJornada = 'todas';
+    state.filtroTurno = 'todos';
+    state.filtroUrgente = false;
+
+    const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
+    const inputUbicacion = document.querySelector(CONFIG.SELECTORS.INPUT_UBICACION);
+    const selectFecha = document.querySelector(CONFIG.SELECTORS.FILTRO_FECHA);
+    const selectJornada = document.querySelector(CONFIG.SELECTORS.FILTRO_JORNADA);
+    const selectTurno = document.querySelector(CONFIG.SELECTORS.FILTRO_TURNO);
+    const btnUrgente = document.querySelector(CONFIG.SELECTORS.FILTRO_URGENTE);
+
+    if (inputPuesto) inputPuesto.value = '';
+    if (inputUbicacion) inputUbicacion.value = '';
+    if (selectFecha) selectFecha.value = 'todas';
+    if (selectJornada) selectJornada.value = 'todas';
+    if (selectTurno) selectTurno.value = 'todos';
+    if (btnUrgente) {
+      btnUrgente.setAttribute('data-active', 'false');
+      btnUrgente.classList.remove('active');
+    }
+
+    document.querySelectorAll('.category-card').forEach(el => {
+      const rawVal = el.dataset.category || el.textContent.trim();
+      const normVal = normalizarCategoria(rawVal);
+      el.classList.toggle('active', normVal === 'todas' || normVal === 'todos');
+    });
+
+    aplicarFiltros();
   }
 
   // ==========================================
@@ -784,18 +782,25 @@
       });
     }
 
-    // 2. Delegación Global para Modal de Bienvenida, Cambios de Modo y Filtro Urgencias
-    document.addEventListener('click', (e) => {
-      const btnUrgente = e.target.closest(CONFIG.SELECTORS.FILTRO_URGENTE);
-      if (btnUrgente) {
-        e.preventDefault();
+    // 2. Toggle Chip Urgentes
+    const btnUrgente = document.querySelector(CONFIG.SELECTORS.FILTRO_URGENTE);
+    if (btnUrgente) {
+      btnUrgente.addEventListener('click', () => {
         state.filtroUrgente = !state.filtroUrgente;
+        btnUrgente.setAttribute('data-active', state.filtroUrgente ? 'true' : 'false');
         btnUrgente.classList.toggle('active', state.filtroUrgente);
-        btnUrgente.setAttribute('aria-pressed', state.filtroUrgente ? 'true' : 'false');
         aplicarFiltros();
-        return;
-      }
+      });
+    }
 
+    // 3. Botón Limpiar Chips
+    const btnLimpiar = document.querySelector(CONFIG.SELECTORS.BTN_LIMPIAR_CHIPS);
+    if (btnLimpiar) {
+      btnLimpiar.addEventListener('click', resetearFiltros);
+    }
+
+    // 4. Delegación Global para Modal de Bienvenida y Cambios de Modo
+    document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-mode], [data-action]');
       if (!btn) return;
 
@@ -816,7 +821,7 @@
       }
     });
 
-    // 3. Inputs de Búsqueda Hero
+    // 5. Inputs de Búsqueda Hero
     const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
     if (inputPuesto) {
       inputPuesto.addEventListener('input', debounce((e) => {
@@ -838,7 +843,7 @@
       formBusquedaHero.addEventListener('submit', (e) => e.preventDefault());
     }
 
-    // 4. Tarjetas de Categorías
+    // 6. Tarjetas de Categorías
     const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
       card.addEventListener('click', () => {
@@ -855,7 +860,7 @@
       });
     });
 
-    // 5. Filtros Secundarios (Fecha, Tipo de Empleo, Turno)
+    // 7. Filtros Secundarios (Fecha, Tipo de Empleo/Jornada, Turno)
     const selectFecha = document.querySelector(CONFIG.SELECTORS.FILTRO_FECHA);
     if (selectFecha) {
       selectFecha.addEventListener('change', (e) => {
@@ -880,7 +885,7 @@
       });
     }
 
-    // 6. Publicación Express Empresas a WhatsApp
+    // 8. Publicación Express Empresas a WhatsApp
     const formExpress = document.querySelector(CONFIG.SELECTORS.FORM_EXPRESS);
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
