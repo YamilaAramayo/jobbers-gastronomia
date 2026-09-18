@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada, Accesible (A11y), Sanitizada, Optimizada y Paginada
+ * Versión Consolidada con Soporte Completo de Navegación y Footer Activo
  */
 
 (function () {
@@ -28,7 +28,8 @@
       BTN_LIMPIAR_CHIPS: '#btn-limpiar-chips',
       CONTADOR_RESULTADOS: '#cant-vacantes',
       FORM_EXPRESS: '#form-publicacion-express',
-      MODAL_BIENVENIDA: '#modal-role-selector'
+      MODAL_BIENVENIDA: '#modal-role-selector',
+      FOOTER: 'footer'
     },
     FALLBACK_VACANTES: [
       {
@@ -143,7 +144,7 @@
   }
 
   // ==========================================
-  // 2. UTILIDADES Y ACCESIBILIDAD (A11Y)
+  // 2. UTILIDADES Y NOTIFICACIONES
   // ==========================================
   function escapeHTML(str) {
     if (str === null || str === undefined) return '';
@@ -229,7 +230,7 @@
   }
 
   // ==========================================
-  // 3. CAMBIO DE MODO Y MODAL INICIAL
+  // 3. CAMBIO DE MODO
   // ==========================================
   function setMode(mode) {
     const postulanteView = document.getElementById('view-postulante');
@@ -251,7 +252,6 @@
       btnEmpresa?.setAttribute('aria-selected', !esPostulante);
 
       localStorage.setItem(CONFIG.STORAGE_KEY, mode);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
@@ -273,7 +273,7 @@
   }
 
   // ==========================================
-  // 4. CARGA DE DATOS Y CONEXIÓN
+  // 4. CARGA DE DATOS
   // ==========================================
   async function cargarVacantes() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
@@ -283,11 +283,11 @@
 
     try {
       const response = await fetch(CONFIG.API_URL);
-      if (!response.ok) throw new Error(`Error de red: ${response.statusText} (${response.status})`);
+      if (!response.ok) throw new Error(`Error de red: ${response.statusText}`);
       const data = await response.json();
       state.vacantes = Array.isArray(data) && data.length > 0 ? data : CONFIG.FALLBACK_VACANTES;
     } catch (error) {
-      console.warn('[Jobbers] Servidor no disponible. Usando datos de respaldo.', error);
+      console.warn('[Jobbers] Usando datos de respaldo.', error);
       state.vacantes = [...CONFIG.FALLBACK_VACANTES];
     } finally {
       aplicarFiltros();
@@ -306,7 +306,6 @@
     const jBuscada = normalizarTexto(state.filtroJornada);
     const tBuscado = normalizarTexto(state.filtroTurno);
 
-    // Visibilidad del botón "Limpiar filtros"
     const btnLimpiar = document.querySelector(CONFIG.SELECTORS.BTN_LIMPIAR_CHIPS);
     const hayFiltrosActivos = qPuesto || qUbicacion || catBuscada !== 'todas' || state.filtroFecha !== 'todas' || jBuscada !== 'todas' || tBuscado !== 'todos' || state.filtroUrgente;
     if (btnLimpiar) {
@@ -344,10 +343,6 @@
           if (state.filtroFecha === '24h') coincideFecha = horasAntiguedad <= 24;
           else if (state.filtroFecha === '7d') coincideFecha = horasAntiguedad <= 168;
           else if (state.filtroFecha === '30d') coincideFecha = horasAntiguedad <= 720;
-        } else {
-          const tiempoStr = normalizarTexto(item.tiempo || item.haceCuanto || '');
-          if (state.filtroFecha === '24h') coincideFecha = tiempoStr.includes('hoy') || tiempoStr.includes('24h') || tiempoStr.includes('1 dia');
-          else if (state.filtroFecha === '7d') coincideFecha = tiempoStr.includes('hoy') || tiempoStr.includes('dia') || tiempoStr.includes('semana');
         }
       }
 
@@ -370,9 +365,7 @@
           <button type="button" class="btn-amber" id="btn-reset-filtros" style="margin-top: 1rem; cursor: pointer;">Ver todas las ofertas</button>
         </div>
       `;
-
       if (pagContainer) pagContainer.innerHTML = '';
-
       document.getElementById('btn-reset-filtros')?.addEventListener('click', resetearFiltros, { once: true });
       return;
     }
@@ -452,9 +445,7 @@
 
   function actualizarContador() {
     const contador = document.querySelector(CONFIG.SELECTORS.CONTADOR_RESULTADOS);
-    if (contador) {
-      contador.textContent = String(state.vacantesFiltradas.length);
-    }
+    if (contador) contador.textContent = String(state.vacantesFiltradas.length);
   }
 
   function resetearFiltros() {
@@ -493,7 +484,7 @@
   }
 
   // ==========================================
-  // 6. MODALES Y POSTULACIÓN EXPRESS
+  // 6. MODALES Y POSTULACIONES
   // ==========================================
   function asegurarEstructurasModales() {
     if (!document.getElementById('modal-jobbers-detalle')) {
@@ -577,14 +568,11 @@
           e.target.classList.contains('modal-overlay') || 
           e.target.classList.contains('jobbers-close-btn') || 
           e.target.classList.contains('modal-close-btn') ||
-          e.target.classList.contains('btn-cerrar-modal') ||
-          e.target.closest('#btn-close-role-modal') ||
-          e.target.closest('#btn-cerrar-modal-talento')
+          e.target.classList.contains('btn-cerrar-modal')
         ) {
           cerrarModal(modal);
         }
       });
-
       modal.addEventListener('keydown', (e) => manejarTrampaDeFoco(e, modal));
     });
 
@@ -598,13 +586,10 @@
     if (!modalEl.classList.contains('active')) {
       state.elementoPrevioFoco = document.activeElement;
     }
-
     modalEl.removeAttribute('hidden');
     modalEl.setAttribute('aria-hidden', 'false');
-
     void modalEl.offsetWidth;
     modalEl.classList.add('active');
-
     const primerInput = modalEl.querySelector('button:not([disabled]), input:not([disabled]), textarea:not([disabled])');
     primerInput?.focus();
   }
@@ -612,11 +597,9 @@
   function cerrarModal(modalEl = null) {
     const modalActivo = modalEl || document.querySelector('.modal-overlay.active');
     if (!modalActivo) return;
-
     modalActivo.classList.remove('active');
     modalActivo.setAttribute('aria-hidden', 'true');
     modalActivo.setAttribute('hidden', '');
-
     if (state.elementoPrevioFoco?.focus) {
       state.elementoPrevioFoco.focus();
     }
@@ -638,13 +621,13 @@
     document.getElementById('det-modalidad').textContent = `💼 Modalidad: ${jornadaTurno}`;
     document.getElementById('det-ubicacion').textContent = `📍 Ubicación: ${vacante.zona || vacante.ubicacion || 'Córdoba'}`;
     document.getElementById('det-sueldo').textContent = `💰 Sueldo: ${formatearSueldo(vacante.sueldo)}`;
-    document.getElementById('det-descripcion').textContent = vacante.descripcion || `Se busca ${vacante.puesto} para sumarse al equipo. Postulate enviando tu CV por WhatsApp.`;
+    document.getElementById('det-descripcion').textContent = vacante.descripcion || `Se busca ${vacante.puesto}. Postulate enviando tu CV por WhatsApp.`;
 
     const listaReq = document.getElementById('det-requisitos');
     if (listaReq) {
       listaReq.innerHTML = Array.isArray(vacante.requisitos) && vacante.requisitos.length > 0
         ? vacante.requisitos.map(r => `<li>${escapeHTML(r)}</li>`).join('')
-        : '<li>Experiencia previa comprobable en el puesto.</li><li>Disponibilidad horaria indicada.</li>';
+        : '<li>Experiencia previa comprobable en el puesto.</li>';
     }
 
     const btnPostular = document.getElementById('det-btn-postular');
@@ -692,7 +675,7 @@
     mensaje += `Me postulo para la vacante de *${vacante.puesto || 'Puesto Gastronómico'}* en *${vacante.empresa || 'Jobbers Argentina'}*.\n\n`;
     mensaje += `📱 *Mi Teléfono:* ${telefono}\n`;
     if (experiencia) mensaje += `📝 *Mi Presentación:* ${experiencia}\n`;
-    mensaje += `\n📎 *Adjunto mi CV en formato PDF a este chat para su evaluación.* Muchas gracias!`;
+    mensaje += `\n📎 *Adjunto mi CV en formato PDF a este chat.* Muchas gracias!`;
 
     const urlWA = `https://wa.me/${waContacto}?text=${encodeURIComponent(mensaje)}`;
     cerrarModal(document.querySelector('.modal-overlay.active'));
@@ -701,7 +684,95 @@
   }
 
   // ==========================================
-  // 7. LISTENERS DE EVENTOS Y FORMULARIO EXPRESS
+  // 7. LÓGICA INTERACTIVA DEL FOOTER
+  // ==========================================
+  function inicializarFooterLinks() {
+    const footer = document.querySelector(CONFIG.SELECTORS.FOOTER);
+    if (!footer) return;
+
+    footer.addEventListener('click', (e) => {
+      const link = e.target.closest('a, button, [data-footer-action]');
+      if (!link) return;
+
+      const textoNorm = normalizarTexto(link.textContent || '');
+      const action = link.dataset.footerAction || textoNorm;
+
+      // 1. Opciones para Postulantes
+      if (action.includes('buscar empleos')) {
+        e.preventDefault();
+        setMode('postulante');
+        const inputBuscador = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO) || document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
+        inputBuscador?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } 
+      else if (action.includes('creador de cv')) {
+        e.preventDefault();
+        mostrarNotificacion('📄 Herramienta "Creador de CV PDF" próximamente disponible.', 'info');
+      } 
+      else if (action.includes('jobbers pro postulantes')) {
+        e.preventDefault();
+        mostrarNotificacion('⭐ Membresía Pro Postulantes: Mayor visibilidad en búsquedas activas.', 'info');
+      } 
+      else if (action.includes('consejos de entrevista')) {
+        e.preventDefault();
+        const blogSec = document.getElementById('blog') || document.getElementById('quienes-somos');
+        if (blogSec) {
+          blogSec.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          mostrarNotificacion('💡 Tip: Llevá siempre tu CV impreso y libreta sanitaria actualizada.', 'info');
+        }
+      }
+
+      // 2. Opciones para Empresas
+      else if (action.includes('publicar vacantes')) {
+        e.preventDefault();
+        setMode('empresa');
+        const formExpress = document.querySelector(CONFIG.SELECTORS.FORM_EXPRESS);
+        if (formExpress) {
+          formExpress.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } 
+      else if (action.includes('grilla de talentos')) {
+        e.preventDefault();
+        setMode('empresa');
+        const talentosSec = document.getElementById('seccion-talentos') || document.querySelector('.talentos-grid');
+        talentosSec?.scrollIntoView({ behavior: 'smooth' });
+      } 
+      else if (action.includes('planes de reclutamiento') || action.includes('contacto b2b')) {
+        e.preventDefault();
+        const msg = encodeURIComponent('Hola Jobbers! Me interesa solicitar información sobre Planes de Reclutamiento y Servicios B2B.');
+        window.open(`https://wa.me/${CONFIG.WA_DEFAULT}?text=${msg}`, '_blank', 'noopener,noreferrer');
+      }
+
+      // 3. Soporte & Recursos
+      else if (action.includes('quienes somos')) {
+        e.preventDefault();
+        const quienesSomosSec = document.getElementById('quienes-somos');
+        if (quienesSomosSec) {
+          quienesSomosSec.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          mostrarNotificacion('🤝 Jobbers Argentina: La comunidad gastronómica líder del país.', 'info');
+        }
+      } 
+      else if (action.includes('blog gastronomico')) {
+        e.preventDefault();
+        mostrarNotificacion('📰 Blog Gastronómico: Novedades del rubro y tendencias de mercado.', 'info');
+      } 
+      else if (action.includes('centro de ayuda')) {
+        e.preventDefault();
+        const msg = encodeURIComponent('Hola! Necesito asistencia técnica con la plataforma Jobbers.');
+        window.open(`https://wa.me/${CONFIG.WA_DEFAULT}?text=${msg}`, '_blank', 'noopener,noreferrer');
+      } 
+      else if (action.includes('terminos y condiciones')) {
+        e.preventDefault();
+        mostrarNotificacion('📜 Términos y Condiciones: Plataforma de intermediación de empleo gastronómico.', 'info');
+      }
+    });
+  }
+
+  // ==========================================
+  // 8. EVENT LISTENERS GENERALES
   // ==========================================
   function inicializarEventosGrid() {
     const grid = document.querySelector(CONFIG.SELECTORS.GRID_VACANTES);
@@ -735,13 +806,7 @@
       if (avatarEl) {
         const imgPath = `img/talentos/${id}.webp`;
         const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.nombre)}&background=1e293b&color=f59e0b&bold=true`;
-
-        avatarEl.innerHTML = `
-          <img src="${imgPath}" 
-               alt="Foto de ${escapeHTML(t.nombre)}" 
-               style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;" 
-               onerror="this.onerror=null; this.src='${fallbackUrl}';">
-        `;
+        avatarEl.innerHTML = `<img src="${imgPath}" alt="${escapeHTML(t.nombre)}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.onerror=null; this.src='${fallbackUrl}';">`;
       }
 
       document.getElementById('modal-talento-nombre').textContent = t.nombre;
@@ -757,7 +822,7 @@
 
       const btnWa = document.getElementById('modal-talento-wa');
       if (btnWa) {
-        btnWa.href = `https://wa.me/${t.wa}?text=${encodeURIComponent(`Hola! Vi el perfil de ${t.nombre} (${t.puesto}) en Jobbers y me interesa contactarlo.`)}`;
+        btnWa.href = `https://wa.me/${t.wa}?text=${encodeURIComponent(`Hola! Vi el perfil de ${t.nombre} en Jobbers.`)}`;
       }
 
       abrirModal(modal);
@@ -765,24 +830,12 @@
   }
 
   function inicializarFiltrosYBotones() {
-    // 1. Botones de Modo en Cabecera
     const btnPostulante = document.getElementById('btn-mode-postulante');
     const btnEmpresa = document.getElementById('btn-mode-empresa');
 
-    if (btnPostulante) {
-      btnPostulante.addEventListener('click', (e) => {
-        e.preventDefault();
-        setMode('postulante');
-      });
-    }
-    if (btnEmpresa) {
-      btnEmpresa.addEventListener('click', (e) => {
-        e.preventDefault();
-        setMode('empresa');
-      });
-    }
+    if (btnPostulante) btnPostulante.addEventListener('click', (e) => { e.preventDefault(); setMode('postulante'); });
+    if (btnEmpresa) btnEmpresa.addEventListener('click', (e) => { e.preventDefault(); setMode('empresa'); });
 
-    // 2. Toggle Chip Urgentes
     const btnUrgente = document.querySelector(CONFIG.SELECTORS.FILTRO_URGENTE);
     if (btnUrgente) {
       btnUrgente.addEventListener('click', () => {
@@ -793,35 +846,9 @@
       });
     }
 
-    // 3. Botón Limpiar Chips
     const btnLimpiar = document.querySelector(CONFIG.SELECTORS.BTN_LIMPIAR_CHIPS);
-    if (btnLimpiar) {
-      btnLimpiar.addEventListener('click', resetearFiltros);
-    }
+    if (btnLimpiar) btnLimpiar.addEventListener('click', resetearFiltros);
 
-    // 4. Delegación Global para Modal de Bienvenida y Cambios de Modo
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-mode], [data-action]');
-      if (!btn) return;
-
-      e.preventDefault();
-
-      const mode = btn.dataset.mode;
-      const action = btn.dataset.action;
-      const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
-
-      if (action === 'switch-mode' || action === 'open-role-modal') {
-        if (modalBienvenida) abrirModal(modalBienvenida);
-      } 
-      else if (action === 'init-mode') {
-        seleccionarModoInicial(mode);
-      } 
-      else if (mode && !btn.id && !btn.classList.contains('category-card')) {
-        setMode(mode);
-      }
-    });
-
-    // 5. Inputs de Búsqueda Hero
     const inputPuesto = document.querySelector(CONFIG.SELECTORS.INPUT_PUESTO);
     if (inputPuesto) {
       inputPuesto.addEventListener('input', debounce((e) => {
@@ -838,54 +865,15 @@
       }));
     }
 
-    const formBusquedaHero = document.getElementById('form-busqueda-postulante');
-    if (formBusquedaHero) {
-      formBusquedaHero.addEventListener('submit', (e) => e.preventDefault());
-    }
-
-    // 6. Tarjetas de Categorías
-    const categoryCards = document.querySelectorAll('.category-card');
-    categoryCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const rawCat = card.dataset.category || card.textContent.trim();
-        state.filtroCategoria = rawCat;
-
-        const catTargetNorm = normalizarCategoria(rawCat);
-        categoryCards.forEach(c => {
-          const cRaw = c.dataset.category || c.textContent.trim();
-          c.classList.toggle('active', normalizarCategoria(cRaw) === catTargetNorm);
-        });
-
-        aplicarFiltros();
-      });
-    });
-
-    // 7. Filtros Secundarios (Fecha, Tipo de Empleo/Jornada, Turno)
     const selectFecha = document.querySelector(CONFIG.SELECTORS.FILTRO_FECHA);
-    if (selectFecha) {
-      selectFecha.addEventListener('change', (e) => {
-        state.filtroFecha = e.target.value;
-        aplicarFiltros();
-      });
-    }
+    if (selectFecha) selectFecha.addEventListener('change', (e) => { state.filtroFecha = e.target.value; aplicarFiltros(); });
 
     const selectJornada = document.querySelector(CONFIG.SELECTORS.FILTRO_JORNADA);
-    if (selectJornada) {
-      selectJornada.addEventListener('change', (e) => {
-        state.filtroJornada = e.target.value;
-        aplicarFiltros();
-      });
-    }
+    if (selectJornada) selectJornada.addEventListener('change', (e) => { state.filtroJornada = e.target.value; aplicarFiltros(); });
 
     const selectTurno = document.querySelector(CONFIG.SELECTORS.FILTRO_TURNO);
-    if (selectTurno) {
-      selectTurno.addEventListener('change', (e) => {
-        state.filtroTurno = e.target.value;
-        aplicarFiltros();
-      });
-    }
+    if (selectTurno) selectTurno.addEventListener('change', (e) => { state.filtroTurno = e.target.value; aplicarFiltros(); });
 
-    // 8. Publicación Express Empresas a WhatsApp
     const formExpress = document.querySelector(CONFIG.SELECTORS.FORM_EXPRESS);
     if (formExpress) {
       formExpress.addEventListener('submit', (e) => {
@@ -894,32 +882,21 @@
         const telefono = document.getElementById('exp-telefono')?.value.trim();
         const puesto = document.getElementById('exp-puesto')?.value || 'Puesto no especificado';
         const zona = document.getElementById('exp-zona')?.value || 'Zona no especificada';
-        const turno = document.getElementById('exp-turno')?.value || 'Turno no especificado';
-        const jornada = document.getElementById('exp-jornada')?.value || 'Jornada no especificada';
 
         if (!empresa || !telefono) {
           mostrarNotificacion('Completá al menos el nombre de la empresa y el teléfono.', 'error');
           return;
         }
 
-        let mensaje = `📢 *NUEVA BÚSQUEDA EXPRESS (EMPRESA)*\n\n`;
-        mensaje += `🏢 *Local/Empresa:* ${empresa}\n`;
-        mensaje += `💼 *Puesto:* ${puesto}\n`;
-        mensaje += `📍 *Zona/Barrio:* ${zona}\n`;
-        mensaje += `⏰ *Turno/Jornada:* ${turno} - ${jornada}\n`;
-        mensaje += `📱 *WhatsApp de Contacto:* ${telefono}\n\n`;
-        mensaje += `Solicito la activación y difusión de esta oferta en Jobbers Argentina.`;
-
-        const urlWA = `https://wa.me/${CONFIG.WA_DEFAULT}?text=${encodeURIComponent(mensaje)}`;
-        mostrarNotificacion('Generando anuncio Express...', 'exito');
-        window.open(urlWA, '_blank', 'noopener,noreferrer');
+        let mensaje = `📢 *NUEVA BÚSQUEDA EXPRESS (EMPRESA)*\n\n🏢 *Empresa:* ${empresa}\n💼 *Puesto:* ${puesto}\n📍 *Zona:* ${zona}\n📱 *Contacto:* ${telefono}`;
+        window.open(`https://wa.me/${CONFIG.WA_DEFAULT}?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener,noreferrer');
         formExpress.reset();
       });
     }
   }
 
   // ==========================================
-  // 8. INICIALIZACIÓN Y API PÚBLICA
+  // 9. INICIALIZACIÓN PRINCIPAL
   // ==========================================
   function init() {
     asegurarEstructurasModales();
@@ -927,6 +904,7 @@
     inicializarEventosGrid();
     inicializarTalentos();
     inicializarFiltrosYBotones();
+    inicializarFooterLinks();
     cargarVacantes();
   }
 
@@ -936,7 +914,6 @@
     init();
   }
 
-  // Exposición de API pública
   window.JobbersGastronomia = {
     init,
     cargarVacantes,
