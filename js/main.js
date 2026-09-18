@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada con Selección de Rol Activa y Modal Interactivo
+ * Versión Consolidada con Confirmación Personalizada y Modal Interactivo
  */
 
 (function () {
@@ -232,13 +232,13 @@
   // ==========================================
   // 3. CAMBIO DE MODO Y MODAL DE INICIO
   // ==========================================
-  function setMode(mode, forzarSinConfirmar = false) {
+  async function setMode(mode, forzarSinConfirmar = false) {
     const perfilActual = localStorage.getItem(CONFIG.STORAGE_KEY) || 'postulante';
 
     if (!forzarSinConfirmar && perfilActual !== mode) {
       const textoModo = mode === 'empresa' ? 'Empresa' : 'Postulante';
-      const confirmar = confirm(`¿Estás seguro de que querés cambiar al perfil de ${textoModo}?`);
-      if (!confirmar) return;
+      const confirmado = await solicitarConfirmacion(`¿Estás seguro de que querés cambiar al perfil de ${textoModo}?`);
+      if (!confirmado) return;
     }
 
     const postulanteView = document.getElementById('view-postulante');
@@ -513,9 +513,69 @@
   }
 
   // ==========================================
-  // 6. MODALES Y POSTULACIONES
+  // 6. MODALES, CONFIRMACIÓN Y POSTULACIONES
   // ==========================================
+  function solicitarConfirmacion(mensaje) {
+    return new Promise((resolve) => {
+      const modal = document.getElementById('modal-jobbers-confirm');
+      const txt = document.getElementById('confirm-mensaje');
+      const btnAceptar = document.getElementById('btn-confirm-aceptar');
+      const btnCancelar = document.getElementById('btn-confirm-cancelar');
+
+      if (!modal || !txt || !btnAceptar || !btnCancelar) {
+        resolve(confirm(mensaje));
+        return;
+      }
+
+      txt.textContent = mensaje;
+
+      const alAceptar = () => {
+        cerrarModal(modal);
+        limpiar();
+        resolve(true);
+      };
+
+      const alCancelar = () => {
+        cerrarModal(modal);
+        limpiar();
+        resolve(false);
+      };
+
+      const limpiar = () => {
+        btnAceptar.removeEventListener('click', alAceptar);
+        btnCancelar.removeEventListener('click', alCancelar);
+      };
+
+      btnAceptar.addEventListener('click', alAceptar);
+      btnCancelar.addEventListener('click', alCancelar);
+
+      abrirModal(modal);
+    });
+  }
+
   function asegurarEstructurasModales() {
+    if (!document.getElementById('modal-jobbers-confirm')) {
+      const modalConfirm = document.createElement('div');
+      modalConfirm.id = 'modal-jobbers-confirm';
+      modalConfirm.className = 'modal-overlay';
+      modalConfirm.setAttribute('role', 'dialog');
+      modalConfirm.setAttribute('aria-modal', 'true');
+      modalConfirm.setAttribute('aria-hidden', 'true');
+      modalConfirm.setAttribute('hidden', '');
+      modalConfirm.innerHTML = `
+        <div class="modal-card" style="max-width: 400px; text-align: center; padding: 1.5rem;">
+          <button type="button" class="jobbers-close-btn" style="position:absolute; right:15px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" aria-label="Cerrar ventana">&times;</button>
+          <h3 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.25rem;">¿Cambiar de perfil?</h3>
+          <p id="confirm-mensaje" style="color: var(--text-secondary, #94a3b8); margin-bottom: 1.5rem; font-size: 0.95rem;"></p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center;">
+            <button type="button" id="btn-confirm-cancelar" class="btn-amber" style="background: transparent; border: 1px solid var(--border-color, #334155); color: #fff; flex: 1;">Cancelar</button>
+            <button type="button" id="btn-confirm-aceptar" class="btn-green" style="flex: 1;">Aceptar</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modalConfirm);
+    }
+
     if (!document.getElementById('modal-jobbers-detalle')) {
       const modalDetalle = document.createElement('div');
       modalDetalle.id = 'modal-jobbers-detalle';
