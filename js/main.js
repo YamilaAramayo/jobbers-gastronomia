@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Módulo Interactivo Gastronómico
- * Versión Consolidada con Selección de Rol Obligatoria y Confirmación de Cambio
+ * Versión Consolidada con Selección de Rol Activa y Modal Interactivo
  */
 
 (function () {
@@ -235,7 +235,6 @@
   function setMode(mode, forzarSinConfirmar = false) {
     const perfilActual = localStorage.getItem(CONFIG.STORAGE_KEY) || 'postulante';
 
-    // Solicitud de confirmación si se intenta cambiar de pestaña manualmente
     if (!forzarSinConfirmar && perfilActual !== mode) {
       const textoModo = mode === 'empresa' ? 'Empresa' : 'Postulante';
       const confirmar = confirm(`¿Estás seguro de que querés cambiar al perfil de ${textoModo}?`);
@@ -265,16 +264,35 @@
   }
 
   function seleccionarModoInicial(mode) {
-    // Aplica el modo directamente sin lanzar la confirmación adicional
     setMode(mode, true);
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
     if (modalBienvenida) cerrarModal(modalBienvenida);
   }
 
+  function inicializarModalBienvenida() {
+    const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
+    if (!modalBienvenida) return;
+
+    modalBienvenida.addEventListener('click', (e) => {
+      const objetivo = e.target.closest('[data-role], [data-mode], button, div');
+      if (!objetivo || objetivo.classList.contains('jobbers-close-btn') || objetivo.classList.contains('modal-overlay')) return;
+
+      const texto = normalizarTexto(objetivo.textContent || '');
+      const dataRole = objetivo.dataset.role || objetivo.dataset.mode;
+
+      if (dataRole === 'postulante' || texto.includes('busco empleo') || texto.includes('vacantes y postularme')) {
+        e.preventDefault();
+        seleccionarModoInicial('postulante');
+      } else if (dataRole === 'empresa' || texto.includes('soy empresa') || texto.includes('publicar una oferta')) {
+        e.preventDefault();
+        seleccionarModoInicial('empresa');
+      }
+    });
+  }
+
   function verificarPerfilInicial() {
     const modalBienvenida = document.querySelector(CONFIG.SELECTORS.MODAL_BIENVENIDA);
 
-    // Despliega siempre el modal inicial para que el usuario elija su perfil al ingresar
     if (modalBienvenida) {
       abrirModal(modalBienvenida);
     } else {
@@ -708,7 +726,6 @@
       const textoNorm = normalizarTexto(link.textContent || '');
       const action = link.dataset.footerAction || textoNorm;
 
-      // 1. Opciones para Postulantes
       if (action.includes('buscar empleos')) {
         e.preventDefault();
         setMode('postulante');
@@ -732,8 +749,6 @@
           mostrarNotificacion('💡 Tip: Llevá siempre tu CV impreso y libreta sanitaria actualizada.', 'info');
         }
       }
-
-      // 2. Opciones para Empresas
       else if (action.includes('publicar vacantes')) {
         e.preventDefault();
         setMode('empresa');
@@ -755,8 +770,6 @@
         const msg = encodeURIComponent('Hola Jobbers! Me interesa solicitar información sobre Planes de Reclutamiento y Servicios B2B.');
         window.open(`https://wa.me/${CONFIG.WA_DEFAULT}?text=${msg}`, '_blank', 'noopener,noreferrer');
       }
-
-      // 3. Soporte & Recursos
       else if (action.includes('quienes somos')) {
         e.preventDefault();
         const quienesSomosSec = document.getElementById('quienes-somos');
@@ -923,6 +936,7 @@
   // ==========================================
   function init() {
     asegurarEstructurasModales();
+    inicializarModalBienvenida();
     verificarPerfilInicial();
     inicializarEventosGrid();
     inicializarTalentos();
