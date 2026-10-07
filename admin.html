@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel de Administración | Jobbers Argentina</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        /* Estilos específicos del Panel Admin */
+        body {
+            background-color: #0b0f19;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .admin-navbar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .admin-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .metric-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .metric-icon.amber { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .metric-icon.green { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .metric-icon.red { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        .metric-data h4 { font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .metric-data p { font-size: 0.85rem; color: #94a3b8; }
+
+        /* Tabla de Solicitudes */
+        .admin-table-container {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table-header-tools {
+            padding: 1.25rem;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .admin-table th {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid #334155;
+        }
+
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #334155;
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-pendiente { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .status-aprobado { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .status-rechazado { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        .btn-act {
+            padding: 0.4rem 0.7rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-right: 0.3rem;
+        }
+
+        .btn-act:hover { opacity: 0.85; }
+        .btn-act-ok { background: #22c55e; color: #fff; }
+        .btn-act-no { background: #ef4444; color: #fff; }
+
+        /* Modal de Login de Seguridad */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 15, 25, 0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MODAL DE AUTENTICACIÓN ADMIN -->
+    <div id="login-modal" class="login-overlay">
+        <div class="login-card">
+            <div style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 1rem;">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 style="margin-bottom: 0.5rem; color: #fff;">Panel Interno Jobbers</h2>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1.5rem;">Ingresá la clave de administrador para acceder a las solicitudes.</p>
+            <form id="admin-login-form">
+                <input type="password" id="admin-pass" class="input-dark w-full" placeholder="Clave de acceso" required style="padding: 0.8rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #fff; width: 100%;">
+                <p id="login-error" style="color: #ef4444; font-size: 0.8rem; display: none; margin-bottom: 0.8rem;">Clave incorrecta. Intentá de nuevo.</p>
+                <button type="submit" class="btn-amber w-full" style="padding: 0.8rem; font-weight: 700; width: 100%;">Ingresar al Panel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- NAVBAR DEL PANEL -->
+    <header class="admin-navbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="index.html" class="brand-logo" style="text-decoration: none; color: inherit;">Jobbers<span>.</span></a>
+            <span class="admin-badge"><i class="fas fa-shield-alt"></i> MÓDULO PRIVADO</span>
+        </div>
+        <div>
+            <a href="index.html" class="btn-amber" style="padding: 0.4rem 0.9rem; text-decoration: none; font-size: 0.85rem; font-weight: 700;">
+                <i class="fas fa-external-link-alt"></i> Ir a la Web Pública
+            </a>
+        </div>
+    </header>
+
+    <main class="container" style="max-width: 1100px; padding-top: 2rem; padding-bottom: 4rem;">
+
+        <!-- MÉTRICAS RÁPIDAS -->
+        <section class="admin-metrics">
+            <div class="metric-card">
+                <div class="metric-icon amber"><i class="fas fa-clock"></i></div>
+                <div class="metric-data">
+                    <h4 id="count-pendientes">0</h4>
+                    <p>Pendientes de Revisión</p>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon green"><i class="fas fa-check-circle"></i></div>
+                <div class="metric-data">
+                    <h4 id="count-aprobados">0</h4>
+                    <p>Aprobadas y Publicadas</p>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon red"><i class="fas fa-times-circle"></i></div>
+                <div class="metric-data">
+                    <h4 id="count-rechazados">0</h4>
+                    <p>Rechazadas / Archivadas</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TABLA DE CONTROL Y GESTIÓN -->
+        <section class="admin-table-container">
+            <div class="table-header-tools">
+                <div>
+                    <h3 style="color: #fff; font-size: 1.1rem;"><i class="fas fa-list-check" style="color: #f59e0b;"></i> Solicitudes de Empresas y Vacantes</h3>
+                    <p style="color: #94a3b8; font-size: 0.8rem;">Aprobá para visibilizar en la web o rechazá las ofertas dudosas.</p>
+                </div>
+                <button onclick="resetDemoData()" style="background: transparent; color: #64748b; border: 1px dashed #334155; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">
+                    <i class="fas fa-sync-alt"></i> Cargar datos de prueba
+                </button>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Empresa / Local</th>
+                            <th>Puesto Requerido</th>
+                            <th>Zona / Contacto</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body">
+                        <!-- Carga dinámica vía JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Clave de acceso administrativa (demo)
+        const ADMIN_PASS = "admin2026";
+
+        // Login Check
+        document.getElementById("admin-login-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const inputPass = document.getElementById("admin-pass").value;
+            if (inputPass === ADMIN_PASS) {
+                document.getElementById("login-modal").style.display = "none";
+                sessionStorage.setItem("jobbers_admin_auth", "true");
+                initAdmin();
+            } else {
+                document.getElementById("login-error").style.display = "block";
+            }
+        });
+
+        // Verificar sesión activa
+        if (sessionStorage.getItem("jobbers_admin_auth") === "true") {
+            document.getElementById("login-modal").style.display = "none";
+            document.addEventListener("DOMContentLoaded", initAdmin);
+        }
+
+        // Datos de ejemplo iniciales
+        const defaultData = [
+            { id: 101, fecha: "07/10/2026", empresa: "Brunch & Coffee Güemes", puesto: "Barista Profesional", zona: "Güemes, Cba", whatsapp: "3513080197", estado: "pendiente" },
+            { id: 102, fecha: "06/10/2026", empresa: "RestoBar Cerro", puesto: "Cocinero de Minutas", zona: "Cerro de las Rosas", whatsapp: "3515554321", estado: "aprobado" },
+            { id: 103, fecha: "05/10/2026", empresa: "Pizzería Centro", puesto: "Bachero / Limpieza", zona: "Centro", whatsapp: "3516667890", estado: "pendiente" }
+        ];
+
+        function getItems() {
+            return JSON.parse(localStorage.getItem("jobbers_admin_requests")) || defaultData;
+        }
+
+        function setItems(data) {
+            localStorage.setItem("jobbers_admin_requests", JSON.stringify(data));
+            initAdmin();
+        }
+
+        function initAdmin() {
+            const items = getItems();
+            const tbody = document.getElementById("admin-table-body");
+            tbody.innerHTML = "";
+
+            let countP = 0, countA = 0, countR = 0;
+
+            items.forEach(item => {
+                if (item.estado === "pendiente") countP++;
+                if (item.estado === "aprobado") countA++;
+                if (item.estado === "rechazado") countR++;
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="color: #94a3b8; font-size: 0.8rem;">${item.fecha}</td>
+                    <td><strong>${item.empresa}</strong></td>
+                    <td style="color: #f59e0b; font-weight: 600;">${item.puesto}</td>
+                    <td>
+                        ${item.zona}<br>
+                        <a href="https://wa.me/549${item.whatsapp}" target="_blank" style="color: #22c55e; font-size: 0.8rem; text-decoration: none;">
+                            <i class="fab fa-whatsapp"></i> ${item.whatsapp}
+                        </a>
+                    </td>
+                    <td><span class="status-pill status-${item.estado}">${item.estado}</span></td>
+                    <td>
+                        ${item.estado === 'pendiente' ? `
+                            <button class="btn-act btn-act-ok" onclick="cambiarEstado(${item.id}, 'aprobado')" title="Aprobar y Publicar"><i class="fas fa-check"></i> Aprobar</button>
+                            <button class="btn-act btn-act-no" onclick="cambiarEstado(${item.id}, 'rechazado')" title="Rechazar"><i class="fas fa-times"></i></button>
+                        ` : `<small style="color:#64748b;">Procesado</small>`}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById("count-pendientes").innerText = countP;
+            document.getElementById("count-aprobados").innerText = countA;
+            document.getElementById("count-rechazados").innerText = countR;
+        }
+
+        function cambiarEstado(id, nuevoEstado) {
+            let items = getItems();
+            items = items.map(item => {
+                if (item.id === id) item.estado = nuevoEstado;
+                return item;
+            });
+            setItems(items);
+        }
+
+        function resetDemoData() {
+            localStorage.removeItem("jobbers_admin_requests");
+            initAdmin();
+        }
+    </script>
+</body>
+</html>
