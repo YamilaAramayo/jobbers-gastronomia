@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <style>
-        /* Estilos específicos del Panel Admin */
         body {
             background-color: #0b0f19;
             color: #f8fafc;
@@ -43,9 +42,9 @@
 
         .admin-metrics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .metric-card {
@@ -59,57 +58,131 @@
         }
 
         .metric-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
 
         .metric-icon.amber { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
         .metric-icon.green { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
         .metric-icon.red { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .metric-icon.blue { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
 
-        .metric-data h4 { font-size: 1.5rem; font-weight: 800; color: #fff; }
-        .metric-data p { font-size: 0.85rem; color: #94a3b8; }
+        .metric-data h4 { font-size: 1.4rem; font-weight: 800; color: #fff; }
+        .metric-data p { font-size: 0.8rem; color: #94a3b8; }
 
-        /* Tabla de Solicitudes */
+        /* Barra de Filtros Avanzada */
+        .filters-toolbar {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px 12px 0 0;
+            padding: 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tab-btn-group {
+            display: flex;
+            gap: 0.5rem;
+            background: #0f172a;
+            padding: 0.3rem;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #f59e0b;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.55rem 0.8rem 0.55rem 2.2rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.85rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+
+        .urgente-chip-btn {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            color: #f59e0b;
+            padding: 0.45rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .urgente-chip-btn.active {
+            background: #f59e0b;
+            color: #000;
+        }
+
+        /* Tabla Principal */
         .admin-table-container {
             background: #1e293b;
             border: 1px solid #334155;
-            border-radius: 12px;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
             overflow: hidden;
-        }
-
-        .table-header-tools {
-            padding: 1.25rem;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
 
         .admin-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .admin-table th {
             background: #0f172a;
             color: #94a3b8;
-            padding: 1rem;
+            padding: 0.9rem 1rem;
             font-weight: 600;
             border-bottom: 1px solid #334155;
+            white-space: nowrap;
         }
 
         .admin-table td {
-            padding: 1rem;
+            padding: 0.9rem 1rem;
             border-bottom: 1px solid #334155;
             color: #e2e8f0;
             vertical-align: middle;
@@ -119,7 +192,7 @@
             display: inline-block;
             padding: 0.25rem 0.6rem;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             text-transform: uppercase;
         }
@@ -128,22 +201,34 @@
         .status-aprobado { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
         .status-rechazado { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
 
+        .badge-urgente {
+            background: #f59e0b;
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 0.2rem;
+        }
+
         .btn-act {
-            padding: 0.4rem 0.7rem;
+            padding: 0.35rem 0.6rem;
             border-radius: 6px;
             border: none;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: opacity 0.2s;
-            margin-right: 0.3rem;
+            margin-right: 0.2rem;
         }
 
         .btn-act:hover { opacity: 0.85; }
+        .btn-act-view { background: #38bdf8; color: #000; }
         .btn-act-ok { background: #22c55e; color: #fff; }
         .btn-act-no { background: #ef4444; color: #fff; }
 
-        /* Modal de Login de Seguridad */
+        /* Modal Login & Modal Detalle */
         .login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -155,28 +240,27 @@
             z-index: 9999;
         }
 
-        .login-card {
+        .modal-card {
             background: #1e293b;
             border: 1px solid #334155;
             border-radius: 16px;
-            padding: 2.5rem;
-            max-width: 400px;
+            padding: 2rem;
+            max-width: 500px;
             width: 90%;
-            text-align: center;
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- MODAL DE AUTENTICACIÓN ADMIN -->
+    <!-- MODAL DE AUTENTICACIÓN -->
     <div id="login-modal" class="login-overlay">
-        <div class="login-card">
+        <div class="modal-card" style="text-align: center;">
             <div style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 1rem;">
                 <i class="fas fa-lock"></i>
             </div>
             <h2 style="margin-bottom: 0.5rem; color: #fff;">Panel Interno Jobbers</h2>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1.5rem;">Ingresá la clave de administrador para acceder a las solicitudes.</p>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1.5rem;">Ingresá la clave de administrador para gestionar las vacantes.</p>
             <form id="admin-login-form">
                 <input type="password" id="admin-pass" class="input-dark w-full" placeholder="Clave de acceso" required style="padding: 0.8rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #fff; width: 100%;">
                 <p id="login-error" style="color: #ef4444; font-size: 0.8rem; display: none; margin-bottom: 0.8rem;">Clave incorrecta. Intentá de nuevo.</p>
@@ -185,22 +269,44 @@
         </div>
     </div>
 
+    <!-- MODAL DETALLE DE BÚSQUEDA -->
+    <div id="modal-detalle" class="login-overlay" style="display: none;">
+        <div class="modal-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid #334155; padding-bottom:0.5rem;">
+                <h3 style="color:#f59e0b;" id="m-local">Detalle de Solicitud</h3>
+                <button onclick="cerrarModalDetalle()" style="background:transparent; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">&times;</button>
+            </div>
+            <div style="font-size:0.9rem; line-height:1.6; color:#e2e8f0;">
+                <p><strong>Puesto:</strong> <span id="m-puesto"></span></p>
+                <p><strong>Ubicación:</strong> <span id="m-zona"></span></p>
+                <p><strong>Modalidad:</strong> <span id="m-turno"></span> | <span id="m-jornada"></span></p>
+                <p><strong>Contacto:</strong> <span id="m-wa"></span></p>
+                <p><strong>Prioridad Pro:</strong> <span id="m-urgente"></span></p>
+                <div style="margin-top:1rem; background:#0f172a; padding:0.8rem; border-radius:8px; border:1px solid #334155;">
+                    <strong style="color:#94a3b8; font-size:0.8rem; display:block; margin-bottom:0.3rem;">REQUISITOS Y DETALLES:</strong>
+                    <p id="m-detalles" style="white-space:pre-wrap; font-size:0.85rem; color:#cbd5e1;"></p>
+                </div>
+            </div>
+            <button onclick="cerrarModalDetalle()" class="btn-amber w-full" style="margin-top:1.5rem; padding:0.6rem;">Cerrar Ficha</button>
+        </div>
+    </div>
+
     <!-- NAVBAR DEL PANEL -->
     <header class="admin-navbar">
         <div style="display: flex; align-items: center; gap: 1rem;">
             <a href="index.html" class="brand-logo" style="text-decoration: none; color: inherit;">Jobbers<span>.</span></a>
-            <span class="admin-badge"><i class="fas fa-shield-alt"></i> MÓDULO PRIVADO</span>
+            <span class="admin-badge"><i class="fas fa-shield-alt"></i> MÓDULO ADMINISTRADOR</span>
         </div>
         <div>
             <a href="index.html" class="btn-amber" style="padding: 0.4rem 0.9rem; text-decoration: none; font-size: 0.85rem; font-weight: 700;">
-                <i class="fas fa-external-link-alt"></i> Ir a la Web Pública
+                <i class="fas fa-external-link-alt"></i> Ver Web Pública
             </a>
         </div>
     </header>
 
-    <main class="container" style="max-width: 1100px; padding-top: 2rem; padding-bottom: 4rem;">
+    <main class="container" style="max-width: 1200px; padding-top: 2rem; padding-bottom: 4rem;">
 
-        <!-- MÉTRICAS RÁPIDAS -->
+        <!-- MÉTRICAS DE CONTROL -->
         <section class="admin-metrics">
             <div class="metric-card">
                 <div class="metric-icon amber"><i class="fas fa-clock"></i></div>
@@ -213,7 +319,14 @@
                 <div class="metric-icon green"><i class="fas fa-check-circle"></i></div>
                 <div class="metric-data">
                     <h4 id="count-aprobados">0</h4>
-                    <p>Aprobadas y Publicadas</p>
+                    <p>Aprobadas / Publicadas</p>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon blue"><i class="fas fa-bolt"></i></div>
+                <div class="metric-data">
+                    <h4 id="count-urgentes">0</h4>
+                    <p>Solicitudes Urgentes Pro</p>
                 </div>
             </div>
             <div class="metric-card">
@@ -225,26 +338,41 @@
             </div>
         </section>
 
-        <!-- TABLA DE CONTROL Y GESTIÓN -->
-        <section class="admin-table-container">
-            <div class="table-header-tools">
-                <div>
-                    <h3 style="color: #fff; font-size: 1.1rem;"><i class="fas fa-list-check" style="color: #f59e0b;"></i> Solicitudes de Empresas y Vacantes</h3>
-                    <p style="color: #94a3b8; font-size: 0.8rem;">Aprobá para visibilizar en la web o rechazá las ofertas dudosas.</p>
-                </div>
-                <button onclick="resetDemoData()" style="background: transparent; color: #64748b; border: 1px dashed #334155; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">
-                    <i class="fas fa-sync-alt"></i> Cargar datos de prueba
-                </button>
+        <!-- FILTROS DE BÚSQUEDA -->
+        <div class="filters-toolbar">
+            <div class="tab-btn-group">
+                <button class="tab-btn active" onclick="filtrarEstado('todas', this)">Todas</button>
+                <button class="tab-btn" onclick="filtrarEstado('pendiente', this)">Pendientes</button>
+                <button class="tab-btn" onclick="filtrarEstado('aprobado', this)">Aprobadas</button>
+                <button class="tab-btn" onclick="filtrarEstado('rechazado', this)">Rechazadas</button>
             </div>
 
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="input-buscar" oninput="renderTabla()" placeholder="Buscar por local, puesto, zona o WhatsApp...">
+            </div>
+
+            <button id="btn-filtro-urgente" class="urgente-chip-btn" onclick="toggleFiltroUrgente()">
+                ⚡ Solo Urgentes
+            </button>
+
+            <button onclick="resetDemoData()" style="background: transparent; color: #64748b; border: 1px dashed #334155; padding: 0.45rem 0.8rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">
+                <i class="fas fa-sync-alt"></i> Reset Demo
+            </button>
+        </div>
+
+        <!-- TABLA DE VACANTES -->
+        <section class="admin-table-container">
             <div style="overflow-x: auto;">
                 <table class="admin-table">
                     <thead>
                         <tr>
                             <th>Fecha</th>
-                            <th>Empresa / Local</th>
+                            <th>Local / Gastronómico</th>
                             <th>Puesto Requerido</th>
-                            <th>Zona / Contacto</th>
+                            <th>Zona / Barrio</th>
+                            <th>Turno / Jornada</th>
+                            <th>WhatsApp</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -259,14 +387,14 @@
     </main>
 
     <script>
-        // Clave de acceso administrativa (demo)
         const ADMIN_PASS = "admin2026";
+        let filtroEstadoActual = "todas";
+        let soloUrgentes = false;
 
-        // Login Check
+        // Formulario Login
         document.getElementById("admin-login-form").addEventListener("submit", function(e) {
             e.preventDefault();
-            const inputPass = document.getElementById("admin-pass").value;
-            if (inputPass === ADMIN_PASS) {
+            if (document.getElementById("admin-pass").value === ADMIN_PASS) {
                 document.getElementById("login-modal").style.display = "none";
                 sessionStorage.setItem("jobbers_admin_auth", "true");
                 initAdmin();
@@ -275,17 +403,52 @@
             }
         });
 
-        // Verificar sesión activa
         if (sessionStorage.getItem("jobbers_admin_auth") === "true") {
             document.getElementById("login-modal").style.display = "none";
             document.addEventListener("DOMContentLoaded", initAdmin);
         }
 
-        // Datos de ejemplo iniciales
+        // Datos iniciales de prueba basados exactamente en el formulario
         const defaultData = [
-            { id: 101, fecha: "07/10/2026", empresa: "Brunch & Coffee Güemes", puesto: "Barista Profesional", zona: "Güemes, Cba", whatsapp: "3513080197", estado: "pendiente" },
-            { id: 102, fecha: "06/10/2026", empresa: "RestoBar Cerro", puesto: "Cocinero de Minutas", zona: "Cerro de las Rosas", whatsapp: "3515554321", estado: "aprobado" },
-            { id: 103, fecha: "05/10/2026", empresa: "Pizzería Centro", puesto: "Bachero / Limpieza", zona: "Centro", whatsapp: "3516667890", estado: "pendiente" }
+            { 
+                id: 201, 
+                fecha: "07/10/2026", 
+                empresa: "Brunch & Coffee Güemes", 
+                whatsapp: "3513080197", 
+                puesto: "Barista Profesional", 
+                zona: "Güemes", 
+                turno: "Turno Mañana", 
+                jornada: "Full Time", 
+                detalles: "Experiencia mínima de 1 año en arte latte. Manejo de molino y calibración de café de especialidad.", 
+                urgente: true, 
+                estado: "pendiente" 
+            },
+            { 
+                id: 202, 
+                fecha: "06/10/2026", 
+                empresa: "RestoBar Cerro", 
+                whatsapp: "3515554321", 
+                puesto: "Cocinero / Cocinera", 
+                zona: "Cerro de las Rosas / Urca", 
+                turno: "Turno Noche", 
+                jornada: "Full Time", 
+                detalles: "Para despacho de minutas, hamburguesas gourmet y tapeo. Disponibilidad para fines de semana.", 
+                urgente: false, 
+                estado: "aprobado" 
+            },
+            { 
+                id: 203, 
+                fecha: "05/10/2026", 
+                empresa: "Trattoria Centro", 
+                whatsapp: "3516667890", 
+                puesto: "Mozo / Camarera", 
+                zona: "Centro", 
+                turno: "Turno Cortado", 
+                jornada: "Part Time", 
+                detalles: "Buena presencia y buena atención al cliente. Se valora conocimiento en carta de vinos.", 
+                urgente: true, 
+                estado: "pendiente" 
+            }
         ];
 
         function getItems() {
@@ -298,42 +461,111 @@
         }
 
         function initAdmin() {
+            actualizarMetricas();
+            renderTabla();
+        }
+
+        function actualizarMetricas() {
             const items = getItems();
+            let p = 0, a = 0, r = 0, u = 0;
+            items.forEach(item => {
+                if (item.estado === "pendiente") p++;
+                if (item.estado === "aprobado") a++;
+                if (item.estado === "rechazado") r++;
+                if (item.urgente) u++;
+            });
+            document.getElementById("count-pendientes").innerText = p;
+            document.getElementById("count-aprobados").innerText = a;
+            document.getElementById("count-rechazados").innerText = r;
+            document.getElementById("count-urgentes").innerText = u;
+        }
+
+        function renderTabla() {
+            const items = getItems();
+            const busqueda = document.getElementById("input-buscar").value.toLowerCase();
             const tbody = document.getElementById("admin-table-body");
             tbody.innerHTML = "";
 
-            let countP = 0, countA = 0, countR = 0;
+            const filtrados = items.filter(item => {
+                const matchEstado = (filtroEstadoActual === "todas") || (item.estado === filtroEstadoActual);
+                const matchUrgente = !soloUrgentes || item.urgente;
+                const matchTexto = item.empresa.toLowerCase().includes(busqueda) ||
+                                   item.puesto.toLowerCase().includes(busqueda) ||
+                                   item.zona.toLowerCase().includes(busqueda) ||
+                                   item.whatsapp.includes(busqueda);
+                return matchEstado && matchUrgente && matchTexto;
+            });
 
-            items.forEach(item => {
-                if (item.estado === "pendiente") countP++;
-                if (item.estado === "aprobado") countA++;
-                if (item.estado === "rechazado") countR++;
+            if (filtrados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:#64748b;">No se encontraron solicitudes con estos filtros.</td></tr>`;
+                return;
+            }
 
+            filtrados.forEach(item => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                    <td style="color: #94a3b8; font-size: 0.8rem;">${item.fecha}</td>
-                    <td><strong>${item.empresa}</strong></td>
-                    <td style="color: #f59e0b; font-weight: 600;">${item.puesto}</td>
+                    <td style="color: #94a3b8; font-size: 0.78rem;">${item.fecha}</td>
                     <td>
-                        ${item.zona}<br>
+                        <strong>${item.empresa}</strong>
+                        ${item.urgente ? '<br><span class="badge-urgente">⚡ URGENTE PRO</span>' : ''}
+                    </td>
+                    <td style="color: #f59e0b; font-weight: 600;">${item.puesto}</td>
+                    <td>${item.zona}</td>
+                    <td style="font-size:0.8rem; color:#94a3b8;">${item.turno}<br><em>${item.jornada}</em></td>
+                    <td>
                         <a href="https://wa.me/549${item.whatsapp}" target="_blank" style="color: #22c55e; font-size: 0.8rem; text-decoration: none;">
                             <i class="fab fa-whatsapp"></i> ${item.whatsapp}
                         </a>
                     </td>
                     <td><span class="status-pill status-${item.estado}">${item.estado}</span></td>
                     <td>
+                        <button class="btn-act btn-act-view" onclick="verDetalle(${item.id})" title="Ver detalles opcionales"><i class="fas fa-eye"></i></button>
                         ${item.estado === 'pendiente' ? `
-                            <button class="btn-act btn-act-ok" onclick="cambiarEstado(${item.id}, 'aprobado')" title="Aprobar y Publicar"><i class="fas fa-check"></i> Aprobar</button>
+                            <button class="btn-act btn-act-ok" onclick="aprobarYNotificar(${item.id})" title="Aprobar y Avisar por WhatsApp"><i class="fas fa-check"></i> Aprobar</button>
                             <button class="btn-act btn-act-no" onclick="cambiarEstado(${item.id}, 'rechazado')" title="Rechazar"><i class="fas fa-times"></i></button>
                         ` : `<small style="color:#64748b;">Procesado</small>`}
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
+        }
 
-            document.getElementById("count-pendientes").innerText = countP;
-            document.getElementById("count-aprobados").innerText = countA;
-            document.getElementById("count-rechazados").innerText = countR;
+        function filtrarEstado(estado, btn) {
+            filtroEstadoActual = estado;
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderTabla();
+        }
+
+        function toggleFiltroUrgente() {
+            soloUrgentes = !soloUrgentes;
+            const btn = document.getElementById("btn-filtro-urgente");
+            if (soloUrgentes) {
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+            }
+            renderTabla();
+        }
+
+        function verDetalle(id) {
+            const item = getItems().find(x => x.id === id);
+            if (!item) return;
+
+            document.getElementById("m-local").innerText = item.empresa;
+            document.getElementById("m-puesto").innerText = item.puesto;
+            document.getElementById("m-zona").innerText = item.zona;
+            document.getElementById("m-turno").innerText = item.turno;
+            document.getElementById("m-jornada").innerText = item.jornada;
+            document.getElementById("m-wa").innerText = item.whatsapp;
+            document.getElementById("m-urgente").innerText = item.urgente ? "SÍ (⚡ Solicitud Urgente Destacada)" : "No";
+            document.getElementById("m-detalles").innerText = item.detalles || "Sin detalles u observaciones adicionales.";
+
+            document.getElementById("modal-detalle").style.display = "flex";
+        }
+
+        function cerrarModalDetalle() {
+            document.getElementById("modal-detalle").style.display = "none";
         }
 
         function cambiarEstado(id, nuevoEstado) {
@@ -343,6 +575,19 @@
                 return item;
             });
             setItems(items);
+        }
+
+        function aprobarYNotificar(id) {
+            const items = getItems();
+            const item = items.find(x => x.id === id);
+            if (!item) return;
+
+            // Cambiar estado a aprobado
+            cambiarEstado(id, 'aprobado');
+
+            // Abrir WhatsApp con mensaje predeterminado
+            const msg = encodeURIComponent(`¡Hola ${item.empresa}! 👋 Te avisamos desde Jobbers Argentina que tu búsqueda para el puesto de "${item.puesto}" ya fue aprobada y se encuentra publicada en el portal.`);
+            window.open(`https://wa.me/549${item.whatsapp}?text=${msg}`, '_blank');
         }
 
         function resetDemoData() {
