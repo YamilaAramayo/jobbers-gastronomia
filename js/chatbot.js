@@ -25,12 +25,14 @@
           <button id="chat-close-btn" style="background:none; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">&times;</button>
         </div>
         <div class="chat-messages" id="chat-messages">
-          <div class="msg-bot">${BOT_CONFIG.mensajesInicio}</div>
         </div>
       </div>
     `;
 
     document.body.appendChild(container);
+
+    // Mensaje inicial formateado
+    agregarMensaje(BOT_CONFIG.mensajesInicio, 'bot');
 
     const btnToggle = document.getElementById('jobbers-chatbot-btn');
     const chatBox = document.getElementById('jobbers-chatbot-box');
@@ -58,10 +60,21 @@
     const chatMsgContainer = document.getElementById('chat-messages');
     if (!chatMsgContainer) return;
 
-    const div = document.createElement('div');
-    div.className = tipo === 'bot' ? 'msg-bot' : 'msg-user';
-    div.textContent = texto;
-    chatMsgContainer.appendChild(div);
+    if (tipo === 'bot') {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'message-wrapper';
+      wrapper.innerHTML = `
+        <span class="msg-bot-title">Jobbers Bot 🤖</span>
+        <div class="msg-bot">${texto}</div>
+      `;
+      chatMsgContainer.appendChild(wrapper);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'msg-user';
+      div.textContent = texto;
+      chatMsgContainer.appendChild(div);
+    }
+
     chatMsgContainer.scrollTop = chatMsgContainer.scrollHeight;
   }
 
