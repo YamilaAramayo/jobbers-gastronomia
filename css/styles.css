@@ -1447,4 +1447,61 @@ opacity: 0.6;
 .btn-opt:hover {
   background: var(--accent-amber);
   color: #000000;
+   
+}
+
+/* Cabecera del Chatbot con Tacua */
+.chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-header-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--accent-amber);
+}
+
+.chat-header-status {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--accent-green);
+  font-weight: 500;
+}
+
+#chat-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+#chat-close-btn:hover {
+  color: var(--text-primary);
+}
+
+/* Autor y Avatar dentro del chat */
+.msg-bot-author {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.msg-bot-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.msg-bot-title {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 700;
 }
