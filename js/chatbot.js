@@ -1,12 +1,14 @@
 /**
- * Jobbers Argentina - Chatbot Asistente Gastronómico
+ * Jobbers Argentina - Chatbot Asistente Gastronómico (Tacua 🐦)
  */
 (function () {
   'use strict';
 
   const BOT_CONFIG = {
-    nombre: 'Jobbers Bot 🤖',
-    mensajesInicio: '¡Hola! Bienvenid@ a Jobbers Gastronomía. ¿En qué te puedo ayudar hoy?'
+    nombre: 'Tacua 🐦 (Asistente Jobbers)',
+    // Podés cambiar la URL por una imagen local como 'img/tacua-avatar.png'
+    avatarUrl: 'https://img.freepik.com/vector-premium/lindo-pajarito-azul-estilo-animado-ilustracion-vectorial_969863-1282.jpg',
+    mensajesInicio: '¡Hola! Soy Tacua, la asistente de Jobbers Gastronomía. ¿En qué te puedo ayudar hoy?'
   };
 
   function inicializarChatbot() {
@@ -16,22 +18,27 @@
     container.id = 'jobbers-chatbot-container';
     container.innerHTML = `
       <button id="jobbers-chatbot-btn" type="button" aria-expanded="false">
-        💬 Asistente Jobbers
+        <span>🐦</span> Asistente Jobbers
       </button>
 
       <div id="jobbers-chatbot-box" style="display: none;" aria-hidden="true">
         <div class="chat-header">
-          <strong>${BOT_CONFIG.nombre}</strong>
-          <button id="chat-close-btn" style="background:none; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;">&times;</button>
+          <div class="chat-header-info">
+            <img src="${BOT_CONFIG.avatarUrl}" alt="Tacua" class="chat-header-avatar">
+            <div>
+              <strong>Tacua 🐦</strong>
+              <span class="chat-header-status">En línea • Córdoba</span>
+            </div>
+          </div>
+          <button id="chat-close-btn" aria-label="Cerrar chat">&times;</button>
         </div>
-        <div class="chat-messages" id="chat-messages">
-        </div>
+        <div class="chat-messages" id="chat-messages"></div>
       </div>
     `;
 
     document.body.appendChild(container);
 
-    // Mensaje inicial formateado
+    // Mensaje inicial
     agregarMensaje(BOT_CONFIG.mensajesInicio, 'bot');
 
     const btnToggle = document.getElementById('jobbers-chatbot-btn');
@@ -64,7 +71,10 @@
       const wrapper = document.createElement('div');
       wrapper.className = 'message-wrapper';
       wrapper.innerHTML = `
-        <span class="msg-bot-title">Jobbers Bot 🤖</span>
+        <div class="msg-bot-author">
+          <img src="${BOT_CONFIG.avatarUrl}" alt="Tacua" class="msg-bot-avatar">
+          <span class="msg-bot-title">Tacua</span>
+        </div>
         <div class="msg-bot">${texto}</div>
       `;
       chatMsgContainer.appendChild(wrapper);
@@ -105,16 +115,16 @@
       switch (opcion) {
         case 'postulante':
           agregarMensaje('Para postularte a una vacante, solo tenés que hacer clic en "Postularme 📲" en cualquiera de las ofertas de la pantalla principal.');
-          agregarMensaje('¿Te gustaría saber sobre la Membresía Pro Postulantes?');
+          agregarMensaje('¿Te gustaría conocer la Membresía Jobbers Pro para destacar tu CV en Córdoba?');
           break;
 
         case 'empresa':
-          agregarMensaje('Publicar avisos en Jobbers es 100% GRATUITO. Podés completar el formulario de "Publicación Rápida" en la sección de Empresas.');
-          agregarMensaje('También ofrecemos Planes Premium B2B con vacantes fijadas en portada.');
+          agregarMensaje('Publicar avisos en Jobbers es 100% GRATUITO. Podés completar el formulario de "Publicación Rápida" en la pestaña de Empresas.');
+          agregarMensaje('También contamos con vacantes fijadas en portada y planes B2B.');
           break;
 
         case 'soporte':
-          agregarMensaje('Nuestra atención es totalmente digital a través de la plataforma. Dejanos tus datos en el formulario y te contactaremos por correo.');
+          agregarMensaje('Nuestra atención es 100% digital. Podés dejarnos tu consulta o escribirnos para soporte de CV o publicaciones.');
           break;
       }
     }, 400);
