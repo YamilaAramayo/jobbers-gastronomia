@@ -1313,6 +1313,7 @@ opacity: 0.6;
 
 /* ==========================================================================
 /* ==========================================================================
+ /* ==========================================================================
    20. WIDGET CHATBOT INTERACTIVO (JOBBERS ASISTENTE) - CORREGIDO
    ========================================================================== */
 #jobbers-chatbot-container {
@@ -1447,7 +1448,6 @@ opacity: 0.6;
 .btn-opt:hover {
   background: var(--accent-amber);
   color: #000000;
-   
 }
 
 /* Cabecera del Chatbot con Tacua */
@@ -1458,11 +1458,13 @@ opacity: 0.6;
 }
 
 .chat-header-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid var(--accent-amber);
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 1.5px solid var(--accent-amber) !important;
 }
 
 .chat-header-status {
@@ -1494,10 +1496,12 @@ opacity: 0.6;
 }
 
 .msg-bot-avatar {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
 }
 
 .msg-bot-title {
