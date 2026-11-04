@@ -915,7 +915,34 @@
   }
 
   // ==========================================
-  // 9. INICIALIZACIÓN PRINCIPAL
+  // 9. VINCULACIÓN DE TARJETAS DE SOPORTE A TACUA 🐦
+  // ==========================================
+  function vincularBotonesSoporteATacua() {
+    document.querySelectorAll('a, button').forEach(el => {
+      const texto = el.textContent.trim().toUpperCase();
+      
+      // Botón "HABLAR CON UN ASESOR" (Postulantes)
+      if (texto.includes('HABLAR CON UN ASESOR')) {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const btnChat = document.getElementById('jobbers-chatbot-btn');
+          if (btnChat) btnChat.click();
+        });
+      }
+
+      // Botón "SOPORTE A EMPRESAS" (B2B)
+      if (texto.includes('SOPORTE A EMPRESAS')) {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const btnChat = document.getElementById('jobbers-chatbot-btn');
+          if (btnChat) btnChat.click();
+        });
+      }
+    });
+  }
+
+  // ==========================================
+  // 10. INICIALIZACIÓN PRINCIPAL
   // ==========================================
   document.addEventListener('DOMContentLoaded', () => {
     asegurarEstructurasModales();
@@ -923,6 +950,7 @@
     verificarPerfilInicial();
     inicializarEventosFiltros();
     inicializarFormularioExpress();
+    vincularBotonesSoporteATacua();
     cargarVacantes();
   });
 
