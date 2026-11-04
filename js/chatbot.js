@@ -169,15 +169,15 @@
       const nuevoTicket = {
         id: Date.now(),
         fecha: fechaHoy,
-        empresa: `${nombre} (Ticket Soporte)`,
+        empresa: nombre,
         whatsapp: contacto,
-        puesto: "Consulta de Soporte",
+        puesto: "Consulta General Chatbot",
         zona: "Chatbot Web",
         turno: "Soporte General",
-        jornada: "-",
         detalles: mensaje,
         urgente: false,
-        estado: "pendiente"
+        estado: "pendiente",
+        tipo: "chatbot" // <--- Esto asegura que aparezca directo en la solapa de Chatbot del admin.html
       };
 
       actualData.unshift(nuevoTicket);
