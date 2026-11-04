@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Chatbot Asistente Gastronómico (Tacua 🐦)
- * Versión Pro - Automatizada e Inteligente
+ * Versión Pro con Formulario de Consultas Internas
  */
 (function () {
   'use strict';
@@ -94,7 +94,7 @@
     optContainer.innerHTML = `
       <button type="button" class="btn-opt" data-opt="postulante">🧑‍🍳 Soy Postulante</button>
       <button type="button" class="btn-opt" data-opt="empresa">🏢 Soy Empresa / Local</button>
-      <button type="button" class="btn-opt" data-opt="soporte">❓ Ayuda / Contacto (WhatsApp)</button>
+      <button type="button" class="btn-opt" data-opt="soporte">❓ Ayuda / Dejar Consulta</button>
     `;
 
     chatMsgContainer.appendChild(optContainer);
@@ -177,26 +177,42 @@
           break;
 
         case 'soporte':
-          agregarMensaje('Si necesitás asistencia personalizada o tenés consultas urgentes, podés comunicarte directamente con nuestro equipo por WhatsApp.');
+          agregarMensaje('Completá este breve formulario interno para derivar tu consulta directamente al panel de administración.');
           
           const chatMsgContainer = document.getElementById('chat-messages');
           if (chatMsgContainer) {
-            const wppDiv = document.createElement('div');
-            wppDiv.className = 'chat-options';
-            wppDiv.innerHTML = `
-              <a href="https://wa.me/5493541582448?text=Hola!%20Necesito%20asistencia%20con%20Jobbers%20Gastronom%C3%ADa." 
-                 target="_blank" 
-                 rel="noopener noreferrer" 
-                 class="btn-opt" 
-                 style="text-decoration: none; justify-content: center; background: var(--accent-amber); color: #000000; font-weight: 700;">
-                💬 Chatear por WhatsApp (3541582448)
-              </a>
+            const formDiv = document.createElement('div');
+            formDiv.className = 'chat-options';
+            formDiv.innerHTML = `
+              <div style="display: flex; flex-direction: column; gap: 8px; background: var(--bg-card-hover); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                <input type="text" id="ticket-nombre" placeholder="Tu Nombre / Local" style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-primary); font-size: 0.85rem;">
+                <textarea id="ticket-mensaje" placeholder="Escribí tu consulta aquí..." rows="2" style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-primary); font-size: 0.85rem; resize: none;"></textarea>
+                <button type="button" id="enviar-ticket-btn" class="btn-opt" style="justify-content: center; background: var(--accent-amber); color: #000; font-weight: 700; text-align: center;">
+                  📤 Enviar Consulta al Admin
+                </button>
+              </div>
             `;
-            chatMsgContainer.appendChild(wppDiv);
+            chatMsgContainer.appendChild(formDiv);
             chatMsgContainer.scrollTop = chatMsgContainer.scrollHeight;
+
+            document.getElementById('enviar-ticket-btn').addEventListener('click', () => {
+              const nombre = document.getElementById('ticket-nombre').value.trim();
+              const mensaje = document.getElementById('ticket-mensaje').value.trim();
+
+              if (!nombre || !mensaje) {
+                alert('Por favor, completá tu nombre y tu consulta.');
+                return;
+              }
+
+              formDiv.remove();
+              agregarMensaje(`Nombre: ${nombre} - Consulta: ${mensaje}`, 'user');
+              
+              setTimeout(() => {
+                agregarMensaje(`¡Listo ${nombre}! Tu consulta fue registrada con éxito en el sistema interno de Jobbers.`);
+                mostrarOpcionesSecundarias('soporte');
+              }, 400);
+            });
           }
-          
-          mostrarOpcionesSecundarias('soporte');
           break;
       }
     }, 400);
