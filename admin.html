@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <style>
-        /* BASE & RESET ADMIN - ESTILO JOBBERS UNIFICADO */
         body {
             background-color: var(--bg-main, #0b0f19);
             color: var(--text-primary, #f8fafc);
@@ -23,44 +22,52 @@
             margin: 0;
         }
 
-        /* NAVBAR ADMIN */
         .admin-navbar {
             background: var(--bg-card, #131822);
             border-bottom: 1px solid var(--border-color, #222c3d);
             padding: 1rem 2rem;
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            flex-wrap: wrap !important;
-            gap: 1rem !important;
-            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .admin-badge {
-            background: rgba(255, 183, 3, 0.1) !important;
-            color: var(--accent-amber, #ffb703) !important;
-            padding: 0.35rem 0.9rem !important;
-            border-radius: var(--radius-pill, 50px) !important;
-            font-size: 0.75rem !important;
-            font-weight: 800 !important;
-            letter-spacing: 0.5px !important;
-            border: 1px solid rgba(255, 183, 3, 0.25) !important;
-            display: inline-flex !important;
+            background: rgba(255, 183, 3, 0.1);
+            color: var(--accent-amber, #ffb703);
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 183, 3, 0.25);
+            display: inline-flex;
             align-items: center;
         }
 
         .badge-urgente {
-            background: var(--accent-amber, #ffb703) !important;
-            color: #000 !important;
-            font-size: 0.65rem !important;
-            font-weight: 800 !important;
-            padding: 0.15rem 0.4rem !important;
-            border-radius: var(--radius-sm, 6px) !important;
-            margin-top: 0.2rem !important;
+            background: var(--accent-amber, #ffb703);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.15rem 0.4rem;
+            border-radius: 6px;
+            margin-top: 0.2rem;
             display: inline-block;
         }
 
-        /* MÉTRICAS DE CONTROL */
+        .badge-soporte {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.15rem 0.4rem;
+            border-radius: 6px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            display: inline-block;
+        }
+
         .admin-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -71,18 +78,12 @@
         .metric-card {
             background: var(--bg-card, #131822);
             border: 1px solid var(--border-color, #222c3d);
-            border-radius: var(--radius-md, 12px);
+            border-radius: 12px;
             padding: 1.25rem;
             display: flex;
             align-items: center;
             gap: 1rem;
-            box-shadow: var(--shadow-card, 0 4px 20px rgba(0, 0, 0, 0.3));
-            transition: transform 0.2s ease;
-        }
-
-        .metric-card:hover {
-            border-color: var(--accent-amber, #ffb703);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .metric-icon {
@@ -101,13 +102,12 @@
         .metric-icon.red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
 
         .metric-data h4 { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0; }
-        .metric-data p { font-size: 0.8rem; color: var(--text-secondary, #94a3b8); margin: 0; }
+        .metric-data p { font-size: 0.8rem; color: #94a3b8; margin: 0; }
 
-        /* BARRA DE FILTROS */
         .filters-toolbar {
             background: var(--bg-card, #131822);
             border: 1px solid var(--border-color, #222c3d);
-            border-radius: var(--radius-md, 12px) var(--radius-md, 12px) 0 0;
+            border-radius: 12px 12px 0 0;
             padding: 1.25rem;
             display: flex;
             flex-wrap: wrap;
@@ -119,7 +119,7 @@
         .tab-btn-group {
             display: flex;
             gap: 0.4rem;
-            background: var(--bg-main, #0b0f19);
+            background: #0b0f19;
             padding: 0.3rem;
             border-radius: 8px;
             border: 1px solid var(--border-color, #222c3d);
@@ -128,17 +128,13 @@
         .tab-btn {
             background: transparent;
             border: none;
-            color: var(--text-secondary, #94a3b8);
+            color: #94a3b8;
             padding: 0.45rem 0.9rem;
             border-radius: 6px;
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .tab-btn:hover {
-            color: #fff;
         }
 
         .tab-btn.active {
@@ -156,17 +152,12 @@
         .search-box input {
             width: 100%;
             padding: 0.6rem 0.8rem 0.6rem 2.3rem;
-            background: var(--bg-input, #0b0f19);
+            background: #0b0f19;
             border: 1px solid var(--border-color, #222c3d);
-            border-radius: var(--radius-sm, 8px);
+            border-radius: 8px;
             color: #fff;
             font-size: 0.85rem;
             font-family: inherit;
-        }
-
-        .search-box input:focus {
-            border-color: var(--accent-amber, #ffb703);
-            outline: none;
         }
 
         .search-box i {
@@ -174,34 +165,15 @@
             left: 0.8rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-secondary, #94a3b8);
+            color: #94a3b8;
         }
 
-        .urgente-chip-btn {
-            background: rgba(255, 183, 3, 0.1);
-            border: 1px solid var(--accent-amber, #ffb703);
-            color: var(--accent-amber, #ffb703);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm, 8px);
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .urgente-chip-btn.active {
-            background: var(--accent-amber, #ffb703);
-            color: #000;
-        }
-
-        /* TABLA DE SOLICITUDES */
         .admin-table-container {
             background: var(--bg-card, #131822);
             border: 1px solid var(--border-color, #222c3d);
             border-top: none;
-            border-radius: 0 0 var(--radius-md, 12px) var(--radius-md, 12px);
+            border-radius: 0 0 12px 12px;
             overflow: hidden;
-            box-shadow: var(--shadow-card, 0 4px 20px rgba(0, 0, 0, 0.3));
         }
 
         .admin-table {
@@ -212,8 +184,8 @@
         }
 
         .admin-table th {
-            background: var(--bg-main, #0b0f19);
-            color: var(--text-secondary, #94a3b8);
+            background: #0b0f19;
+            color: #94a3b8;
             padding: 1rem;
             font-weight: 700;
             border-bottom: 1px solid var(--border-color, #222c3d);
@@ -223,12 +195,8 @@
         .admin-table td {
             padding: 1rem;
             border-bottom: 1px solid var(--border-color, #222c3d);
-            color: var(--text-primary, #f8fafc);
+            color: #f8fafc;
             vertical-align: middle;
-        }
-
-        .admin-table tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
         }
 
         .status-pill {
@@ -240,8 +208,8 @@
             text-transform: uppercase;
         }
 
-        .status-pendiente { background: rgba(255, 183, 3, 0.15); color: var(--accent-amber, #ffb703); border: 1px solid rgba(255, 183, 3, 0.3); }
-        .status-aprobado { background: rgba(0, 230, 118, 0.15); color: var(--accent-green, #00e676); border: 1px solid rgba(0, 230, 118, 0.3); }
+        .status-pendiente { background: rgba(255, 183, 3, 0.15); color: #ffb703; border: 1px solid rgba(255, 183, 3, 0.3); }
+        .status-aprobado { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
         .status-rechazado { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         .btn-act {
@@ -258,12 +226,10 @@
             gap: 0.3rem;
         }
 
-        .btn-act:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-act-view { background: #38bdf8; color: #000; }
-        .btn-act-ok { background: var(--accent-green, #00e676); color: #000; }
+        .btn-act-ok { background: #00e676; color: #000; }
         .btn-act-no { background: #ef4444; color: #fff; }
 
-        /* MODALES */
         .login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -276,9 +242,9 @@
         }
 
         .modal-card {
-            background: var(--bg-card, #131822);
+            background: #131822;
             border: 1px solid var(--border-color, #222c3d);
-            border-radius: var(--radius-lg, 16px);
+            border-radius: 16px;
             padding: 2rem;
             max-width: 480px;
             width: 90%;
@@ -289,14 +255,9 @@
             background: var(--accent-amber, #ffb703);
             color: #000;
             border: none;
-            border-radius: var(--radius-sm, 8px);
+            border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
-            transition: filter 0.2s;
-        }
-
-        .btn-amber:hover {
-            filter: brightness(1.1);
         }
     </style>
 </head>
@@ -305,34 +266,33 @@
     <!-- MODAL AUTENTICACIÓN -->
     <div id="login-modal" class="login-overlay">
         <div class="modal-card" style="text-align: center;">
-            <div style="font-size: 2.5rem; color: var(--accent-amber, #ffb703); margin-bottom: 1rem;">
+            <div style="font-size: 2.5rem; color: #ffb703; margin-bottom: 1rem;">
                 <i class="fas fa-shield-halved"></i>
             </div>
             <h2 style="margin-bottom: 0.5rem; color: #fff; font-size: 1.5rem;">Panel Interno Jobbers</h2>
-            <p style="color: var(--text-secondary, #94a3b8); font-size: 0.85rem; margin-bottom: 1.5rem;">Ingresá la clave de administrador para gestionar las vacantes y solicitudes.</p>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1.5rem;">Ingresá la clave de administrador para gestionar solicitudes y consultas.</p>
             <form id="admin-login-form">
-                <input type="password" id="admin-pass" placeholder="Clave de acceso (admin2026)" required style="padding: 0.8rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid var(--border-color, #222c3d); background: var(--bg-input, #0b0f19); color: #fff; width: 100%; font-family: inherit; box-sizing: border-box;">
+                <input type="password" id="admin-pass" placeholder="Clave de acceso (admin2026)" required style="padding: 0.8rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #222c3d; background: #0b0f19; color: #fff; width: 100%; box-sizing: border-box;">
                 <p id="login-error" style="color: #ef4444; font-size: 0.8rem; display: none; margin-bottom: 0.8rem;">Clave incorrecta. Intentá de nuevo.</p>
-                <button type="submit" class="btn-amber" style="padding: 0.8rem; width: 100%; font-size: 0.95rem;">Ingresar al Panel</button>
+                <button type="submit" class="btn-amber" style="padding: 0.8rem; width: 100%;">Ingresar al Panel</button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL DETALLE DE BÚSQUEDA -->
+    <!-- MODAL DETALLE -->
     <div id="modal-detalle" class="login-overlay" style="display: none;">
         <div class="modal-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--border-color, #222c3d); padding-bottom:0.75rem;">
-                <h3 style="color:var(--accent-amber, #ffb703); margin:0; font-size: 1.1rem;" id="m-local">Detalle de Solicitud</h3>
-                <button onclick="cerrarModalDetalle()" style="background:transparent; border:none; color:var(--text-secondary, #94a3b8); font-size:1.4rem; cursor:pointer;">&times;</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid #222c3d; padding-bottom:0.75rem;">
+                <h3 style="color:#ffb703; margin:0; font-size: 1.1rem;" id="m-local">Detalle</h3>
+                <button onclick="cerrarModalDetalle()" style="background:transparent; border:none; color:#94a3b8; font-size:1.4rem; cursor:pointer;">&times;</button>
             </div>
             <div style="font-size:0.9rem; line-height:1.6; color:#e2e8f0;">
-                <p><strong>Puesto:</strong> <span id="m-puesto" style="color:#fff;"></span></p>
-                <p><strong>Ubicación:</strong> <span id="m-zona"></span></p>
-                <p><strong>Modalidad:</strong> <span id="m-turno"></span> | <span id="m-jornada"></span></p>
+                <p><strong>Tipo / Puesto:</strong> <span id="m-puesto" style="color:#fff;"></span></p>
+                <p><strong>Ubicación / Canal:</strong> <span id="m-zona"></span></p>
+                <p><strong>Modalidad / Turno:</strong> <span id="m-turno"></span></p>
                 <p><strong>Contacto:</strong> <span id="m-wa"></span></p>
-                <p><strong>Prioridad Pro:</strong> <span id="m-urgente"></span></p>
-                <div style="margin-top:1rem; background:var(--bg-main, #0b0f19); padding:1rem; border-radius:8px; border:1px solid var(--border-color, #222c3d);">
-                    <strong style="color:var(--text-secondary, #94a3b8); font-size:0.75rem; display:block; margin-bottom:0.4rem; letter-spacing:0.5px;">REQUISITOS Y OBSERVACIONES:</strong>
+                <div style="margin-top:1rem; background:#0b0f19; padding:1rem; border-radius:8px; border:1px solid #222c3d;">
+                    <strong style="color:#94a3b8; font-size:0.75rem; display:block; margin-bottom:0.4rem;">CONTENIDO / OBSERVACIONES:</strong>
                     <p id="m-detalles" style="white-space:pre-wrap; font-size:0.85rem; color:#cbd5e1; margin:0;"></p>
                 </div>
             </div>
@@ -343,7 +303,7 @@
     <!-- NAVBAR ADMIN -->
     <header class="admin-navbar">
         <div style="display: flex; align-items: center; gap: 1rem;">
-            <a href="index.html" style="text-decoration: none; color: #fff; font-weight: 800; font-size: 1.4rem;">Jobbers<span style="color:var(--accent-amber, #ffb703);">.</span></a>
+            <a href="index.html" style="text-decoration: none; color: #fff; font-weight: 800; font-size: 1.4rem;">Jobbers<span style="color:#ffb703;">.</span></a>
             <span class="admin-badge"><i class="fas fa-shield-alt" style="margin-right: 0.4rem;"></i> MÓDULO ADMINISTRADOR</span>
         </div>
         <div>
@@ -355,39 +315,27 @@
 
     <main class="container" style="max-width: 1200px; padding: 2rem 1rem 4rem; margin: 0 auto;">
 
-        <!-- MÉTRICAS DE CONTROL -->
+        <!-- MÉTRICAS -->
         <section class="admin-metrics">
             <div class="metric-card">
                 <div class="metric-icon amber"><i class="fas fa-clock"></i></div>
-                <div class="metric-data">
-                    <h4 id="count-pendientes">0</h4>
-                    <p>Pendientes de Revisión</p>
-                </div>
+                <div class="metric-data"><h4 id="count-pendientes">0</h4><p>Pendientes</p></div>
             </div>
             <div class="metric-card">
                 <div class="metric-icon green"><i class="fas fa-check-circle"></i></div>
-                <div class="metric-data">
-                    <h4 id="count-aprobados">0</h4>
-                    <p>Aprobadas / Publicadas</p>
-                </div>
+                <div class="metric-data"><h4 id="count-aprobados">0</h4><p>Aprobadas / Atendidas</p></div>
             </div>
             <div class="metric-card">
-                <div class="metric-icon blue"><i class="fas fa-bolt"></i></div>
-                <div class="metric-data">
-                    <h4 id="count-urgentes">0</h4>
-                    <p>Solicitudes Urgentes Pro</p>
-                </div>
+                <div class="metric-icon blue"><i class="fas fa-comments"></i></div>
+                <div class="metric-data"><h4 id="count-consultas">0</h4><p>Consultas del Chatbot</p></div>
             </div>
             <div class="metric-card">
                 <div class="metric-icon red"><i class="fas fa-times-circle"></i></div>
-                <div class="metric-data">
-                    <h4 id="count-rechazados">0</h4>
-                    <p>Rechazadas / Archivadas</p>
-                </div>
+                <div class="metric-data"><h4 id="count-rechazados">0</h4><p>Rechazadas</p></div>
             </div>
         </section>
 
-        <!-- FILTROS DE BÚSQUEDA -->
+        <!-- FILTROS -->
         <div class="filters-toolbar">
             <div class="tab-btn-group">
                 <button class="tab-btn active" onclick="filtrarEstado('todas', this)">Todas</button>
@@ -398,37 +346,31 @@
 
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="input-buscar" oninput="renderTabla()" placeholder="Buscar por local, puesto, zona o WhatsApp...">
+                <input type="text" id="input-buscar" oninput="renderTabla()" placeholder="Buscar por nombre, puesto, consulta o contacto...">
             </div>
 
-            <button id="btn-filtro-urgente" class="urgente-chip-btn" onclick="toggleFiltroUrgente()">
-                ⚡ Solo Urgentes
-            </button>
-
-            <button onclick="resetDemoData()" style="background: transparent; color: var(--text-secondary, #94a3b8); border: 1px dashed var(--border-color, #222c3d); padding: 0.5rem 0.8rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer; transition: color 0.2s;" title="Restaurar datos de ejemplo">
+            <button onclick="resetDemoData()" style="background: transparent; color: #94a3b8; border: 1px dashed #222c3d; padding: 0.5rem 0.8rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">
                 <i class="fas fa-sync-alt"></i> Reset Demo
             </button>
         </div>
 
-        <!-- TABLA DE VACANTES -->
+        <!-- TABLA -->
         <section class="admin-table-container">
             <div style="overflow-x: auto;">
                 <table class="admin-table">
                     <thead>
                         <tr>
                             <th>Fecha</th>
-                            <th>Local / Gastronómico</th>
-                            <th>Puesto Requerido</th>
-                            <th>Zona / Barrio</th>
-                            <th>Turno / Jornada</th>
-                            <th>WhatsApp</th>
+                            <th>Origen / Solicitante</th>
+                            <th>Detalle / Puesto</th>
+                            <th>Ubicación / Canal</th>
+                            <th>Turno / Info</th>
+                            <th>Contacto</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="admin-table-body">
-                        <!-- Carga dinámica vía JS -->
-                    </tbody>
+                    <tbody id="admin-table-body"></tbody>
                 </table>
             </div>
         </section>
@@ -438,9 +380,7 @@
     <script>
         const ADMIN_PASS = "admin2026";
         let filtroEstadoActual = "todas";
-        let soloUrgentes = false;
 
-        // Login
         document.getElementById("admin-login-form").addEventListener("submit", function(e) {
             e.preventDefault();
             if (document.getElementById("admin-pass").value === ADMIN_PASS) {
@@ -457,8 +397,20 @@
             document.addEventListener("DOMContentLoaded", initAdmin);
         }
 
-        // Datos de prueba iniciales
         const defaultData = [
+            { 
+                id: 101, 
+                fecha: "07/10/2026", 
+                empresa: "María Gómez (Ticket Soporte)", 
+                whatsapp: "3541582448", 
+                puesto: "Consulta de Soporte", 
+                zona: "Chatbot Web", 
+                turno: "Soporte General", 
+                jornada: "-", 
+                detalles: "Hola, quiero saber cómo destacar mi perfil de cocinera en la plataforma.", 
+                urgente: false, 
+                estado: "pendiente" 
+            },
             { 
                 id: 201, 
                 fecha: "07/10/2026", 
@@ -468,33 +420,7 @@
                 zona: "Güemes", 
                 turno: "Turno Mañana", 
                 jornada: "Full Time", 
-                detalles: "Experiencia mínima de 1 año en arte latte. Manejo de molino y calibración de café de especialidad.", 
-                urgente: true, 
-                estado: "pendiente" 
-            },
-            { 
-                id: 202, 
-                fecha: "06/10/2026", 
-                empresa: "RestoBar Cerro", 
-                whatsapp: "3515554321", 
-                puesto: "Cocinero / Cocinera", 
-                zona: "Cerro de las Rosas / Urca", 
-                turno: "Turno Noche", 
-                jornada: "Full Time", 
-                detalles: "Para despacho de minutas, hamburguesas gourmet y tapeo. Disponibilidad para fines de semana.", 
-                urgente: false, 
-                estado: "aprobado" 
-            },
-            { 
-                id: 203, 
-                fecha: "05/10/2026", 
-                empresa: "Trattoria Centro", 
-                whatsapp: "3516667890", 
-                puesto: "Mozo / Camarera", 
-                zona: "Centro", 
-                turno: "Turno Cortado", 
-                jornada: "Part Time", 
-                detalles: "Buena presencia y excelente atención al público. Se valora conocimiento en carta de vinos.", 
+                detalles: "Experiencia mínima de 1 año en arte latte.", 
                 urgente: true, 
                 estado: "pendiente" 
             }
@@ -516,17 +442,17 @@
 
         function actualizarMetricas() {
             const items = getItems();
-            let p = 0, a = 0, r = 0, u = 0;
+            let p = 0, a = 0, c = 0, r = 0;
             items.forEach(item => {
                 if (item.estado === "pendiente") p++;
                 if (item.estado === "aprobado") a++;
                 if (item.estado === "rechazado") r++;
-                if (item.urgente) u++;
+                if (item.puesto && item.puesto.includes("Soporte")) c++;
             });
             document.getElementById("count-pendientes").innerText = p;
             document.getElementById("count-aprobados").innerText = a;
+            document.getElementById("count-consultas").innerText = c;
             document.getElementById("count-rechazados").innerText = r;
-            document.getElementById("count-urgentes").innerText = u;
         }
 
         function renderTabla() {
@@ -537,42 +463,42 @@
 
             const filtrados = items.filter(item => {
                 const matchEstado = (filtroEstadoActual === "todas") || (item.estado === filtroEstadoActual);
-                const matchUrgente = !soloUrgentes || item.urgente;
                 const matchTexto = item.empresa.toLowerCase().includes(busqueda) ||
                                    item.puesto.toLowerCase().includes(busqueda) ||
-                                   item.zona.toLowerCase().includes(busqueda) ||
-                                   item.whatsapp.includes(busqueda);
-                return matchEstado && matchUrgente && matchTexto;
+                                   item.whatsapp.toLowerCase().includes(busqueda);
+                return matchEstado && matchTexto;
             });
 
             if (filtrados.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:var(--text-secondary, #94a3b8);">No se encontraron solicitudes con estos filtros.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:#94a3b8;">No se encontraron solicitudes ni consultas.</td></tr>`;
                 return;
             }
 
             filtrados.forEach(item => {
+                const esSoporte = item.puesto && item.puesto.includes("Soporte");
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                    <td style="color: var(--text-secondary, #94a3b8); font-size: 0.78rem;">${item.fecha}</td>
+                    <td style="color: #94a3b8; font-size: 0.78rem;">${item.fecha}</td>
                     <td>
                         <strong>${item.empresa}</strong>
                         ${item.urgente ? '<br><span class="badge-urgente">⚡ URGENTE PRO</span>' : ''}
+                        ${esSoporte ? '<br><span class="badge-soporte">💬 CONSULTA CHATBOT</span>' : ''}
                     </td>
-                    <td style="color: var(--accent-amber, #ffb703); font-weight: 600;">${item.puesto}</td>
+                    <td style="color: #ffb703; font-weight: 600;">${item.puesto}</td>
                     <td>${item.zona}</td>
-                    <td style="font-size:0.8rem; color:var(--text-secondary, #94a3b8);">${item.turno}<br><em>${item.jornada}</em></td>
+                    <td style="font-size:0.8rem; color:#94a3b8;">${item.turno}</td>
                     <td>
-                        <a href="https://wa.me/549${item.whatsapp}" target="_blank" style="color: var(--accent-green, #00e676); font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                        <a href="https://wa.me/549${item.whatsapp.replace(/\D/g,'')}" target="_blank" style="color: #00e676; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                             <i class="fab fa-whatsapp"></i> ${item.whatsapp}
                         </a>
                     </td>
                     <td><span class="status-pill status-${item.estado}">${item.estado}</span></td>
                     <td>
-                        <button class="btn-act btn-act-view" onclick="verDetalle(${item.id})" title="Ver detalles opcionales"><i class="fas fa-eye"></i></button>
+                        <button class="btn-act btn-act-view" onclick="verDetalle(${item.id})" title="Ver detalles"><i class="fas fa-eye"></i></button>
                         ${item.estado === 'pendiente' ? `
-                            <button class="btn-act btn-act-ok" onclick="aprobarYNotificar(${item.id})" title="Aprobar y Avisar por WhatsApp"><i class="fas fa-check"></i> Aprobar</button>
+                            <button class="btn-act btn-act-ok" onclick="cambiarEstado(${item.id}, 'aprobado')" title="Marcar atendido"><i class="fas fa-check"></i> Atender</button>
                             <button class="btn-act btn-act-no" onclick="cambiarEstado(${item.id}, 'rechazado')" title="Rechazar"><i class="fas fa-times"></i></button>
-                        ` : `<small style="color:var(--text-secondary, #94a3b8);">Procesado</small>`}
+                        ` : `<small style="color:#94a3b8;">Procesado</small>`}
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -586,17 +512,6 @@
             renderTabla();
         }
 
-        function toggleFiltroUrgente() {
-            soloUrgentes = !soloUrgentes;
-            const btn = document.getElementById("btn-filtro-urgente");
-            if (soloUrgentes) {
-                btn.classList.add("active");
-            } else {
-                btn.classList.remove("active");
-            }
-            renderTabla();
-        }
-
         function verDetalle(id) {
             const item = getItems().find(x => x.id === id);
             if (!item) return;
@@ -605,10 +520,8 @@
             document.getElementById("m-puesto").innerText = item.puesto;
             document.getElementById("m-zona").innerText = item.zona;
             document.getElementById("m-turno").innerText = item.turno;
-            document.getElementById("m-jornada").innerText = item.jornada;
             document.getElementById("m-wa").innerText = item.whatsapp;
-            document.getElementById("m-urgente").innerText = item.urgente ? "SÍ (⚡ Solicitud Urgente Destacada)" : "No";
-            document.getElementById("m-detalles").innerText = item.detalles || "Sin detalles u observaciones adicionales.";
+            document.getElementById("m-detalles").innerText = item.detalles || "Sin detalles.";
 
             document.getElementById("modal-detalle").style.display = "flex";
         }
@@ -624,17 +537,6 @@
                 return item;
             });
             setItems(items);
-        }
-
-        function aprobarYNotificar(id) {
-            const items = getItems();
-            const item = items.find(x => x.id === id);
-            if (!item) return;
-
-            cambiarEstado(id, 'aprobado');
-
-            const msg = encodeURIComponent(`¡Hola ${item.empresa}! 👋 Te avisamos desde Jobbers Argentina que tu búsqueda para el puesto de "${item.puesto}" ya fue aprobada y se encuentra publicada en el portal.`);
-            window.open(`https://wa.me/549${item.whatsapp}?text=${msg}`, '_blank');
         }
 
         function resetDemoData() {
