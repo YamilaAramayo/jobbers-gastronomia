@@ -1,5 +1,6 @@
 /**
  * Jobbers Argentina - Chatbot Asistente Gastronómico (Tacua 🐦)
+ * Versión Pro - Automatizada e Inteligente
  */
 (function () {
   'use strict';
@@ -7,7 +8,7 @@
   const BOT_CONFIG = {
     nombre: 'Tacua 🐦 (Asistente Jobbers)',
     avatarUrl: 'https://img.freepik.com/vector-premium/lindo-pajarito-azul-estilo-animado-ilustracion-vectorial_969863-1282.jpg',
-    mensajesInicio: '¡Hola! Soy Tacua, la asistente de Jobbers Gastronomía. ¿En qué te puedo ayudar hoy?'
+    mensajesInicio: '¡Hola! Soy Tacua 🐦, tu asistente en Jobbers Gastronomía. ¿En qué te puedo echar una pata hoy?'
   };
 
   function inicializarChatbot() {
@@ -93,7 +94,7 @@
     optContainer.innerHTML = `
       <button type="button" class="btn-opt" data-opt="postulante">🧑‍🍳 Soy Postulante</button>
       <button type="button" class="btn-opt" data-opt="empresa">🏢 Soy Empresa / Local</button>
-      <button type="button" class="btn-opt" data-opt="soporte">❓ Ayuda / Contacto</button>
+      <button type="button" class="btn-opt" data-opt="soporte">❓ Ayuda / Contacto (WhatsApp)</button>
     `;
 
     chatMsgContainer.appendChild(optContainer);
@@ -101,7 +102,6 @@
 
     optContainer.querySelectorAll('.btn-opt').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        // Desactivar botones anteriores para mantener orden
         optContainer.remove();
         manejarOpcion(e.target.dataset.opt, e.target.textContent);
       });
@@ -118,11 +118,13 @@
     if (tipoMenu === 'postulante') {
       optContainer.innerHTML = `
         <button type="button" class="btn-opt" data-action="pro">⭐ Ver Membresía Pro</button>
+        <button type="button" class="btn-opt" data-action="consejos">💡 Tips para armar mi CV</button>
         <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
       `;
     } else if (tipoMenu === 'empresa') {
       optContainer.innerHTML = `
         <button type="button" class="btn-opt" data-action="publicar">🚀 ¿Cómo publicar gratis?</button>
+        <button type="button" class="btn-opt" data-action="planesb2b">👑 Ver Planes Premium B2B</button>
         <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
       `;
     } else {
@@ -143,10 +145,16 @@
           agregarMensaje('¿En qué otra cosa te puedo ayudar?', 'bot');
           mostrarOpcionesPrincipales();
         } else if (accion === 'pro') {
-          agregarMensaje('La Membresía Jobbers Pro te otorga prioridad en la grilla y herramientas exclusivas para destacar tu perfil en Córdoba.');
+          agregarMensaje('La Membresía Jobbers Pro te otorga ubicación prioritaria en la grilla y herramientas exclusivas para acelerar tu contratación en Córdoba.');
+          mostrarOpcionesSecundarias('postulante');
+        } else if (accion === 'consejos') {
+          agregarMensaje('Destacá tus experiencias clave en cocina, barra o salón, poné tus datos de contacto claros y subí tu archivo en formato PDF.');
           mostrarOpcionesSecundarias('postulante');
         } else if (accion === 'publicar') {
-          agregarMensaje('Simplemente ingresá a la sección "Empresas" en la barra superior de la web y completá el formulario express en segundos.');
+          agregarMensaje('Entrá a la sección de "Empresas" en la barra superior de la web y completá el formulario de Publicación Rápida en menos de 2 minutos.');
+          mostrarOpcionesSecundarias('empresa');
+        } else if (accion === 'planesb2b') {
+          agregarMensaje('Los planes B2B incluyen vacantes fijadas en portada y difusión prioritaria para captar al mejor personal gastronómico al instante.');
           mostrarOpcionesSecundarias('empresa');
         }
       });
@@ -159,17 +167,35 @@
     setTimeout(() => {
       switch (opcion) {
         case 'postulante':
-          agregarMensaje('Para postularte a una vacante, solo hacé clic en el botón "Postularme 📲" que figura en cada oferta de la pantalla principal.');
+          agregarMensaje('Para postularte, solo tenés que hacer clic en el botón "Postularme 📲" que figura en cada oferta de la pantalla principal.');
           mostrarOpcionesSecundarias('postulante');
           break;
 
         case 'empresa':
-          agregarMensaje('Publicar avisos en Jobbers es 100% gratuito mediante el formulario de Publicación Rápida en la pestaña de Empresas.');
+          agregarMensaje('Publicar avisos en Jobbers es 100% gratuito mediante el formulario express en la pestaña de Empresas de la plataforma.');
           mostrarOpcionesSecundarias('empresa');
           break;
 
         case 'soporte':
-          agregarMensaje('Nuestra atención es 100% digital y autogestionada en la plataforma para agilizar tus búsquedas sin esperas.');
+          agregarMensaje('Si necesitás asistencia personalizada o tenés consultas urgentes, podés comunicarte directamente con nuestro equipo por WhatsApp.');
+          
+          const chatMsgContainer = document.getElementById('chat-messages');
+          if (chatMsgContainer) {
+            const wppDiv = document.createElement('div');
+            wppDiv.className = 'chat-options';
+            wppDiv.innerHTML = `
+              <a href="https://wa.me/5493541582448?text=Hola!%20Necesito%20asistencia%20con%20Jobbers%20Gastronom%C3%ADa." 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 class="btn-opt" 
+                 style="text-decoration: none; justify-content: center; background: var(--accent-amber); color: #000000; font-weight: 700;">
+                💬 Chatear por WhatsApp (3541582448)
+              </a>
+            `;
+            chatMsgContainer.appendChild(wppDiv);
+            chatMsgContainer.scrollTop = chatMsgContainer.scrollHeight;
+          }
+          
           mostrarOpcionesSecundarias('soporte');
           break;
       }
