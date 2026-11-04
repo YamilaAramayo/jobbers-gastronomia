@@ -1,6 +1,6 @@
 /**
  * Jobbers Argentina - Chatbot Asistente Gastronómico (Tacua 🐦)
- * Versión Pro con Formulario de Consultas Internas
+ * Versión Pro con Sistema Interno de Consultas y Captura de Contacto
  */
 (function () {
   'use strict';
@@ -161,6 +161,32 @@
     });
   }
 
+  function guardarConsultaEnAdmin(nombre, contacto, mensaje) {
+    try {
+      const actualData = JSON.parse(localStorage.getItem('jobbers_admin_requests')) || [];
+      const fechaHoy = new Date().toLocaleDateString('es-AR');
+      
+      const nuevoTicket = {
+        id: Date.now(),
+        fecha: fechaHoy,
+        empresa: `${nombre} (Ticket Soporte)`,
+        whatsapp: contacto,
+        puesto: "Consulta de Soporte",
+        zona: "Chatbot Web",
+        turno: "Soporte General",
+        jornada: "-",
+        detalles: mensaje,
+        urgente: false,
+        estado: "pendiente"
+      };
+
+      actualData.unshift(nuevoTicket);
+      localStorage.setItem('jobbers_admin_requests', JSON.stringify(actualData));
+    } catch (err) {
+      console.error('Error al guardar la consulta en el storage local:', err);
+    }
+  }
+
   function manejarOpcion(opcion, labelTexto) {
     agregarMensaje(labelTexto, 'user');
 
@@ -177,7 +203,7 @@
           break;
 
         case 'soporte':
-          agregarMensaje('Completá este breve formulario interno para derivar tu consulta directamente al panel de administración.');
+          agregarMensaje('Completá este breve formulario interno con tu medio de contacto para derivar tu consulta directamente al panel de administración.');
           
           const chatMsgContainer = document.getElementById('chat-messages');
           if (chatMsgContainer) {
@@ -186,6 +212,7 @@
             formDiv.innerHTML = `
               <div style="display: flex; flex-direction: column; gap: 8px; background: var(--bg-card-hover); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
                 <input type="text" id="ticket-nombre" placeholder="Tu Nombre / Local" style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-primary); font-size: 0.85rem;">
+                <input type="text" id="ticket-contacto" placeholder="WhatsApp o Correo de contacto" style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-primary); font-size: 0.85rem;">
                 <textarea id="ticket-mensaje" placeholder="Escribí tu consulta aquí..." rows="2" style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-primary); font-size: 0.85rem; resize: none;"></textarea>
                 <button type="button" id="enviar-ticket-btn" class="btn-opt" style="justify-content: center; background: var(--accent-amber); color: #000; font-weight: 700; text-align: center;">
                   📤 Enviar Consulta al Admin
@@ -197,18 +224,21 @@
 
             document.getElementById('enviar-ticket-btn').addEventListener('click', () => {
               const nombre = document.getElementById('ticket-nombre').value.trim();
+              const contacto = document.getElementById('ticket-contacto').value.trim();
               const mensaje = document.getElementById('ticket-mensaje').value.trim();
 
-              if (!nombre || !mensaje) {
-                alert('Por favor, completá tu nombre y tu consulta.');
+              if (!nombre || !contacto || !mensaje) {
+                alert('Por favor, completá todos los campos para poder responderte.');
                 return;
               }
 
+              guardarConsultaEnAdmin(nombre, contacto, mensaje);
+
               formDiv.remove();
-              agregarMensaje(`Nombre: ${nombre} - Consulta: ${mensaje}`, 'user');
+              agregarMensaje(`Nombre: ${nombre} (${contacto}) - Consulta: ${mensaje}`, 'user');
               
               setTimeout(() => {
-                agregarMensaje(`¡Listo ${nombre}! Tu consulta fue registrada con éxito en el sistema interno de Jobbers.`);
+                agregarMensaje(`¡Listo ${nombre}! Recibimos tu consulta junto con tu contacto. Te responderemos a la brevedad.`);
                 mostrarOpcionesSecundarias('soporte');
               }, 400);
             });
