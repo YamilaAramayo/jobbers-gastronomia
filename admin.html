@@ -46,28 +46,42 @@
             align-items: center;
         }
 
-        .badge-urgente {
+        /* PESTAÑAS PRINCIPALES (SECCIÓN ADMIN / CHATBOT) */
+        .main-tabs-container {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color, #222c3d);
+            padding-bottom: 1rem;
+        }
+
+        .main-tab-btn {
+            background: var(--bg-card, #131822);
+            border: 1px solid var(--border-color, #222c3d);
+            color: var(--text-secondary, #94a3b8);
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .main-tab-btn:hover {
+            color: #fff;
+            border-color: rgba(255, 183, 3, 0.4);
+        }
+
+        .main-tab-btn.active {
             background: var(--accent-amber, #ffb703);
             color: #000;
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 0.15rem 0.4rem;
-            border-radius: 6px;
-            margin-top: 0.2rem;
-            display: inline-block;
+            border-color: var(--accent-amber, #ffb703);
         }
 
-        .badge-soporte {
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 0.15rem 0.4rem;
-            border-radius: 6px;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            display: inline-block;
-        }
-
+        /* MÉTRICAS */
         .admin-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -104,6 +118,7 @@
         .metric-data h4 { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0; }
         .metric-data p { font-size: 0.8rem; color: #94a3b8; margin: 0; }
 
+        /* FILTROS */
         .filters-toolbar {
             background: var(--bg-card, #131822);
             border: 1px solid var(--border-color, #222c3d);
@@ -212,6 +227,17 @@
         .status-aprobado { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
         .status-rechazado { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
 
+        .badge-urgente {
+            background: #ffb703;
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.15rem 0.4rem;
+            border-radius: 6px;
+            margin-top: 0.2rem;
+            display: inline-block;
+        }
+
         .btn-act {
             padding: 0.4rem 0.7rem;
             border-radius: 6px;
@@ -283,16 +309,16 @@
     <div id="modal-detalle" class="login-overlay" style="display: none;">
         <div class="modal-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid #222c3d; padding-bottom:0.75rem;">
-                <h3 style="color:#ffb703; margin:0; font-size: 1.1rem;" id="m-local">Detalle</h3>
+                <h3 style="color:#ffb703; margin:0; font-size: 1.1rem;" id="m-titulo">Detalle</h3>
                 <button onclick="cerrarModalDetalle()" style="background:transparent; border:none; color:#94a3b8; font-size:1.4rem; cursor:pointer;">&times;</button>
             </div>
             <div style="font-size:0.9rem; line-height:1.6; color:#e2e8f0;">
-                <p><strong>Tipo / Puesto:</strong> <span id="m-puesto" style="color:#fff;"></span></p>
-                <p><strong>Ubicación / Canal:</strong> <span id="m-zona"></span></p>
-                <p><strong>Modalidad / Turno:</strong> <span id="m-turno"></span></p>
+                <p><strong><span id="label-campo1">Empresa</span>:</strong> <span id="m-val1" style="color:#fff;"></span></p>
+                <p><strong><span id="label-campo2">Puesto</span>:</strong> <span id="m-val2"></span></p>
+                <p><strong><span id="label-campo3">Zona</span>:</strong> <span id="m-val3"></span></p>
                 <p><strong>Contacto:</strong> <span id="m-wa"></span></p>
                 <div style="margin-top:1rem; background:#0b0f19; padding:1rem; border-radius:8px; border:1px solid #222c3d;">
-                    <strong style="color:#94a3b8; font-size:0.75rem; display:block; margin-bottom:0.4rem;">CONTENIDO / OBSERVACIONES:</strong>
+                    <strong style="color:#94a3b8; font-size:0.75rem; display:block; margin-bottom:0.4rem;">MENSAJE / REQUISITOS:</strong>
                     <p id="m-detalles" style="white-space:pre-wrap; font-size:0.85rem; color:#cbd5e1; margin:0;"></p>
                 </div>
             </div>
@@ -315,24 +341,19 @@
 
     <main class="container" style="max-width: 1200px; padding: 2rem 1rem 4rem; margin: 0 auto;">
 
-        <!-- MÉTRICAS -->
-        <section class="admin-metrics">
-            <div class="metric-card">
-                <div class="metric-icon amber"><i class="fas fa-clock"></i></div>
-                <div class="metric-data"><h4 id="count-pendientes">0</h4><p>Pendientes</p></div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon green"><i class="fas fa-check-circle"></i></div>
-                <div class="metric-data"><h4 id="count-aprobados">0</h4><p>Aprobadas / Atendidas</p></div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon blue"><i class="fas fa-comments"></i></div>
-                <div class="metric-data"><h4 id="count-consultas">0</h4><p>Consultas del Chatbot</p></div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon red"><i class="fas fa-times-circle"></i></div>
-                <div class="metric-data"><h4 id="count-rechazados">0</h4><p>Rechazadas</p></div>
-            </div>
+        <!-- PESTAÑAS PRINCIPALES (SECCIONES) -->
+        <div class="main-tabs-container">
+            <button class="main-tab-btn active" id="tab-empresas-btn" onclick="cambiarSeccion('empresas')">
+                <i class="fas fa-building"></i> 🏢 Solicitudes de Empresas (Vacantes)
+            </button>
+            <button class="main-tab-btn" id="tab-chatbot-btn" onclick="cambiarSeccion('chatbot')">
+                <i class="fas fa-comments"></i> 💬 Consultas del Chatbot (Soporte)
+            </button>
+        </div>
+
+        <!-- MÉTRICAS DINÁMICAS -->
+        <section class="admin-metrics" id="container-metrics">
+            <!-- Se actualiza por JS -->
         </section>
 
         <!-- FILTROS -->
@@ -340,13 +361,13 @@
             <div class="tab-btn-group">
                 <button class="tab-btn active" onclick="filtrarEstado('todas', this)">Todas</button>
                 <button class="tab-btn" onclick="filtrarEstado('pendiente', this)">Pendientes</button>
-                <button class="tab-btn" onclick="filtrarEstado('aprobado', this)">Aprobadas</button>
+                <button class="tab-btn" onclick="filtrarEstado('aprobado', this)">Atendidas / Aprobadas</button>
                 <button class="tab-btn" onclick="filtrarEstado('rechazado', this)">Rechazadas</button>
             </div>
 
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="input-buscar" oninput="renderTabla()" placeholder="Buscar por nombre, puesto, consulta o contacto...">
+                <input type="text" id="input-buscar" oninput="renderTabla()" placeholder="Buscar por nombre, puesto o contacto...">
             </div>
 
             <button onclick="resetDemoData()" style="background: transparent; color: #94a3b8; border: 1px dashed #222c3d; padding: 0.5rem 0.8rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">
@@ -354,23 +375,16 @@
             </button>
         </div>
 
-        <!-- TABLA -->
+        <!-- TABLA DINÁMICA -->
         <section class="admin-table-container">
             <div style="overflow-x: auto;">
                 <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Origen / Solicitante</th>
-                            <th>Detalle / Puesto</th>
-                            <th>Ubicación / Canal</th>
-                            <th>Turno / Info</th>
-                            <th>Contacto</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
+                    <thead id="tabla-head">
+                        <!-- Cabecera dinámica -->
                     </thead>
-                    <tbody id="admin-table-body"></tbody>
+                    <tbody id="admin-table-body">
+                        <!-- Contenido dinámico -->
+                    </tbody>
                 </table>
             </div>
         </section>
@@ -379,6 +393,7 @@
 
     <script>
         const ADMIN_PASS = "admin2026";
+        let seccionActual = "empresas"; // 'empresas' o 'chatbot'
         let filtroEstadoActual = "todas";
 
         document.getElementById("admin-login-form").addEventListener("submit", function(e) {
@@ -401,15 +416,15 @@
             { 
                 id: 101, 
                 fecha: "07/10/2026", 
-                empresa: "María Gómez (Ticket Soporte)", 
+                empresa: "María Gómez", 
                 whatsapp: "3541582448", 
                 puesto: "Consulta de Soporte", 
                 zona: "Chatbot Web", 
                 turno: "Soporte General", 
-                jornada: "-", 
                 detalles: "Hola, quiero saber cómo destacar mi perfil de cocinera en la plataforma.", 
                 urgente: false, 
-                estado: "pendiente" 
+                estado: "pendiente",
+                tipo: "chatbot" 
             },
             { 
                 id: 201, 
@@ -422,7 +437,8 @@
                 jornada: "Full Time", 
                 detalles: "Experiencia mínima de 1 año en arte latte.", 
                 urgente: true, 
-                estado: "pendiente" 
+                estado: "pendiente",
+                tipo: "empresa" 
             }
         ];
 
@@ -440,67 +456,144 @@
             renderTabla();
         }
 
+        function cambiarSeccion(seccion) {
+            seccionActual = seccion;
+            document.getElementById("tab-empresas-btn").classList.toggle("active", seccion === "empresas");
+            document.getElementById("tab-chatbot-btn").classList.toggle("active", seccion === "chatbot");
+            filtroEstadoActual = "todas";
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            document.querySelector(".tab-btn-group button").classList.add("active");
+            initAdmin();
+        }
+
         function actualizarMetricas() {
             const items = getItems();
-            let p = 0, a = 0, c = 0, r = 0;
-            items.forEach(item => {
+            const filtradosSeccion = items.filter(i => (i.tipo || 'empresa') === seccionActual);
+
+            let p = 0, a = 0, r = 0, u = 0;
+            filtradosSeccion.forEach(item => {
                 if (item.estado === "pendiente") p++;
                 if (item.estado === "aprobado") a++;
                 if (item.estado === "rechazado") r++;
-                if (item.puesto && item.puesto.includes("Soporte")) c++;
+                if (item.urgente) u++;
             });
-            document.getElementById("count-pendientes").innerText = p;
-            document.getElementById("count-aprobados").innerText = a;
-            document.getElementById("count-consultas").innerText = c;
-            document.getElementById("count-rechazados").innerText = r;
+
+            const metricsContainer = document.getElementById("container-metrics");
+            if (seccionActual === "empresas") {
+                metricsContainer.innerHTML = `
+                    <div class="metric-card"><div class="metric-icon amber"><i class="fas fa-clock"></i></div><div class="metric-data"><h4>${p}</h4><p>Pendientes de Revisión</p></div></div>
+                    <div class="metric-card"><div class="metric-icon green"><i class="fas fa-check-circle"></i></div><div class="metric-data"><h4>${a}</h4><p>Aprobadas / Publicadas</p></div></div>
+                    <div class="metric-card"><div class="metric-icon blue"><i class="fas fa-bolt"></i></div><div class="metric-data"><h4>${u}</h4><p>Solicitudes Urgentes Pro</p></div></div>
+                    <div class="metric-card"><div class="metric-icon red"><i class="fas fa-times-circle"></i></div><div class="metric-data"><h4>${r}</h4><p>Rechazadas</p></div></div>
+                `;
+            } else {
+                metricsContainer.innerHTML = `
+                    <div class="metric-card"><div class="metric-icon amber"><i class="fas fa-clock"></i></div><div class="metric-data"><h4>${p}</h4><p>Consultas Nuevas</p></div></div>
+                    <div class="metric-card"><div class="metric-icon green"><i class="fas fa-check-circle"></i></div><div class="metric-data"><h4>${a}</h4><p>Consultas Atendidas</p></div></div>
+                    <div class="metric-card"><div class="metric-icon red"><i class="fas fa-times-circle"></i></div><div class="metric-data"><h4>${r}</h4><p>Archivadas</p></div></div>
+                `;
+            }
         }
 
         function renderTabla() {
             const items = getItems();
             const busqueda = document.getElementById("input-buscar").value.toLowerCase();
+            const thead = document.getElementById("tabla-head");
             const tbody = document.getElementById("admin-table-body");
             tbody.innerHTML = "";
 
             const filtrados = items.filter(item => {
+                const tipoItem = item.tipo || 'empresa';
+                if (tipoItem !== seccionActual) return false;
+
                 const matchEstado = (filtroEstadoActual === "todas") || (item.estado === filtroEstadoActual);
                 const matchTexto = item.empresa.toLowerCase().includes(busqueda) ||
-                                   item.puesto.toLowerCase().includes(busqueda) ||
-                                   item.whatsapp.toLowerCase().includes(busqueda);
+                                   (item.puesto && item.puesto.toLowerCase().includes(busqueda)) ||
+                                   item.whatsapp.toLowerCase().includes(busqueda) ||
+                                   (item.detalles && item.detalles.toLowerCase().includes(busqueda));
                 return matchEstado && matchTexto;
             });
 
+            if (seccionActual === "empresas") {
+                thead.innerHTML = `
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Local / Empresa</th>
+                        <th>Puesto Requerido</th>
+                        <th>Zona / Barrio</th>
+                        <th>Turno / Jornada</th>
+                        <th>WhatsApp</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                `;
+            } else {
+                thead.innerHTML = `
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Solicitante</th>
+                        <th>Asunto / Consulta</th>
+                        <th>Canal</th>
+                        <th>Contacto (Wpp / Correo)</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                `;
+            }
+
             if (filtrados.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:#94a3b8;">No se encontraron solicitudes ni consultas.</td></tr>`;
+                const cols = seccionActual === "empresas" ? 8 : 7;
+                tbody.innerHTML = `<tr><td colspan="${cols}" style="text-align:center; padding:2rem; color:#94a3b8;">No se encontraron registros en esta sección.</td></tr>`;
                 return;
             }
 
             filtrados.forEach(item => {
-                const esSoporte = item.puesto && item.puesto.includes("Soporte");
                 const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td style="color: #94a3b8; font-size: 0.78rem;">${item.fecha}</td>
-                    <td>
-                        <strong>${item.empresa}</strong>
-                        ${item.urgente ? '<br><span class="badge-urgente">⚡ URGENTE PRO</span>' : ''}
-                        ${esSoporte ? '<br><span class="badge-soporte">💬 CONSULTA CHATBOT</span>' : ''}
-                    </td>
-                    <td style="color: #ffb703; font-weight: 600;">${item.puesto}</td>
-                    <td>${item.zona}</td>
-                    <td style="font-size:0.8rem; color:#94a3b8;">${item.turno}</td>
-                    <td>
-                        <a href="https://wa.me/549${item.whatsapp.replace(/\D/g,'')}" target="_blank" style="color: #00e676; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-                            <i class="fab fa-whatsapp"></i> ${item.whatsapp}
-                        </a>
-                    </td>
-                    <td><span class="status-pill status-${item.estado}">${item.estado}</span></td>
-                    <td>
-                        <button class="btn-act btn-act-view" onclick="verDetalle(${item.id})" title="Ver detalles"><i class="fas fa-eye"></i></button>
-                        ${item.estado === 'pendiente' ? `
-                            <button class="btn-act btn-act-ok" onclick="cambiarEstado(${item.id}, 'aprobado')" title="Marcar atendido"><i class="fas fa-check"></i> Atender</button>
-                            <button class="btn-act btn-act-no" onclick="cambiarEstado(${item.id}, 'rechazado')" title="Rechazar"><i class="fas fa-times"></i></button>
-                        ` : `<small style="color:#94a3b8;">Procesado</small>`}
-                    </td>
-                `;
+                if (seccionActual === "empresas") {
+                    tr.innerHTML = `
+                        <td style="color: #94a3b8; font-size: 0.78rem;">${item.fecha}</td>
+                        <td>
+                            <strong>${item.empresa}</strong>
+                            ${item.urgente ? '<br><span class="badge-urgente">⚡ URGENTE PRO</span>' : ''}
+                        </td>
+                        <td style="color: #ffb703; font-weight: 600;">${item.puesto}</td>
+                        <td>${item.zona}</td>
+                        <td style="font-size:0.8rem; color:#94a3b8;">${item.turno}<br><em>${item.jornada || ''}</em></td>
+                        <td>
+                            <a href="https://wa.me/549${item.whatsapp.replace(/\D/g,'')}" target="_blank" style="color: #00e676; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fab fa-whatsapp"></i> ${item.whatsapp}
+                            </a>
+                        </td>
+                        <td><span class="status-pill status-${item.estado}">${item.estado}</span></td>
+                        <td>
+                            <button class="btn-act btn-act-view" onclick="verDetalle(${item.id})" title="Ver detalles"><i class="fas fa-eye"></i></button>
+                            ${item.estado === 'pendiente' ? `
+                                <button class="btn-act btn-act-ok" onclick="aprobarYNotificarEmpresa(${item.id})" title="Aprobar"><i class="fas fa-check"></i> Aprobar</button>
+                                <button class="btn-act btn-act-no" onclick="cambiarEstado(${item.id}, 'rechazado')" title="Rechazar"><i class="fas fa-times"></i></button>
+                            ` : `<small style="color:#94a3b8;">Procesado</small>`}
+                        </td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td style="color: #94a3b8; font-size: 0.78rem;">${item.fecha}</td>
+                        <td><strong>${item.empresa}</strong></td>
+                        <td style="color: #38bdf8; font-weight: 600;">${item.puesto}</td>
+                        <td>${item.zona}</td>
+                        <td>
+                            <a href="https://wa.me/549${item.whatsapp.replace(/\D/g,'')}" target="_blank" style="color: #00e676; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fab fa-whatsapp"></i> ${item.whatsapp}
+                            </a>
+                        </td>
+                        <td><span class="status-pill status-${item.estado}">${item.estado}</span></td>
+                        <td>
+                            <button class="btn-act btn-act-view" onclick="verDetalle(${item.id})" title="Ver consulta"><i class="fas fa-eye"></i></button>
+                            ${item.estado === 'pendiente' ? `
+                                <button class="btn-act btn-act-ok" onclick="cambiarEstado(${item.id}, 'aprobado')" title="Marcar atendido"><i class="fas fa-check"></i> Atender</button>
+                                <button class="btn-act btn-act-no" onclick="cambiarEstado(${item.id}, 'rechazado')" title="Archivar"><i class="fas fa-times"></i></button>
+                            ` : `<small style="color:#94a3b8;">Atendido</small>`}
+                        </td>
+                    `;
+                }
                 tbody.appendChild(tr);
             });
         }
@@ -516,13 +609,26 @@
             const item = getItems().find(x => x.id === id);
             if (!item) return;
 
-            document.getElementById("m-local").innerText = item.empresa;
-            document.getElementById("m-puesto").innerText = item.puesto;
-            document.getElementById("m-zona").innerText = item.zona;
-            document.getElementById("m-turno").innerText = item.turno;
-            document.getElementById("m-wa").innerText = item.whatsapp;
-            document.getElementById("m-detalles").innerText = item.detalles || "Sin detalles.";
+            if (seccionActual === "empresas") {
+                document.getElementById("m-titulo").innerText = "Detalle de Vacante";
+                document.getElementById("label-campo1").innerText = "Empresa";
+                document.getElementById("label-campo2").innerText = "Puesto";
+                document.getElementById("label-campo3").innerText = "Zona";
+                document.getElementById("m-val1").innerText = item.empresa;
+                document.getElementById("m-val2").innerText = item.puesto;
+                document.getElementById("m-val3").innerText = `${item.zona} (${item.turno} - ${item.jornada})`;
+            } else {
+                document.getElementById("m-titulo").innerText = "Detalle de Consulta de Chatbot";
+                document.getElementById("label-campo1").innerText = "Solicitante";
+                document.getElementById("label-campo2").innerText = "Asunto";
+                document.getElementById("label-campo3").innerText = "Canal";
+                document.getElementById("m-val1").innerText = item.empresa;
+                document.getElementById("m-val2").innerText = item.puesto;
+                document.getElementById("m-val3").innerText = item.zona;
+            }
 
+            document.getElementById("m-wa").innerText = item.whatsapp;
+            document.getElementById("m-detalles").innerText = item.detalles || "Sin detalles adicionales.";
             document.getElementById("modal-detalle").style.display = "flex";
         }
 
@@ -537,6 +643,16 @@
                 return item;
             });
             setItems(items);
+        }
+
+        function aprobarYNotificarEmpresa(id) {
+            const items = getItems();
+            const item = items.find(x => x.id === id);
+            if (!item) return;
+
+            cambiarEstado(id, 'aprobado');
+            const msg = encodeURIComponent(`¡Hola ${item.empresa}! 👋 Te avisamos desde Jobbers Argentina que tu búsqueda para el puesto de "${item.puesto}" ya fue aprobada y se encuentra publicada en el portal.`);
+            window.open(`https://wa.me/549${item.whatsapp.replace(/\D/g,'')}`, '_blank');
         }
 
         function resetDemoData() {
