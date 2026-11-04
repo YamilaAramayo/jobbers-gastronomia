@@ -6,7 +6,6 @@
 
   const BOT_CONFIG = {
     nombre: 'Tacua 🐦 (Asistente Jobbers)',
-    // Podés cambiar la URL por una imagen local como 'img/tacua-avatar.png'
     avatarUrl: 'https://img.freepik.com/vector-premium/lindo-pajarito-azul-estilo-animado-ilustracion-vectorial_969863-1282.jpg',
     mensajesInicio: '¡Hola! Soy Tacua, la asistente de Jobbers Gastronomía. ¿En qué te puedo ayudar hoy?'
   };
@@ -38,8 +37,9 @@
 
     document.body.appendChild(container);
 
-    // Mensaje inicial
+    // Mensaje inicial y opciones base
     agregarMensaje(BOT_CONFIG.mensajesInicio, 'bot');
+    mostrarOpcionesPrincipales();
 
     const btnToggle = document.getElementById('jobbers-chatbot-btn');
     const chatBox = document.getElementById('jobbers-chatbot-box');
@@ -50,10 +50,6 @@
       chatBox.style.display = visible ? 'none' : 'flex';
       btnToggle.setAttribute('aria-expanded', !visible);
       chatBox.setAttribute('aria-hidden', visible);
-
-      if (!visible && document.querySelectorAll('.chat-options').length === 0) {
-        mostrarOpcionesIniciales();
-      }
     });
 
     btnClose.addEventListener('click', () => {
@@ -88,7 +84,7 @@
     chatMsgContainer.scrollTop = chatMsgContainer.scrollHeight;
   }
 
-  function mostrarOpcionesIniciales() {
+  function mostrarOpcionesPrincipales() {
     const chatMsgContainer = document.getElementById('chat-messages');
     if (!chatMsgContainer) return;
 
@@ -104,7 +100,56 @@
     chatMsgContainer.scrollTop = chatMsgContainer.scrollHeight;
 
     optContainer.querySelectorAll('.btn-opt').forEach(btn => {
-      btn.addEventListener('click', (e) => manejarOpcion(e.target.dataset.opt, e.target.textContent));
+      btn.addEventListener('click', (e) => {
+        // Desactivar botones anteriores para mantener orden
+        optContainer.remove();
+        manejarOpcion(e.target.dataset.opt, e.target.textContent);
+      });
+    });
+  }
+
+  function mostrarOpcionesSecundarias(tipoMenu) {
+    const chatMsgContainer = document.getElementById('chat-messages');
+    if (!chatMsgContainer) return;
+
+    const optContainer = document.createElement('div');
+    optContainer.className = 'chat-options';
+
+    if (tipoMenu === 'postulante') {
+      optContainer.innerHTML = `
+        <button type="button" class="btn-opt" data-action="pro">⭐ Ver Membresía Pro</button>
+        <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
+      `;
+    } else if (tipoMenu === 'empresa') {
+      optContainer.innerHTML = `
+        <button type="button" class="btn-opt" data-action="publicar">🚀 ¿Cómo publicar gratis?</button>
+        <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
+      `;
+    } else {
+      optContainer.innerHTML = `
+        <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
+      `;
+    }
+
+    chatMsgContainer.appendChild(optContainer);
+    chatMsgContainer.scrollTop = chatMsgContainer.scrollHeight;
+
+    optContainer.querySelectorAll('.btn-opt').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const accion = e.target.dataset.action;
+        optContainer.remove();
+        
+        if (accion === 'reiniciar') {
+          agregarMensaje('¿En qué otra cosa te puedo ayudar?', 'bot');
+          mostrarOpcionesPrincipales();
+        } else if (accion === 'pro') {
+          agregarMensaje('La Membresía Jobbers Pro te otorga prioridad en la grilla y herramientas exclusivas para destacar tu perfil en Córdoba.');
+          mostrarOpcionesSecundarias('postulante');
+        } else if (accion === 'publicar') {
+          agregarMensaje('Simplemente ingresá a la sección "Empresas" en la barra superior de la web y completá el formulario express en segundos.');
+          mostrarOpcionesSecundarias('empresa');
+        }
+      });
     });
   }
 
@@ -114,17 +159,18 @@
     setTimeout(() => {
       switch (opcion) {
         case 'postulante':
-          agregarMensaje('Para postularte a una vacante, solo tenés que hacer clic en "Postularme 📲" en cualquiera de las ofertas de la pantalla principal.');
-          agregarMensaje('¿Te gustaría conocer la Membresía Jobbers Pro para destacar tu CV en Córdoba?');
+          agregarMensaje('Para postularte a una vacante, solo hacé clic en el botón "Postularme 📲" que figura en cada oferta de la pantalla principal.');
+          mostrarOpcionesSecundarias('postulante');
           break;
 
         case 'empresa':
-          agregarMensaje('Publicar avisos en Jobbers es 100% GRATUITO. Podés completar el formulario de "Publicación Rápida" en la pestaña de Empresas.');
-          agregarMensaje('También contamos con vacantes fijadas en portada y planes B2B.');
+          agregarMensaje('Publicar avisos en Jobbers es 100% gratuito mediante el formulario de Publicación Rápida en la pestaña de Empresas.');
+          mostrarOpcionesSecundarias('empresa');
           break;
 
         case 'soporte':
-          agregarMensaje('Nuestra atención es 100% digital. Podés dejarnos tu consulta o escribirnos para soporte de CV o publicaciones.');
+          agregarMensaje('Nuestra atención es 100% digital y autogestionada en la plataforma para agilizar tus búsquedas sin esperas.');
+          mostrarOpcionesSecundarias('soporte');
           break;
       }
     }, 400);
