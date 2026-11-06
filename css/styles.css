@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
 /* ==========================================================================
-
 VARIABLES Y PALETA DE DISEÑO (SYSTEM TOKENIZED)
 ========================================================================== */
 :root {
@@ -133,7 +132,7 @@ display: block;
 }
 
 /* ==========================================================================
-4. HEADER & NAVBAR
+4. HEADER & NAVBAR (CON LOGOTIPO VECTORIAL)
 ========================================================================== */
 .navbar {
 position: sticky;
@@ -151,13 +150,21 @@ transform: translateZ(0);
 }
 
 .brand-logo {
-font-size: 1.4rem;
-font-weight: 800;
-letter-spacing: -0.02em;
+display: flex;
+align-items: center;
+text-decoration: none;
+height: 40px;
 }
 
-.brand-logo span {
-color: var(--accent-amber);
+.logo-jobbers-svg {
+height: 38px;
+width: auto;
+display: block;
+transition: transform var(--transition-fast);
+}
+
+.brand-logo:hover .logo-jobbers-svg {
+transform: scale(1.03);
 }
 
 .mode-switch-container {
@@ -680,7 +687,7 @@ padding: 2.5rem 2rem;
 
 .express-form-card {
 padding: 1.25rem;
-background-color: #13171F; /* Fondo totalmente opaco para evitar transparencias */
+background-color: #13171F;
 border: 1px solid var(--border-color);
 border-radius: var(--radius-sm);
 }
@@ -1060,7 +1067,7 @@ position: relative;
 width: 100%;
 max-width: 480px;
 padding: 2rem 1.75rem;
-background-color: #13171F; /* Fondo sólido opaco obligatorio para opacar el contenido trasero */
+background-color: #13171F;
 border: 1px solid var(--border-color);
 border-radius: var(--radius-lg);
 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
@@ -1094,7 +1101,6 @@ background-color: var(--bg-card-hover);
 color: var(--text-primary);
 }
 
-/* Modal Selector de Perfil */
 .welcome-title {
 font-size: 1.35rem;
 font-weight: 800;
@@ -1157,7 +1163,6 @@ font-size: 0.85rem;
 color: var(--text-secondary);
 }
 
-/* Modal Ver Talento */
 .modal-talento-header {
 display: flex;
 align-items: center;
@@ -1243,7 +1248,6 @@ white-space: nowrap;
 border: 0;
 }
 
-/* Estilos Quiénes Somos (Tokenizado) */
 .quienes-somos-section {
 padding: 3rem 1.5rem;
 background-color: var(--bg-card);
@@ -1312,10 +1316,8 @@ opacity: 0.6;
 }
 
 /* ==========================================================================
-/* ==========================================================================
- /* ==========================================================================
-   20. WIDGET CHATBOT INTERACTIVO (JOBBERS ASISTENTE) - CORREGIDO
-   ========================================================================== */
+20. WIDGET CHATBOT INTERACTIVO (JOBBERS ASISTENTE)
+========================================================================== */
 #jobbers-chatbot-container {
   position: fixed;
   bottom: 20px;
@@ -1385,7 +1387,6 @@ opacity: 0.6;
   gap: 10px;
 }
 
-/* Contenedor de cada mensaje del bot para separar el nombre/avatar del texto */
 .message-wrapper {
   display: flex;
   flex-direction: column;
@@ -1450,7 +1451,6 @@ opacity: 0.6;
   color: #000000;
 }
 
-/* Cabecera del Chatbot con Tacua */
 .chat-header-info {
   display: flex;
   align-items: center;
@@ -1487,7 +1487,6 @@ opacity: 0.6;
   color: var(--text-primary);
 }
 
-/* Autor y Avatar dentro del chat */
 .msg-bot-author {
   display: flex;
   align-items: center;
@@ -1502,10 +1501,4 @@ opacity: 0.6;
   min-height: 20px !important;
   border-radius: 50% !important;
   object-fit: cover !important;
-}
-
-.msg-bot-title {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  font-weight: 700;
 }
