@@ -1,14 +1,14 @@
 /**
  * Jobbers Argentina - Chatbot Asistente Gastronómico (Tacua 🐦)
- * Versión Pro con Sistema Interno de Consultas y Captura de Contacto
+ * Versión Unificada: Canal de Soporte a Empresas y Asistencia General
  */
 (function () {
   'use strict';
 
   const BOT_CONFIG = {
-    nombre: 'Tacua 🐦 (Asistente Jobbers)',
+    nombre: 'Tacua 🐦 (Soporte Jobbers)',
     avatarUrl: 'https://img.freepik.com/vector-premium/lindo-pajarito-azul-estilo-animado-ilustracion-vectorial_969863-1282.jpg',
-    mensajesInicio: '¡Hola! Soy Tacua 🐦, tu asistente en Jobbers Gastronomía. ¿En qué te puedo echar una pata hoy?'
+    mensajesInicio: '¡Hola! Soy Tacua 🐦. Asisto en la coordinación y soporte técnico de Jobbers Gastronomía. ¿En qué te podemos ayudar hoy?'
   };
 
   function inicializarChatbot() {
@@ -18,7 +18,7 @@
     container.id = 'jobbers-chatbot-container';
     container.innerHTML = `
       <button id="jobbers-chatbot-btn" type="button" aria-expanded="false">
-        <span>🐦</span> Asistente Jobbers
+        <span>🐦</span> Soporte Jobbers
       </button>
 
       <div id="jobbers-chatbot-box" style="display: none;" aria-hidden="true">
@@ -27,7 +27,7 @@
             <img src="${BOT_CONFIG.avatarUrl}" alt="Tacua" class="chat-header-avatar">
             <div>
               <strong>Tacua 🐦</strong>
-              <span class="chat-header-status">En línea • Córdoba</span>
+              <span class="chat-header-status">Soporte a Empresas • Córdoba</span>
             </div>
           </div>
           <button id="chat-close-btn" aria-label="Cerrar chat">&times;</button>
@@ -38,7 +38,7 @@
 
     document.body.appendChild(container);
 
-    // Mensaje inicial y opciones base
+    // Mensaje inicial y opciones base unificadas
     agregarMensaje(BOT_CONFIG.mensajesInicio, 'bot');
     mostrarOpcionesPrincipales();
 
@@ -91,10 +91,11 @@
 
     const optContainer = document.createElement('div');
     optContainer.className = 'chat-options';
+    // Menú unificado apuntando al canal corporativo requerido
     optContainer.innerHTML = `
-      <button type="button" class="btn-opt" data-opt="postulante">🧑‍🍳 Soy Postulante</button>
-      <button type="button" class="btn-opt" data-opt="empresa">🏢 Soy Empresa / Local</button>
-      <button type="button" class="btn-opt" data-opt="soporte">❓ Ayuda / Dejar Consulta</button>
+      <button type="button" class="btn-opt" data-opt="soporte-empresas">💬 Contactar Soporte a Empresas</button>
+      <button type="button" class="btn-opt" data-opt="info-publicacion">📢 Consultar sobre Publicar Vacantes</button>
+      <button type="button" class="btn-opt" data-opt="consulta-general">❓ Dejar Consulta General</button>
     `;
 
     chatMsgContainer.appendChild(optContainer);
@@ -104,59 +105,6 @@
       btn.addEventListener('click', (e) => {
         optContainer.remove();
         manejarOpcion(e.target.dataset.opt, e.target.textContent);
-      });
-    });
-  }
-
-  function mostrarOpcionesSecundarias(tipoMenu) {
-    const chatMsgContainer = document.getElementById('chat-messages');
-    if (!chatMsgContainer) return;
-
-    const optContainer = document.createElement('div');
-    optContainer.className = 'chat-options';
-
-    if (tipoMenu === 'postulante') {
-      optContainer.innerHTML = `
-        <button type="button" class="btn-opt" data-action="pro">⭐ Ver Membresía Pro</button>
-        <button type="button" class="btn-opt" data-action="consejos">💡 Tips para armar mi CV</button>
-        <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
-      `;
-    } else if (tipoMenu === 'empresa') {
-      optContainer.innerHTML = `
-        <button type="button" class="btn-opt" data-action="publicar">🚀 ¿Cómo publicar gratis?</button>
-        <button type="button" class="btn-opt" data-action="planesb2b">👑 Ver Planes Premium B2B</button>
-        <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
-      `;
-    } else {
-      optContainer.innerHTML = `
-        <button type="button" class="btn-opt" data-action="reiniciar">🔄 Volver al menú principal</button>
-      `;
-    }
-
-    chatMsgContainer.appendChild(optContainer);
-    chatMsgContainer.scrollTop = chatMsgContainer.scrollHeight;
-
-    optContainer.querySelectorAll('.btn-opt').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const accion = e.target.dataset.action;
-        optContainer.remove();
-        
-        if (accion === 'reiniciar') {
-          agregarMensaje('¿En qué otra cosa te puedo ayudar?', 'bot');
-          mostrarOpcionesPrincipales();
-        } else if (accion === 'pro') {
-          agregarMensaje('La Membresía Jobbers Pro te otorga ubicación prioritaria en la grilla y herramientas exclusivas para acelerar tu contratación en Córdoba.');
-          mostrarOpcionesSecundarias('postulante');
-        } else if (accion === 'consejos') {
-          agregarMensaje('Destacá tus experiencias clave en cocina, barra o salón, poné tus datos de contacto claros y subí tu archivo en formato PDF.');
-          mostrarOpcionesSecundarias('postulante');
-        } else if (accion === 'publicar') {
-          agregarMensaje('Entrá a la sección de "Empresas" en la barra superior de la web y completá el formulario de Publicación Rápida en menos de 2 minutos.');
-          mostrarOpcionesSecundarias('empresa');
-        } else if (accion === 'planesb2b') {
-          agregarMensaje('Los planes B2B incluyen vacantes fijadas en portada y difusión prioritaria para captar al mejor personal gastronómico al instante.');
-          mostrarOpcionesSecundarias('empresa');
-        }
       });
     });
   }
@@ -171,13 +119,13 @@
         fecha: fechaHoy,
         empresa: nombre,
         whatsapp: contacto,
-        puesto: "Consulta General Chatbot",
+        puesto: "Soporte Unificado Chatbot",
         zona: "Chatbot Web",
-        turno: "Soporte General",
+        turno: "Soporte",
         detalles: mensaje,
         urgente: false,
         estado: "pendiente",
-        tipo: "chatbot" // <--- Esto asegura que aparezca directo en la solapa de Chatbot del admin.html
+        tipo: "chatbot"
       };
 
       actualData.unshift(nuevoTicket);
@@ -192,18 +140,24 @@
 
     setTimeout(() => {
       switch (opcion) {
-        case 'postulante':
-          agregarMensaje('Para postularte, solo tenés que hacer clic en el botón "Postularme 📲" que figura en cada oferta de la pantalla principal.');
-          mostrarOpcionesSecundarias('postulante');
+        case 'soporte-empresas':
+          agregarMensaje('Derivando al canal unificado corporativo...');
+          setTimeout(() => {
+            window.open('https://wa.me/5493513080197?text=Hola%2C%20necesito%20asistencia%20en%20el%20canal%20de%20Soporte%20a%20Empresas%20de%20Jobbers.', '_blank');
+            agregarMensaje('Se abrió el WhatsApp de Soporte a Empresas en otra pestaña. ¿Te puedo ayudar en algo más?');
+            mostrarOpcionesPrincipales();
+          }, 600);
           break;
 
-        case 'empresa':
-          agregarMensaje('Publicar avisos en Jobbers es 100% gratuito mediante el formulario express en la pestaña de Empresas de la plataforma.');
-          mostrarOpcionesSecundarias('empresa');
+        case 'info-publicacion':
+          agregarMensaje('Para publicar avisos y conectar con talento gastronómico, podés usar el formulario de publicación rápida o comunicarte directamente con nuestro canal de Soporte a Empresas.');
+          setTimeout(() => {
+            mostrarOpcionesPrincipales();
+          }, 1000);
           break;
 
-        case 'soporte':
-          agregarMensaje('Completá este breve formulario interno con tu medio de contacto para derivar tu consulta directamente al panel de administración.');
+        case 'consulta-general':
+          agregarMensaje('Completá este breve formulario para registrar tu consulta directamente en nuestro sistema interno:');
           
           const chatMsgContainer = document.getElementById('chat-messages');
           if (chatMsgContainer) {
@@ -228,18 +182,18 @@
               const mensaje = document.getElementById('ticket-mensaje').value.trim();
 
               if (!nombre || !contacto || !mensaje) {
-                alert('Por favor, completá todos los campos para poder responderte.');
+                alert('Por favor, completá todos los campos.');
                 return;
               }
 
               guardarConsultaEnAdmin(nombre, contacto, mensaje);
 
               formDiv.remove();
-              agregarMensaje(`Nombre: ${nombre} (${contacto}) - Consulta: ${mensaje}`, 'user');
+              agregarMensaje(`Consulta enviada por: ${nombre} (${contacto})`, 'user');
               
               setTimeout(() => {
-                agregarMensaje(`¡Listo ${nombre}! Recibimos tu consulta junto con tu contacto. Te responderemos a la brevedad.`);
-                mostrarOpcionesSecundarias('soporte');
+                agregarMensaje(`¡Listo ${nombre}! Recibimos tu consulta. Te contactaremos a la brevedad.`);
+                mostrarOpcionesPrincipales();
               }, 400);
             });
           }
