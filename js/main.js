@@ -765,21 +765,23 @@
     const nombre = document.getElementById('post-nombre')?.value.trim();
     const telefono = document.getElementById('post-telefono')?.value.trim();
     const experiencia = document.getElementById('post-experiencia')?.value.trim();
-    const rawWA = document.getElementById('post-contacto-wa')?.value || CONFIG.WA_DEFAULT;
+    const rawWA = document.getElementById('post-contacto-wa')?.value || vacante.contacto_wa || vacante.whatsapp || CONFIG.WA_DEFAULT;
 
     const destinoWA = normalizarWhatsApp(rawWA);
+    const puestoText = vacante.puesto || 'Vacante Gastronómica';
+    const empresaText = vacante.empresa || 'su establecimiento';
 
-    let mensaje = `Hola! 👋 Mi nombre es *${nombre}* y me postulante a través de Jobbers Argentina para el puesto de *${vacante.puesto || 'Vacante'}* en *${vacante.empresa || 'tu local'}*.\n\n`;
-    mensaje += `📱 *Mi WhatsApp:* ${telefono}\n`;
+    let mensaje = `Hola! 👋 Mi nombre es *${nombre}* y me postulo a través de *Jobbers Argentina* para el puesto de *${puestoText}* en *${empresaText}*.\n\n`;
+    mensaje += `📱 *Mi Teléfono de contacto:* ${telefono}\n`;
     if (experiencia) {
-      mensaje += `📝 *Mi Experiencia:* ${experiencia}\n`;
+      mensaje += `📝 *Resumen de Experiencia:* ${experiencia}\n`;
     }
-    mensaje += `\n📎 *Adjunto mi CV en PDF para su revisión.* ¡Muchas gracias!`;
+    mensaje += `\n📎 *Adjunto mi CV en formato PDF para su revisión.* ¡Muchas gracias por la oportunidad!`;
 
     const urlWA = `https://wa.me/${destinoWA}?text=${encodeURIComponent(mensaje)}`;
     
     cerrarModal(document.getElementById('modal-jobbers-postulacion'));
-    mostrarNotificacion('Redirigiendo a WhatsApp...', 'exito');
+    mostrarNotificacion('¡Redirigiendo a WhatsApp con tu postulación!', 'exito');
     window.open(urlWA, '_blank');
   }
 
@@ -814,7 +816,7 @@
         detalles: descripcion,
         urgente: urgente,
         estado: 'pendiente',
-        tipo: 'empresa' // <--- ESTO ES LO QUE HACE QUE APAREZCA EN LA PESTAÑA DEL ADMIN
+        tipo: 'empresa' // <--- Asegura que vaya a la solapa de empresas del admin
       };
 
       let solicitudesGuardadas = JSON.parse(localStorage.getItem('jobbers_admin_requests')) || [];
