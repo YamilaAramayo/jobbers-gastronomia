@@ -813,7 +813,8 @@
         jornada: jornada,
         detalles: descripcion,
         urgente: urgente,
-        estado: 'pendiente'
+        estado: 'pendiente',
+        tipo: 'empresa' // <--- ESTO ES LO QUE HACE QUE APAREZCA EN LA PESTAÑA DEL ADMIN
       };
 
       let solicitudesGuardadas = JSON.parse(localStorage.getItem('jobbers_admin_requests')) || [];
