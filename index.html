@@ -45,17 +45,35 @@
 <body>
 
     <header class="navbar">
-        <!-- LOGO JOBBERS INTEGRADO CON LUPA Y OREJAS DE ZORRO EN LA "E" -->
+        <!-- LOGO JOBBERS VECTORIAL EXACTO -->
         <a href="/" class="brand-logo" aria-label="Inicio Jobbers">
-            Jobb<span class="logo-e-fox" title="Jobbers Gastronomía">
-                e
-                <svg class="fox-ears-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M4 10L9 3L11 8"></path>
-                    <path d="M20 10L15 3L13 8"></path>
-                    <circle cx="12" cy="14" r="5"></circle>
-                    <line x1="15.5" y1="17.5" x2="19" y2="21"></line>
-                </svg>
-            </span>rs<span class="dot-amber">.</span>
+            <svg class="logo-jobbers-svg" viewBox="0 0 460 110" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jobbers Logo">
+                <!-- Texto "Jobb" -->
+                <text x="5" y="82" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="94" fill="#FFFFFF" letter-spacing="-2">Jobb</text>
+                
+                <!-- Letra "e" como Lupa vectorizada con siluetas adentro -->
+                <g transform="translate(268, 12)">
+                    <!-- Mango de la lupa -->
+                    <path d="M 40 60 L 54 78" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" />
+                    <!-- Círculo exterior de la lupa -->
+                    <circle cx="28" cy="46" r="26" stroke="#FFFFFF" stroke-width="10" fill="none"/>
+                    <!-- Silueta Central de Personas -->
+                    <circle cx="28" cy="38" r="5" fill="#FFFFFF"/>
+                    <path d="M 20 53 C 20 46, 36 46, 36 53 Z" fill="#FFFFFF"/>
+                    <!-- Silueta Izquierda -->
+                    <circle cx="16" cy="41" r="3.8" fill="#FFFFFF"/>
+                    <path d="M 10 52 C 10 47, 22 47, 22 52 Z" fill="#FFFFFF"/>
+                    <!-- Silueta Derecha -->
+                    <circle cx="40" cy="41" r="3.8" fill="#FFFFFF"/>
+                    <path d="M 34 52 C 34 47, 46 47, 46 52 Z" fill="#FFFFFF"/>
+                </g>
+                
+                <!-- Texto "rs" -->
+                <text x="352" y="82" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="94" fill="#FFFFFF" letter-spacing="-2">rs</text>
+                
+                <!-- Cuadrado Ámbar final -->
+                <rect x="424" y="60" width="18" height="18" fill="#FFB703" rx="2"/>
+            </svg>
         </a>
 
         <div class="mode-switch-container" role="tablist" aria-label="Modo de usuario">
@@ -235,7 +253,7 @@
                         </a>
                     </div>
 
-                    <!-- SOPORTE PERSONALIZADO AL POSTULANTE (ACCESO A TACUA) -->
+                    <!-- SOPORTE PERSONALIZADO AL POSTULANTE -->
                     <div class="sidebar-widget widget-accent-amber">
                         <span class="badge-pro badge-amber font-bold">🛠️ SOPORTE TÉCNICO & CV</span>
                         <h3 class="text-amber mb-1 text-md mt-1">¿Necesitás ayuda con tu perfil?</h3>
