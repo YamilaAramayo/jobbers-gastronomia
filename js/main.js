@@ -40,10 +40,10 @@
         categoria: 'cocina',
         jornada: 'Full Time',
         turno: 'Turno Tarde/Noche',
-        sueldo: 500000,
+        sueldo: 550000,
         urgente: true,
         fecha: new Date().toISOString(),
-        tiempo: 'Hoy',
+        tiempo: 'Hace 2 horas',
         descripcion: 'Buscamos cocinero con experiencia previa en despacho, elaboración de carta y manejo de stock.',
         requisitos: ['Experiencia previa mínima de 2 años', 'Libreta sanitaria al día'],
         contacto_wa: '5493513080197'
@@ -59,7 +59,7 @@
         sueldo: 380000,
         urgente: false,
         fecha: new Date(Date.now() - 86400000 * 3).toISOString(),
-        tiempo: 'Hace 3 días',
+        tiempo: 'Hace 3 horas',
         descripcion: 'Atención al público, calibración de molino, arte latte y despacho de pastelería.',
         requisitos: ['Curso de Barismo comprobable', 'Excelente presencia y trato'],
         contacto_wa: '5493513080197'
@@ -407,27 +407,39 @@
     grid.innerHTML = vacantesPagina.map(v => {
       const ubicacion = escapeHTML(v.zona || v.ubicacion || 'Córdoba');
       const sueldoText = escapeHTML(formatearSueldo(v.sueldo));
-      const tiempo = escapeHTML(v.tiempo || v.haceCuanto || 'Reciente');
       const esUrgente = v.urgente === true || v.urgente === 1 || String(v.urgente).toLowerCase() === 'true' || String(v.urgente).toLowerCase() === 'si';
 
       return `
         <article class="job-card ${esUrgente ? 'urgente' : ''}" data-id="${escapeHTML(v.id)}">
-          ${esUrgente ? '<span class="badge-urgente">Urgente</span>' : ''}
-          <div class="job-card-header">
-            <div>
-              <h3 class="job-title">${escapeHTML(v.puesto)}</h3>
-              <p class="job-company">${escapeHTML(v.empresa)} • <span class="job-location">${ubicacion}</span></p>
+          ${esUrgente ? '<span class="badge-urgente">URGENTE</span>' : ''}
+          
+          <div class="job-card-left">
+            <div class="job-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              </svg>
             </div>
-            <span class="job-time">${tiempo}</span>
+            <div class="job-main-info">
+              <h3 class="job-title">${escapeHTML(v.puesto)}</h3>
+              <p class="job-company-location">${escapeHTML(v.empresa)} • ${ubicacion}</p>
+              
+              <div class="job-tags">
+                ${v.jornada ? `<span class="job-tag">${escapeHTML(v.jornada)}</span>` : ''}
+                ${v.turno ? `<span class="job-tag">${escapeHTML(v.turno)}</span>` : ''}
+              </div>
+            </div>
           </div>
-          <div class="job-details">
-            ${v.jornada ? `<span class="badge">${escapeHTML(v.jornada)}</span>` : ''}
-            ${v.turno ? `<span class="badge">${escapeHTML(v.turno)}</span>` : ''}
-            <span class="badge badge-salary">${sueldoText}</span>
-          </div>
-          <div class="job-card-footer">
-            <button type="button" class="btn-ver-detalle" data-id="${escapeHTML(v.id)}">Ver Detalle</button>
-            <button type="button" class="btn-postularme" data-id="${escapeHTML(v.id)}">Postularme 📲</button>
+
+          <div class="job-card-right">
+            <div class="job-salary-container">
+              <span class="job-salary">${sueldoText}</span>
+              <span class="job-salary-period">por mes</span>
+            </div>
+            <div class="job-actions">
+              <button type="button" class="btn-ver-detalle" data-id="${escapeHTML(v.id)}">Ver Detalle</button>
+              <button type="button" class="btn-postularme" data-id="${escapeHTML(v.id)}">Postularme</button>
+            </div>
           </div>
         </article>
       `;
@@ -816,7 +828,7 @@
         detalles: descripcion,
         urgente: urgente,
         estado: 'pendiente',
-        tipo: 'empresa' // <--- Asegura que vaya a la solapa de empresas del admin
+        tipo: 'empresa'
       };
 
       let solicitudesGuardadas = JSON.parse(localStorage.getItem('jobbers_admin_requests')) || [];
@@ -924,17 +936,7 @@
     document.querySelectorAll('a, button').forEach(el => {
       const texto = el.textContent.trim().toUpperCase();
       
-      // Botón "HABLAR CON UN ASESOR" (Postulantes)
-      if (texto.includes('HABLAR CON UN ASESOR')) {
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          const btnChat = document.getElementById('jobbers-chatbot-btn');
-          if (btnChat) btnChat.click();
-        });
-      }
-
-      // Botón "SOPORTE A EMPRESAS" (B2B)
-      if (texto.includes('SOPORTE A EMPRESAS')) {
+      if (texto.includes('HABLAR CON UN ASESOR') || texto.includes('SOPORTE A EMPRESAS')) {
         el.addEventListener('click', (e) => {
           e.preventDefault();
           const btnChat = document.getElementById('jobbers-chatbot-btn');
