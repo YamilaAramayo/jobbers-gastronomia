@@ -723,6 +723,50 @@
         </div>
     </div>
 
+    <!-- MODAL POSTULACIÓN EXPRESS (CON WHATSAPP Y EMAIL) -->
+    <div id="modal-postulacion-express" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-postulacion-titulo" hidden>
+        <div class="modal-box">
+            <button type="button" class="modal-close-btn" id="btn-cerrar-postulacion" aria-label="Cerrar modal">&times;</button>
+            <h2 id="modal-postulacion-titulo">Postulación Express</h2>
+            <p class="text-amber font-bold mb-2" id="postulacion-puesto-titulo">Cocinero / Chef de Partida - Bistro Gourmet</p>
+
+            <form id="form-postulacion-express-modal">
+                <div class="form-group mb-2">
+                    <label for="postulante-nombre" class="block text-xs font-semibold mb-1">Nombre y Apellido *</label>
+                    <input type="text" id="postulante-nombre" class="input-dark w-full" placeholder="Ej: María González" required>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label class="block text-xs font-semibold mb-1">Datos de Contacto *</label>
+                    <div class="flex-col gap-1">
+                        <input type="tel" id="postulante-whatsapp" class="input-dark w-full" placeholder="Número de WhatsApp (ej: 3511234567)">
+                        <input type="email" id="postulante-email" class="input-dark w-full" placeholder="Correo Gmail / Email (ej: usuario@gmail.com)">
+                    </div>
+                    <span class="text-xs text-secondary mt-1 block">Ingresá al menos uno de los dos medios de contacto.</span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label for="postulante-exp" class="block text-xs font-semibold mb-1">Experiencia previa (Breve)</label>
+                    <textarea id="postulante-exp" class="input-dark w-full" rows="3" placeholder="Contanos tu experiencia en el rubro..."></textarea>
+                </div>
+
+                <p class="text-xs text-secondary mb-3">
+                    📎 Al enviarse, recordá adjuntar tu CV en PDF.
+                </p>
+
+                <div class="modal-actions flex-row justify-end gap-2">
+                    <button type="button" class="btn-cancelar" id="btn-cancelar-postulacion">Cancelar</button>
+                    <button type="button" class="btn-green" id="btn-enviar-wa">
+                        Enviar WhatsApp 📱
+                    </button>
+                    <button type="button" class="btn-amber" id="btn-enviar-email">
+                        Enviar Email ✉️
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- MODAL VER TALENTO -->
     <div id="modal-talento" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-talento-nombre" tabindex="-1" hidden>
         <div class="modal-box modal-talento-box">
